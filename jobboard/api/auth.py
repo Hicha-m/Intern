@@ -1,3 +1,4 @@
+from hashlib import sha256
 from urllib.parse import urlsplit
 
 from django.conf import settings
@@ -33,7 +34,15 @@ from jobboard.services.auth import throttle
 
 
 def identity(user):
-    return {"id": user.pk, "username": user.username, "email": user.email}
+    from jobboard.api.onboarding import next_step
+
+    profile = CandidateProfile.objects.filter(user=user).first()
+    return {
+        "id": user.pk,
+        "username": user.username,
+        "email": user.email,
+        "onboarding_step": next_step(profile),
+    }
 
 
 def text(data, key, maximum=254):
@@ -58,12 +67,33 @@ def csrf(request):
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
+def email_availability(request):
+    # A deliberate registration UX: disclose availability only, never account data.
+    rate(request, "email-availability")
+    data = s.validated(request, s.EmailAvailabilitySerializer)
+    email = data["email"].strip().casefold()
+    throttle("email-availability:identity", email)
+    return Response(
+        {"available": not get_user_model().objects.filter(email__iexact=email).exists()}
+    )
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def register(request):
     data = s.validated(request, s.RegisterSerializer)
-    username = text(data, "username", 150)
-    rate(request, "register", username)
-    email = text(data, "email")
+    email = text(data, "email").strip().casefold()
     validate_email(email)
+    username = (
+        data.get("username") or "candidate_" + sha256(email.encode()).hexdigest()[:40]
+    )
+    rate(request, "register", email)
+    if get_user_model().objects.filter(email__iexact=email).exists():
+        raise APIError(
+            "validation_error",
+            "Check your registration details.",
+            details={"email": [{"code": "unavailable"}]},
+        )
     name = text(data, "full_name", 240)
     password = text(data, "password", 4096)
     form = UserCreationForm(
@@ -88,9 +118,19 @@ def register(request):
 @permission_classes([AllowAny])
 def sign_in(request):
     data = s.validated(request, s.LoginSerializer)
-    username, password = text(data, "username", 150), text(data, "password", 4096)
+    username, password = text(data, "username", 254), text(data, "password", 4096)
     rate(request, "login", username)
-    user = authenticate(request, username=username, password=password)
+    # Keep legacy username access; email lookup must resolve exactly one account.
+    matches = list(
+        get_user_model()
+        .objects.filter(email__iexact=username.strip())
+        .values_list("username", flat=True)[:2]
+    )
+    if len(matches) > 1:
+        raise APIError("invalid_credentials", "Invalid credentials.", 401)
+    user = authenticate(
+        request, username=matches[0] if matches else username, password=password
+    )
     if user is None:
         raise APIError("invalid_credentials", "Invalid credentials.", 401)
     login(request, user)
@@ -193,6 +233,7 @@ urlpatterns = [
     for route, view in [
         ("csrf", csrf),
         ("register", register),
+        ("email-availability", email_availability),
         ("login", sign_in),
         ("logout", sign_out),
         ("me", me),

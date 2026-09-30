@@ -1,0 +1,112 @@
+import { expect, test } from '@playwright/test'
+import type { Page } from '@playwright/test'
+async function prepare(page: Page) {
+  await page.route('**/api/v1/auth/me/', route => route.fulfill({ status: 401, json: { error: { code: 'authentication_required' } } }))
+  await page.route('**/api/v1/auth/csrf/', route => route.fulfill({ json: { csrf_token: 'registration-csrf' } }))
+  await page.route('**/api/v1/auth/email-availability/', route => route.fulfill({ json: { available: true } }))
+  await page.goto('/register')
+  await expect(page.getByRole('button', { name: 'Continuer' })).toBeEnabled()
+}
+async function fill(page: Page) {
+  await page.getByLabel('Adresse e-mail').fill('ada@example.test')
+  await page.getByRole('button', { name: 'Continuer' }).click()
+  await page.getByLabel('Nom complet').fill('Ada Lovelace')
+  await page.getByRole('button', { name: 'Continuer' }).click()
+  await page.getByLabel('Mot de passe', { exact: true }).fill('A unique passphrase 482!')
+}
+test('email first, back preserves data, final registration sends contract and CSRF', async ({ page }) => {
+  await prepare(page)
+  let calls = 0
+  await page.route('**/api/v1/auth/register/', async route => {
+    calls++
+    expect(route.request().headers()['x-csrftoken']).toBe('registration-csrf')
+    expect(route.request().postDataJSON()).toEqual({ full_name: 'Ada Lovelace', email: 'ada@example.test', password: 'A unique passphrase 482!' })
+    await route.fulfill({ json: { user: { id: 1, username: 'candidate_123', email: 'ada@example.test', onboarding_step: 'resume' }, csrf_token: 'registered-csrf' } })
+  })
+  await page.route('**/api/v1/auth/logout/', async route => {
+    expect(route.request().headers()['x-csrftoken']).toBe('registered-csrf')
+    await route.fulfill({ json: { ok: true } })
+  })
+  await expect(page.getByLabel('Nom complet')).toHaveCount(0)
+  await expect(page.getByLabel('Mot de passe', { exact: true })).toHaveCount(0)
+  await fill(page)
+  expect(calls).toBe(0)
+  await page.getByRole('button', { name: 'Retour' }).click()
+  await expect(page.getByLabel('Nom complet')).toHaveValue('Ada Lovelace')
+  await page.getByRole('button', { name: 'Continuer' }).click()
+  await expect(page.getByLabel('Mot de passe', { exact: true })).toHaveValue('A unique passphrase 482!')
+  await page.getByRole('button', { name: 'Créer mon compte' }).click()
+  await expect(page).toHaveURL(/\/onboarding\/resume$/)
+  await page.getByRole('button', { name: 'Se déconnecter' }).click()
+  await page.getByRole('link', { name: 'Pas encore de compte ? Créer un compte' }).click()
+  await expect(page).toHaveURL(/\/register$/)
+})
+test('email error returns to correct step with associated error and focus', async ({ page }) => {
+  await prepare(page)
+  await page.route('**/api/v1/auth/register/', route => route.fulfill({ status: 400, json: { error: { code: 'validation_error', details: { email: [{ code: 'unavailable' }] } } } }))
+  await fill(page)
+  await page.getByRole('button', { name: 'Créer mon compte' }).click()
+  await expect(page.getByLabel('Adresse e-mail')).toBeFocused()
+  await expect(page.getByLabel('Adresse e-mail')).toHaveAccessibleDescription(/Connectez-vous/)
+  await expect(page.getByLabel('Adresse e-mail')).toHaveValue('ada@example.test')
+})
+test('pending prevents duplicates, service failure allows explicit retry', async ({ page }) => {
+  await prepare(page)
+  let release!: () => void
+  const gate = new Promise<void>(resolve => { release = resolve })
+  let calls = 0
+  await page.route('**/api/v1/auth/register/', async route => {
+    calls++; await gate
+    await route.fulfill({ status: 503, json: { error: { code: 'unavailable' } } })
+  })
+  await fill(page)
+  await page.getByRole('button', { name: 'Créer mon compte' }).click()
+  await expect(page.getByRole('button', { name: 'Création du compte…' })).toBeDisabled()
+  await expect(page.getByRole('button', { name: 'Retour' })).toBeDisabled()
+  release()
+  await expect(page.getByRole('alert')).toContainText('momentanément indisponible')
+  await expect(page.getByRole('alert')).toBeFocused()
+  expect(calls).toBe(1)
+})
+test('fullscreen email screen, responsive onboarding and reduced motion', async ({ page }, info) => {
+  await prepare(page)
+  for (const width of [1280, 390, 320]) {
+    await page.setViewportSize({ width, height: 844 })
+    expect(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight && document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+    await page.screenshot({ path: info.outputPath(`register-${width}.png`), fullPage: true, animations: 'disabled' })
+  }
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await fill(page)
+  await expect(page.locator('.auth-form')).toHaveCSS('animation-name', 'none')
+  await expect(page.getByLabel('Mot de passe', { exact: true })).toHaveAttribute('autocomplete', 'new-password')
+  await page.getByRole('button', { name: 'Afficher le mot de passe' }).click()
+  await expect(page.getByLabel('Mot de passe', { exact: true })).toHaveAttribute('type', 'text')
+  await page.getByRole('button', { name: 'Créer mon compte' }).scrollIntoViewIfNeeded()
+  await expect(page.getByRole('button', { name: 'Créer mon compte' })).toBeInViewport()
+  await page.screenshot({ path: info.outputPath('onboarding-password.png'), fullPage: true })
+})
+
+test('existing email is rejected before name and password, editing allows retry', async ({ page }) => {
+  await prepare(page)
+  await page.route('**/api/v1/auth/email-availability/', async route => {
+    expect(route.request().headers()['x-csrftoken']).toBe('registration-csrf')
+    await route.fulfill({ json: { available: route.request().postDataJSON().email !== 'ada@example.test' } })
+  })
+  await page.getByLabel('Adresse e-mail').fill('ada@example.test')
+  await page.getByRole('button', { name: 'Continuer' }).click()
+  await expect(page.getByLabel('Adresse e-mail')).toHaveAccessibleDescription(/déjà utilisée/)
+  await expect(page.getByLabel('Adresse e-mail')).toBeFocused()
+  await expect(page.getByLabel('Nom complet')).toHaveCount(0)
+  await page.getByLabel('Adresse e-mail').fill('new@example.test')
+  await page.getByRole('button', { name: 'Continuer' }).click()
+  await expect(page.getByLabel('Nom complet')).toBeVisible()
+})
+test('availability outage does not advance registration', async ({ page }) => {
+  await prepare(page)
+  await page.route('**/api/v1/auth/email-availability/', route => route.fulfill({ status: 503, json: { error: { code: 'unavailable' } } }))
+  await page.getByLabel('Adresse e-mail').fill('ada@example.test')
+  await page.getByRole('button', { name: 'Continuer' }).click()
+  await expect(page.getByRole('alert')).toBeVisible()
+  await expect(page.getByLabel('Nom complet')).toHaveCount(0)
+  await expect(page.getByRole('button', { name: 'Continuer' })).toBeEnabled()
+})

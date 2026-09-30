@@ -1,0 +1,244 @@
+/* Primitive palettes supplied by the project designer. */
+.dark, .dark-theme {
+  --orange-1: #160f0d;
+  --orange-2: #1f1511;
+  --orange-3: #351b10;
+  --orange-4: #4b1b04;
+  --orange-5: #5a2409;
+  --orange-6: #693219;
+  --orange-7: #814226;
+  --orange-8: #a55531;
+  --orange-9: #ff7024;
+  --orange-10: #f2640d;
+  --orange-11: #ff9c6b;
+  --orange-12: #ffdcca;
+
+  --orange-a1: #e6000006;
+  --orange-a2: #ff55110f;
+  --orange-a3: #fd530b27;
+  --orange-a4: #fc3a003f;
+  --orange-a5: #fd4f004f;
+  --orange-a6: #fd6a265f;
+  --orange-a7: #ff7a3e78;
+  --orange-a8: #ff7f459f;
+  --orange-a9: #ff7024;
+  --orange-a10: #fe680df2;
+  --orange-a11: #ff9c6b;
+  --orange-a12: #ffdcca;
+
+  --gray-1: #111113;
+  --gray-2: #19191b;
+  --gray-3: #222325;
+  --gray-4: #292a2e;
+  --gray-5: #303136;
+  --gray-6: #393a40;
+  --gray-7: #46484f;
+  --gray-8: #5f606a;
+  --gray-9: #6c6e79;
+  --gray-10: #797b86;
+  --gray-11: #b2b3bd;
+  --gray-12: #eeeef0;
+
+  --gray-a1: #1111bb03;
+  --gray-a2: #cbcbf90b;
+  --gray-a3: #d6e2f916;
+  --gray-a4: #d1d9f920;
+  --gray-a5: #d7ddfd28;
+  --gray-a6: #d9defc33;
+  --gray-a7: #dae2fd43;
+  --gray-a8: #e0e3fd60;
+  --gray-a9: #e0e4fd70;
+  --gray-a10: #e3e7fd7e;
+  --gray-a11: #eff0feb9;
+  --gray-a12: #fdfdffef;
+
+  --orange-contrast: #fff;
+  --orange-surface: #2d191180;
+  --orange-indicator: #ff7024;
+  --orange-track: #ff7024;
+  --gray-contrast: #fff;
+  --gray-surface: rgba(0, 0, 0, 0.05);
+  --gray-indicator: #6c6e79;
+  --gray-track: #6c6e79;
+  --color-background: #111;
+}
+
+@supports (color: color(display-p3 1 1 1)) {
+  @media (color-gamut: p3) {
+    .dark, .dark-theme {
+      --orange-1: oklch(17.8% .012 43.9);
+      --orange-2: oklch(20.7% .0193 43.9);
+      --orange-3: oklch(25.7% .0455 43.9);
+      --orange-4: oklch(29.3% .0801 43.9);
+      --orange-5: oklch(33.4% .0873 43.9);
+      --orange-6: oklch(38.6% .0874 43.9);
+      --orange-7: oklch(45.3% .0953 43.9);
+      --orange-8: oklch(54% .1169 43.9);
+      --orange-9: oklch(71% .1923 43.9);
+      --orange-10: oklch(67.3% .1923 43.9);
+      --orange-11: oklch(79.9% .1641 43.9);
+      --orange-12: oklch(92.5% .0527 43.9);
+
+      --gray-1: oklch(17.8% .0042 277.7);
+      --gray-2: oklch(21.5% .004 277.7);
+      --gray-3: oklch(25.5% .0055 277.7);
+      --gray-4: oklch(28.4% .0075 277.7);
+      --gray-5: oklch(31.4% .0089 277.7);
+      --gray-6: oklch(35% .01 277.7);
+      --gray-7: oklch(40.2% .0121 277.7);
+      --gray-8: oklch(49.2% .0157 277.7);
+      --gray-9: oklch(54% .0167 277.7);
+      --gray-10: oklch(58.6% .0165 277.7);
+      --gray-11: oklch(77% .0138 277.7);
+      --gray-12: oklch(94.9% .0026 277.7);
+
+      --orange-a1: color(display-p3 .9922 0 0 / .017);
+      --orange-a2: color(display-p3 .9922 .3765 .1451 / .051);
+      --orange-a3: color(display-p3 1 .3882 .098 / .135);
+      --orange-a4: color(display-p3 1 .302 0 / .219);
+      --orange-a5: color(display-p3 1 .3804 .0667 / .278);
+      --orange-a6: color(display-p3 1 .4824 .2314 / .341);
+      --orange-a7: color(display-p3 1 .5333 .3059 / .437);
+      --orange-a8: color(display-p3 1 .5569 .3373 / .58);
+      --orange-a9: color(display-p3 1 .5059 .251 / .929);
+      --orange-a10: color(display-p3 1 .4784 .2039 / .874);
+      --orange-a11: color(display-p3 1 .6667 .4784 / .942);
+      --orange-a12: color(display-p3 1 .8902 .8196 / .975);
+
+      --gray-a1: color(display-p3 .0667 .0667 .9412 / .009);
+      --gray-a2: color(display-p3 .8 .8 .9804 / .043);
+      --gray-a3: color(display-p3 .851 .898 .9882 / .085);
+      --gray-a4: color(display-p3 .8392 .8706 1 / .122);
+      --gray-a5: color(display-p3 .8471 .8745 1 / .156);
+      --gray-a6: color(display-p3 .8784 .898 1 / .194);
+      --gray-a7: color(display-p3 .8745 .9059 .9961 / .257);
+      --gray-a8: color(display-p3 .8941 .9059 1 / .37);
+      --gray-a9: color(display-p3 .8902 .9098 1 / .433);
+      --gray-a10: color(display-p3 .902 .9176 1 / .488);
+      --gray-a11: color(display-p3 .9451 .949 1 / .719);
+      --gray-a12: color(display-p3 .9922 .9922 1 / .937);
+
+      --orange-surface: color(display-p3 0.1647 0.0941 0.0627 / 0.5);
+      --orange-indicator: oklch(71% 0.1923 43.9);
+      --orange-track: oklch(71% 0.1923 43.9);
+      --gray-surface: color(display-p3 0 0 0 / 5%);
+      --gray-indicator: oklch(54% 0.0167 277.7);
+      --gray-track: oklch(54% 0.0167 277.7);
+    }
+  }
+}
+
+/* Components consume these roles; primitives remain available for new roles. */
+.dark, .dark-theme {
+  color-scheme: dark;
+  --background: var(--color-background);
+  --surface: var(--gray-2);
+  --hover: var(--gray-3);
+  --pressed: var(--gray-4);
+  --border: var(--gray-6);
+  --border-interactive: var(--gray-8);
+  --text: var(--gray-12);
+  --muted: var(--gray-11);
+  --accent: var(--orange-9);
+  --accent-hover: var(--orange-10);
+  --accent-text: var(--orange-11);
+  --accent-soft: var(--orange-3);
+  --accent-soft-hover: var(--orange-4);
+  --accent-border: var(--orange-7);
+  /* Dark text has stronger contrast on the bright orange accent. */
+  --on-accent: var(--gray-1);
+  --focus-ring: var(--orange-11);
+}
+
+/* Light theme: the same orange brand with neutral white surfaces. */
+.light, .light-theme {
+  color-scheme: light;
+  --gray-1: #fcfcfd;
+  --gray-2: #f9f9fb;
+  --gray-3: #f0f0f3;
+  --gray-4: #e8e8ec;
+  --gray-5: #e0e1e6;
+  --gray-6: #d9d9e0;
+  --gray-7: #cdced6;
+  --gray-8: #b9bbc6;
+  --gray-9: #8b8d98;
+  --gray-10: #80838d;
+  --gray-11: #60646c;
+  --gray-12: #1c2024;
+  --orange-1: #fefcfb;
+  --orange-2: #fff7ed;
+  --orange-3: #ffead5;
+  --orange-4: #ffdfb5;
+  --orange-5: #ffd19a;
+  --orange-6: #ffc182;
+  --orange-7: #f5ae73;
+  --orange-8: #ec9455;
+  --orange-9: #ff7024;
+  --orange-10: #f2640d;
+  --orange-11: #b64000;
+  --orange-12: #582d1d;
+  --gray-a3: #0000330f;
+  --color-background: #ffffff;
+  --background: var(--color-background);
+  --surface: var(--gray-2);
+  --hover: var(--gray-3);
+  --pressed: var(--gray-4);
+  --border: var(--gray-6);
+  --border-interactive: var(--gray-8);
+  --text: var(--gray-12);
+  --muted: var(--gray-11);
+  --accent: var(--orange-9);
+  --accent-hover: var(--orange-10);
+  --accent-text: var(--orange-11);
+  --accent-soft: var(--orange-3);
+  --accent-soft-hover: var(--orange-4);
+  --accent-border: var(--orange-7);
+  --on-accent: #111113;
+  --focus-ring: var(--orange-11);
+}
+
+/* Semantic component colors. Component CSS does not consume palette steps. */
+.dark, .dark-theme {
+  --field-border: #797b86;
+  --field-border-hover: var(--gray-11);
+  --error-text: #ffb4ab;
+  --error-background: #301b1a;
+  --error-border: #e5756a;
+  --image-outline: oklch(1 0 0 / 0.1);
+}
+.light, .light-theme {
+  --field-border: var(--gray-10);
+  --field-border-hover: var(--gray-11);
+  --error-text: #a32922;
+  --error-background: #fff0ee;
+  --error-border: #c84b42;
+  --image-outline: oklch(0 0 0 / 0.1);
+}
+.dark, .dark-theme, .light, .light-theme {
+  --field-background: var(--background);
+  --field-text: var(--text);
+  --button-background: var(--accent);
+  --button-background-hover: var(--accent-hover);
+  --button-text: var(--on-accent);
+  --image-placeholder: var(--surface);
+  --image-placeholder-icon: var(--muted);
+  --text-on-image: #eeeef0;
+  --text-on-image-muted: #d9d9e0;
+  --image-shade: linear-gradient(transparent 25%, rgb(0 0 0 / 0.8));
+  --shadow-image: inset 0 0 0 var(--border-width) var(--image-outline);
+}
+:root { --resume-shadow: 0 0 0 1px oklch(1 0 0 / 0.08); }
+.light { --resume-shadow: 0 0 0 1px oklch(0 0 0 / 0.06), 0 1px 2px -1px oklch(0 0 0 / 0.06), 0 2px 4px oklch(0 0 0 / 0.04); }
+
+.light, .light-theme {
+  --select-shadow: 0 0 0 1px oklch(0 0 0 / 0.06), 0 4px 8px -2px oklch(0 0 0 / 0.08), 0 12px 32px -8px oklch(0 0 0 / 0.14);
+}
+.dark, .dark-theme {
+  --select-shadow: 0 0 0 1px oklch(1 0 0 / 0.13), 0 12px 32px -8px oklch(0 0 0 / 0.4);
+}
+.light, .light-theme, .dark, .dark-theme {
+  --login-button-sheen: linear-gradient(180deg, oklch(1 0 0 / 0.08), oklch(1 0 0 / 0));
+  --login-button-shadow: inset 0 1px 0 oklch(1 0 0 / 0.22), 0 0 0 1px oklch(0 0 0 / 0.08), 0 2px 4px -1px oklch(0 0 0 / 0.14);
+  --login-button-shadow-hover: inset 0 1px 0 oklch(1 0 0 / 0.26), 0 0 0 1px oklch(0 0 0 / 0.1), 0 4px 8px -2px oklch(0 0 0 / 0.18);
+  --login-button-shadow-pressed: inset 0 1px 2px oklch(0 0 0 / 0.12), 0 0 0 1px oklch(0 0 0 / 0.1);
+}

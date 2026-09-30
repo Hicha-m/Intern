@@ -2,6 +2,7 @@
 
 import hashlib
 import logging
+import math
 from io import BytesIO
 from pathlib import PurePath
 from uuid import uuid4
@@ -10,7 +11,14 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from pypdf import PdfReader, filters
-from pypdf.generic import ArrayObject, DictionaryObject, IndirectObject
+from pypdf.generic import (
+    ArrayObject,
+    DictionaryObject,
+    FloatObject,
+    IndirectObject,
+    NullObject,
+    NumberObject,
+)
 
 from jobboard.api.core import APIError, lock_user
 from jobboard.integrations.storage import (
@@ -28,6 +36,41 @@ filters.ZLIB_MAX_OUTPUT_LENGTH = 16 * 1024 * 1024
 filters.LZW_MAX_OUTPUT_LENGTH = 16 * 1024 * 1024
 filters.MAX_ARRAY_BASED_STREAM_OUTPUT_LENGTH = 16 * 1024 * 1024
 filters.MAX_DECLARED_STREAM_LENGTH = 16 * 1024 * 1024
+
+
+def _passive_open_destination(value, reader):
+    """Accept only a local page/zoom destination, never an action dictionary."""
+    if not isinstance(value, ArrayObject) or len(value) < 2:
+        return False
+    page, mode, *coordinates = value
+    arity = {
+        "/Fit": 0,
+        "/FitB": 0,
+        "/FitH": 1,
+        "/FitV": 1,
+        "/FitBH": 1,
+        "/FitBV": 1,
+        "/XYZ": 3,
+        "/FitR": 4,
+    }
+    if (
+        not isinstance(mode, str)
+        or mode not in arity
+        or len(coordinates) != arity[mode]
+    ):
+        return False
+    if not isinstance(page, IndirectObject) or not any(
+        page == candidate.indirect_reference for candidate in reader.pages
+    ):
+        return False
+    return all(
+        isinstance(coordinate, NullObject)
+        or (
+            isinstance(coordinate, (NumberObject, FloatObject))
+            and math.isfinite(float(coordinate))
+        )
+        for coordinate in coordinates
+    )
 
 
 def validate_pdf(data):
@@ -52,12 +95,18 @@ def validate_pdf(data):
             if count > 100000:
                 raise ValueError("Excessive PDF object graph")
             if isinstance(item, DictionaryObject):
+                # LaTeX and other exporters use /OpenAction for passive page fitting.
+                # Only permit that form on the catalog; continue traversing it below.
+                if "/OpenAction" in item and (
+                    item is not reader.root_object
+                    or not _passive_open_destination(item["/OpenAction"], reader)
+                ):
+                    raise ValueError("Opening actions are not accepted")
                 if any(
                     key in item
                     for key in (
                         "/JS",
                         "/JavaScript",
-                        "/OpenAction",
                         "/AA",
                         "/EmbeddedFiles",
                         "/EF",

@@ -1,0 +1,151 @@
+/* Shared foundations. 1rem follows the browser's text-size preference. */
+:root {
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-9: 2.25rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-13: 3.25rem;
+  --space-14: 3.5rem;
+  --space-16: 4rem;
+  --space-18: 4.5rem;
+  --space-22: 5.5rem;
+
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.8125rem;
+  --font-size-md: 0.875rem;
+  --font-size-body: 0.9375rem;
+  --font-size-input: 1rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 2rem;
+  --font-size-display: 2.25rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 650;
+  --font-weight-bold: 700;
+  --font-weight-brand: 750;
+  --line-height-tight: 1.18;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.65;
+  --tracking-heading: -0.045em;
+  --tracking-brand: -0.065em;
+  --tracking-eyebrow: 0.08em;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-image: 1.375rem;
+  --radius-round: 50%;
+  --radius-control: var(--radius-md);
+  --radius-card: var(--radius-lg);
+  --radius-notice: var(--radius-md);
+  --border-width: 1px;
+  --focus-width: 2px;
+  --focus-offset: 3px;
+  --icon-stroke: 1.5;
+  --spinner-stroke: 1.5px;
+
+  --control-height: 3.375rem;
+  --target-size: 2.75rem;
+  --icon-size: 1.25rem;
+  --spinner-size: 0.9375rem;
+  --onboarding-stage-height: 20rem;
+  --form-width: 27.5rem;
+  --content-width: 60rem;
+  --onboarding-width: 76rem;
+  --onboarding-card-height: 38rem;
+  --onboarding-header-height: 4.5rem;
+  --onboarding-drop-height: 11rem;
+  --onboarding-heading-size: clamp(1.75rem, 2.8vw, 2.25rem);
+  --onboarding-panel-padding: clamp(var(--space-6), 4vw, var(--space-12));
+  --sidebar-width: 14.75rem;
+  --viewport-min-width: 20rem;
+  --control-padding-x: var(--space-4);
+  --form-gap: var(--space-5);
+  --field-gap: var(--space-2);
+  --button-gap: var(--space-2);
+  --login-button-height: var(--space-13);
+  --button-action-inset: var(--space-5);
+  --button-action-padding: calc(var(--button-action-inset) + var(--icon-size) + var(--space-3));
+  --button-icon-nudge: calc(var(--space-1) / 2);
+  --image-inset: var(--space-3);
+  --toggle-inset: calc((var(--control-height) - var(--target-size)) / 2);
+
+  --duration-enter: 240ms;
+  --duration-stagger: 40ms;
+  --motion-enter-offset: var(--space-3);
+  --ease-enter: cubic-bezier(0.23, 1, 0.32, 1);
+  --duration-fast: 150ms;
+  --duration-spin: 700ms;
+  --ease-interactive: cubic-bezier(0.2, 0, 0, 1);
+  --scale-pressed: 0.96;
+  --opacity-disabled: 0.6;
+  --layer-skip-link: 10;
+  --layer-image: -2;
+  --layer-image-shade: -1;
+  --underline-offset: var(--space-1);
+
+  /* Auth composition: intentionally fluid, independent of color mode. */
+  --auth-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  --auth-image-padding: clamp(var(--space-8), 4vw, var(--space-16));
+  --auth-panel-padding: clamp(var(--space-6), 5dvh, var(--space-12)) clamp(var(--space-6), 4.4vw, var(--space-18)) var(--space-6);
+  --auth-form-padding: var(--space-6) 0;
+  --auth-heading-gap: var(--space-8);
+  --auth-heading-size: clamp(1.75rem, 2.5vw, 2.375rem);
+  --auth-hero-size: clamp(var(--font-size-xl), 3.45vw, 3.375rem);
+  --auth-brand-size: 2.125rem;
+  --auth-copy-width: 36.25rem;
+  --auth-description-width: 28.125rem;
+  --auth-placeholder-offset: 10rem;
+  --content-padding: var(--space-14) clamp(var(--space-6), 6vw, var(--space-22));
+  --page-heading-size: clamp(2.125rem, 4vw, 3rem);
+}
+
+/* Custom properties cannot be used in native media-query conditions.
+   Keep these three layout boundaries here, not in individual components. */
+@media (max-width: 999px) {
+  :root {
+    --auth-columns: minmax(0, 1fr) minmax(0, 1fr);
+    --auth-image-padding: var(--space-8);
+    --auth-panel-padding: var(--space-10) var(--space-5) var(--space-6);
+    --auth-hero-size: var(--font-size-display);
+  }
+}
+@media (min-width: 721px) and (max-height: 680px) {
+  :root {
+    --auth-panel-padding: var(--space-5) var(--space-6);
+    --auth-form-padding: var(--space-4) 0;
+    --auth-heading-gap: var(--space-6);
+    --form-gap: var(--space-4);
+    --auth-hero-size: var(--font-size-display);
+  }
+}
+@media (max-width: 720px) {
+  :root {
+    --auth-panel-padding: var(--space-10) var(--space-6) var(--space-6);
+    --auth-form-padding: var(--space-13) 0;
+    --auth-heading-size: var(--font-size-xl);
+    --auth-brand-size: var(--font-size-xl);
+    --content-padding: var(--space-10) var(--space-6);
+  }
+}
+
+:root {
+  --layer-popover: 20;
+  --select-menu-height: 20rem;
+  --select-available-height: 20rem;
+}
+
+:root {
+  --onboarding-form-width: 52rem;
+  --onboarding-choice-width: 8rem;
+  --onboarding-inner-radius: calc(var(--radius-control) + var(--space-5));
+  --scale-icon-hidden: 0.25;
+  --blur-icon-hidden: 4px;
+}

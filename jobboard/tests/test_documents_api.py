@@ -7,6 +7,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
 from django.urls import include, path
 from pypdf import PdfWriter
+from pypdf.generic import ArrayObject, DictionaryObject, NameObject, TextStringObject
 
 from jobboard.api.core import APIError
 from jobboard.integrations.storage import read_object, write_object
@@ -102,6 +103,46 @@ class DocumentAPITests(TestCase):
         with override_settings(MAX_DOCUMENT_BYTES=20):
             self.assertEqual(self.upload().status_code, 413)
         self.assertEqual(Document.objects.count(), 0)
+
+    def test_passive_opening_destination_is_accepted(self):
+        for indirect in (False, True):
+            with self.subTest(indirect=indirect):
+                writer = PdfWriter()
+                page = writer.add_blank_page(width=100, height=100)
+                destination = ArrayObject([page.indirect_reference, NameObject("/Fit")])
+                writer.root_object[NameObject("/OpenAction")] = (
+                    writer._add_object(destination) if indirect else destination
+                )
+                stream = BytesIO()
+                writer.write(stream)
+                response = self.upload(stream.getvalue())
+                self.assertEqual(response.status_code, 200, response.content)
+
+    def test_opening_actions_and_malformed_destinations_are_rejected(self):
+        for action in ("/JavaScript", "/Launch", "/URI", "/GoTo"):
+            with self.subTest(action=action):
+                writer = PdfWriter()
+                writer.add_blank_page(width=100, height=100)
+                writer.root_object[NameObject("/OpenAction")] = DictionaryObject(
+                    {
+                        NameObject("/S"): NameObject(action),
+                    }
+                )
+                stream = BytesIO()
+                writer.write(stream)
+                self.assertEqual(self.upload(stream.getvalue()).status_code, 400)
+        writer = PdfWriter()
+        page = writer.add_blank_page(width=100, height=100)
+        writer.root_object[NameObject("/OpenAction")] = ArrayObject(
+            [
+                page.indirect_reference,
+                NameObject("/Fit"),
+                TextStringObject("unexpected"),
+            ]
+        )
+        stream = BytesIO()
+        writer.write(stream)
+        self.assertEqual(self.upload(stream.getvalue()).status_code, 400)
 
     def test_integrity_check_and_delete_storage(self):
         pk = self.upload().json()["id"]

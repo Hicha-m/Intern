@@ -1,6 +1,6 @@
-# Intern — backend Django
+# Intern — Django et frontend
 
-API candidat Django 6.1 / Django REST framework 3.18 / PostgreSQL 16. Le schéma, le contrat de livraison et les décisions sont dans [docs/BACKEND_SPEC.md](docs/BACKEND_SPEC.md). Ce dépôt ne contient pas encore le frontend.
+API candidat Django 6.1 / Django REST framework 3.18 / PostgreSQL 16. Le schéma, le contrat de livraison et les décisions sont dans [docs/BACKEND_SPEC.md](docs/BACKEND_SPEC.md). Le [frontend React](frontend/README.md) propose la connexion, l’inscription, la réinitialisation du mot de passe et l’ajout du CV après inscription ; les autres espaces métier restent provisoires.
 
 ## Démarrer en local
 

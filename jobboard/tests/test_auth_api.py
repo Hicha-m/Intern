@@ -69,6 +69,72 @@ class AuthAPITests(TestCase):
             self.client.get("/api/v1/auth/me/").json()["user"]["id"], user.pk
         )
 
+    def test_email_onboarding_creates_profile_and_allows_email_login(self):
+        data = {
+            "email": "New.Person@example.com",
+            "full_name": "New Person",
+            "password": PASSWORD,
+        }
+        response = self.post("register", data)
+        self.assertEqual(response.status_code, 200, response.content)
+        user = get_user_model().objects.get(pk=response.json()["user"]["id"])
+        self.assertTrue(user.username.startswith("candidate_"))
+        self.assertEqual(user.email, "new.person@example.com")
+        self.assertEqual(
+            CandidateProfile.objects.get(user=user).full_name, "New Person"
+        )
+        self.post("logout", {})
+        response = self.post(
+            "login", {"username": "NEW.PERSON@example.com", "password": PASSWORD}
+        )
+        self.assertEqual(response.status_code, 200, response.content)
+        response = self.post("register", data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.json()["error"]["details"]["email"][0]["code"], "unavailable"
+        )
+
+    def test_email_availability_requires_csrf_and_normalizes_email(self):
+        response = self.client.post(
+            "/api/v1/auth/email-availability/",
+            {"email": self.user.email},
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(
+            self.post("email-availability", {"email": " ALICE@EXAMPLE.COM "}).json(),
+            {"available": False},
+        )
+        self.assertEqual(
+            self.post("email-availability", {"email": "new@example.com"}).json(),
+            {"available": True},
+        )
+        self.assertEqual(
+            self.post("email-availability", {"email": "bad"}).status_code, 400
+        )
+        self.assertEqual(get_user_model().objects.count(), 1)
+        self.assertEqual(self.client.get("/api/v1/auth/me/").status_code, 401)
+
+    @override_settings(AUTH_RATE_LIMIT=1)
+    def test_email_availability_is_rate_limited(self):
+        self.assertEqual(
+            self.post("email-availability", {"email": "alice@example.com"}).status_code,
+            200,
+        )
+        self.assertEqual(
+            self.post("email-availability", {"email": "ALICE@example.com"}).status_code,
+            429,
+        )
+
+    def test_ambiguous_legacy_email_cannot_select_another_account(self):
+        get_user_model().objects.create_user(
+            username="other", email="alice@example.com", password=PASSWORD
+        )
+        response = self.post(
+            "login", {"username": "alice@example.com", "password": PASSWORD}
+        )
+        self.assertEqual(response.status_code, 401)
+
     def test_registration_rejects_weak_password_and_privilege_fields(self):
         data = {
             "username": "newuser",

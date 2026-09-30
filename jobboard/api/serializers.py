@@ -94,13 +94,18 @@ class EmptySerializer(StrictSerializer):
 
 
 class LoginSerializer(StrictSerializer):
-    username = TextField(max_length=150)
+    username = TextField(max_length=254)
     password = TextField(max_length=4096, write_only=True)
 
 
 class RegisterSerializer(LoginSerializer):
+    username = TextField(max_length=150, required=False)
     email = TextField(max_length=254)
     full_name = TextField(max_length=240)
+
+
+class EmailAvailabilitySerializer(StrictSerializer):
+    email = serializers.EmailField(max_length=254)
 
 
 class PasswordChangeSerializer(StrictSerializer):

@@ -24,6 +24,14 @@ class CandidateProfile(models.Model):
     location = models.ForeignKey(
         "Location", on_delete=models.PROTECT, null=True, blank=True
     )
+    street_address = models.CharField(max_length=240, blank=True)
+    city = models.CharField(max_length=160, blank=True)
+    postal_code = models.CharField(max_length=32, blank=True)
+    district = models.CharField(max_length=160, blank=True)
+    region = models.CharField(max_length=160, blank=True)
+    country_code = models.CharField(max_length=2, blank=True)
+    citizenships = models.JSONField(default=list, blank=True)
+    onboarding_completed_at = models.DateTimeField(null=True, blank=True)
     available_from = models.DateField(null=True, blank=True)
     linkedin_url = models.URLField(max_length=2048, null=True, blank=True)
     github_url = models.URLField(max_length=2048, null=True, blank=True)
@@ -168,6 +176,7 @@ class WorkAuthorization(models.Model):
     country_code = models.CharField(max_length=2)
     authorized = models.BooleanField(null=True, blank=True)
     needs_sponsorship = models.BooleanField(null=True, blank=True)
+    authorization_basis = models.CharField(max_length=32, blank=True)
     confirmed_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:

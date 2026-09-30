@@ -1,0 +1,17 @@
+@import "./tokens.css";
+@import "./theme.css";
+
+:root {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-regular);
+  color: var(--text);
+  background: var(--background);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: var(--viewport-min-width); }
+button, input, textarea, select { font: inherit; }
+:focus-visible { outline: var(--focus-width) solid var(--focus-ring); outline-offset: var(--focus-offset); }
