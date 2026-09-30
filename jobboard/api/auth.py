@@ -22,8 +22,12 @@ from django.middleware.csrf import get_token
 from django.urls import path
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
-from jobboard.api.core import APIError, body, endpoint, lock_user
+from jobboard.api import serializers as s
+from jobboard.api.core import APIError, lock_user
 from jobboard.models import CandidateProfile
 from jobboard.services.auth import throttle
 
@@ -46,18 +50,16 @@ def rate(request, action, username=""):
         throttle(action + ":identity", username.casefold())
 
 
-@endpoint(["GET"], auth=False)
+@api_view(["GET"])
+@permission_classes([AllowAny])
 def csrf(request):
-    return {"csrf_token": get_token(request)}
+    return Response({"csrf_token": get_token(request)})
 
 
-@endpoint(["POST"], auth=False)
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def register(request):
-    data = body(
-        request,
-        ["username", "email", "password", "full_name"],
-        ["username", "email", "password", "full_name"],
-    )
+    data = s.validated(request, s.RegisterSerializer)
     username = text(data, "username", 150)
     rate(request, "register", username)
     email = text(data, "email")
@@ -79,38 +81,37 @@ def register(request):
         user.save()
         CandidateProfile.objects.create(user=user, full_name=name)
     login(request, user)
-    return {"user": identity(user), "csrf_token": get_token(request)}
+    return Response({"user": identity(user), "csrf_token": get_token(request)})
 
 
-@endpoint(["POST"], auth=False)
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def sign_in(request):
-    data = body(request, ["username", "password"], ["username", "password"])
+    data = s.validated(request, s.LoginSerializer)
     username, password = text(data, "username", 150), text(data, "password", 4096)
     rate(request, "login", username)
     user = authenticate(request, username=username, password=password)
     if user is None:
         raise APIError("invalid_credentials", "Invalid credentials.", 401)
     login(request, user)
-    return {"user": identity(user), "csrf_token": get_token(request)}
+    return Response({"user": identity(user), "csrf_token": get_token(request)})
 
 
-@endpoint(["POST"])
+@api_view(["POST"])
 def sign_out(request):
-    body(request, [])
+    s.validated(request, s.EmptySerializer)
     logout(request)
-    return {"ok": True}
+    return Response({"ok": True})
 
 
-@endpoint(["GET"])
+@api_view(["GET"])
 def me(request):
-    return {"user": identity(request.user)}
+    return Response({"user": identity(request.user)})
 
 
-@endpoint(["POST"])
+@api_view(["POST"])
 def password_change(request):
-    data = body(
-        request, ["old_password", "new_password"], ["old_password", "new_password"]
-    )
+    data = s.validated(request, s.PasswordChangeSerializer)
     rate(request, "password", request.user.username)
     with transaction.atomic():
         user = lock_user(request.user)
@@ -130,12 +131,13 @@ def password_change(request):
             )
         form.save()
     update_session_auth_hash(request, user)
-    return {"ok": True}
+    return Response({"ok": True})
 
 
-@endpoint(["POST"], auth=False)
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def password_reset(request):
-    data = body(request, ["email"], ["email"])
+    data = s.validated(request, s.PasswordResetSerializer)
     email = text(data, "email")
     rate(request, "reset", email)
     form = PasswordResetForm({"email": email})
@@ -149,14 +151,13 @@ def password_reset(request):
         subject_template_name="registration/password_reset_subject.txt",
         from_email=settings.DEFAULT_FROM_EMAIL,
     )
-    return {"ok": True}
+    return Response({"ok": True})
 
 
-@endpoint(["POST"], auth=False)
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def password_reset_confirm(request):
-    data = body(
-        request, ["uid", "token", "new_password"], ["uid", "token", "new_password"]
-    )
+    data = s.validated(request, s.PasswordResetConfirmSerializer)
     rate(request, "reset-confirm")
     try:
         pk = force_str(urlsafe_base64_decode(text(data, "uid")))
@@ -184,7 +185,7 @@ def password_reset_confirm(request):
                 details=form.errors.get_json_data(),
             )
         form.save()
-    return {"ok": True}
+    return Response({"ok": True})
 
 
 urlpatterns = [

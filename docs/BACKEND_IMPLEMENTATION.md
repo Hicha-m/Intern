@@ -2,7 +2,7 @@
 
 ## Livré et vérifié
 
-- API JSON native Django avec sessions, CSRF, reset/changement de mot de passe, limitation partagée PostgreSQL et validation explicite.
+- API JSON Django REST framework avec sessions, CSRF, reset/changement de mot de passe, limitation partagée PostgreSQL et validation explicite.
 - Catalogue filtrable/paginé, favoris, recommandations respectant contrats/modes et comparabilité des salaires ; import public Greenhouse atomique et relançable.
 - Profil, parcours, préférences, version ; PDF privés locaux/R2, empreintes et protection des documents historiques.
 - Dossiers/révisions immuables par l'API, snapshots factuels, hash canonique, approbation individuelle et outbox atomique.
@@ -10,7 +10,7 @@
 - Historique, suivi manuel, tâches/entretiens ; export ZIP et suppression reprenable avec protection des opérations encore en vol.
 - Configuration d'environnement, image Docker non root, web/worker Compose, healthchecks HTTP, documentation [API](API.md) et [spec](BACKEND_SPEC.md).
 
-## Preuves exécutées
+## Preuves de la livraison initiale (avant migration DRF)
 
 | Vérification | Résultat |
 |---|---|
@@ -29,6 +29,33 @@
 Le conteneur de vérification a été arrêté et supprimé après le contrôle. Aucun worker d'envoi n'a été laissé en marche. Les tests R2/ATS utilisent des doubles contrôlés ; aucun document personnel n'a été envoyé à un tiers.
 
 La seule nouvelle migration est `0015_request_throttle`, table technique de compteurs expirables. Elle est appliquée à la base locale après sauvegarde PostgreSQL : `/Users/omarbenjelloun/.codex/backups/intern-backend-20260930/before-0015.dump`. Les migrations métier et le volume existant ont été conservés.
+
+## Migration DRF — vérifications du 30 septembre 2026
+
+La [spec de migration](DRF_MIGRATION_SPEC.md) documente les recommandations officielles
+et le contrat conservé. DRF 3.18.1 est verrouillé dans `uv.lock`.
+
+- Les 109 tests historiques sont passés après remplacement de la couche HTTP.
+- Les dix nouveaux tests `jobboard.tests.test_drf_contract` sont passés après les
+  derniers ajustements : CSRF anonyme/origine, permissions, parsing, serializers,
+  pagination, négociation, uploads, téléchargements et champs privés.
+- `manage.py check` et `makemigrations --check --dry-run` ont réussi avant l’incident
+  d’environnement décrit ci-dessous ; aucune modification de modèle ou migration.
+- Ruff (toutes les règles configurées) et formatage passent sur les fichiers Python
+  de la migration ; `git diff --check` passe. Le lint global garde des diagnostics
+  préexistants hors périmètre.
+
+La dernière relance combinée des 119 tests a été bloquée avant leur exécution :
+macOS a signalé `No space left on device`, puis Docker Desktop/PostgreSQL sont
+devenus indisponibles. Elle reste à rejouer après rétablissement de Docker :
+
+```bash
+docker compose up -d db
+TEST_DATABASE_NAME=test_intern_drf uv run manage.py test jobboard --noinput
+```
+
+La migration DRF n’a pas été déployée. Les contrôles Docker de la section précédente
+concernent l’image antérieure à cette migration.
 
 ## Limites avant activation du produit complet
 

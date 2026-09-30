@@ -55,6 +55,7 @@ if not DEBUG and (
 # Application definition
 
 INSTALLED_APPS = [
+    "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "jobboard.api.drf.NoStoreMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -239,3 +241,17 @@ if PRIVATE_STORAGE_BACKEND == "r2" and R2_BUCKET == "local":
     raise ImproperlyConfigured(
         "The bucket name local is reserved for development storage."
     )
+
+# The browser frontend shares Django sessions; public views opt into AllowAny.
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": ["jobboard.api.drf.CsrfSessionAuthentication"],
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_PARSER_CLASSES": ["rest_framework.parsers.JSONParser"],
+    "DEFAULT_RENDERER_CLASSES": ["jobboard.api.drf.ContractJSONRenderer"],
+    "DEFAULT_PAGINATION_CLASS": "jobboard.api.drf.ContractPagination",
+    "PAGE_SIZE": 20,
+    "EXCEPTION_HANDLER": "jobboard.api.drf.exception_handler",
+    "STRICT_JSON": True,
+    "DATETIME_FORMAT": None,
+    "DATE_FORMAT": None,
+}

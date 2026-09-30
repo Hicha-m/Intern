@@ -5,8 +5,13 @@ from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404
 from django.urls import path
 from django.utils import timezone
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-from jobboard.api.core import APIError, body, endpoint, lock_user, model_data, paginate
+from jobboard.api import read_serializers as r
+from jobboard.api import serializers as s
+from jobboard.api.core import APIError, lock_user
+from jobboard.api.drf import paginate
 from jobboard.models import (
     CandidateProfile,
     CompensationBand,
@@ -48,60 +53,8 @@ def open_offers():
 
 
 def serialize_offer(offer, detail=False):
-    result = model_data(
-        offer,
-        [
-            "id",
-            "title",
-            "contract_type",
-            "employment_schedule",
-            "work_mode",
-            "seniority",
-            "remote_scope",
-            "language_code",
-            "status",
-            "published_at",
-            "expires_at",
-        ],
-    )
-    result["company"] = model_data(offer.company, ["id", "name", "website_url"])
-    result["role"] = (
-        model_data(offer.role, ["id", "name", "slug"]) if offer.role_id else None
-    )
-    result["locations"] = [
-        model_data(item, ["id", "name", "country_code", "region", "city"])
-        for item in offer.locations.all()
-    ]
-    result["skills"] = [
-        model_data(item, ["id", "name", "slug"]) for item in offer.skills.all()
-    ]
-    result["compensation_bands"] = [
-        model_data(
-            item,
-            [
-                "id",
-                "minimum",
-                "maximum",
-                "currency",
-                "period",
-                "gross_net",
-                "location_id",
-            ],
-        )
-        for item in offer.compensation_bands.all()
-    ]
-    result["sources"] = [
-        {
-            "id": item.pk,
-            "provider": item.board.provider,
-            "apply_url": item.apply_url,
-            "submission_mode": item.board.submission_mode,
-        }
-        for item in offer.sources.all()
-    ]
-    if detail:
-        result["description"] = offer.description
-    return result
+    serializer = r.OfferDetailSerializer if detail else r.OfferSerializer
+    return serializer(offer).data
 
 
 def filtered_offers(request):
@@ -131,17 +84,19 @@ def filtered_offers(request):
     return queryset.distinct()
 
 
-@endpoint(["GET"])
+@api_view(["GET"])
 def offers(request):
     return paginate(filtered_offers(request), request, serialize_offer)
 
 
-@endpoint(["GET"])
+@api_view(["GET"])
 def offer_detail(request, pk):
-    return serialize_offer(get_object_or_404(open_offers(), pk=pk), detail=True)
+    return Response(
+        serialize_offer(get_object_or_404(open_offers(), pk=pk), detail=True)
+    )
 
 
-@endpoint(["GET"])
+@api_view(["GET"])
 def catalogue(request):
     # Each vocabulary has an independent page, selected with ?kind=roles|skills|locations.
     kind = request.GET.get("kind", "roles")
@@ -154,17 +109,17 @@ def catalogue(request):
         raise APIError("invalid_filter", "Search is limited to 300 characters.")
     if query:
         queryset = queryset.filter(name__icontains=query)
-    fields = (
-        ["id", "name", "country_code", "region", "city"]
-        if kind == "locations"
-        else ["id", "name", "slug"]
-    )
-    result = paginate(queryset, request, lambda item: model_data(item, fields))
-    result["kind"] = kind
+    serializer = {
+        "roles": r.RoleSerializer,
+        "skills": r.SkillSerializer,
+        "locations": r.LocationSerializer,
+    }[kind]
+    result = paginate(queryset, request, lambda item: serializer(item).data)
+    result.data["kind"] = kind
     return result
 
 
-@endpoint(["GET"])
+@api_view(["GET"])
 def saved_offers(request):
     return paginate(
         offer_queryset()
@@ -175,10 +130,10 @@ def saved_offers(request):
     )
 
 
-@endpoint(["PUT", "DELETE"])
+@api_view(["PUT", "DELETE"])
 def saved_offer(request, pk):
     if request.body:
-        body(request, allowed=set())
+        s.validated(request, s.EmptySerializer)
     with transaction.atomic():
         lock_user(request.user)
         if request.method == "PUT":
@@ -186,10 +141,10 @@ def saved_offer(request, pk):
             SavedOffer.objects.get_or_create(user=request.user, offer=offer)
         else:
             SavedOffer.objects.filter(user=request.user, offer_id=pk).delete()
-    return {"saved": request.method == "PUT", "offer_id": pk}
+    return Response({"saved": request.method == "PUT", "offer_id": pk})
 
 
-@endpoint(["GET"])
+@api_view(["GET"])
 def recommendations(request):
     unknown_option = request.GET.get("include_unknown", "true")
     if unknown_option not in {"true", "false"}:

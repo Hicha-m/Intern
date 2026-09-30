@@ -1,6 +1,6 @@
 # Intern — backend Django
 
-API candidat Django 6.1 / PostgreSQL 16. Le schéma, le contrat de livraison et les décisions sont dans [docs/BACKEND_SPEC.md](docs/BACKEND_SPEC.md). Ce dépôt ne contient pas encore le frontend.
+API candidat Django 6.1 / Django REST framework 3.18 / PostgreSQL 16. Le schéma, le contrat de livraison et les décisions sont dans [docs/BACKEND_SPEC.md](docs/BACKEND_SPEC.md). Ce dépôt ne contient pas encore le frontend.
 
 ## Démarrer en local
 
@@ -22,6 +22,10 @@ uv run manage.py run_worker
 ```
 
 `--once` consomme au maximum un envoi et termine. Lancer également `purge_accounts` pour traiter les demandes de suppression ; `cleanup_backend` nettoie les sessions expirées, compteurs et réponses d'import expirées. Ces commandes sont prévues pour une exécution planifiée par l'exploitant.
+
+## Architecture HTTP
+
+La [spec de migration DRF](docs/DRF_MIGRATION_SPEC.md) décrit le contrat préservé et les recommandations officielles. Les vues utilisent `api_view`, les serializers de commande et de lecture ont des champs explicites, et les services gardent les transactions et règles métier. Authentification par session avec CSRF, y compris pour les requêtes anonymes. Pagination et erreurs conservent le format v1.
 
 ## Parcours API
 

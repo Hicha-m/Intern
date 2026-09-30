@@ -1,29 +1,35 @@
 from django.contrib.auth import logout
-from django.http import FileResponse, JsonResponse
+from django.http import FileResponse
 from django.urls import path
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-from jobboard.api.core import body, endpoint
+from jobboard.api import serializers as s
+from jobboard.api.downloads import DownloadAPIView
 from jobboard.services.accounts import export_account, request_deletion
 
 
-@endpoint(["GET"])
-def export(request):
-    response = FileResponse(
-        export_account(request.user),
-        as_attachment=True,
-        filename="intern-account.zip",
-        content_type="application/zip",
-    )
-    response["Cache-Control"] = "no-store"
-    return response
+class AccountExportView(DownloadAPIView):
+    def get(self, request):
+        response = FileResponse(
+            export_account(request.user),
+            as_attachment=True,
+            filename="intern-account.zip",
+            content_type="application/zip",
+        )
+        response["Cache-Control"] = "no-store"
+        return response
 
 
-@endpoint(["POST"])
+export = AccountExportView.as_view()
+
+
+@api_view(["POST"])
 def delete(request):
-    data = body(request, {"password"}, required=("password",))
+    data = s.validated(request, s.DeleteAccountSerializer)
     deletion = request_deletion(request.user, data["password"])
     logout(request)
-    return JsonResponse({"id": deletion.pk, "status": deletion.status}, status=202)
+    return Response({"id": deletion.pk, "status": deletion.status}, status=202)
 
 
 urlpatterns = [

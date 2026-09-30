@@ -1,14 +1,8 @@
-"""Small HTTP boundary shared by the native Django API."""
-
-import json
-from functools import wraps
+"""Domain validation helpers and Django error pages (outside DRF dispatch)."""
 
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.core.paginator import EmptyPage, Paginator
-from django.db import IntegrityError, models
-from django.http import Http404, HttpResponseBase, JsonResponse
-from django.http.request import RequestDataTooBig
+from django.db import models
+from django.http import JsonResponse
 
 
 class APIError(Exception):
@@ -25,81 +19,6 @@ def error_response(code, message, status=400, details=None):
     )
 
 
-def endpoint(methods, auth=True):
-    def decorate(view):
-        @wraps(view)
-        def wrapped(request, *args, **kwargs):
-            try:
-                if request.method not in methods:
-                    response = error_response(
-                        "method_not_allowed", "Method not allowed.", 405
-                    )
-                    response["Allow"] = ", ".join(methods)
-                    return response
-                if auth and (
-                    not request.user.is_authenticated or not request.user.is_active
-                ):
-                    raise APIError(
-                        "authentication_required", "Sign in to continue.", 401
-                    )
-                result = view(request, *args, **kwargs)
-                response = (
-                    result
-                    if isinstance(result, HttpResponseBase)
-                    else JsonResponse(result, safe=isinstance(result, dict))
-                )
-            except APIError as exc:
-                response = error_response(
-                    exc.code, exc.message, exc.status, exc.details
-                )
-            except ValidationError as exc:
-                details = (
-                    exc.message_dict
-                    if hasattr(exc, "message_dict")
-                    else {"fields": exc.messages}
-                )
-                response = error_response(
-                    "validation_error", "Invalid input.", details=details
-                )
-            except (ObjectDoesNotExist, Http404):
-                response = error_response("not_found", "Resource not found.", 404)
-            except RequestDataTooBig:
-                response = error_response("too_large", "Request is too large.", 413)
-            except IntegrityError:
-                response = error_response(
-                    "conflict", "This operation conflicts with existing data.", 409
-                )
-            response["Cache-Control"] = "no-store"
-            return response
-
-        return wrapped
-
-    return decorate
-
-
-def body(request, allowed, required=()):
-    if request.content_type != "application/json":
-        raise APIError("invalid_content_type", "Use application/json.", 415)
-    try:
-        data = json.loads(
-            request.body,
-            parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)),
-        )
-    except (ValueError, UnicodeDecodeError):
-        raise APIError("invalid_json", "Invalid JSON object.") from None
-    if not isinstance(data, dict):
-        raise APIError("invalid_json", "Expected a JSON object.")
-    extra = set(data) - set(allowed)
-    missing = set(required) - set(data)
-    if extra or missing:
-        raise APIError(
-            "invalid_fields",
-            "Check the request fields.",
-            details={"unknown": sorted(extra), "missing": sorted(missing)},
-        )
-    return data
-
-
 def integer(value, name="id", minimum=1, maximum=2147483647):
     if isinstance(value, bool) or not isinstance(value, (str, int)):
         raise APIError("invalid_integer", f"{name} must be an integer.")
@@ -110,22 +29,6 @@ def integer(value, name="id", minimum=1, maximum=2147483647):
     if str(result) != str(value) or not minimum <= result <= maximum:
         raise APIError("invalid_integer", f"{name} is out of range.")
     return result
-
-
-def paginate(queryset, request, serializer):
-    page_number = integer(request.GET.get("page", "1"), "page")
-    page_size = integer(request.GET.get("page_size", "20"), "page_size", maximum=100)
-    paginator = Paginator(queryset, page_size)
-    try:
-        page = paginator.page(page_number)
-    except EmptyPage:
-        raise APIError("not_found", "Page not found.", 404) from None
-    return {
-        "results": [serializer(item) for item in page.object_list],
-        "count": paginator.count,
-        "page": page.number,
-        "page_size": page_size,
-    }
 
 
 def model_data(instance, fields):

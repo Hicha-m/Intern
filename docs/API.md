@@ -1,5 +1,7 @@
 # API candidat Intern
 
+Implémentation Django REST framework 3.18. Les routes conservent le contrat v1 ; [décisions et sources](DRF_MIGRATION_SPEC.md). Les corps de commande passent par des serializers stricts et les lectures par des serializers aux champs explicites.
+
 Préfixe `/api/v1/`. JSON objet et cookie de session Django. Toutes les mutations requièrent `X-CSRFToken`, y compris inscription et connexion. Récupérer le token via `GET auth/csrf/` et utiliser le nouveau token retourné après authentification. Pas de CORS ouvert : le frontend est prévu sur la même origine. Réponses privées `Cache-Control: no-store`.
 
 Les routes et objectifs figurent dans [BACKEND_SPEC.md](BACKEND_SPEC.md). Exemples de corps :
@@ -67,3 +69,16 @@ GET `account/export/` : ZIP privé, `data.json` versionné et `documents/<id>.pd
 ```
 
 Listes : `{results,count,page,page_size}`. Pages commencent à 1, taille par défaut 20, maximum 100. Une page inexistante renvoie 404. Les IDs étrangers retournent la même erreur 404 qu'une ressource absente. 400 validation, 401 session, 403 CSRF, 409 conflit, 413 taille, 415 mauvais Content-Type, 429 limite d'authentification, 503 source/stockage indisponible.
+
+## Comportements DRF
+
+- Réponses JSON uniquement ; demander exclusivement un format non proposé donne 406
+  (`not_acceptable`). Les téléchargements autorisés restent des réponses fichier.
+- `OPTIONS` est disponible sur les routes, sous les mêmes permissions de session.
+- Les réponses 401 portent `WWW-Authenticate: Session` ; le frontend doit utiliser
+  le parcours de connexion et les cookies Django.
+- L’enveloppe d’erreur reste `{error:{code,message,details}}`. Les erreurs de champs
+  produites par les serializers utilisent `validation_error` et une liste de messages
+  par champ dans `details`. Les champs inconnus/manquants conservent `invalid_fields`.
+- Le compteur PostgreSQL d’authentification est conservé ; aucun throttle de cache
+  non atomique ne le remplace. Aucune session n’est invalidée par cette migration.

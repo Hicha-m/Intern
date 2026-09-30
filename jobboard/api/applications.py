@@ -2,43 +2,16 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from django.db import transaction
 from django.urls import path
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from jobboard import models as m
-from jobboard.api.core import (
-    APIError,
-    apply_fields,
-    body,
-    endpoint,
-    integer,
-    lock_user,
-    model_data,
-    paginate,
-)
+from jobboard.api import read_serializers as r
+from jobboard.api import serializers as s
+from jobboard.api.core import APIError, apply_fields, integer, lock_user
+from jobboard.api.drf import paginate
 from jobboard.services import applications as service
 
-APP_FIELDS = [
-    "id",
-    "offer_id",
-    "source_id",
-    "status",
-    "submitted_at",
-    "external_reference",
-    "created_at",
-    "updated_at",
-]
-RUN_FIELDS = [
-    "id",
-    "revision_id",
-    "purpose",
-    "status",
-    "phase",
-    "attempt_no",
-    "error_code",
-    "external_receipt",
-    "started_at",
-    "finished_at",
-    "created_at",
-]
 TASK_FIELDS = ["title", "due_at", "completed_at"]
 INTERVIEW_FIELDS = [
     "title",
@@ -53,42 +26,23 @@ INTERVIEW_FIELDS = [
 
 
 def revision_data(revision):
-    return {
-        **model_data(
-            revision,
-            [
-                "id",
-                "revision_no",
-                "schema_version",
-                "profile_snapshot",
-                "offer_snapshot",
-                "form_snapshot",
-                "answers",
-                "content_hash",
-                "sealed_at",
-                "created_at",
-            ],
-        ),
-        "document_ids": list(
-            revision.document_links.values_list("document_id", flat=True)
-        ),
-        "missing_fields": service.missing_fields(revision),
-    }
+    return r.RevisionSerializer(revision).data
 
 
 def run_data(run):
-    return model_data(run, RUN_FIELDS)
+    return r.RunSerializer(run).data
 
 
-@endpoint(["GET", "POST"])
+@api_view(["GET", "POST"])
 def applications(request):
     if request.method == "POST":
-        data = body(request, ["offer_id", "source_id"], ["offer_id", "source_id"])
-        return model_data(
-            service.create_application(
-                request.user, integer(data["offer_id"]), integer(data["source_id"])
-            ),
-            APP_FIELDS,
+        data = s.validated(request, s.CreateApplicationSerializer)
+        return Response(
+            r.ApplicationSerializer(
+                service.create_application(
+                    request.user, integer(data["offer_id"]), integer(data["source_id"])
+                )
+            ).data
         )
     qs = m.Application.objects.filter(user=request.user).order_by("-updated_at", "-pk")
     status = request.GET.get("status")
@@ -96,79 +50,84 @@ def applications(request):
         if status not in m.Application.Status.values:
             raise APIError("invalid_status", "Unknown status.")
         qs = qs.filter(status=status)
-    return paginate(qs, request, lambda app: model_data(app, APP_FIELDS))
+    return paginate(qs, request, lambda app: r.ApplicationSerializer(app).data)
 
 
-@endpoint(["GET"])
+@api_view(["GET"])
 def application_detail(request, pk):
     app = service.private_application(request.user, pk)
     # Bounded history pages independently of the main tracker page.
-    return {
-        **model_data(app, APP_FIELDS),
-        "latest_revision": revision_data(app.revisions.order_by("-revision_no").first())
-        if app.revisions.exists()
-        else None,
-        "latest_run": run_data(app.runs.order_by("-pk").first())
-        if app.runs.exists()
-        else None,
-    }
+    return Response(
+        {
+            **r.ApplicationSerializer(app).data,
+            "latest_revision": revision_data(
+                app.revisions.order_by("-revision_no").first()
+            )
+            if app.revisions.exists()
+            else None,
+            "latest_run": run_data(app.runs.order_by("-pk").first())
+            if app.runs.exists()
+            else None,
+        }
+    )
 
 
-@endpoint(["POST"])
+@api_view(["POST"])
 def prepare(request, pk):
-    body(request, [])
-    return revision_data(service.prepare(request.user, pk))
+    s.validated(request, s.EmptySerializer)
+    return Response(revision_data(service.prepare(request.user, pk)))
 
 
-@endpoint(["GET", "POST"])
+@api_view(["GET", "POST"])
 def revise(request, pk):
     if request.method == "GET":
         app = service.private_application(request.user, pk)
         return paginate(app.revisions.order_by("-revision_no"), request, revision_data)
-    data = body(request, ["answers", "document_ids"], ["answers", "document_ids"])
-    return revision_data(
-        service.revise(request.user, pk, data["answers"], data["document_ids"])
-    )
-
-
-@endpoint(["POST"])
-def approve(request, pk):
-    data = body(
-        request,
-        ["revision_id", "content_hash", "idempotency_key"],
-        ["revision_id", "content_hash", "idempotency_key"],
-    )
-    return run_data(
-        service.approve(
-            request.user,
-            pk,
-            integer(data["revision_id"]),
-            data["content_hash"],
-            data["idempotency_key"],
+    data = s.validated(request, s.RevisionSerializer)
+    return Response(
+        revision_data(
+            service.revise(request.user, pk, data["answers"], data["document_ids"])
         )
     )
 
 
-@endpoint(["POST"])
-def revoke(request, pk):
-    body(request, [])
-    return model_data(service.revoke(request.user, pk), APP_FIELDS)
-
-
-@endpoint(["POST"])
-def status(request, pk):
-    data = body(request, ["status", "reason"], ["status", "reason"])
-    return model_data(
-        service.update_status(request.user, pk, data["status"], data["reason"]),
-        APP_FIELDS,
+@api_view(["POST"])
+def approve(request, pk):
+    data = s.validated(request, s.ApprovalSerializer)
+    return Response(
+        run_data(
+            service.approve(
+                request.user,
+                pk,
+                integer(data["revision_id"]),
+                data["content_hash"],
+                data["idempotency_key"],
+            )
+        )
     )
 
 
-@endpoint(["POST"])
+@api_view(["POST"])
+def revoke(request, pk):
+    s.validated(request, s.EmptySerializer)
+    return Response(r.ApplicationSerializer(service.revoke(request.user, pk)).data)
+
+
+@api_view(["POST"])
+def status(request, pk):
+    data = s.validated(request, s.StatusSerializer)
+    return Response(
+        r.ApplicationSerializer(
+            service.update_status(request.user, pk, data["status"], data["reason"])
+        ).data
+    )
+
+
+@api_view(["POST"])
 def resolve(request, pk):
-    data = body(request, ["outcome", "evidence"], ["outcome", "evidence"])
-    return run_data(
-        service.resolve(request.user, pk, data["outcome"], data["evidence"])
+    data = s.validated(request, s.ResolutionSerializer)
+    return Response(
+        run_data(service.resolve(request.user, pk, data["outcome"], data["evidence"]))
     )
 
 
@@ -188,7 +147,7 @@ def validate_related(kind, data):
             raise APIError("invalid_timezone", "Provide an IANA time zone.") from None
 
 
-@endpoint(["GET", "POST"])
+@api_view(["GET", "POST"])
 def related_list(request, pk, kind):
     app = service.private_application(request.user, pk)
     model, fields = related_config(kind)
@@ -196,22 +155,35 @@ def related_list(request, pk, kind):
         return paginate(
             model.objects.filter(application=app).order_by("pk"),
             request,
-            lambda row: model_data(row, ["id"] + fields),
+            lambda row: (
+                (r.TaskSerializer if kind == "tasks" else r.InterviewSerializer)(
+                    row
+                ).data
+            ),
         )
-    data = body(request, fields)
+    data = s.validated(
+        request, s.TaskSerializer if kind == "tasks" else s.InterviewSerializer
+    )
     validate_related(kind, data)
     with transaction.atomic():
         lock_user(request.user)
         app = service.private_application(request.user, pk, lock=True)
         item = apply_fields(model(application=app), data, fields)
         service.event(app, kind + "_created", payload={"id": item.pk})
-    return model_data(item, ["id"] + fields)
+    return Response(
+        (r.TaskSerializer if kind == "tasks" else r.InterviewSerializer)(item).data
+    )
 
 
-@endpoint(["PATCH", "DELETE"])
+@api_view(["PATCH", "DELETE"])
 def related_detail(request, pk, kind, item_id):
     model, fields = related_config(kind)
-    data = body(request, fields if request.method == "PATCH" else [])
+    data = s.validated(
+        request,
+        (s.TaskSerializer if kind == "tasks" else s.InterviewSerializer)
+        if request.method == "PATCH"
+        else s.EmptySerializer,
+    )
     validate_related(kind, data)
     with transaction.atomic():
         lock_user(request.user)
@@ -220,10 +192,12 @@ def related_detail(request, pk, kind, item_id):
         if request.method == "DELETE":
             item.delete()
             service.event(app, kind + "_deleted", payload={"id": item_id})
-            return {"ok": True}
+            return Response({"ok": True})
         apply_fields(item, data, fields)
         service.event(app, kind + "_updated", payload={"id": item.pk})
-        return model_data(item, ["id"] + fields)
+        return Response(
+            (r.TaskSerializer if kind == "tasks" else r.InterviewSerializer)(item).data
+        )
 
 
 urlpatterns = [
@@ -252,7 +226,7 @@ for kind in ("tasks", "interviews"):
     ]
 
 
-@endpoint(["GET"])
+@api_view(["GET"])
 def history(request, pk, kind):
     app = service.private_application(request.user, pk)
     if kind == "runs":
@@ -260,18 +234,7 @@ def history(request, pk, kind):
     return paginate(
         app.events.order_by("-happened_at", "-pk"),
         request,
-        lambda item: model_data(
-            item,
-            [
-                "id",
-                "run_id",
-                "kind",
-                "origin",
-                "status_after",
-                "happened_at",
-                "payload",
-            ],
-        ),
+        lambda item: r.EventSerializer(item).data,
     )
 
 

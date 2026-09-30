@@ -23,7 +23,7 @@ Sources officielles consultées le 30 septembre 2026 :
 - [Greenhouse](https://docs.greenhouse.io/job-board.html) : import public ; envoi réservé à une clé Job Board partenaire. Une offre publique n'accorde pas un droit d'envoi par API.
 - [R2 et boto3](https://developers.cloudflare.com/r2/examples/aws/boto3/) : stockage S3 privé configurable.
 
-API JSON native Django sous `/api/v1/`, mêmes origines et sessions. Les vues restent minces ; `services/` porte les mutations et `integrations/` les accès externes. Les IDs existants sont conservés avec contrôle systématique du propriétaire. Les champs modifiables sont explicitement autorisés. Aucun endpoint générique d'écriture de révision, autorisation, run ou événement.
+API JSON Django REST framework sous `/api/v1/`, mêmes origines et sessions. La [spec de migration DRF](DRF_MIGRATION_SPEC.md) remplace le choix initial de vues JSON natives. Les vues restent minces ; `services/` porte les mutations et `integrations/` les accès externes. Les IDs existants sont conservés avec contrôle systématique du propriétaire. Les champs modifiables sont explicitement autorisés. Aucun endpoint générique d'écriture de révision, autorisation, run ou événement.
 
 ## Contrat HTTP
 
