@@ -15,7 +15,8 @@ class SchemaMigrationTests(TransactionTestCase):
         return executor.loader.project_state(target).apps
 
     def tearDown(self):
-        self.migrate(NEW)
+        executor = MigrationExecutor(connection)
+        self.migrate(executor.loader.graph.leaf_nodes())
         super().tearDown()
 
     def test_upgrade_and_rollback_preserve_legacy_ids_links_and_preferences(self):

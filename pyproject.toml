@@ -3,6 +3,15 @@ name = "intern"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
-    "django>=6.1.1",
+    "boto3>=1.40,<2",
+    "django>=6.1.1,<6.2",
+    "gunicorn>=23,<24",
+    "httpx>=0.28,<1",
     "psycopg[binary]>=3.3.6",
+    "pypdf>=6,<7",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12,<1",
 ]

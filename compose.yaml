@@ -2,13 +2,56 @@ services:
   db:
     image: postgres:16
     environment:
-      POSTGRES_DB: intern
-      POSTGRES_USER: intern_user
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: ${POSTGRES_DB:-intern}
+      POSTGRES_USER: ${POSTGRES_USER:-intern_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234}
     ports:
-      - "127.0.0.1:5432:5432"
+      - "127.0.0.1:5433:5432"
     volumes:
       - intern_pgdata:/var/lib/postgresql/data
-
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  web:
+    build: .
+    profiles: [app]
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment: &app_environment
+      DJANGO_DEBUG: ${DJANGO_DEBUG:-true}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-development-only-intern-key-never-use-in-production-000000000}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1,[::1]}
+      POSTGRES_DB: ${POSTGRES_DB:-intern}
+      POSTGRES_USER: ${POSTGRES_USER:-intern_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: "5432"
+      PRIVATE_STORAGE_BACKEND: ${PRIVATE_STORAGE_BACKEND:-local}
+      R2_ENDPOINT_URL: ${R2_ENDPOINT_URL:-}
+      R2_ACCESS_KEY_ID: ${R2_ACCESS_KEY_ID:-}
+      R2_SECRET_ACCESS_KEY: ${R2_SECRET_ACCESS_KEY:-}
+      R2_BUCKET: ${R2_BUCKET:-}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8000}
+      GREENHOUSE_API_KEYS: "${GREENHOUSE_API_KEYS:-{}}"
+    volumes:
+      - intern_media:/app/.private-media
+      - intern_static:/app/staticfiles
+    depends_on:
+      db:
+        condition: service_healthy
+  worker:
+    build: .
+    profiles: [app]
+    command: [".venv/bin/python", "manage.py", "run_worker"]
+    environment: *app_environment
+    volumes:
+      - intern_media:/app/.private-media
+    depends_on:
+      db:
+        condition: service_healthy
 volumes:
   intern_pgdata:
+  intern_media:
+  intern_static:

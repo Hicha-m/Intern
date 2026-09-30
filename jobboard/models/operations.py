@@ -68,3 +68,11 @@ class DeletionRequest(models.Model):
                 name="deletion_dates_valid",
             ),
         ]
+
+
+class RequestThrottle(models.Model):
+    """Shared, hashed counters; no IP or account identifier retained in clear text."""
+
+    key = models.CharField(max_length=64, unique=True)
+    count = models.PositiveIntegerField(default=0)
+    expires_at = models.DateTimeField(db_index=True)

@@ -1,5 +1,7 @@
 # Implémentation du schéma Django
 
+Évolution du 30 septembre : API et services métier livrés ensuite ; voir [BACKEND_IMPLEMENTATION.md](BACKEND_IMPLEMENTATION.md) pour les vérifications actuelles et limites externes. Le rapport ci-dessous conserve la livraison du schéma du 28 septembre.
+
 Date : 28 septembre 2026. **Les 34 modèles du schéma V1 sont implémentés et les migrations `0009` à `0014` sont appliquées à la base PostgreSQL locale.**
 
 ## Organisation

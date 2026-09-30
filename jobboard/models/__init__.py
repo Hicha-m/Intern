@@ -23,7 +23,7 @@ from .catalogue import (
     SourceBoard,
 )
 from .documents import Document
-from .operations import DeletionRequest, OutboxMessage
+from .operations import DeletionRequest, OutboxMessage, RequestThrottle
 from .profiles import (
     CandidateProfile,
     CandidateSkill,
@@ -60,6 +60,7 @@ __all__ = [
     "OfferSkill",
     "OfferSource",
     "OutboxMessage",
+    "RequestThrottle",
     "PreferenceContract",
     "PreferenceLocation",
     "PreferenceRole",
