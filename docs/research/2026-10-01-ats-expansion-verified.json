@@ -1,0 +1,227 @@
+{
+  "measured_at": "2026-10-01T06:28:00.669281+00:00",
+  "sources": [
+    {
+      "company": "EDF UK",
+      "board_id": 1041,
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "company": "Deloitte Netherlands",
+      "board_id": 1042,
+      "new_visible_offer_ids": [
+        6626,
+        6632,
+        6633,
+        6635,
+        6636,
+        6637,
+        6638,
+        6639,
+        6640,
+        6641,
+        6642,
+        6643,
+        6644,
+        6645,
+        6646,
+        6647,
+        6648,
+        6649,
+        6650,
+        6651,
+        6652,
+        6653,
+        6654,
+        6655,
+        6656,
+        6657,
+        6658,
+        6660,
+        6661,
+        6662,
+        6663,
+        6664
+      ],
+      "new_target_offer_ids": [
+        6626,
+        6632,
+        6633,
+        6635,
+        6636,
+        6637,
+        6638,
+        6639,
+        6640,
+        6641,
+        6642,
+        6643,
+        6644,
+        6645,
+        6646,
+        6647,
+        6648,
+        6649,
+        6650,
+        6651,
+        6652,
+        6653,
+        6654,
+        6655,
+        6656,
+        6657,
+        6658,
+        6660,
+        6661,
+        6662,
+        6663,
+        6664
+      ]
+    },
+    {
+      "company": "2K Madrid",
+      "board_id": 1043,
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "company": "Adyen",
+      "board_id": 1044,
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "company": "Cabify",
+      "board_id": 1045,
+      "new_visible_offer_ids": [
+        6901
+      ],
+      "new_target_offer_ids": [
+        6901
+      ]
+    },
+    {
+      "company": "Canonical",
+      "board_id": 1046,
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "company": "Celonis",
+      "board_id": 1047,
+      "new_visible_offer_ids": [
+        7268,
+        7321,
+        7355,
+        7360,
+        7362,
+        7516
+      ],
+      "new_target_offer_ids": []
+    },
+    {
+      "company": "Picnic",
+      "board_id": 1051,
+      "new_visible_offer_ids": [
+        7538,
+        7539,
+        7550,
+        7556,
+        7613,
+        7650,
+        7651,
+        7652,
+        7653,
+        7654,
+        7655,
+        7656,
+        7673,
+        7730,
+        7815
+      ],
+      "new_target_offer_ids": [
+        7651,
+        7652,
+        7655,
+        7656
+      ]
+    },
+    {
+      "company": "HubSpot",
+      "board_id": 1052,
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "company": "Satispay",
+      "board_id": 1053,
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "company": "Mollie",
+      "board_id": 1054,
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "company": "Satispay",
+      "board_id": 1055,
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "company": "Ryanair",
+      "board_id": 1056,
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    }
+  ],
+  "retained_board_ids": [
+    1042,
+    1045,
+    1051
+  ],
+  "retained_visible_offers": 48,
+  "retained_country_counts": [
+    {
+      "locations__country_code": "DE",
+      "offers": 6
+    },
+    {
+      "locations__country_code": "ES",
+      "offers": 1
+    },
+    {
+      "locations__country_code": "FR",
+      "offers": 3
+    },
+    {
+      "locations__country_code": "NL",
+      "offers": 36
+    },
+    {
+      "locations__country_code": null,
+      "offers": 16
+    }
+  ],
+  "schedules": [
+    {
+      "board_id": 1042,
+      "paused": false,
+      "next_run_at": "2026-10-01 08:25:33.899600+00:00"
+    },
+    {
+      "board_id": 1045,
+      "paused": false,
+      "next_run_at": "2026-10-01 08:25:44.071113+00:00"
+    },
+    {
+      "board_id": 1051,
+      "paused": false,
+      "next_run_at": "2026-10-01 08:26:38.767434+00:00"
+    }
+  ],
+  "exact_link_merge_candidates": 0
+}

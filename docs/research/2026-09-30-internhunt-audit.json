@@ -1,0 +1,73 @@
+{
+  "observed_at_utc": "2026-09-30T19:29:42.993458+00:00",
+  "global_count": 12311,
+  "europe_region_count": 6612,
+  "regions": [
+    "Western Europe",
+    "UK & Ireland",
+    "Southern Europe",
+    "Nordics",
+    "Eastern Europe"
+  ],
+  "sample_size": 50,
+  "sample_unique_company_labels": 39,
+  "sample_non_internship_title_count": 12,
+  "sample_exclusions": [
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58356",
+      "reason": "explicit non-internship title; title review only"
+    },
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58362",
+      "reason": "explicit non-internship title; title review only"
+    },
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58372",
+      "reason": "explicit non-internship title; title review only"
+    },
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58375",
+      "reason": "explicit non-internship title; title review only"
+    },
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58394",
+      "reason": "explicit non-internship title; title review only"
+    },
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58403",
+      "reason": "explicit non-internship title; title review only"
+    },
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58407",
+      "reason": "explicit non-internship title; title review only"
+    },
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58413",
+      "reason": "explicit non-internship title; title review only"
+    },
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58414",
+      "reason": "explicit non-internship title; title review only"
+    },
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58417",
+      "reason": "explicit non-internship title; title review only"
+    },
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58460",
+      "reason": "explicit non-internship title; title review only"
+    },
+    {
+      "internhunt_url": "https://internhunt.eu/jobs/58461",
+      "reason": "explicit non-internship title; title review only"
+    }
+  ],
+  "sha256": {
+    "europe.txt": "8a0c549e1b704ca32a6c944ea41da7a1d4798f877d3e1d65d4a6234d4a323d58",
+    "home.txt": "b53f90fa16a0c7f78032734b9004d196b66d56881fd001c066fbf9883bba17e1",
+    "detail.txt": "5647063d51ab003020411e12dc26abd05f43c62354f3286b20b4d1feaeed71c3",
+    "statistics.txt": "57441d0ced7ffbd8098f8061b1135c1121b15a268dfcb44647460f69d89bb70f",
+    "robots.txt": "e9639e3c4681ce85f852fbac48e2eeee5ba51296dbfec57c200d59b76237ab80",
+    "jobs.txt": "1cd690d9c3cb268b8fa0a0bcfc2d652ac3c772924e3af997a7a5b51a8d48683f"
+  }
+}

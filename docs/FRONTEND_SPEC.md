@@ -7,8 +7,10 @@ Date : 30 septembre 2026. Contrat : [API v1](API.md), [vision](VISION.md),
 
 La livraison comprend la connexion par e-mail, l’inscription, le reset, la garde de
 session et la déconnexion, ainsi que l’onboarding connecté obligatoire en trois étapes :
-CV privé, adresse et autorisations de travail. Le profil permet de télécharger ou
-remplacer le CV. Les sélecteurs de pays sont personnalisés et utilisables au clavier.
+CV privé, adresse et autorisations de travail. Le profil regroupe désormais les informations personnelles, compétences, expériences,
+formations, projets, liens professionnels, préférences de recherche, adresse et
+autorisations de travail, ainsi que le téléchargement et le remplacement du CV.
+Les formulaires utilisent les API existantes ; voir [détails du profil](design/profile.md). Les sélecteurs de pays sont personnalisés et utilisables au clavier.
 Le thème orange/gris, les icônes Hugeicons et les animations courtes partagent les
 tokens du frontend. La réduction des mouvements est respectée. Sur mobile, le panneau
 décoratif de connexion est masqué. Pas de boutons OAuth sans intégration.

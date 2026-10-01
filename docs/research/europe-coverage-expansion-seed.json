@@ -1,0 +1,47 @@
+[
+  {
+    "company": "Spinnin Records / Warner Music Benelux",
+    "url": "https://spinninrecordsandwmgbenelux.recruitee.com",
+    "provider": "recruitee",
+    "evidence_url": "https://spinninrecordsandwmgbenelux.recruitee.com/api/offers",
+    "verified_http": 200,
+    "notes": "Public JSON: structured NL country and current internships in music, marketing, analytics and royalties."
+  },
+  {
+    "company": "FieldBuddy",
+    "url": "https://fieldbuddy.recruitee.com",
+    "provider": "recruitee",
+    "evidence_url": "https://fieldbuddy.recruitee.com/api/offers",
+    "verified_http": 200,
+    "notes": "Public JSON: marketing internships, structured NL country."
+  },
+  {
+    "company": "Iris van Herpen",
+    "url": "https://irisvanherpen.recruitee.com",
+    "provider": "recruitee",
+    "evidence_url": "https://irisvanherpen.recruitee.com/o/atelier-internship",
+    "notes": "Official public atelier internship page; employer board pilot required."
+  },
+  {
+    "company": "SkyGeo",
+    "url": "https://skygeo.recruitee.com",
+    "provider": "recruitee",
+    "evidence_url": "https://skygeo.recruitee.com/l/nl/o/internship",
+    "notes": "Official Delft internship page; employer board pilot required."
+  },
+  {
+    "company": "Creative Clicks",
+    "url": "https://creativeclicks.recruitee.com",
+    "provider": "recruitee",
+    "evidence_url": "https://creativeclicks.recruitee.com/l/nl/o/operations-internship-3",
+    "notes": "Official operations internship page; employer board pilot required."
+  },
+  {
+    "company": "haebmau",
+    "url": "https://haebmau.jobs.personio.de",
+    "provider": "personio",
+    "evidence_url": "https://haebmau.jobs.personio.de/xml",
+    "verified_http": 200,
+    "notes": "Public XML verified. Country corroboration required; no inference from employer home country."
+  }
+]

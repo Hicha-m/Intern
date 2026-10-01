@@ -1,0 +1,166 @@
+{
+  "checked_at": "2026-09-30T22:26:56.864721+00:00",
+  "published_jobtech_offers": 24,
+  "catalogue_total": 1821,
+  "offers": [
+    {
+      "id": 4486,
+      "title": "LIA – Account Manager inom Försäljning",
+      "company__name": "Consort Nordic AB"
+    },
+    {
+      "id": 4485,
+      "title": "LIA inom lön",
+      "company__name": "Svenska N'ergy AB"
+    },
+    {
+      "id": 4484,
+      "title": "Kommunikatör / Webbkommunikatör  praktik inom content och SEO",
+      "company__name": "Birger AB"
+    },
+    {
+      "id": 4483,
+      "title": "Praktikant till innovativ AgTech-startup i Malmö (Med chans till jobb)",
+      "company__name": "PlantRobotic Sweden AB"
+    },
+    {
+      "id": 4482,
+      "title": "Praktikant-Försäljning-Klädbutik i Västerås",
+      "company__name": "Jameel, Hazar Waheed Jameel"
+    },
+    {
+      "id": 4481,
+      "title": "Praktik inom marknadsföring och kommunikation - skapa innehåll",
+      "company__name": "Hemkodat AB"
+    },
+    {
+      "id": 4480,
+      "title": "Praktik inom grafisk design och visuell kommunikation",
+      "company__name": "Hemkodat AB"
+    },
+    {
+      "id": 4479,
+      "title": "Praktik inom event och projektledning - skapa aktiviteter som gör skillnad",
+      "company__name": "Hemkodat AB"
+    },
+    {
+      "id": 4478,
+      "title": "Praktik inom e-handel och digital marknadsföring",
+      "company__name": "BeSafe Nordic AB"
+    },
+    {
+      "id": 4477,
+      "title": "Lager- och logistikmedarbetare  praktik",
+      "company__name": "Stöldskyddsservice Sverige AB"
+    },
+    {
+      "id": 4476,
+      "title": "Praktik snickare",
+      "company__name": "Wolfbuilder Stockholm AB"
+    },
+    {
+      "id": 4475,
+      "title": "LIA-praktikant SoMe, AI-optimering och SEO - Höst 2026/Vår 2027",
+      "company__name": "+Moveco AB"
+    },
+    {
+      "id": 4473,
+      "title": "Praktikant - Bilbranschen",
+      "company__name": "Bilsmidigt AB"
+    },
+    {
+      "id": 4468,
+      "title": "Praktikant sökes inom HR & Rekrytering till Homecall",
+      "company__name": "Home Call Sweden AB"
+    },
+    {
+      "id": 4467,
+      "title": "Praktik inom internationalisering",
+      "company__name": "Jönköpings kommun"
+    },
+    {
+      "id": 4466,
+      "title": "Fullstack Developer Intern  Bygg digitala produkter från grunden",
+      "company__name": "Birger AB"
+    },
+    {
+      "id": 4465,
+      "title": "Internship  Logistics Procurement Planning",
+      "company__name": "Robert Bosch Aktiebolag"
+    },
+    {
+      "id": 4464,
+      "title": "Internship Sustainability & Production - Spring 2027 at Kappahl Group",
+      "company__name": "Kappahl Sverige AB"
+    },
+    {
+      "id": 4463,
+      "title": "Internship Technical Designer (Patternmaker) Spring 2027 at Kappahl Group",
+      "company__name": "Kappahl Sverige AB"
+    },
+    {
+      "id": 4462,
+      "title": "Internship Textile Purchase Spring 2027 at Kappal Group",
+      "company__name": "Kappahl Sverige AB"
+    },
+    {
+      "id": 4461,
+      "title": "Internship Textile Designer Spring 2027 at Kappahl Group",
+      "company__name": "Kappahl Sverige AB"
+    },
+    {
+      "id": 4460,
+      "title": "Internship within Employer Branding",
+      "company__name": "Husqvarna AB"
+    },
+    {
+      "id": 4459,
+      "title": "Student/Erasmus+ Internship Opportunities in Stockholm",
+      "company__name": "BøthOfUs AB"
+    },
+    {
+      "id": 4458,
+      "title": "Internship  Vietnamese Chemical Regulations & Market Development",
+      "company__name": "Global Product Compliance (Europe) AB"
+    }
+  ],
+  "queries": [
+    {
+      "id": 181,
+      "term": "praktik",
+      "cursor": "20",
+      "total_available": 331,
+      "result_count": 20,
+      "last_error_code": ""
+    },
+    {
+      "id": 183,
+      "term": "LIA",
+      "cursor": "",
+      "total_available": 16,
+      "result_count": 16,
+      "last_error_code": ""
+    },
+    {
+      "id": 180,
+      "term": "internship",
+      "cursor": "20",
+      "total_available": 26,
+      "result_count": 20,
+      "last_error_code": ""
+    },
+    {
+      "id": 182,
+      "term": "praktikant",
+      "cursor": "20",
+      "total_available": 25,
+      "result_count": 20,
+      "last_error_code": ""
+    }
+  ],
+  "limitations": [
+    "Pilot only; remaining pages scheduled",
+    "Cross-platform duplicates can remain",
+    "Unknown foreign taxonomy not mapped"
+  ]
+}

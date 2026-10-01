@@ -77,7 +77,7 @@ export function Onboarding({ step }: { step: 'address' | 'work-eligibility' }) {
     try {
       await apiRequest(`/onboarding/${step}/`, { method: 'PUT', body: step === 'address' ? data.address : { citizenships: data.citizenships, work_authorizations: data.work_authorizations } })
       await session.refresh()
-      navigate(step === 'address' ? '/onboarding/work-eligibility' : '/stages', { replace: true })
+      navigate(step === 'address' ? '/onboarding/work-eligibility' : '/dashboard', { replace: true })
     } catch (cause) {
       setError(cause instanceof ApiError && cause.status === 400 ? 'Vérifiez les champs et vos réponses avant de continuer.' : 'Vos réponses n’ont pas été enregistrées. Réessayez.')
     } finally { busy.current = false; setPending(false) }

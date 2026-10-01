@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-01T05:52:37.182182+00:00",
+  "wttj_pilot": {
+    "query_id": 133,
+    "seen": 50,
+    "imported": 39,
+    "cursor_before": "1790587619:1790806222:9",
+    "cursor_after": "1790587619:1790806222:10"
+  },
+  "indeed_pilot": "jobspy_upstream_http_error",
+  "smartrecruiters_pilot": "upstream_invalid_response (network timeout)",
+  "linkedin_live_probe": false,
+  "queries": [
+    {
+      "id": 74,
+      "provider": "jobspy_indeed",
+      "cursor": "",
+      "last_error_code": "jobspy_invalid_response",
+      "last_success_at": null,
+      "next_run_at": "2026-10-01 05:55:32.790855+00:00"
+    },
+    {
+      "id": 133,
+      "provider": "wttj",
+      "cursor": "1790587619:1790806222:11",
+      "last_error_code": "",
+      "last_success_at": "2026-10-01 05:51:50.003830+00:00",
+      "next_run_at": "2026-10-01 05:52:50.003832+00:00"
+    }
+  ],
+  "smartrecruiters": [
+    {
+      "board_id": 5,
+      "last_error_code": "upstream_invalid_response",
+      "next_run_at": "2026-10-01 03:44:51.953604+00:00"
+    }
+  ],
+  "published_offers_at_report": 2744,
+  "limitation": "Concurrent workers prevent attributing total catalogue growth to this lot; imports are not necessarily unique new offers."
+}

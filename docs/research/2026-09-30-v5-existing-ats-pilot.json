@@ -1,0 +1,40 @@
+{
+  "revision": "6b44a1badc9bfbf5cf176f75265cc5729e520e99",
+  "scanned": 3437,
+  "invalid": 0,
+  "registered": 4,
+  "activated": 2,
+  "failures": [
+    {
+      "url": "https://redhat.wd5.myworkdayjobs.com/en-US/jobs",
+      "code": "country_facets_unavailable"
+    },
+    {
+      "url": "https://orange.wd3.myworkdayjobs.com/en-US/Orange_Career",
+      "code": "country_facets_unavailable"
+    }
+  ],
+  "sources": [
+    {
+      "company": "Philips",
+      "url": "https://philips.wd3.myworkdayjobs.com/en-US/jobs-and-careers",
+      "status": "validated"
+    },
+    {
+      "company": "Red Hat",
+      "url": "https://redhat.wd5.myworkdayjobs.com/en-US/jobs",
+      "status": "validation_failed"
+    },
+    {
+      "company": "Orange",
+      "url": "https://orange.wd3.myworkdayjobs.com/en-US/Orange_Career",
+      "status": "validation_failed"
+    },
+    {
+      "company": "Thales",
+      "url": "https://thales.wd3.myworkdayjobs.com/en-US/careers",
+      "status": "validated"
+    }
+  ],
+  "next_offset": 4
+}

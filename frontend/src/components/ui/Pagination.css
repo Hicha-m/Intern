@@ -1,0 +1,22 @@
+.catalogue-pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-6); padding-top: var(--space-4); border-top: var(--border-width) solid var(--dashboard-rule); font-size: var(--font-size-sm); font-variant-numeric: tabular-nums; }
+.catalogue-pagination-range { margin: 0; color: var(--dashboard-muted); }
+.catalogue-pagination-range strong { font-weight: var(--font-weight-medium); color: var(--dashboard-ink); }
+.catalogue-pagination-nav, .pagination-pages { display: flex; align-items: center; gap: var(--space-1); }
+.pagination-pages { list-style: none; margin: 0; padding: 0; }
+.catalogue-pagination-nav a, .pagination-direction, .pagination-ellipsis { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--target-size); min-width: var(--target-size); padding: var(--space-2); border: var(--border-width) solid transparent; border-radius: var(--radius-control); color: var(--dashboard-ink); text-decoration: none; white-space: nowrap; }
+.catalogue-pagination-nav a { transition: background-color var(--duration-fast) var(--ease-interactive), color var(--duration-fast) var(--ease-interactive); }
+.catalogue-pagination-nav a[aria-current="page"] { border-color: var(--dashboard-accent-text); background: var(--dashboard-active); color: var(--dashboard-accent-text); font-weight: var(--font-weight-semibold); }
+.catalogue-pagination-nav .pagination-direction { padding-inline: var(--space-3); }
+.catalogue-pagination-nav .pagination-direction[aria-disabled] { color: var(--dashboard-muted); opacity: var(--opacity-disabled); }
+.pagination-mobile-position { display: none; color: var(--dashboard-muted); text-align: center; }
+#offers-results { scroll-margin-top: var(--space-5); }
+#offers-results:focus-visible { outline: var(--focus-width) solid var(--dashboard-accent-text); outline-offset: var(--focus-offset); }
+@media (hover: hover) and (pointer: fine) { .catalogue-pagination-nav a:hover { background: var(--dashboard-active); color: var(--dashboard-accent-text); } }
+@media (max-width: 600px) {
+  .catalogue-pagination { flex-direction: column; gap: var(--space-2); }
+  .catalogue-pagination-nav { width: 100%; justify-content: center; }
+  .pagination-pages { display: none; }
+  .pagination-mobile-position { display: block; flex: 1; font-size: var(--font-size-xs); }
+  .catalogue-pagination-nav .pagination-direction { padding-inline: var(--space-1); gap: var(--space-1); font-size: var(--font-size-xs); }
+}
+@media (prefers-reduced-motion: reduce) { .catalogue-pagination-nav a { transition: none; } }

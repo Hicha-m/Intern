@@ -1,0 +1,34 @@
+/* Shared horizontal navigation for every candidate page. */
+.workspace { min-height: 100dvh; padding: 0 var(--space-6); background: var(--dashboard-card); color: var(--dashboard-ink); font-family: var(--dashboard-font); }
+.workspace-frame { min-height: 100dvh; display: block; background: var(--dashboard-card); }
+.workspace-navbar { display: flex; align-items: center; gap: var(--space-6); min-width: 0; padding: var(--space-3) var(--space-4) 0; border-bottom: var(--border-width) solid var(--dashboard-rule); }
+.workspace-brand { flex-shrink: 0; padding-bottom: var(--space-3); font-size: var(--font-size-xl); line-height: var(--line-height-tight); font-weight: var(--font-weight-brand); letter-spacing: var(--tracking-brand); text-decoration: none; color: var(--dashboard-ink); }
+.workspace-brand span { color: var(--accent); }
+.workspace-navbar nav { display: flex; align-self: stretch; align-items: stretch; min-width: 0; gap: var(--space-1); overflow-x: auto; scrollbar-width: thin; scroll-padding-inline: var(--space-2); }
+.workspace-nav-link { position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; gap: var(--space-2); min-height: var(--space-14); padding: var(--space-2) var(--space-3) var(--space-4); border-radius: var(--radius-sm) var(--radius-sm) 0 0; color: var(--dashboard-muted); font-size: var(--font-size-sm); text-decoration: none; white-space: nowrap; transition: color var(--duration-fast) var(--ease-interactive), background-color var(--duration-fast) var(--ease-interactive); }
+.workspace-nav-link > svg { display: none; }
+.workspace-nav-link.is-active { color: var(--dashboard-accent-text); font-weight: var(--font-weight-semibold); }
+.workspace-nav-link.is-active::before { content: ''; position: absolute; left: var(--space-3); right: var(--space-3); bottom: 0; height: var(--focus-width); border-radius: var(--radius-round) var(--radius-round) 0 0; background: var(--dashboard-accent-text); }
+.workspace-count { display: inline-flex; align-items: center; justify-content: center; min-width: var(--space-5); padding: 0 var(--space-1); border-radius: var(--radius-sm); font-size: var(--font-size-xs); background: var(--dashboard-active); color: var(--dashboard-accent-text); font-variant-numeric: tabular-nums; }
+.workspace-navbar-account { display: grid; flex-shrink: 0; margin-left: auto; padding: 0 0 var(--space-3) var(--space-4); border-left: var(--border-width) solid var(--dashboard-rule); }
+.workspace-account { display: flex; align-items: center; gap: var(--space-1); }
+.workspace-account-link { display: flex; align-items: center; justify-content: center; min-width: var(--target-size); min-height: var(--target-size); border-radius: var(--radius-control); color: inherit; text-decoration: none; }
+.workspace-avatar { display: grid; place-items: center; width: var(--space-8); height: var(--space-8); border-radius: var(--radius-round); background: var(--dashboard-active); color: var(--dashboard-accent-text); font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); }
+.workspace-account-name { display: none; }
+.workspace-navbar :is(a, button):focus-visible { outline: var(--focus-width) solid var(--dashboard-accent-text); outline-offset: calc(-1 * var(--focus-width)); }
+.workspace-navbar .workspace-error { max-width: var(--dashboard-sidebar-width); overflow-wrap: anywhere; }
+@media (hover: hover) and (pointer: fine) {
+  .workspace-nav-link:hover, .workspace-account-link:hover { background: var(--dashboard-subtle); color: var(--dashboard-ink); }
+  .workspace-nav-link.is-active:hover { color: var(--dashboard-accent-text); }
+}
+@media (max-width: 1200px) {
+  .workspace-navbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 var(--space-4); }
+  .workspace-navbar nav { grid-column: 1 / -1; grid-row: 2; }
+  .workspace-navbar-account { grid-column: 2; grid-row: 1; border-left: 0; }
+}
+@media (max-width: 600px) {
+  .workspace { padding-inline: var(--space-4); }
+  .workspace-navbar { padding-inline: 0; }
+  .workspace-nav-link { min-height: var(--space-12); }
+}
+@media (prefers-reduced-motion: reduce) { .workspace-nav-link { transition: none; } }

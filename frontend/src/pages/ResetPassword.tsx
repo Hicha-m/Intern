@@ -34,14 +34,14 @@ export function ResetPassword() {
     } catch (cause) { setError(authError(cause)) }
     finally { busy.current = false; setPending(false) }
   }
-  return <AuthLayout>
+  return <AuthLayout mode="reset">
     <header className="auth-heading"><h1>{done === 'changed' ? 'Mot de passe modifié.' : confirming ? 'Un nouveau départ.' : 'Mot de passe oublié ?'}</h1><p>{confirming ? 'Choisissez un nouveau mot de passe pour votre compte.' : 'Nous vous aidons à retrouver l’accès à votre compte.'}</p></header>
     {done ? <AuthNotice>{done === 'changed' ? 'Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.' : 'Si un compte correspond à cette adresse, un lien de réinitialisation vous sera envoyé.'}</AuthNotice>
       : malformed ? <AuthNotice error>Ce lien est incomplet. <Link to="/reset-password">Demander un nouveau lien</Link></AuthNotice>
       : <form className="auth-form" onSubmit={submit} aria-label="Réinitialisation du mot de passe">
         <fieldset disabled={pending}>
-          {confirming ? <><PasswordField label="Nouveau mot de passe" name="new_password" autoComplete="new-password" minLength={8} maxLength={4096} required /><PasswordField label="Confirmer le mot de passe" name="confirm_password" autoComplete="new-password" minLength={8} maxLength={4096} required /></>
-            : <AuthField label="Adresse e-mail" name="email" type="email" autoComplete="email" maxLength={254} required hint="Utilisez l’adresse e-mail associée à votre compte." />}
+          {confirming ? <><PasswordField floatingLabel label="Nouveau mot de passe" name="new_password" autoComplete="new-password" minLength={8} maxLength={4096} required /><PasswordField floatingLabel label="Confirmer le mot de passe" name="confirm_password" autoComplete="new-password" minLength={8} maxLength={4096} required /></>
+            : <AuthField floatingLabel label="Adresse e-mail" name="email" type="email" autoComplete="email" maxLength={254} required />}
         </fieldset>
         {error && <AuthNotice error>{error}{confirming && <> <Link to="/reset-password">Demander un nouveau lien</Link></>}</AuthNotice>}
         <AuthButton type="submit" pending={pending}>{pending ? 'En cours…' : confirming ? 'Enregistrer le mot de passe' : 'Recevoir un lien'}</AuthButton>

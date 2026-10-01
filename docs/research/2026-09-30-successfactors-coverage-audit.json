@@ -1,0 +1,77 @@
+{
+  "observed_at": "2026-09-30T20:49:26.716773+00:00",
+  "before_published": 841,
+  "after_published": 920,
+  "new_provider": "successfactors",
+  "imports": [
+    {
+      "board_id": 33,
+      "board__company__name": "ZF Group",
+      "status": "succeeded",
+      "seen_count": 3,
+      "is_full_snapshot": false,
+      "diagnostics": [
+        {
+          "code": "keyword_search_partial"
+        }
+      ]
+    },
+    {
+      "board_id": 34,
+      "board__company__name": "Schaeffler",
+      "status": "succeeded",
+      "seen_count": 55,
+      "is_full_snapshot": false,
+      "diagnostics": [
+        {
+          "code": "keyword_search_partial"
+        }
+      ]
+    },
+    {
+      "board_id": 35,
+      "board__company__name": "SAP",
+      "status": "succeeded",
+      "seen_count": 21,
+      "is_full_snapshot": false,
+      "diagnostics": [
+        {
+          "code": "keyword_search_partial"
+        },
+        {
+          "code": "page_budget_exceeded",
+          "query": "internship"
+        }
+      ]
+    }
+  ],
+  "published_by_employer": {
+    "SAP": 21,
+    "Schaeffler": 55,
+    "ZF Group": 3
+  },
+  "countries": [
+    "AL",
+    "AT",
+    "BE",
+    "BG",
+    "CH",
+    "CZ",
+    "DE",
+    "DK",
+    "ES",
+    "FR",
+    "GB",
+    "HU",
+    "IE",
+    "IT",
+    "NL",
+    "NO",
+    "PL",
+    "PT",
+    "RO",
+    "RS",
+    "SE"
+  ],
+  "invalid_scope": 0
+}

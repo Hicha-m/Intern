@@ -1,0 +1,93 @@
+[
+  {
+    "company": "Winamax",
+    "url": "https://jobs.lever.co/winamax",
+    "provider": "lever",
+    "evidence_url": "https://api.lever.co/v0/postings/winamax?mode=json",
+    "notes": "Checked 2026-09-30; API returned 29 postings of 29 reported; 10 Europe internship candidates in this response before deduplication/detail validation. Example: STAGE  Backend - Pilotage des flux de paiement (H/F)."
+  },
+  {
+    "company": "Protolabs",
+    "url": "https://jobs.lever.co/protolabs",
+    "provider": "lever",
+    "evidence_url": "https://api.lever.co/v0/postings/protolabs?mode=json",
+    "notes": "Checked 2026-09-30; API returned 84 postings of 84 reported; 1 Europe internship candidates in this response before deduplication/detail validation. Example: Sales Intern."
+  },
+  {
+    "company": "Doctolib",
+    "url": "https://job-boards.greenhouse.io/doctolib",
+    "provider": "greenhouse",
+    "evidence_url": "https://boards-api.greenhouse.io/v1/boards/doctolib/jobs",
+    "notes": "Checked 2026-09-30; API returned 154 postings of 154 reported; 36 Europe internship candidates in this response before deduplication/detail validation. Example: Business Development Representative Intern - Milano (x/f/m)."
+  },
+  {
+    "company": "Aircall",
+    "url": "https://job-boards.greenhouse.io/aircallioinc",
+    "provider": "greenhouse",
+    "evidence_url": "https://boards-api.greenhouse.io/v1/boards/aircallioinc/jobs",
+    "notes": "Checked 2026-09-30; API returned 70 postings of 70 reported; 9 Europe internship candidates in this response before deduplication/detail validation. Example: Digital Customer Success Manager Intern."
+  },
+  {
+    "company": "Human Rights Watch",
+    "url": "https://job-boards.greenhouse.io/humanrightswatch",
+    "provider": "greenhouse",
+    "evidence_url": "https://boards-api.greenhouse.io/v1/boards/humanrightswatch/jobs",
+    "notes": "Checked 2026-09-30; API returned 14 postings of 14 reported; 1 Europe internship candidates in this response before deduplication/detail validation. Example: Europe & Central Asia Division Intern."
+  },
+  {
+    "company": "Accor",
+    "url": "https://jobs.smartrecruiters.com/accorcorpo",
+    "provider": "smartrecruiters",
+    "evidence_url": "https://api.smartrecruiters.com/v1/companies/accorcorpo/postings?limit=100",
+    "notes": "Checked 2026-09-30; API returned 100 postings of 275 reported; 14 Europe internship candidates in this response before deduplication/detail validation. Example: Assistant Relations Presse et Influence ALL Accor F/H/X (stage)."
+  },
+  {
+    "company": "Ubisoft",
+    "url": "https://jobs.smartrecruiters.com/ubisoft2",
+    "provider": "smartrecruiters",
+    "evidence_url": "https://api.smartrecruiters.com/v1/companies/ubisoft2/postings?limit=100",
+    "notes": "Checked 2026-09-30; API returned 100 postings of 308 reported; 26 Europe internship candidates in this response before deduplication/detail validation. Example: Creator Project Manager Assistant - Internship (6 months) January 2027 (W/M/NB)."
+  },
+  {
+    "company": "Sopra Steria",
+    "url": "https://jobs.smartrecruiters.com/SopraSteria1",
+    "provider": "smartrecruiters",
+    "evidence_url": "https://api.smartrecruiters.com/v1/companies/SopraSteria1/postings?limit=100",
+    "notes": "Checked 2026-09-30; API returned 100 postings of 2041 reported; 31 Europe internship candidates in this response before deduplication/detail validation. Example: Stage - Chef/fe de Projet - Services Publics - Ile de France."
+  },
+  {
+    "company": "IMC",
+    "url": "https://job-boards.greenhouse.io/imc",
+    "provider": "greenhouse",
+    "evidence_url": "https://boards-api.greenhouse.io/v1/boards/imc/jobs",
+    "notes": "Checked 2026-09-30; API returned 170 postings of 170 reported; 6 Europe internship candidates in this response before deduplication/detail validation. Example: Hardware Engineer Intern."
+  },
+  {
+    "company": "Presidents Institute",
+    "url": "https://job-boards.greenhouse.io/presidents",
+    "provider": "greenhouse",
+    "evidence_url": "https://boards-api.greenhouse.io/v1/boards/presidents/jobs",
+    "notes": "Checked 2026-09-30; API returned 11 postings of 11 reported; 5 Europe internship candidates in this response before deduplication/detail validation. Example: Commercial Intern."
+  },
+  {
+    "company": "Maven",
+    "url": "https://job-boards.greenhouse.io/mavensecuritiesholdingltd",
+    "provider": "greenhouse",
+    "evidence_url": "https://boards-api.greenhouse.io/v1/boards/mavensecuritiesholdingltd/jobs",
+    "notes": "Checked 2026-09-30; API returned 45 postings of 45 reported; 4 Europe internship candidates in this response before deduplication/detail validation. Example: Amsterdam Trader Summer Internship 2027."
+  },
+  {
+    "company": "Bosch",
+    "url": "https://jobs.smartrecruiters.com/BoschGroup",
+    "provider": "smartrecruiters",
+    "evidence_url": "https://api.smartrecruiters.com/v1/companies/BoschGroup/postings?limit=100",
+    "notes": "Checked 2026-09-30; API returned 100 postings of 4831 reported; 15 Europe internship candidates in this response before deduplication/detail validation. Example: Problem solving gyakornok termelési minőségügyi területen."
+  },
+  {
+    "company": "CERN",
+    "url": "https://jobs.smartrecruiters.com/CERN",
+    "provider": "smartrecruiters",
+    "evidence_url": "https://api.smartrecruiters.com/v1/companies/CERN/postings?limit=100",
+    "notes": "Checked 2026-09-30; API returned 55 postings of 55 reported; 1 Europe internship candidates in this response before deduplication/detail validation. Example: Short Term Internship 2026."
+  }
+]

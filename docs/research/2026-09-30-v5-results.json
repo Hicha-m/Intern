@@ -1,0 +1,102 @@
+{
+  "new_connectors": [
+    {
+      "board_id": 235,
+      "company": "swan.io",
+      "provider": "teamtailor",
+      "stored": 18,
+      "visible": 0,
+      "run_status": "succeeded",
+      "paused": false
+    },
+    {
+      "board_id": 236,
+      "company": "talan",
+      "provider": "teamtailor",
+      "stored": 0,
+      "visible": 0,
+      "run_status": "failed",
+      "paused": true
+    },
+    {
+      "board_id": 237,
+      "company": "Fifty-Five",
+      "provider": "workable",
+      "stored": 4,
+      "visible": 4,
+      "run_status": "succeeded",
+      "paused": false
+    },
+    {
+      "board_id": 238,
+      "company": "Flowdesk",
+      "provider": "workable",
+      "stored": 1,
+      "visible": 1,
+      "run_status": "succeeded",
+      "paused": false
+    },
+    {
+      "board_id": 239,
+      "company": "Sézane",
+      "provider": "workable",
+      "stored": 30,
+      "visible": 17,
+      "run_status": "succeeded",
+      "paused": false
+    },
+    {
+      "board_id": 240,
+      "company": "Skeepers",
+      "provider": "workable",
+      "stored": 0,
+      "visible": 0,
+      "run_status": "succeeded",
+      "paused": false
+    }
+  ],
+  "total_visible": 1290,
+  "tests": 304,
+  "verified_at": "2026-09-30T21:57:44.373953+00:00",
+  "runtime": {
+    "backend_health": 200,
+    "frontend_proxy_health": 200,
+    "catalogue_worker_restarted": true,
+    "jobspy_worker_restarted": true
+  },
+  "reenriched_offers": 3847,
+  "existing_ats_activations": [
+    {
+      "board_id": 241,
+      "company": "Philips",
+      "status": "succeeded",
+      "stored": 39,
+      "visible": 39,
+      "paused": false
+    },
+    {
+      "board_id": 242,
+      "company": "Red Hat",
+      "status": "failed",
+      "stored": 0,
+      "visible": 0,
+      "paused": true
+    },
+    {
+      "board_id": 243,
+      "company": "Orange",
+      "status": "failed",
+      "stored": 0,
+      "visible": 0,
+      "paused": true
+    },
+    {
+      "board_id": 244,
+      "company": "Thales",
+      "status": "succeeded",
+      "stored": 60,
+      "visible": 60,
+      "paused": false
+    }
+  ]
+}

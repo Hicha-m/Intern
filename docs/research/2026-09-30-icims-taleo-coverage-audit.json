@@ -1,0 +1,110 @@
+{
+  "observed_at": "2026-09-30T21:05:56.631779+00:00",
+  "before_published": 920,
+  "after_published": 928,
+  "countries": [
+    "AL",
+    "AT",
+    "BE",
+    "BG",
+    "CH",
+    "CZ",
+    "DE",
+    "DK",
+    "ES",
+    "FR",
+    "GB",
+    "HU",
+    "IE",
+    "IT",
+    "NL",
+    "NO",
+    "PL",
+    "PT",
+    "RO",
+    "RS",
+    "SE"
+  ],
+  "sources": [
+    {
+      "provider": "taleo",
+      "company": "IAEA",
+      "url": "https://iaea.taleo.net/careersection/ex/jobsearch.ftl",
+      "board_id": 36,
+      "status": "succeeded",
+      "seen_count": 2,
+      "published": 2,
+      "partial": true,
+      "diagnostics": [
+        {
+          "code": "keyword_search_partial"
+        }
+      ],
+      "scheduled": true
+    },
+    {
+      "provider": "icims",
+      "company": "Hines",
+      "url": "https://careers-hines.icims.com/jobs/search",
+      "board_id": 37,
+      "status": "succeeded",
+      "seen_count": 0,
+      "published": 0,
+      "partial": true,
+      "diagnostics": [
+        {
+          "code": "keyword_search_partial"
+        }
+      ],
+      "scheduled": true
+    },
+    {
+      "provider": "icims",
+      "company": "SAS",
+      "url": "https://global-sas.icims.com/jobs/search",
+      "board_id": 38,
+      "status": "succeeded",
+      "seen_count": 0,
+      "published": 0,
+      "partial": true,
+      "diagnostics": [
+        {
+          "code": "keyword_search_partial"
+        }
+      ],
+      "scheduled": true
+    },
+    {
+      "provider": "icims",
+      "company": "Arthur D. Little",
+      "url": "https://internships-adlittle.icims.com/jobs/search",
+      "board_id": 39,
+      "status": "succeeded",
+      "seen_count": 5,
+      "published": 5,
+      "partial": true,
+      "diagnostics": [
+        {
+          "code": "keyword_search_partial"
+        }
+      ],
+      "scheduled": true
+    },
+    {
+      "provider": "icims",
+      "company": "Trinseo",
+      "url": "https://emeacareers-trinseo.icims.com/jobs/search",
+      "board_id": 40,
+      "status": "succeeded",
+      "seen_count": 1,
+      "published": 1,
+      "partial": true,
+      "diagnostics": [
+        {
+          "code": "keyword_search_partial"
+        }
+      ],
+      "scheduled": true
+    }
+  ]
+}

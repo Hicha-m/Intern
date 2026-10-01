@@ -1,0 +1,42 @@
+{
+  "date": "2026-09-30",
+  "jobspy_revision": "7f0ff3ab25a4a4cd204af421cf6378ede3da5569",
+  "before_published": 928,
+  "last_verified_published": 981,
+  "query_pilots": [
+    {
+      "query_id": 64,
+      "site": "linkedin",
+      "country": "FR",
+      "seen": 20,
+      "imported": 20
+    },
+    {
+      "query_id": 65,
+      "site": "linkedin",
+      "country": "GB",
+      "seen": 20,
+      "imported": 17
+    },
+    {
+      "query_id": 66,
+      "site": "linkedin",
+      "country": "DE",
+      "seen": 20,
+      "imported": 16
+    },
+    {
+      "query_id": 74,
+      "site": "indeed",
+      "country": "FR",
+      "error": "jobspy_empty_unconfirmed"
+    }
+  ],
+  "registry_candidates_batch": 1000,
+  "tests": {
+    "backend_passed": 295,
+    "database": "isolated PostgreSQL 16.15 after Docker outage"
+  },
+  "docker_build": "failed: BuildKit metadata and numpy extraction input/output error; Docker daemon stopped",
+  "runtime": "Final check: Docker daemon unavailable, PostgreSQL 127.0.0.1:5433 not responding. Workers not running. 981 is the last verified count before the outage; no volumes reset or restored."
+}

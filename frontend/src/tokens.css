@@ -149,3 +149,65 @@
   --scale-icon-hidden: 0.25;
   --blur-icon-hidden: 4px;
 }
+
+/* The auth spread has its own editorial scale; application forms keep theirs. */
+:root {
+  --font-brand-sans: 'DM Sans', var(--font-sans);
+  --font-brand-serif: 'Instrument Serif', Georgia, serif;
+  --brand-control-radius: 0.375rem;
+  --auth-font-sans: var(--font-brand-sans);
+  --auth-font-serif: var(--font-brand-serif);
+  --auth-spread-width: 100rem;
+  --auth-page-gutter: clamp(1.5rem, 3.6vw, 4rem);
+  --auth-spread-gap: clamp(2rem, 4.5vw, 5rem);
+  --auth-masthead-height: 6.5rem;
+  --auth-poster-size: clamp(4rem, 5.8vw, 6.5rem);
+  --auth-poster-serif-size: 1.4em;
+  --auth-title-size: clamp(2.75rem, 3.3vw, 3.75rem);
+  --auth-title-serif-size: 1.1em;
+  --auth-editorial-tracking: -0.06em;
+  --auth-serif-tracking: -0.035em;
+  --auth-editorial-leading: 1.03;
+  --auth-art-min-height: 12rem;
+  --auth-art-height: 39dvh;
+  --auth-editorial-form-width: 24rem;
+  --auth-editorial-radius: var(--brand-control-radius);
+  --auth-progress-thickness: 2px;
+  --auth-caption-size: 0.6875rem;
+  --auth-poster-crop: 50% 45%;
+  --auth-art-mark-size: 5rem;
+  --auth-art-mark-icon: 3.5rem;
+  --auth-field-height: 4.75rem;
+  --auth-label-float-offset: 1.125rem;
+  --auth-label-float-scale: 0.75;
+  --auth-autofill-cover: 1000px;
+}
+
+/* Workspace composition. Colors, fonts and controls share the login brand roles. */
+:root {
+  --dashboard-font: var(--font-brand-sans);
+  --dashboard-sidebar-width: 13.75rem;
+  --dashboard-header-height: 6.5rem;
+  --dashboard-frame-radius: var(--brand-control-radius);
+  --dashboard-search-width: 32rem;
+  --dashboard-card-height: 10rem;
+  --dashboard-table-width: 42rem;
+  --dashboard-table-row: 4.5rem;
+  --dashboard-dialog-width: 30rem;
+  --dashboard-detail-width: 48rem;
+  --dashboard-pill-radius: var(--brand-control-radius);
+  --dashboard-company-size: 2rem;
+  --dashboard-card-mark-size: 1.375rem;
+  --dashboard-header-columns: minmax(12rem, 1fr) minmax(12rem, 1.1fr) auto;
+}
+
+/* Offer catalogue composition. */
+:root {
+  --offers-chip-width: 17rem;
+  --offers-card-height: 12.5rem;
+}
+
+:root {
+  --coverage-cell-width: 8rem;
+  --coverage-error-width: 12rem;
+}

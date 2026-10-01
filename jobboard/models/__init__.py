@@ -23,6 +23,23 @@ from .catalogue import (
     SourceBoard,
 )
 from .documents import Document
+from .engine import (
+    AlertEvent,
+    BoardSchedule,
+    CompanyPreference,
+    DiscoveryQuery,
+    DiscoveryResult,
+    ExternalOpportunity,
+    OfferEnrichment,
+    OfferFeedback,
+    OfferMergeDecision,
+    OfferReport,
+    SavedSearch,
+    SourceCandidate,
+    SourceDiscoverySeed,
+    SourceObservation,
+    SourceRevision,
+)
 from .operations import DeletionRequest, OutboxMessage, RequestThrottle
 from .profiles import (
     CandidateProfile,
@@ -60,12 +77,12 @@ __all__ = [
     "OfferSkill",
     "OfferSource",
     "OutboxMessage",
-    "RequestThrottle",
     "PreferenceContract",
     "PreferenceLocation",
     "PreferenceRole",
     "PreferenceWorkMode",
     "Project",
+    "RequestThrottle",
     "RevisionDocument",
     "Role",
     "SavedOffer",
@@ -75,3 +92,24 @@ __all__ = [
     "SubmissionAuthorization",
     "WorkAuthorization",
 ]
+
+
+__all__ += [
+    "AlertEvent",
+    "BoardSchedule",
+    "CompanyPreference",
+    "ExternalOpportunity",
+    "OfferEnrichment",
+    "OfferFeedback",
+    "OfferReport",
+    "SavedSearch",
+    "SourceCandidate",
+    "SourceObservation",
+    "SourceRevision",
+]
+
+__all__ += ["OfferMergeDecision"]
+
+__all__ += ["SourceDiscoverySeed"]
+
+__all__ += ["DiscoveryQuery", "DiscoveryResult"]

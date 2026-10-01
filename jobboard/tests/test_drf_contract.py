@@ -17,6 +17,7 @@ from jobboard.api.core import APIError
 from jobboard.api.drf import ContractJSONRenderer
 from jobboard.models import CandidateProfile, Company, Document, Offer, SearchPreference
 from jobboard.services.profiles import preference_data, profile_data
+from jobboard.tests.engine_fixtures import publishable
 from jobboard.tests.test_documents_api import pdf_bytes
 
 
@@ -68,9 +69,10 @@ class DRFContractTests(TestCase):
 
     def test_anonymous_private_access_has_401_challenge(self):
         self.client.logout()
+        self.assertEqual(self.client.get("/api/v1/offers/").status_code, 200)
         for route in (
             "auth/me/",
-            "offers/",
+            "saved-offers/",
             "profile/",
             "documents/",
             "applications/",
@@ -154,6 +156,8 @@ class DRFContractTests(TestCase):
         Offer.objects.bulk_create(
             [Offer(company=company, title=str(i)) for i in range(3)]
         )
+        for offer in Offer.objects.all():
+            publishable(offer)
         first = self.client.get("/api/v1/offers/?page_size=2").json()
         second = self.client.get("/api/v1/offers/?page_size=2&page=2").json()
         self.assertEqual(first["count"], 3)

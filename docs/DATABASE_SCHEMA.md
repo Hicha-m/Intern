@@ -356,3 +356,15 @@ Avant de livrer les futures migrations/services, vérifier aussi :
 - Données historiques conservées après migration : comptes, IDs d’offres, associations, préférences et URLs.
 
 **Les décisions produit encore ouvertes ne bloquent pas le schéma V1** : pays de lancement, liste de boards compatibles, politique commerciale, durées définitives de conservation. Les modèles et migrations sont maintenant livrés. L’intégration réelle des connecteurs et l’écriture des services métier restent un chantier distinct ; leur protocole est spécifié ici.
+
+## Extension du moteur européen (migrations 0017–0019)
+
+Les modèles additifs sont définis dans [`jobboard/models/engine.py`](../jobboard/models/engine.py). Les migrations `0017_internship_engine`, `0018_enrichment_event` et `0019_offer_merge_decision` ajoutent le suivi de collecte et les fonctions candidat sans remplacer les identifiants historiques d'offres/dossiers.
+
+- `BoardSchedule` conserve cadence, prochaine exécution, échecs, quarantaine et lease avec jeton de fencing ; `SourceObservation` conserve les absences successives.
+- `SourceRevision` conserve les révisions sources identifiées par hash ; `OfferEnrichment` est une projection un-à-un contenant classification, pays, domaine, version de contenu, `event_at` et `facts` JSON. L'implémentation utilise un objet JSON de faits sourcés, **pas une table `OfferFact` par champ**. Les propriétés filtrables et indices de classification restent séparés. `event_at` sert à distinguer un changement significatif d'une simple revérification.
+- `SourceCandidate` est le registre opérateur de sources découvertes/proposées. `OfferMergeDecision` conserve la décision et la preuve de fusion/réversion ; le doublon masqué conserve son ID et ses historiques privés.
+- `SavedSearch`, `OfferFeedback`, `CompanyPreference`, `OfferReport`, `AlertEvent` et `ExternalOpportunity` appartiennent chacun à un utilisateur par FK avec suppression en cascade. Les mutations API filtrent par propriétaire et prennent d'abord le verrou du compte ; les champs système ne sont pas assignables par la saisie.
+- `SavedSearch.criteria` est un JSON validé par schéma explicite. Les événements d'alerte possèdent une clé unique candidat/événement, avec canal actuellement limité à `in_app`. Feedback et préférences d'entreprise sont uniques par candidat et cible.
+
+Le catalogue partagé ne contient ni recherches privées ni contenu des opportunités ajoutées par URL. Les nouveaux objets privés sont inclus dans l'export et la purge existants. Les détails exacts du contrat HTTP sont décrits dans [API.md](API.md#moteur-de-stages-européen).

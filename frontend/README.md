@@ -47,7 +47,7 @@ Le formulaire utilise une **adresse e-mail** ; l’API conserve aussi la connexi
 nom d’utilisateur pour les anciens comptes. Aucun compte de démonstration ni connexion
 Google/GitHub n’est ajouté. Créer un compte ou utiliser un compte candidat existant
 pour un essai réel. Les mots de passe ne sont pas stockés dans localStorage/sessionStorage.
-Après succès, retour à l’espace demandé ou `/stages`, avec reprise obligatoire de
+Après succès, retour à l’espace demandé ou `/dashboard`, avec reprise obligatoire de
 l’onboarding s’il reste incomplet.
 
 Le reset appelle les endpoints Django existants. Pour ouvrir le lien de l’email en
@@ -85,3 +85,23 @@ Pour activer la configuration R2 locale : `uv run --env-file .env manage.py runs
 ## Onboarding obligatoire
 
 Le parcours connecté comporte trois étapes : `/onboarding/resume`, `/onboarding/address`, puis `/onboarding/work-eligibility`. Le serveur retourne `onboarding_step` dans la session ; les pages privées redirigent vers la première étape non terminée. Les étapes précédentes restent accessibles pour correction. Le CV est obligatoire. L’adresse est enregistrée au clic sur Continuer et la dernière étape valide les réponses avant de marquer l’onboarding terminé. Les nouveaux champs sont ajoutés par la migration `0016_candidate_onboarding`, sans considérer les comptes existants comme déjà terminés. La nationalité et les subdivisions d’adresse sont facultatives ; au moins un pays de travail et des réponses explicites sont nécessaires.
+
+## Tableau de bord
+
+`/dashboard` reprend la palette crème/encre/orange, DM Sans, Instrument Serif et les
+arrondis des pages de connexion. Ces valeurs sont partagées via `--brand-*` et
+`--font-brand-*` ; la densité du tableau de bord reste adaptée à un outil de travail.
+La référence visuelle guide la structure (navigation, quatre offres, tableau), sans
+pourcentages de compatibilité ni données de démonstration dans l’application.
+
+`GET /api/v1/dashboard/` fournit les quatre dernières offres ouvertes, les dossiers
+paginés du compte, les documents de leur dernière révision et les compteurs. `q`,
+`filter`, `page` et `page_size` contrôlent la recherche et la sélection. La lecture
+n’autorise ni ne déclenche aucun envoi. Les cartes ouvrent `/offers/:id`, où les liens
+de candidature existants sont disponibles ; `/applications/:id` affiche le suivi.
+Le bouton « Tout vérifier » ouvre `/a-valider`. La relecture et l’envoi automatisé
+ne sont pas implémentés par cette interface.
+
+Les logos d’entreprise sont représentés par des initiales tant que l’API ne fournit
+pas de fichiers publics. Le nom affiché en bas provient du profil du compte. Les
+captures de `tests/dashboard.spec.ts` utilisent uniquement des fixtures isolées.

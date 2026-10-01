@@ -1,0 +1,16 @@
+[
+  {
+    "key": "nvidia",
+    "board_id": 456,
+    "status": "validated"
+  },
+  {
+    "key": "dolby",
+    "board_id": 457,
+    "status": "validated"
+  },
+  {
+    "key": "microsoft",
+    "error": "upstream_rate_limited"
+  }
+]

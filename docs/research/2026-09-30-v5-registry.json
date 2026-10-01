@@ -1,0 +1,1261 @@
+{
+  "revision": "6b44a1badc9bfbf5cf176f75265cc5729e520e99",
+  "scanned": 250,
+  "invalid": 0,
+  "registered": 250,
+  "activated": 0,
+  "failures": [],
+  "sources": [
+    {
+      "company": "123 POUSSE",
+      "url": "https://123pousse.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "1KOMMA5° Sverige",
+      "url": "https://1komma5.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "2Care",
+      "url": "https://2care.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "2LCollection",
+      "url": "https://2lcollection.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "4C Associates",
+      "url": "https://4cassociates.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "4OC",
+      "url": "https://4oc.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "73 Strings",
+      "url": "https://73strings.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Å Energi",
+      "url": "https://aenergi-glitre-nett.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ÅBEN",
+      "url": "https://aabenbryg.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AAF/Dinair",
+      "url": "https://aafdinair.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AB Linde Maskiner",
+      "url": "https://lindemaskiner.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ABG Sundal Collier",
+      "url": "https://abgsc.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Above Agency",
+      "url": "https://above.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Abright",
+      "url": "https://abright.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Accelerate",
+      "url": "https://accelerate.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Accessiway",
+      "url": "https://accessiway.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Acme Corp",
+      "url": "https://acmecorp.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "The Acorn Group",
+      "url": "https://acorngroup.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ACP",
+      "url": "https://acp.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Active Academy",
+      "url": "https://ssa.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Acumetis",
+      "url": "https://acumetis.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Adam",
+      "url": "https://adam.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Adaptive Teams",
+      "url": "https://adaptiveteams.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Addison Lee",
+      "url": "https://addisonlee.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Adevinta",
+      "url": "https://adevinta.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Adform",
+      "url": "https://adform.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "adobe",
+      "url": "https://adobe.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AdsBack",
+      "url": "https://adsback.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Adsmurai",
+      "url": "https://adsmurai.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Advantage Medical Staffing",
+      "url": "https://advantagemedicalstaffing.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Advantmed",
+      "url": "https://advantmed.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Adveez for talents",
+      "url": "https://adveez.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Advenica",
+      "url": "https://advenica.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Advokatfirman Delphi",
+      "url": "https://advokatfirmandelphi.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "adzu",
+      "url": "https://adzu.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "aerones",
+      "url": "https://aerones.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AFNOR Groupe",
+      "url": "https://afnorgroupe.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Schibsted",
+      "url": "https://aftonbladet.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AFTRAL",
+      "url": "https://aftral.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Again",
+      "url": "https://again.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Agap2",
+      "url": "https://agap2.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Agency",
+      "url": "https://agency.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Agileday Oy",
+      "url": "https://agiledayoy.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Agile Retail",
+      "url": "https://agileretail.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Aidn",
+      "url": "https://aidn.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Aignostics",
+      "url": "https://aignostics.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Aikido Security",
+      "url": "https://aikidosecurity.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AIOS",
+      "url": "https://aios.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AIR",
+      "url": "https://air.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Aira",
+      "url": "https://aira.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Air-e",
+      "url": "https://aire.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Air products",
+      "url": "https://airproducts.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Airshoppen Travel Retail",
+      "url": "https://airshoppentravelretail.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Aito",
+      "url": "https://aito.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AJT Engineering",
+      "url": "https://ajtengineering-1706701723.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AKA",
+      "url": "https://aka.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Akality",
+      "url": "https://akality.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Àlber Blanc Capital",
+      "url": "https://alberblanc.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ALEA",
+      "url": "https://alea.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Aleido Group",
+      "url": "https://aleidogroup.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Alfa eCare",
+      "url": "https://alfaecare.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "All.in People & Culture",
+      "url": "https://allinpeoplecultureaipcug-1736947759.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "L'Atelier Entrecôte & Volaille",
+      "url": "https://latelierentrecotevolaille.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Líbere Hospitality Group",
+      "url": "https://alliron.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ALP'AZUR HOTELS",
+      "url": "https://alpazurhotels-1738160088.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Alpega",
+      "url": "https://alpega.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Altana Wealth Ltd",
+      "url": "https://altanawealth.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Alterneo Ecole",
+      "url": "https://alterneo.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Alva Industries",
+      "url": "https://alvaindustries.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Alva",
+      "url": "https://alvalabs.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Amarenco",
+      "url": "https://amarenco.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Amerikanska Gymnasiet",
+      "url": "https://amerikanskagymnasiet.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Andara Economy",
+      "url": "https://andaraeconomy.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Andara Professionals",
+      "url": "https://andaraprofessionals.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Angel",
+      "url": "https://angel.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AniCura Group",
+      "url": "https://anicuraglobal.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Ánima",
+      "url": "https://anima.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Anima App",
+      "url": "https://animaapp-1721730147.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Anthony Nolan",
+      "url": "https://anthonynolan.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Antin Infrastructure Partners",
+      "url": "https://antininfrastructurepartners-1655458195.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Anzet A/S",
+      "url": "https://anzet.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Palace For Life Foundation",
+      "url": "https://palaceforlifefoundation.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Pearl Fintech",
+      "url": "https://applicon.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ApprovalMax",
+      "url": "https://approvalmax.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Appsilon",
+      "url": "https://appsilon-1739358905.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Arc",
+      "url": "https://arc.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Architus",
+      "url": "https://architus.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Archon",
+      "url": "https://archon.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Ardent Pub Group",
+      "url": "https://ardentpubgroup.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Ardonagh Specialty",
+      "url": "https://ardonaghspeciality.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Arinfo",
+      "url": "https://arinfo-1730798401.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Arion Recruitment",
+      "url": "https://arionrecruitment-1705579161.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Arise AB",
+      "url": "https://arise.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Aritma",
+      "url": "https://aritmaas.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Arkivet",
+      "url": "https://arkivet.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Artificial Labs Ltd",
+      "url": "https://artificiallabsltd.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "art-K",
+      "url": "https://artk-1722428056.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "as",
+      "url": "https://as.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Ascom",
+      "url": "https://ascom.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Asistensi",
+      "url": "https://asistensi.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Askable",
+      "url": "https://askable.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Ask Locala",
+      "url": "https://asklocala-1671530238.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Astrid & Miyu",
+      "url": "https://astridmiyu.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Atdomco",
+      "url": "https://atdomco-1739192595.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Athletic Work",
+      "url": "https://athleticwork.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Atlantique Automatismes Incendie",
+      "url": "https://atlantiqueautomatismesincendie.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Atlassian",
+      "url": "https://atlassian.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ATREVIA",
+      "url": "https://atrevia.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Attendo Sverige",
+      "url": "https://attendosverige.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ATTN.",
+      "url": "https://attn.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Audencia",
+      "url": "https://audencia.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "audibene",
+      "url": "https://audibene.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Audience Collective",
+      "url": "https://audiencecollective.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Aurora Dairies",
+      "url": "https://auroradairies.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Auto24",
+      "url": "https://auto24.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AUTOCAR",
+      "url": "https://autocar.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Automation Consultants",
+      "url": "https://automationconsultants.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Avaaz",
+      "url": "https://avaaz.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Avallone",
+      "url": "https://avallone.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Avanza",
+      "url": "https://avanza.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Avisera",
+      "url": "https://avisera.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Axmed",
+      "url": "https://axmed.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "AYU",
+      "url": "https://ayu.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Azqore SA",
+      "url": "https://azqoresa.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "B3 Consulting Poland",
+      "url": "https://b3consultingpoland.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "B3 Personal",
+      "url": "https://b3personal-demo.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BabySam AB",
+      "url": "https://babysam.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BACB",
+      "url": "https://bacb.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Bamboo",
+      "url": "https://bamboo.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Bambuser",
+      "url": "https://bambuser.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Diversifying Leadership",
+      "url": "https://bamerecruitment.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BARBRI",
+      "url": "https://barbri.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Barrie Knitwear",
+      "url": "https://barrieknitwear.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Bashor Children's Home",
+      "url": "https://bashor.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BCGE",
+      "url": "https://bcge.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BearingPoint Czech Republic",
+      "url": "https://bearingpointczechrepublic.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BearingPoint Netherlands",
+      "url": "https://bearingpointnetherlands.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Berg Propulsion AB",
+      "url": "https://bergpropulsion.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BES Systemhaus GmbH",
+      "url": "https://bessystemhausgmbh.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "bet365",
+      "url": "https://bet365.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Better Dairy",
+      "url": "https://betterdairy-1665413363.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Bihr",
+      "url": "https://bihr.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BirdLife International",
+      "url": "https://birdlifeinternational.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Bloomberg",
+      "url": "https://bloomberg.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Bloq.it",
+      "url": "https://bloqit.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Dazzle: Commercial & Office Cleaning | London",
+      "url": "https://bluestorm.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BLUGIALLO",
+      "url": "https://blugiallo-1735384410.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BMI GlobalEd",
+      "url": "https://bmiglobaled.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Bobobox",
+      "url": "https://bobobox.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Bodyguard",
+      "url": "https://bodyguard.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BOOST",
+      "url": "https://boost-1743083678.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Börjessons",
+      "url": "https://borjessonkoncernen.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Brabners",
+      "url": "https://brabners.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Brams Burgers",
+      "url": "https://brams.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Breathe Battery Technologies",
+      "url": "https://breathebatterytechnologies.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Bruce Studios",
+      "url": "https://bruce.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Brut. France",
+      "url": "https://brutfrance.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "BRYTER",
+      "url": "https://bryter.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Bumper",
+      "url": "https://bumper-1692709783.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "bunny.net",
+      "url": "https://bunnynet.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Burger King Norge",
+      "url": "https://burgerkingno.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CAB Group",
+      "url": "https://cabgroup.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CA Business Digital",
+      "url": "https://cabusinessdigital.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CABAIA",
+      "url": "https://cabaia.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Cabeni AB",
+      "url": "https://cabeni.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Cainiao",
+      "url": "https://cainiao.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Callen-Lenz",
+      "url": "https://callenlenz.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CAM Mécanique Inc.",
+      "url": "https://cammecanique.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Cambio",
+      "url": "https://cambio.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Cambridge Intelligence",
+      "url": "https://cambridge-intelligence.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "JBS Executive Education Ltd",
+      "url": "https://cambridgejudgebs.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CAMCA",
+      "url": "https://camca.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CameraMatics",
+      "url": "https://cameramatics-1639649453.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Canva",
+      "url": "https://canva.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Capago International",
+      "url": "https://capago.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Capalo AI",
+      "url": "https://capaloai.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Caparol",
+      "url": "https://caparol.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Capega",
+      "url": "https://capega.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Capua",
+      "url": "https://capua.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CarCutter",
+      "url": "https://carcutter.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Teamtailor",
+      "url": "https://career.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Tecknuovo",
+      "url": "https://careers-tecknuovo.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Cartrack",
+      "url": "https://cartrackasiacareerpage.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "carVertical",
+      "url": "https://carvertical.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Carwow",
+      "url": "https://carwow.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Casambi",
+      "url": "https://casambi.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Caspeco",
+      "url": "https://caspecoab.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Catalonia hotels",
+      "url": "https://cataloniahotels.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Causeway Technologies",
+      "url": "https://causeway-1588594217.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CDN77",
+      "url": "https://cdn77.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CDP Global",
+      "url": "https://cdpworldwide.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Cedergrenska AB",
+      "url": "https://cedergrenskaab.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Celebrus Technologies plc",
+      "url": "https://celebrus.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Centio",
+      "url": "https://centio.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Centra Technology",
+      "url": "https://centra.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CENTURION SEARCH",
+      "url": "https://centurion.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Cepheo",
+      "url": "https://cepheo.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Cequens",
+      "url": "https://cequens.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Cerdia International GmbH",
+      "url": "https://cerdiainternationalgmbh.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Chapter 2",
+      "url": "https://chapter2.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Chief",
+      "url": "https://chief.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Chip",
+      "url": "https://chip.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CI Games",
+      "url": "https://cigames.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CIPFA",
+      "url": "https://cipfa.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Karanovic & Partners",
+      "url": "https://karanovicpartners.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Knauf Gypsum NEE South-East",
+      "url": "https://ciscountriesknaufgypsumeasterneurop.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Citysjukhuset +7",
+      "url": "https://citysjukhuset.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ClearRoute",
+      "url": "https://clearroute.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Clickatell",
+      "url": "https://clickatell.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Click&Boat",
+      "url": "https://clickboat.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ClickOut Media",
+      "url": "https://clickoutmedia.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ClickTech",
+      "url": "https://clicktech.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "ClickView",
+      "url": "https://clickview.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Clinton",
+      "url": "https://clinton.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Clovr Labs",
+      "url": "https://clovrlabs.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CMBlu Energy AG",
+      "url": "https://cmbluenergyag.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CmdScale GmbH",
+      "url": "https://cmdscale.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "&Co",
+      "url": "https://co.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Codento",
+      "url": "https://codento.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Codestone",
+      "url": "https://codestone.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CoinPoker",
+      "url": "https://coinpoker.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Cold Culture",
+      "url": "https://coldculture.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Colosseum Tandlægerne",
+      "url": "https://colosseumklinikken.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Colossyan",
+      "url": "https://colossyan.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Colten Care",
+      "url": "https://coltencare.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "com",
+      "url": "https://com.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Combine",
+      "url": "https://combine.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Combo",
+      "url": "https://combo.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Computer Sweden Recruitment",
+      "url": "https://computerswedenrecruitment.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Confirma Software",
+      "url": "https://confirmasoftware.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Connectel",
+      "url": "https://connectel.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Connect Talent Solutions",
+      "url": "https://connecttalentsolutionsjobs.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Consea America",
+      "url": "https://conseagroup.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CONSTRUCCIONES RUBAU",
+      "url": "https://construccionsrubau.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Copenhagen Optimization",
+      "url": "https://copenhagenoptimization.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Corndel",
+      "url": "https://corndel.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "cornell",
+      "url": "https://cornell.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Banco Covalto",
+      "url": "https://covalto.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "cpa",
+      "url": "https://cpa.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Creditspring",
+      "url": "https://creditspring.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CR Group Nordic AB",
+      "url": "https://cresiliens.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Crystal Intelligence",
+      "url": "https://crystalintelligence.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CSSD",
+      "url": "https://cssd.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CubicWorks",
+      "url": "https://cubicworks.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CurifyLabs",
+      "url": "https://curifylabs.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CybelAngel",
+      "url": "https://cybelangel.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "CyberOne",
+      "url": "https://cyberone-security.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Dabble",
+      "url": "https://dabble.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Dallas Holdings - Pret A Manger",
+      "url": "https://dallasholdings.teamtailor.com",
+      "status": "candidate"
+    },
+    {
+      "company": "Dansk Industri",
+      "url": "https://danskindustri.teamtailor.com",
+      "status": "candidate"
+    }
+  ],
+  "next_offset": 250
+}

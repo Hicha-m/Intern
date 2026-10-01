@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
-import { Link, Navigate } from 'react-router'
+import { Navigate } from 'react-router'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { ArrowLeft02Icon, ArrowRight02Icon, Tick02Icon } from '@hugeicons/core-free-icons'
 import { useSession } from '../auth/session-context'
 import type { Registration } from '../auth/session-context'
 import { authError } from '../auth/errors'
@@ -87,27 +89,31 @@ export function Register() {
         : cause instanceof ApiError && cause.status === 409 ? 'La création du compte n’a pas abouti. Essayez de vous connecter ou utilisez une autre adresse e-mail.' : authError(cause))
     } finally { busy.current = false; setPending(false) }
   }
-  const titles = ['Créez votre compte.', 'Comment vous appelez-vous ?', 'Sécurisez votre compte.']
-  const descriptions = ['Votre prochaine opportunité commence ici.', 'Le nom qui apparaîtra sur votre profil candidat.', 'Choisissez un mot de passe que vous seul connaissez.']
-  return <AuthLayout>
+  const titles = [<>Votre prochain<br /><em>chapitre.</em></>, <>Faisons<br /><em>connaissance.</em></>, <>Un espace<br /><em>bien à vous.</em></>]
+  return <AuthLayout mode="register">
     <div className="auth-onboarding">
+      <div className="auth-registration-nav">
+        <span className="auth-kicker">Créer un compte · {step + 1} / 3</span>
+        {step > 0 && <button className="auth-previous" type="button" onClick={back} disabled={pending || session.loading}><HugeiconsIcon icon={ArrowLeft02Icon} size={16} strokeWidth={1.5} aria-hidden="true" />Retour</button>}
+      </div>
+      <ol className="auth-registration-progress" aria-label="Étapes de création du compte">
+        {['E-mail', 'Votre nom', 'Mot de passe'].map((label, index) => <li key={label} aria-current={index === step ? 'step' : undefined} data-complete={index < step || undefined}><span className="auth-progress-line" /><span>{index < step && <HugeiconsIcon icon={Tick02Icon} size={14} strokeWidth={2} aria-hidden="true" />}{label}</span></li>)}
+      </ol>
       <div key={step} className="auth-stage">
-        <header className="auth-heading"><h1 ref={heading} tabIndex={-1}>{titles[step]}</h1><p>{descriptions[step]}</p></header>
+        <header className="auth-heading"><h1 ref={heading} tabIndex={-1}>{titles[step]}</h1></header>
         <form ref={form} className="auth-form" onSubmit={submit} aria-label="Inscription" aria-busy={pending}>
           <fieldset disabled={pending || session.loading}>
-            {step === 0 && <AuthField label="Adresse e-mail" name="email" type="email" autoComplete="email" autoCapitalize="none" spellCheck={false} required maxLength={254} value={values.email} onChange={e => update('email', e.target.value)} error={fields.email} />}
-            {step === 1 && <AuthField label="Nom complet" name="full_name" autoComplete="name" required maxLength={240} value={values.full_name} onChange={e => update('full_name', e.target.value)} error={fields.full_name} />}
+            {step === 0 && <AuthField floatingLabel label="Adresse e-mail" name="email" type="email" placeholder="vous@exemple.fr" autoComplete="email" autoCapitalize="none" spellCheck={false} required maxLength={254} value={values.email} onChange={e => update('email', e.target.value)} error={fields.email} />}
+            {step === 1 && <AuthField floatingLabel label="Nom complet" name="full_name" placeholder="Prénom Nom" autoComplete="name" required maxLength={240} value={values.full_name} onChange={e => update('full_name', e.target.value)} error={fields.full_name} />}
             {step === 2 && <>
               <input type="hidden" name="username" autoComplete="username" value={values.email} />
-              <PasswordField name="password" autoComplete="new-password" required minLength={8} maxLength={4096} hint="Au moins 8 caractères. Évitez les mots de passe courants, uniquement numériques ou proches de vos informations personnelles." value={values.password} onChange={e => update('password', e.target.value)} error={fields.password} />
+              <PasswordField floatingLabel name="password" autoComplete="new-password" required minLength={8} maxLength={4096} hint="8 caractères minimum, pas uniquement des chiffres." value={values.password} onChange={e => update('password', e.target.value)} error={fields.password} />
             </>}
           </fieldset>
           {(error ?? session.error) && <AuthNotice error>{error ?? session.error}</AuthNotice>}
-          <AuthButton type="submit" pending={pending} disabled={session.loading}>{pending ? step === 0 ? 'Vérification de l’adresse…' : 'Création du compte…' : session.loading ? 'Vérification de la session…' : step < 2 ? 'Continuer' : 'Créer mon compte'}</AuthButton>
-          {step > 0 && <button className="auth-previous" type="button" onClick={back} disabled={pending}>← Retour</button>}
+          <AuthButton type="submit" endIcon={<HugeiconsIcon icon={ArrowRight02Icon} size={20} strokeWidth={1.5} />} pending={pending} disabled={session.loading}>{pending ? step === 0 ? 'Vérification de l’adresse…' : 'Création du compte…' : session.loading ? 'Vérification de la session…' : step < 2 ? 'Continuer' : 'Créer mon compte'}</AuthButton>
         </form>
       </div>
-      <p className="auth-back"><Link to="/login">Déjà un compte ? Se connecter</Link></p>
     </div>
   </AuthLayout>
 }

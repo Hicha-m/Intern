@@ -1,0 +1,2020 @@
+{
+  "measured_at": "2026-09-30T22:44:51.038Z",
+  "published_offers": 2401,
+  "providers": [
+    {
+      "provider": "arbeitnow",
+      "offers": 0,
+      "queries": {
+        "truncated": 1
+      },
+      "boards": {},
+      "errors": []
+    },
+    {
+      "provider": "ashby",
+      "offers": 2,
+      "queries": {},
+      "boards": {
+        "enabled": 4
+      },
+      "errors": []
+    },
+    {
+      "provider": "ats_registry",
+      "offers": 0,
+      "queries": {
+        "disabled": 9
+      },
+      "boards": {},
+      "errors": []
+    },
+    {
+      "provider": "bundesagentur",
+      "offers": 250,
+      "queries": {
+        "remaining": 3
+      },
+      "boards": {
+        "enabled": 87
+      },
+      "errors": []
+    },
+    {
+      "provider": "eightfold",
+      "offers": 6,
+      "queries": {},
+      "boards": {
+        "enabled": 3,
+        "paused": 1
+      },
+      "errors": []
+    },
+    {
+      "provider": "eures",
+      "offers": 41,
+      "queries": {
+        "cycle_finished": 29,
+        "remaining": 2
+      },
+      "boards": {
+        "enabled": 41
+      },
+      "errors": []
+    },
+    {
+      "provider": "greenhouse",
+      "offers": 40,
+      "queries": {},
+      "boards": {
+        "enabled": 9
+      },
+      "errors": []
+    },
+    {
+      "provider": "icims",
+      "offers": 6,
+      "queries": {},
+      "boards": {
+        "enabled": 4
+      },
+      "errors": []
+    },
+    {
+      "provider": "jobsearch_se",
+      "offers": 0,
+      "queries": {
+        "cycle_finished": 8,
+        "truncated": 7
+      },
+      "boards": {},
+      "errors": []
+    },
+    {
+      "provider": "jobspy",
+      "offers": 511,
+      "queries": {
+        "truncated": 3,
+        "error": 1
+      },
+      "boards": {
+        "enabled": 290
+      },
+      "errors": [
+        {
+          "code": "jobspy_empty_unconfirmed",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "provider": "jobtech",
+      "offers": 30,
+      "queries": {
+        "cycle_finished": 3,
+        "remaining": 1
+      },
+      "boards": {
+        "enabled": 21
+      },
+      "errors": []
+    },
+    {
+      "provider": "lever",
+      "offers": 0,
+      "queries": {},
+      "boards": {
+        "enabled": 5
+      },
+      "errors": []
+    },
+    {
+      "provider": "linkedin_public",
+      "offers": 0,
+      "queries": {
+        "error": 2,
+        "truncated": 39,
+        "cycle_finished": 6
+      },
+      "boards": {},
+      "errors": [
+        {
+          "code": "linkedin_rate_limited",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "provider": "personio",
+      "offers": 3,
+      "queries": {},
+      "boards": {
+        "enabled": 1
+      },
+      "errors": []
+    },
+    {
+      "provider": "recruitee",
+      "offers": 16,
+      "queries": {},
+      "boards": {
+        "enabled": 6
+      },
+      "errors": []
+    },
+    {
+      "provider": "smartrecruiters",
+      "offers": 518,
+      "queries": {},
+      "boards": {
+        "enabled": 7,
+        "error": 1
+      },
+      "errors": [
+        {
+          "code": "snapshot_changed",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "provider": "successfactors",
+      "offers": 79,
+      "queries": {},
+      "boards": {
+        "enabled": 3
+      },
+      "errors": []
+    },
+    {
+      "provider": "taleo",
+      "offers": 2,
+      "queries": {},
+      "boards": {
+        "enabled": 1
+      },
+      "errors": []
+    },
+    {
+      "provider": "teamtailor",
+      "offers": 0,
+      "queries": {},
+      "boards": {
+        "enabled": 2,
+        "paused": 1
+      },
+      "errors": []
+    },
+    {
+      "provider": "workable",
+      "offers": 22,
+      "queries": {},
+      "boards": {
+        "enabled": 4
+      },
+      "errors": []
+    },
+    {
+      "provider": "workday",
+      "offers": 390,
+      "queries": {},
+      "boards": {
+        "enabled": 10,
+        "paused": 2
+      },
+      "errors": []
+    },
+    {
+      "provider": "wttj",
+      "offers": 485,
+      "queries": {
+        "cycle_finished": 46,
+        "error": 1
+      },
+      "boards": {
+        "enabled": 182
+      },
+      "errors": [
+        {
+          "code": "wttj_invalid_url",
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "deduplication": {},
+  "counting_note": "Distinct published offer IDs; unresolved duplicates may remain. Country and source totals overlap.",
+  "query_details": [
+    {
+      "id": 1,
+      "provider": "arbeitnow",
+      "country": "",
+      "state": "truncated",
+      "cursor": "5",
+      "last_success_at": "2026-09-30T22:41:46.888Z",
+      "next_run_at": "2026-09-30T22:46:41.963Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 2,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:41:53.183Z",
+      "next_run_at": "2026-09-30T22:46:46.890Z",
+      "error": "",
+      "source_total": 331
+    },
+    {
+      "id": 3,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "truncated",
+      "cursor": "400",
+      "last_success_at": "2026-09-30T22:42:31.186Z",
+      "next_run_at": "2026-09-30T22:47:25.010Z",
+      "error": "",
+      "source_total": 1915
+    },
+    {
+      "id": 4,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "truncated",
+      "cursor": "400",
+      "last_success_at": "2026-09-30T22:42:37.526Z",
+      "next_run_at": "2026-09-30T22:47:31.188Z",
+      "error": "",
+      "source_total": 2076
+    },
+    {
+      "id": 5,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T19:41:40.421Z",
+      "next_run_at": "2026-10-01T19:41:39.660Z",
+      "error": "",
+      "source_total": 1
+    },
+    {
+      "id": 6,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T19:41:44.309Z",
+      "next_run_at": "2026-10-01T19:41:40.472Z",
+      "error": "",
+      "source_total": 9
+    },
+    {
+      "id": 7,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:19:13.791Z",
+      "next_run_at": "2026-09-30T22:24:09.174Z",
+      "error": "",
+      "source_total": 26
+    },
+    {
+      "id": 8,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "truncated",
+      "cursor": "300",
+      "last_success_at": "2026-09-30T22:19:21.025Z",
+      "next_run_at": "2026-09-30T22:24:13.795Z",
+      "error": "",
+      "source_total": 1600
+    },
+    {
+      "id": 9,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "truncated",
+      "cursor": "300",
+      "last_success_at": "2026-09-30T22:19:57.854Z",
+      "next_run_at": "2026-09-30T22:24:53.211Z",
+      "error": "",
+      "source_total": 1768
+    },
+    {
+      "id": 10,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T19:43:54.175Z",
+      "next_run_at": "2026-10-01T19:43:53.218Z",
+      "error": "",
+      "source_total": 2
+    },
+    {
+      "id": 11,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T19:44:29.945Z",
+      "next_run_at": "2026-10-01T19:44:24.250Z",
+      "error": "",
+      "source_total": 8
+    },
+    {
+      "id": 12,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "truncated",
+      "cursor": "300",
+      "last_success_at": "2026-09-30T22:39:53.190Z",
+      "next_run_at": "2026-09-30T22:44:42.926Z",
+      "error": "",
+      "source_total": 1214
+    },
+    {
+      "id": 13,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "truncated",
+      "cursor": "300",
+      "last_success_at": "2026-09-30T22:41:04.070Z",
+      "next_run_at": "2026-09-30T22:45:57.558Z",
+      "error": "",
+      "source_total": 2790
+    },
+    {
+      "id": 14,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "truncated",
+      "cursor": "300",
+      "last_success_at": "2026-09-30T22:41:09.804Z",
+      "next_run_at": "2026-09-30T22:46:04.157Z",
+      "error": "",
+      "source_total": 2936
+    },
+    {
+      "id": 15,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T19:45:51.251Z",
+      "next_run_at": "2026-10-01T19:45:47.311Z",
+      "error": "",
+      "source_total": 6
+    },
+    {
+      "id": 16,
+      "provider": "jobsearch_se",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T19:45:55.966Z",
+      "next_run_at": "2026-10-01T19:45:51.257Z",
+      "error": "",
+      "source_total": 8
+    },
+    {
+      "id": 17,
+      "provider": "linkedin_public",
+      "country": "FR",
+      "state": "truncated",
+      "cursor": "30",
+      "last_success_at": "2026-09-30T22:43:19.649Z",
+      "next_run_at": "2026-09-30T22:48:09.435Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 18,
+      "provider": "linkedin_public",
+      "country": "DE",
+      "state": "truncated",
+      "cursor": "30",
+      "last_success_at": "2026-09-30T22:43:28.985Z",
+      "next_run_at": "2026-09-30T22:48:19.653Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 19,
+      "provider": "linkedin_public",
+      "country": "GB",
+      "state": "truncated",
+      "cursor": "30",
+      "last_success_at": "2026-09-30T22:44:12.576Z",
+      "next_run_at": "2026-09-30T22:49:03.724Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 20,
+      "provider": "linkedin_public",
+      "country": "IE",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:33:29.106Z",
+      "next_run_at": "2026-09-30T22:38:19.823Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 21,
+      "provider": "linkedin_public",
+      "country": "ES",
+      "state": "truncated",
+      "cursor": "30",
+      "last_success_at": "2026-09-30T22:44:23.377Z",
+      "next_run_at": "2026-09-30T22:49:12.577Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 22,
+      "provider": "linkedin_public",
+      "country": "IT",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:18:37.420Z",
+      "next_run_at": "2026-09-30T22:23:27.492Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 23,
+      "provider": "linkedin_public",
+      "country": "NL",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:20:07.035Z",
+      "next_run_at": "2026-09-30T22:24:57.855Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 24,
+      "provider": "linkedin_public",
+      "country": "BE",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:20:48.368Z",
+      "next_run_at": "2026-09-30T22:25:39.157Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 25,
+      "provider": "linkedin_public",
+      "country": "LU",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:20:56.935Z",
+      "next_run_at": "2026-09-30T22:25:48.371Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 26,
+      "provider": "linkedin_public",
+      "country": "CH",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:21:38.187Z",
+      "next_run_at": "2026-09-30T22:26:28.832Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 27,
+      "provider": "linkedin_public",
+      "country": "AT",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:21:47.245Z",
+      "next_run_at": "2026-09-30T22:26:38.192Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 28,
+      "provider": "linkedin_public",
+      "country": "PT",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:22:28.527Z",
+      "next_run_at": "2026-09-30T22:27:19.131Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 29,
+      "provider": "linkedin_public",
+      "country": "PL",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:22:37.551Z",
+      "next_run_at": "2026-09-30T22:27:28.530Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 30,
+      "provider": "linkedin_public",
+      "country": "SE",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:23:18.245Z",
+      "next_run_at": "2026-09-30T22:28:09.371Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 31,
+      "provider": "linkedin_public",
+      "country": "NO",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:23:27.266Z",
+      "next_run_at": "2026-09-30T22:28:18.246Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 32,
+      "provider": "linkedin_public",
+      "country": "DK",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:25:35.822Z",
+      "next_run_at": "2026-09-30T22:30:26.900Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 33,
+      "provider": "linkedin_public",
+      "country": "FI",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:25:44.509Z",
+      "next_run_at": "2026-09-30T22:30:35.823Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 34,
+      "provider": "linkedin_public",
+      "country": "IS",
+      "state": "truncated",
+      "cursor": "18",
+      "last_success_at": "2026-09-30T22:26:24.268Z",
+      "next_run_at": "2026-09-30T22:31:16.458Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 35,
+      "provider": "linkedin_public",
+      "country": "CZ",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:26:32.738Z",
+      "next_run_at": "2026-09-30T22:31:24.271Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 36,
+      "provider": "linkedin_public",
+      "country": "SK",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:27:14.135Z",
+      "next_run_at": "2026-09-30T22:32:04.767Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 37,
+      "provider": "linkedin_public",
+      "country": "HU",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:27:23.330Z",
+      "next_run_at": "2026-09-30T22:32:14.136Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 38,
+      "provider": "linkedin_public",
+      "country": "RO",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:28:04.886Z",
+      "next_run_at": "2026-09-30T22:32:55.158Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 39,
+      "provider": "linkedin_public",
+      "country": "BG",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:28:15.661Z",
+      "next_run_at": "2026-09-30T22:33:04.888Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 40,
+      "provider": "linkedin_public",
+      "country": "HR",
+      "state": "truncated",
+      "cursor": "19",
+      "last_success_at": "2026-09-30T22:32:41.988Z",
+      "next_run_at": "2026-09-30T22:37:32.624Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 41,
+      "provider": "linkedin_public",
+      "country": "SI",
+      "state": "truncated",
+      "cursor": "18",
+      "last_success_at": "2026-09-30T22:32:51.128Z",
+      "next_run_at": "2026-09-30T22:37:41.991Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 42,
+      "provider": "linkedin_public",
+      "country": "EE",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:33:37.934Z",
+      "next_run_at": "2026-09-30T22:38:29.107Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 43,
+      "provider": "linkedin_public",
+      "country": "LV",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:34:18.172Z",
+      "next_run_at": "2026-09-30T22:39:09.959Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 44,
+      "provider": "linkedin_public",
+      "country": "LT",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:34:27.037Z",
+      "next_run_at": "2026-09-30T22:39:18.174Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 45,
+      "provider": "linkedin_public",
+      "country": "GR",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:35:07.951Z",
+      "next_run_at": "2026-09-30T22:39:58.842Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 46,
+      "provider": "linkedin_public",
+      "country": "CY",
+      "state": "error",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-09-30T22:28:16.429Z",
+      "error": "linkedin_rate_limited",
+      "source_total": null
+    },
+    {
+      "id": 47,
+      "provider": "linkedin_public",
+      "country": "MT",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:35:17.323Z",
+      "next_run_at": "2026-09-30T22:40:07.953Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 48,
+      "provider": "linkedin_public",
+      "country": "RS",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:35:58.545Z",
+      "next_run_at": "2026-09-30T22:40:49.290Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 49,
+      "provider": "linkedin_public",
+      "country": "UA",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:36:08.016Z",
+      "next_run_at": "2026-09-30T22:40:58.548Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 50,
+      "provider": "linkedin_public",
+      "country": "AL",
+      "state": "truncated",
+      "cursor": "19",
+      "last_success_at": "2026-09-30T22:36:49.057Z",
+      "next_run_at": "2026-09-30T22:41:39.996Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 51,
+      "provider": "linkedin_public",
+      "country": "BA",
+      "state": "truncated",
+      "cursor": "19",
+      "last_success_at": "2026-09-30T22:36:57.680Z",
+      "next_run_at": "2026-09-30T22:41:49.059Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 52,
+      "provider": "linkedin_public",
+      "country": "ME",
+      "state": "truncated",
+      "cursor": "19",
+      "last_success_at": "2026-09-30T22:37:38.595Z",
+      "next_run_at": "2026-09-30T22:42:29.433Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 53,
+      "provider": "linkedin_public",
+      "country": "MK",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:37:39.020Z",
+      "next_run_at": "2026-10-01T22:37:38.598Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 54,
+      "provider": "linkedin_public",
+      "country": "MD",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:38:19.858Z",
+      "next_run_at": "2026-09-30T22:43:10.980Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 55,
+      "provider": "linkedin_public",
+      "country": "LI",
+      "state": "truncated",
+      "cursor": "13",
+      "last_success_at": "2026-09-30T22:38:25.712Z",
+      "next_run_at": "2026-09-30T22:43:19.861Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 56,
+      "provider": "linkedin_public",
+      "country": "MC",
+      "state": "error",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-09-30T22:33:24.099Z",
+      "error": "linkedin_rate_limited",
+      "source_total": null
+    },
+    {
+      "id": 57,
+      "provider": "linkedin_public",
+      "country": "AD",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:38:58.069Z",
+      "next_run_at": "2026-10-01T22:38:57.661Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 58,
+      "provider": "linkedin_public",
+      "country": "SM",
+      "state": "truncated",
+      "cursor": "20",
+      "last_success_at": "2026-09-30T22:39:07.296Z",
+      "next_run_at": "2026-09-30T22:43:58.074Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 59,
+      "provider": "linkedin_public",
+      "country": "BY",
+      "state": "truncated",
+      "cursor": "11",
+      "last_success_at": "2026-09-30T22:39:42.924Z",
+      "next_run_at": "2026-09-30T22:44:39.083Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 60,
+      "provider": "linkedin_public",
+      "country": "XK",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:12:14.486Z",
+      "next_run_at": "2026-10-01T22:12:13.978Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 61,
+      "provider": "linkedin_public",
+      "country": "VA",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:13:37.946Z",
+      "next_run_at": "2026-10-01T22:13:37.522Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 62,
+      "provider": "linkedin_public",
+      "country": "FO",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:40:25.362Z",
+      "next_run_at": "2026-10-01T22:40:24.907Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 63,
+      "provider": "linkedin_public",
+      "country": "GI",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:40:25.767Z",
+      "next_run_at": "2026-10-01T22:40:25.365Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 64,
+      "provider": "jobspy_linkedin",
+      "country": "FR",
+      "state": "truncated",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:25:12.695Z",
+      "next_run_at": "2026-10-01T10:25:12.695Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 65,
+      "provider": "jobspy_linkedin",
+      "country": "GB",
+      "state": "truncated",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:26:03.502Z",
+      "next_run_at": "2026-10-01T10:26:03.502Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 66,
+      "provider": "jobspy_linkedin",
+      "country": "DE",
+      "state": "truncated",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:26:57.238Z",
+      "next_run_at": "2026-10-01T10:26:57.238Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 67,
+      "provider": "ats_registry",
+      "country": "",
+      "state": "disabled",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-09-30T21:25:35.899Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 68,
+      "provider": "ats_registry",
+      "country": "",
+      "state": "disabled",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-09-30T21:25:52.907Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 69,
+      "provider": "ats_registry",
+      "country": "",
+      "state": "disabled",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-09-30T21:26:06.537Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 70,
+      "provider": "ats_registry",
+      "country": "",
+      "state": "disabled",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-09-30T21:26:09.171Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 71,
+      "provider": "ats_registry",
+      "country": "",
+      "state": "disabled",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-09-30T21:26:09.670Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 72,
+      "provider": "ats_registry",
+      "country": "",
+      "state": "disabled",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-09-30T21:26:10.192Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 73,
+      "provider": "ats_registry",
+      "country": "",
+      "state": "disabled",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-09-30T21:26:10.550Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 74,
+      "provider": "jobspy_indeed",
+      "country": "FR",
+      "state": "error",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-10-01T09:26:34.848Z",
+      "error": "jobspy_empty_unconfirmed",
+      "source_total": null
+    },
+    {
+      "id": 100,
+      "provider": "ats_registry",
+      "country": "",
+      "state": "disabled",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-09-30T21:52:32.760Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 101,
+      "provider": "ats_registry",
+      "country": "",
+      "state": "disabled",
+      "cursor": "",
+      "last_success_at": null,
+      "next_run_at": "2026-09-30T21:52:36.700Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 102,
+      "provider": "eures",
+      "country": "DE",
+      "state": "remaining",
+      "cursor": "7",
+      "last_success_at": "2026-09-30T22:41:36.599Z",
+      "next_run_at": "2026-09-30T22:46:36.599Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 103,
+      "provider": "eures",
+      "country": "BE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:03:19.826Z",
+      "next_run_at": "2026-10-01T10:03:19.826Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 104,
+      "provider": "eures",
+      "country": "FI",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:03:21.969Z",
+      "next_run_at": "2026-10-01T10:03:21.969Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 105,
+      "provider": "eures",
+      "country": "AT",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:05:43.477Z",
+      "next_run_at": "2026-10-01T10:05:43.477Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 106,
+      "provider": "eures",
+      "country": "BG",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:06:14.073Z",
+      "next_run_at": "2026-10-01T10:06:14.073Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 107,
+      "provider": "eures",
+      "country": "CH",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:06:46.152Z",
+      "next_run_at": "2026-10-01T10:06:46.152Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 108,
+      "provider": "eures",
+      "country": "CY",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:07:16.757Z",
+      "next_run_at": "2026-10-01T10:07:16.757Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 109,
+      "provider": "eures",
+      "country": "CZ",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:07:47.544Z",
+      "next_run_at": "2026-10-01T10:07:47.544Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 110,
+      "provider": "eures",
+      "country": "DK",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:08:19.106Z",
+      "next_run_at": "2026-10-01T10:08:19.106Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 111,
+      "provider": "eures",
+      "country": "EE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:08:50.502Z",
+      "next_run_at": "2026-10-01T10:08:50.502Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 112,
+      "provider": "eures",
+      "country": "ES",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:26:28.670Z",
+      "next_run_at": "2026-10-01T10:26:28.670Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 113,
+      "provider": "eures",
+      "country": "FR",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:09:56.499Z",
+      "next_run_at": "2026-10-01T10:09:56.499Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 114,
+      "provider": "eures",
+      "country": "GR",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:10:28.439Z",
+      "next_run_at": "2026-10-01T10:10:28.439Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 115,
+      "provider": "eures",
+      "country": "HR",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:10:59.633Z",
+      "next_run_at": "2026-10-01T10:10:59.633Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 116,
+      "provider": "eures",
+      "country": "HU",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:11:30.232Z",
+      "next_run_at": "2026-10-01T10:11:30.232Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 117,
+      "provider": "eures",
+      "country": "IE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:12:01.138Z",
+      "next_run_at": "2026-10-01T10:12:01.138Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 118,
+      "provider": "eures",
+      "country": "IS",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:12:31.739Z",
+      "next_run_at": "2026-10-01T10:12:31.739Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 119,
+      "provider": "eures",
+      "country": "IT",
+      "state": "remaining",
+      "cursor": "7",
+      "last_success_at": "2026-09-30T22:42:46.042Z",
+      "next_run_at": "2026-09-30T22:47:46.042Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 120,
+      "provider": "eures",
+      "country": "LI",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:13:45.728Z",
+      "next_run_at": "2026-10-01T10:13:45.728Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 121,
+      "provider": "eures",
+      "country": "LT",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:14:16.521Z",
+      "next_run_at": "2026-10-01T10:14:16.521Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 122,
+      "provider": "eures",
+      "country": "LU",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:14:47.082Z",
+      "next_run_at": "2026-10-01T10:14:47.082Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 123,
+      "provider": "eures",
+      "country": "LV",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:15:17.630Z",
+      "next_run_at": "2026-10-01T10:15:17.630Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 124,
+      "provider": "eures",
+      "country": "MT",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:15:48.240Z",
+      "next_run_at": "2026-10-01T10:15:48.240Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 125,
+      "provider": "eures",
+      "country": "NL",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:27:37.458Z",
+      "next_run_at": "2026-10-01T10:27:37.458Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 126,
+      "provider": "eures",
+      "country": "NO",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:16:54.051Z",
+      "next_run_at": "2026-10-01T10:16:54.051Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 127,
+      "provider": "eures",
+      "country": "PL",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:17:25.417Z",
+      "next_run_at": "2026-10-01T10:17:25.417Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 128,
+      "provider": "eures",
+      "country": "PT",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:17:56.024Z",
+      "next_run_at": "2026-10-01T10:17:56.024Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 129,
+      "provider": "eures",
+      "country": "RO",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:18:26.607Z",
+      "next_run_at": "2026-10-01T10:18:26.607Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 130,
+      "provider": "eures",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:18:57.273Z",
+      "next_run_at": "2026-10-01T10:18:57.273Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 131,
+      "provider": "eures",
+      "country": "SI",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:19:28.452Z",
+      "next_run_at": "2026-10-01T10:19:28.452Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 132,
+      "provider": "eures",
+      "country": "SK",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:19:58.953Z",
+      "next_run_at": "2026-10-01T10:19:58.953Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 133,
+      "provider": "wttj",
+      "country": "FR",
+      "state": "error",
+      "cursor": "1790587619:1790806222:9",
+      "last_success_at": "2026-09-30T22:41:39.767Z",
+      "next_run_at": "2026-09-30T23:12:40.124Z",
+      "error": "wttj_invalid_url",
+      "source_total": null
+    },
+    {
+      "id": 134,
+      "provider": "wttj",
+      "country": "BE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:10:27.125Z",
+      "next_run_at": "2026-10-01T10:10:27.125Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 135,
+      "provider": "wttj",
+      "country": "DE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:12:09.746Z",
+      "next_run_at": "2026-10-01T10:12:09.746Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 136,
+      "provider": "wttj",
+      "country": "ES",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:12:40.590Z",
+      "next_run_at": "2026-10-01T10:12:40.590Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 137,
+      "provider": "wttj",
+      "country": "NL",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:10:29.887Z",
+      "next_run_at": "2026-10-01T10:10:29.887Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 138,
+      "provider": "wttj",
+      "country": "AD",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:13:10.852Z",
+      "next_run_at": "2026-10-01T10:13:10.852Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 139,
+      "provider": "wttj",
+      "country": "AL",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:13:41.137Z",
+      "next_run_at": "2026-10-01T10:13:41.137Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 140,
+      "provider": "wttj",
+      "country": "AT",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:14:11.411Z",
+      "next_run_at": "2026-10-01T10:14:11.411Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 141,
+      "provider": "wttj",
+      "country": "BA",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:14:41.635Z",
+      "next_run_at": "2026-10-01T10:14:41.635Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 142,
+      "provider": "wttj",
+      "country": "BG",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:15:11.997Z",
+      "next_run_at": "2026-10-01T10:15:11.997Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 143,
+      "provider": "wttj",
+      "country": "BY",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:15:42.231Z",
+      "next_run_at": "2026-10-01T10:15:42.231Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 144,
+      "provider": "wttj",
+      "country": "CH",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:16:12.738Z",
+      "next_run_at": "2026-10-01T10:16:12.738Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 145,
+      "provider": "wttj",
+      "country": "CY",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:16:43.199Z",
+      "next_run_at": "2026-10-01T10:16:43.199Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 146,
+      "provider": "wttj",
+      "country": "CZ",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:17:13.494Z",
+      "next_run_at": "2026-10-01T10:17:13.494Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 147,
+      "provider": "wttj",
+      "country": "DK",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:17:43.765Z",
+      "next_run_at": "2026-10-01T10:17:43.765Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 148,
+      "provider": "wttj",
+      "country": "EE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:18:14.071Z",
+      "next_run_at": "2026-10-01T10:18:14.071Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 149,
+      "provider": "wttj",
+      "country": "FI",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:18:44.406Z",
+      "next_run_at": "2026-10-01T10:18:44.406Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 150,
+      "provider": "wttj",
+      "country": "FO",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:19:14.651Z",
+      "next_run_at": "2026-10-01T10:19:14.651Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 151,
+      "provider": "wttj",
+      "country": "GB",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:34:57.187Z",
+      "next_run_at": "2026-10-01T10:34:57.187Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 152,
+      "provider": "wttj",
+      "country": "GI",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:20:16.396Z",
+      "next_run_at": "2026-10-01T10:20:16.396Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 153,
+      "provider": "wttj",
+      "country": "GR",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:20:46.670Z",
+      "next_run_at": "2026-10-01T10:20:46.670Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 154,
+      "provider": "wttj",
+      "country": "HR",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:21:16.987Z",
+      "next_run_at": "2026-10-01T10:21:16.987Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 155,
+      "provider": "wttj",
+      "country": "HU",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:21:47.217Z",
+      "next_run_at": "2026-10-01T10:21:47.217Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 156,
+      "provider": "wttj",
+      "country": "IE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:22:17.496Z",
+      "next_run_at": "2026-10-01T10:22:17.496Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 157,
+      "provider": "wttj",
+      "country": "IS",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:22:47.776Z",
+      "next_run_at": "2026-10-01T10:22:47.776Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 158,
+      "provider": "wttj",
+      "country": "IT",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:23:18.704Z",
+      "next_run_at": "2026-10-01T10:23:18.704Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 159,
+      "provider": "wttj",
+      "country": "LI",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:23:48.973Z",
+      "next_run_at": "2026-10-01T10:23:48.973Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 160,
+      "provider": "wttj",
+      "country": "LT",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:24:19.284Z",
+      "next_run_at": "2026-10-01T10:24:19.284Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 161,
+      "provider": "wttj",
+      "country": "LU",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:24:49.802Z",
+      "next_run_at": "2026-10-01T10:24:49.802Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 162,
+      "provider": "wttj",
+      "country": "LV",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:25:20.076Z",
+      "next_run_at": "2026-10-01T10:25:20.076Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 163,
+      "provider": "wttj",
+      "country": "MC",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:25:50.474Z",
+      "next_run_at": "2026-10-01T10:25:50.474Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 164,
+      "provider": "wttj",
+      "country": "MD",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:26:20.747Z",
+      "next_run_at": "2026-10-01T10:26:20.747Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 165,
+      "provider": "wttj",
+      "country": "ME",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:26:50.997Z",
+      "next_run_at": "2026-10-01T10:26:50.997Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 166,
+      "provider": "wttj",
+      "country": "MK",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:27:21.278Z",
+      "next_run_at": "2026-10-01T10:27:21.278Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 167,
+      "provider": "wttj",
+      "country": "MT",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:27:51.619Z",
+      "next_run_at": "2026-10-01T10:27:51.619Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 168,
+      "provider": "wttj",
+      "country": "NO",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:28:21.896Z",
+      "next_run_at": "2026-10-01T10:28:21.896Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 169,
+      "provider": "wttj",
+      "country": "PL",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:28:52.197Z",
+      "next_run_at": "2026-10-01T10:28:52.197Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 170,
+      "provider": "wttj",
+      "country": "PT",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:29:22.718Z",
+      "next_run_at": "2026-10-01T10:29:22.718Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 171,
+      "provider": "wttj",
+      "country": "RO",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:29:53.037Z",
+      "next_run_at": "2026-10-01T10:29:53.037Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 172,
+      "provider": "wttj",
+      "country": "RS",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:30:23.456Z",
+      "next_run_at": "2026-10-01T10:30:23.456Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 173,
+      "provider": "wttj",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:30:53.808Z",
+      "next_run_at": "2026-10-01T10:30:53.808Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 174,
+      "provider": "wttj",
+      "country": "SI",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:31:24.055Z",
+      "next_run_at": "2026-10-01T10:31:24.055Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 175,
+      "provider": "wttj",
+      "country": "SK",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:31:54.268Z",
+      "next_run_at": "2026-10-01T10:31:54.268Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 176,
+      "provider": "wttj",
+      "country": "SM",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:32:24.554Z",
+      "next_run_at": "2026-10-01T10:32:24.554Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 177,
+      "provider": "wttj",
+      "country": "UA",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:32:54.792Z",
+      "next_run_at": "2026-10-01T10:32:54.792Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 178,
+      "provider": "wttj",
+      "country": "VA",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:33:25.016Z",
+      "next_run_at": "2026-10-01T10:33:25.016Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 179,
+      "provider": "wttj",
+      "country": "XK",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:33:55.330Z",
+      "next_run_at": "2026-10-01T10:33:55.330Z",
+      "error": "",
+      "source_total": null
+    },
+    {
+      "id": 180,
+      "provider": "jobtech",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:31:05.699Z",
+      "next_run_at": "2026-10-01T10:31:05.699Z",
+      "error": "",
+      "source_total": 26
+    },
+    {
+      "id": 181,
+      "provider": "jobtech",
+      "country": "SE",
+      "state": "remaining",
+      "cursor": "80",
+      "last_success_at": "2026-09-30T22:42:08.839Z",
+      "next_run_at": "2026-09-30T22:47:08.839Z",
+      "error": "",
+      "source_total": 331
+    },
+    {
+      "id": 182,
+      "provider": "jobtech",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:32:18.495Z",
+      "next_run_at": "2026-10-01T10:32:18.495Z",
+      "error": "",
+      "source_total": 25
+    },
+    {
+      "id": 183,
+      "provider": "jobtech",
+      "country": "SE",
+      "state": "cycle_finished",
+      "cursor": "",
+      "last_success_at": "2026-09-30T22:26:00.504Z",
+      "next_run_at": "2026-10-01T10:26:00.504Z",
+      "error": "",
+      "source_total": 16
+    },
+    {
+      "id": 184,
+      "provider": "bundesagentur",
+      "country": "DE",
+      "state": "remaining",
+      "cursor": "5",
+      "last_success_at": "2026-09-30T22:44:09.010Z",
+      "next_run_at": "2026-09-30T22:45:09.010Z",
+      "error": "",
+      "source_total": 5167
+    },
+    {
+      "id": 185,
+      "provider": "bundesagentur",
+      "country": "DE",
+      "state": "remaining",
+      "cursor": "3",
+      "last_success_at": "2026-09-30T22:44:44.773Z",
+      "next_run_at": "2026-09-30T22:45:44.773Z",
+      "error": "",
+      "source_total": 1301
+    },
+    {
+      "id": 186,
+      "provider": "bundesagentur",
+      "country": "DE",
+      "state": "remaining",
+      "cursor": "9",
+      "last_success_at": "2026-09-30T22:43:33.012Z",
+      "next_run_at": "2026-09-30T22:44:33.012Z",
+      "error": "",
+      "source_total": 214
+    }
+  ]
+}

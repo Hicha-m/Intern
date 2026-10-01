@@ -1,0 +1,1582 @@
+{
+  "observed_at": "2026-09-30T21:12:21.732747+00:00",
+  "europe_regions": [
+    "Western Europe",
+    "UK & Ireland",
+    "Southern Europe",
+    "Nordics",
+    "Eastern Europe"
+  ],
+  "pages": [
+    {
+      "page": 1,
+      "url": "https://internhunt.eu/jobs?region=Western+Europe&region=UK+%26+Ireland&region=Southern+Europe&region=Nordics&region=Eastern+Europe&page=1",
+      "count": "6,646",
+      "sha256": "10860a8b90ab5b7575727cdae51c141866cf9e9a3cd63c27f474a48cb29039d2",
+      "rows": [
+        {
+          "id": "58305",
+          "title": "Image and Data Processing Libraries Intern",
+          "company": "NVIDIA"
+        },
+        {
+          "id": "58319",
+          "title": "stage forensisch digitaal onderzoek - Politieacademie",
+          "company": "Politie Nederland"
+        },
+        {
+          "id": "58320",
+          "title": "Design for Test Intern (m/f/d)",
+          "company": "Apple"
+        },
+        {
+          "id": "58321",
+          "title": "Internship Computer Vision & Machine Learning Research",
+          "company": "Apple"
+        },
+        {
+          "id": "58332",
+          "title": "Stage - Ingénieur en IA agentique : Optimisation de modèles par agents LLM F/H",
+          "company": "EDF"
+        },
+        {
+          "id": "58337",
+          "title": "Mobile | Studentische:r Praktikant:in (m/w/d)",
+          "company": "x-root Software GmbH"
+        },
+        {
+          "id": "58347",
+          "title": "Summer 2027 Software Engineer Intern",
+          "company": "AMD"
+        },
+        {
+          "id": "58356",
+          "title": "AI & Automation Apprentice",
+          "company": "The Apprenticeship Guide"
+        },
+        {
+          "id": "58360",
+          "title": "Energy Trading Analyst Intern (m/w/d)",
+          "company": "Rabot Energy"
+        },
+        {
+          "id": "58362",
+          "title": "Werkstudent IT & Automatisierung (m/w/d)",
+          "company": "DetailKLANG Mediensysteme GmbH"
+        },
+        {
+          "id": "58363",
+          "title": "Software Intern",
+          "company": "roboa"
+        },
+        {
+          "id": "58370",
+          "title": "AI Adoption Intern",
+          "company": "Seeweb"
+        },
+        {
+          "id": "58372",
+          "title": "Werkstudent Power Platform / Power Apps Entwicklung (m/w/d)",
+          "company": "Andreas Schmid Group"
+        },
+        {
+          "id": "58374",
+          "title": "Software Engineering Internship (Ireland)",
+          "company": "Red Hat"
+        },
+        {
+          "id": "58375",
+          "title": "2027 Technology Graduate Programme - AI-Native Data Platform Engineering",
+          "company": "TD Securities"
+        },
+        {
+          "id": "58376",
+          "title": "2027 Technology Internship - AI-Native Data Platform Engineering - 6-month Internship (January – Jul",
+          "company": "TD Securities"
+        },
+        {
+          "id": "58387",
+          "title": "Internship Process analysis & reporting using data science",
+          "company": "Toyota Motor Europe"
+        },
+        {
+          "id": "58388",
+          "title": "STAGE 2027 - Développement d’une application légère de simulation systèmes avion (F/H)",
+          "company": "Airbus"
+        },
+        {
+          "id": "58394",
+          "title": "Studentische/r Mitarbeiter/in (m/w/d) für IT-Servicedesk",
+          "company": "Fraunhofer IPK"
+        },
+        {
+          "id": "58395",
+          "title": "Stage Ingénieur.e Intelligence Artificielle",
+          "company": "Groupe SII"
+        },
+        {
+          "id": "58396",
+          "title": "Stage Ingénieur développement logiciel",
+          "company": "Groupe SII"
+        },
+        {
+          "id": "58397",
+          "title": "Stage Recherche - Deep learning et interprétation",
+          "company": "université paris saclay"
+        },
+        {
+          "id": "58399",
+          "title": "Internship: AI Automation Developer F/M",
+          "company": "SAP"
+        },
+        {
+          "id": "58400",
+          "title": "2027 Technology Internship - Valuation Services Software Engineer - 6-month Internship (January – Ju",
+          "company": "TD Securities"
+        },
+        {
+          "id": "58403",
+          "title": "Werkstudent (w/m/d) IT-Onsite Support",
+          "company": "HIT Handelsgruppe GmbH & Co. KG"
+        },
+        {
+          "id": "58404",
+          "title": "stage 6 mois coordination projets IA",
+          "company": "Sanofi"
+        },
+        {
+          "id": "58406",
+          "title": "STAGE de fin d&apos;études – Développement de solutions IA pour des projets photovoltaïques et stock",
+          "company": "L'Usine Nouvelle"
+        },
+        {
+          "id": "58407",
+          "title": "Werkstudent:in PPS Engineer & Künstliche Intelligenz (m/w/d)",
+          "company": "Bayer"
+        },
+        {
+          "id": "58408",
+          "title": "Performance Test Engineer Trainee",
+          "company": "Nokia"
+        },
+        {
+          "id": "58409",
+          "title": "Tirocinio per Tesi - Ingegneria Informatica - IMA AUTOMATION",
+          "company": "IMA Group"
+        },
+        {
+          "id": "58410",
+          "title": "Stagista IT",
+          "company": "Rossi SpA"
+        },
+        {
+          "id": "58413",
+          "title": "Studentische Hilfskraft (w,m,d) im bereich Virtuelle Produktentstehung mit Fokus auf KI-Entwicklung",
+          "company": "Fraunhofer IPK"
+        },
+        {
+          "id": "58414",
+          "title": "Werkstudent IT Support & Workplace (m/w/d)",
+          "company": "Allianz Partners"
+        },
+        {
+          "id": "58415",
+          "title": "2027 Technology Internship - AI-Native Data Platform Engineering - 6-month Internship (January – Jul",
+          "company": "TD"
+        },
+        {
+          "id": "58416",
+          "title": "2027 Technology Internship - Valuation Services Software Engineer - 6-month Internship (January – Ju",
+          "company": "TD"
+        },
+        {
+          "id": "58417",
+          "title": "2027 Technology Graduate Programme - AI-Native Data Platform Engineering",
+          "company": "TD"
+        },
+        {
+          "id": "58418",
+          "title": "Stage - Data engineer (6 mois) F/H",
+          "company": "La Centrale"
+        },
+        {
+          "id": "58422",
+          "title": "Stage - 6 mois - Data Analyst &amp; Automatisation - F/H",
+          "company": "BPCE Infogérance & Technologies"
+        },
+        {
+          "id": "58423",
+          "title": "Stage - 3 à 6 mois - Automatisation et Déploiement de Solutions Cloud F/H",
+          "company": "BPCE Infogérance & Technologies"
+        },
+        {
+          "id": "58447",
+          "title": "Stage in Data & AI",
+          "company": "Exail"
+        },
+        {
+          "id": "58449",
+          "title": "Praktikant*in Software & KI für Elektrofahrzeuge",
+          "company": "Mercedes-Benz Group"
+        },
+        {
+          "id": "58450",
+          "title": "IT Intern (Business and Projects)",
+          "company": "Müller UK & Ireland"
+        },
+        {
+          "id": "58451",
+          "title": "IT Intern (Infrastructure)",
+          "company": "Müller UK & Ireland"
+        },
+        {
+          "id": "58455",
+          "title": "Praktikant (m/w/d) im Team Analytics – Entwicklung eines neuen ML-/KI-Produktes für den Bereich ESG-",
+          "company": "RSU GmbH & Co. KG"
+        },
+        {
+          "id": "58456",
+          "title": "Praktikant KI-gestützte Softwareentwicklung Fahrzeuginnenraum BMW M (w/m/x)",
+          "company": "BMW Group"
+        },
+        {
+          "id": "58457",
+          "title": "Praktikum – Generative KI & Digitalisierung in der Technischen Entwicklung (w/m/d)",
+          "company": "Audi"
+        },
+        {
+          "id": "58458",
+          "title": "Praktikum – Erstellung eines Tools zur Synchronität über Label, Codierung und Anpasskanal (w/m/d)",
+          "company": "Audi"
+        },
+        {
+          "id": "58459",
+          "title": "Praktikum - DevOps und Cloud-Automatisierung für digitale Planungsprozesse (w/m/d)",
+          "company": "Audi"
+        },
+        {
+          "id": "58460",
+          "title": "Working Student - IT and AI Support (f/m/div)",
+          "company": "Infineon Technologies"
+        },
+        {
+          "id": "58461",
+          "title": "Werkstudent*in im Team Manufacturing Software (m/w/d)",
+          "company": "TOPTICA Photonics SE"
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "url": "https://internhunt.eu/jobs?region=Western+Europe&region=UK+%26+Ireland&region=Southern+Europe&region=Nordics&region=Eastern+Europe&page=2",
+      "count": "6,646",
+      "sha256": "f5563376a19e1d352708f3ed5bcd7b3326a4c8a84c179757b5fd3b7085c6dc7c",
+      "rows": [
+        {
+          "id": "58462",
+          "title": "STAGE - Ingénieur développement logiciel Java - F/H",
+          "company": "Thales"
+        },
+        {
+          "id": "58463",
+          "title": "STAGE 2027 - Data Engineer/MLOps pour l'exploitation de données en sources ouvertes (f/h)",
+          "company": "Airbus Defence and Space"
+        },
+        {
+          "id": "58464",
+          "title": "Stage Systèmes embarqués : Développer une carte espion d'environnement électrique et climatique F/H",
+          "company": "MBDA"
+        },
+        {
+          "id": "58465",
+          "title": "Stage Ingénierie Système : Développement de solutions de Data et d'Intelligence Artificielle F/H",
+          "company": "MBDA"
+        },
+        {
+          "id": "58466",
+          "title": "Server-side Developer Trainee",
+          "company": "Bincom Global"
+        },
+        {
+          "id": "58473",
+          "title": "STAGE 2027 - Stage en développement logiciel — Prototype C2 Médical (H/F)",
+          "company": "Airbus Defence and Space"
+        },
+        {
+          "id": "58474",
+          "title": "Data Engineering Intern",
+          "company": "Novobiom"
+        },
+        {
+          "id": "58475",
+          "title": "IT Intern (Infrastructure)",
+          "company": "Müller"
+        },
+        {
+          "id": "58477",
+          "title": "AI Requirement Management for Product Internship",
+          "company": "Alstom"
+        },
+        {
+          "id": "58482",
+          "title": "IT Stagiaire",
+          "company": "Cefetra Group"
+        },
+        {
+          "id": "58484",
+          "title": "Stage Data Engineering (Pipelines/Data) – Paris/IDF – Gratification 1 500€ | M2 - 6 mois",
+          "company": "Equancy | Groupe EDG"
+        },
+        {
+          "id": "58487",
+          "title": "AI & Fullstack Intern (full-time) @ GenAI-Startup",
+          "company": "Akdo"
+        },
+        {
+          "id": "58488",
+          "title": "Fullstack Developer Intern (full-time) @ GenAI-Startup",
+          "company": "Akdo"
+        },
+        {
+          "id": "58489",
+          "title": "M2 internship - In silico",
+          "company": "University of Lille 1 Sciences and Technology"
+        },
+        {
+          "id": "58490",
+          "title": "Junior Support Engineer (f/m/d) - SAP Access - Apprenticeship",
+          "company": "Decathlon Digital"
+        },
+        {
+          "id": "58492",
+          "title": "Werkstudent*in digital Process Innovation",
+          "company": "Mercedes-Benz Group"
+        },
+        {
+          "id": "58493",
+          "title": "Ambitious Software Engineering Interns",
+          "company": "Danske Bank"
+        },
+        {
+          "id": "58494",
+          "title": "Product Engineering Intern",
+          "company": "Soundsense AI"
+        },
+        {
+          "id": "58495",
+          "title": "Artificial Intelligence Intern",
+          "company": "Hartford Advisers"
+        },
+        {
+          "id": "58499",
+          "title": "Forward Deployed Engineer Trainee – AI Transformation",
+          "company": "Visibily"
+        },
+        {
+          "id": "58500",
+          "title": "Praktikant - Webdesign & Webudvikling",
+          "company": "Tuttelu"
+        },
+        {
+          "id": "58505",
+          "title": "Product Intern (on-site)",
+          "company": "Cloover"
+        },
+        {
+          "id": "58506",
+          "title": "Stage Logiciel : Développement logiciel d'un simulateur réseau F/H",
+          "company": "MBDA"
+        },
+        {
+          "id": "58507",
+          "title": "Stage Logiciel : Développement logiciel de test réseau automatisé F/H",
+          "company": "MBDA"
+        },
+        {
+          "id": "58508",
+          "title": "Stage Simulation Numériques : Développement d'algorithmes de Machine Learning pour logiciel F/H",
+          "company": "MBDA"
+        },
+        {
+          "id": "58509",
+          "title": "Stage Logiciel: Outillage d'analyse d'essais Mer F/H",
+          "company": "MBDA"
+        },
+        {
+          "id": "58512",
+          "title": "Praktikum im Bereich Software Engineering",
+          "company": "Trafficon"
+        },
+        {
+          "id": "58513",
+          "title": "Junior ServiceNow Developer (Intern)",
+          "company": "KPMG Italy"
+        },
+        {
+          "id": "58514",
+          "title": "Praktikant til Data Engineering & AI hos PwC",
+          "company": "PwC Danmark"
+        },
+        {
+          "id": "58518",
+          "title": "Working Student Software Platform in Mobile Communications (C++/Rust/Python) (m/f/d)",
+          "company": "Rohde & Schwarz"
+        },
+        {
+          "id": "58519",
+          "title": "Werkstudent:in Full-Stack Development (m/w/d) (TypeScript/React)",
+          "company": "Bootsschule1"
+        },
+        {
+          "id": "58520",
+          "title": "Werkstudent*in im Team Manufacturing Software (m/w/d)",
+          "company": "TOPTICA Photonics"
+        },
+        {
+          "id": "58521",
+          "title": "Werkstudent IT Automation & Operation Management (m/w/d)",
+          "company": "Rohde & Schwarz"
+        },
+        {
+          "id": "58522",
+          "title": "ALTERNANCE - Logiciel bancs hyperfréquences - F/H",
+          "company": "Thales"
+        },
+        {
+          "id": "58525",
+          "title": "CS 27 - BAC+5 - Stage Ingénieur informatique dashbording LOOKER Control TOWER BIW H/F",
+          "company": "Renault Group"
+        },
+        {
+          "id": "58530",
+          "title": "Praktikum Data Analytics & Business Intelligence",
+          "company": "Deutsche Telekom"
+        },
+        {
+          "id": "58531",
+          "title": "Pflichtpraktikant im Bereich AI Agent Development & Testing (m/w/d)",
+          "company": "Mi-Jack Europe GmbH"
+        },
+        {
+          "id": "58532",
+          "title": "Praktikum Entwicklung - Softwareentwicklung für mechatronische Produktdemonstratoren (m/w/d)",
+          "company": "Würth Deutschland"
+        },
+        {
+          "id": "58533",
+          "title": "Praktikum Forschung und Entwicklung - IoT-Systeme und KI (m/w/d)",
+          "company": "Würth Deutschland"
+        },
+        {
+          "id": "58534",
+          "title": "Pflichtpraktikant (m/w/d) Wirtschaftsinformatik / Informatik für die Produktion",
+          "company": "Diehl Metall"
+        },
+        {
+          "id": "58535",
+          "title": "Praktikum - Softwareentwicklung On-Board-Diagnose von V-Otto-Hochleistungsmotoren (w/m/d)",
+          "company": "AUDI AG"
+        },
+        {
+          "id": "58536",
+          "title": "Working Student AI Agents & Robotics Platform (m/f/d)",
+          "company": "Mercedes-Benz Tech Innovation"
+        },
+        {
+          "id": "58537",
+          "title": "Werkstudent (w/m/d) - Conversational AI Testing",
+          "company": "1&1"
+        },
+        {
+          "id": "58538",
+          "title": "Werkstudent (m/w/d) Informationssicherheit",
+          "company": "C24 Bank GmbH"
+        },
+        {
+          "id": "58539",
+          "title": "Werkstudent (m/w/d) IT Development",
+          "company": "C24 Bank GmbH"
+        },
+        {
+          "id": "58540",
+          "title": "Werkstudenten (m/w/d) - Microsoft 365 & KI",
+          "company": "Esri Deutschland"
+        },
+        {
+          "id": "58541",
+          "title": "Working Student (w/m/d) - Mobile Network Capacity Management",
+          "company": "1&1"
+        },
+        {
+          "id": "58542",
+          "title": "Werkstudent (m/w/d) AI & Analytics",
+          "company": "Speira"
+        },
+        {
+          "id": "58543",
+          "title": "INTERNSHIP - Validation Engineer: Artificial Intelligence (M/F)",
+          "company": "OPmobility"
+        },
+        {
+          "id": "58544",
+          "title": "Alternance – Data Analyst IA et automatisation (F/H))",
+          "company": "U IRIS devient U TECH"
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "url": "https://internhunt.eu/jobs?region=Western+Europe&region=UK+%26+Ireland&region=Southern+Europe&region=Nordics&region=Eastern+Europe&page=3",
+      "count": "6,646",
+      "sha256": "4ac350887ed3f368264e7b6c15069580073280d744329941d1578025782e3514",
+      "rows": [
+        {
+          "id": "58545",
+          "title": "Stage - Software Engineer Flutter F/M",
+          "company": "Betclic Group"
+        },
+        {
+          "id": "58546",
+          "title": "Stage - Software Engineer Backend F/M",
+          "company": "Betclic Group"
+        },
+        {
+          "id": "58548",
+          "title": "STAGE 2027 - Intelligence Artificielle : Optimisation de la production aéronautique (F/H)",
+          "company": "Airbus"
+        },
+        {
+          "id": "58549",
+          "title": "Werkstudent (w/m/d) IT-Onsite Support",
+          "company": "Dohle Handelsgruppe Holding GmbH & Co. KG"
+        },
+        {
+          "id": "58550",
+          "title": "Werkstudent (w/m/d) IT-Application Management Compliance",
+          "company": "DekaBank Deutsche Girozentrale"
+        },
+        {
+          "id": "58551",
+          "title": "Werkstudent (w/m/d) Anwendungsentwicklung Reconcilation-Systeme",
+          "company": "DekaBank Deutsche Girozentrale"
+        },
+        {
+          "id": "58552",
+          "title": "Werkstudent (w/m/d) Digital Innovation & Program Management",
+          "company": "Siemens"
+        },
+        {
+          "id": "58553",
+          "title": "Werkstudent UX/UI Design (m/w/d)",
+          "company": "ABRIO"
+        },
+        {
+          "id": "58554",
+          "title": "Student Worker - AI & Business Automation",
+          "company": "Siemens"
+        },
+        {
+          "id": "58556",
+          "title": "Werkstudent (m/w/d) Organisation und IT - KI Agenten, ESM & DORA Vertragsmanagement",
+          "company": "VR Bank Augsburg-Ostallgäu eG"
+        },
+        {
+          "id": "58558",
+          "title": "Stage Ingénieur.e R&D — Cybersécurité offensive",
+          "company": "Groupe SII"
+        },
+        {
+          "id": "58559",
+          "title": "Internship - Business Processes - Automations - 6 months",
+          "company": "Jet Aviation"
+        },
+        {
+          "id": "58560",
+          "title": "Apprentice EFZ / Application Development",
+          "company": "Adobe"
+        },
+        {
+          "id": "58567",
+          "title": "Werkstudent (m/w/d) Cloud Engineering & Automation – Microsoft Azure",
+          "company": "HanseMerkur Grundvermögen AG"
+        },
+        {
+          "id": "58568",
+          "title": "Praktikant*in Prozessautomatisierung (w/m/d)",
+          "company": "Otto Group one.O"
+        },
+        {
+          "id": "58569",
+          "title": "Werkstudent (m/w/d) Data Engineering & Analytics – Schwerpunkt Microsoft Fabric",
+          "company": "HanseMerkur Grundvermögen AG"
+        },
+        {
+          "id": "58570",
+          "title": "Werkstudent (m/w/d) mit Schwerpunkt Software",
+          "company": "ESPERA-WERKE GMBH"
+        },
+        {
+          "id": "58571",
+          "title": "Werkstudent im Bereich IT Compute (m/w/d)",
+          "company": "Dräger"
+        },
+        {
+          "id": "58572",
+          "title": "Stage - Ingénieur(e) - Détection anomalie par IA (F/H)",
+          "company": "Groupe SII"
+        },
+        {
+          "id": "58573",
+          "title": "Praktikum IT Finance & Business Intelligence",
+          "company": "Porsche Financial Services GmbH"
+        },
+        {
+          "id": "58574",
+          "title": "Praktikum Automation Systems (m/w/x)",
+          "company": "ZEISS Group"
+        },
+        {
+          "id": "58575",
+          "title": "STAGE - Ingénieur Validation : Intelligence Artificielle (H/F)",
+          "company": "OPmobility"
+        },
+        {
+          "id": "58576",
+          "title": "R&D Internship Software Continuous Integration",
+          "company": "ETEL S.A."
+        },
+        {
+          "id": "58577",
+          "title": "Werkstudent:in KI & Data Engineering (m/w/d)",
+          "company": "Bayer"
+        },
+        {
+          "id": "58578",
+          "title": "Praktikum Einkauf Data Science & KI",
+          "company": "Porsche"
+        },
+        {
+          "id": "58580",
+          "title": "Stagiaires 2027",
+          "company": "LALUX Assurances"
+        },
+        {
+          "id": "58582",
+          "title": "IT Intern",
+          "company": "WEP Clinical"
+        },
+        {
+          "id": "58583",
+          "title": "#Discover II 2026-2027 / AI models Internship",
+          "company": "Airbus Defence and Space"
+        },
+        {
+          "id": "58584",
+          "title": "Trainee Information Technology Security (m/w/d) ab 01.04.2027",
+          "company": "Bundesdruckerei-Gruppe"
+        },
+        {
+          "id": "58585",
+          "title": "Werkstudent (w/m/d) IT Service",
+          "company": "Helmholtz-Zentrum Berlin"
+        },
+        {
+          "id": "58586",
+          "title": "Software Engineering - Internship 2027",
+          "company": "Horizon Quantum Computing"
+        },
+        {
+          "id": "58587",
+          "title": "Stage : AI agent designer & developer",
+          "company": "Stellantis"
+        },
+        {
+          "id": "58588",
+          "title": "Software Engineering - Internship 2027",
+          "company": "Horizon Quantum"
+        },
+        {
+          "id": "58594",
+          "title": "Werkstudent / Praktikant (m/w/d) im Bereich SAP-Datenmigration & Datenqualität",
+          "company": "GBfoods Deutschland"
+        },
+        {
+          "id": "58595",
+          "title": "Praktikum User Experience Design (w/m/d)",
+          "company": "EDITED"
+        },
+        {
+          "id": "58596",
+          "title": "Working Student Product & Cruise Related System Management",
+          "company": "TUI Cruises"
+        },
+        {
+          "id": "58597",
+          "title": "STAGE - Ingénieur systèmes embarqués/systèmes de combat H/F",
+          "company": "NAVAL GROUP"
+        },
+        {
+          "id": "58598",
+          "title": "Stage - Développement Cloud & Solutions Agentiques (F/H)",
+          "company": "Orange"
+        },
+        {
+          "id": "58599",
+          "title": "Stage - Test et Observabilité pour Assistants IA (F/H)",
+          "company": "Orange"
+        },
+        {
+          "id": "58600",
+          "title": "Werkstudent (Wirtschafts-)Informatik, Data Science oder MINT im Input Management (m/w/d)",
+          "company": "Zurich Insurance"
+        },
+        {
+          "id": "58602",
+          "title": "Backend Developer Intern",
+          "company": "Titan OS"
+        },
+        {
+          "id": "58603",
+          "title": "Frontend Developer Intern",
+          "company": "Titan OS"
+        },
+        {
+          "id": "58604",
+          "title": "Becario Técnico/a Innovación y Transformación Digital",
+          "company": "Elecnor Group"
+        },
+        {
+          "id": "58605",
+          "title": "🚀 Infra, Cloud & Sistemas | Internship",
+          "company": "NTT DATA Europe & Latam"
+        },
+        {
+          "id": "58608",
+          "title": "Fullstack Developer Intern",
+          "company": "Datawords"
+        },
+        {
+          "id": "58609",
+          "title": "Werkstudent IT Automation & Operation Management (m/w/d)",
+          "company": "ROHDE & SCHWARZ GmbH & Co. KG"
+        },
+        {
+          "id": "58610",
+          "title": "STAGE- Python - Scripts Intégration Logiciel et IHM – F/H",
+          "company": "Thales"
+        },
+        {
+          "id": "58611",
+          "title": "STAGE - Ingénieur développement logiciel JavaFX/Swing - UX - H/F",
+          "company": "Thales"
+        },
+        {
+          "id": "58612",
+          "title": "STAGE - JavaFx - IHM Création Scénario Test - F/H",
+          "company": "Thales"
+        },
+        {
+          "id": "58614",
+          "title": "STUDENTISCHE HILFSKRAFT im Bereich Verteilte Simulation",
+          "company": "Fraunhofer FKIE"
+        }
+      ]
+    }
+  ],
+  "sample_size": 150,
+  "sample_company_labels": 111,
+  "sample_company_labels_without_exact_normalized_board_match": [
+    "1&1",
+    "ABRIO",
+    "AMD",
+    "AUDI AG",
+    "Adobe",
+    "Airbus Defence and Space",
+    "Akdo",
+    "Allianz Partners",
+    "Alstom",
+    "Andreas Schmid Group",
+    "Apple",
+    "Audi",
+    "BMW Group",
+    "BPCE Infogérance & Technologies",
+    "Bayer",
+    "Betclic Group",
+    "Bincom Global",
+    "Bootsschule1",
+    "Bundesdruckerei-Gruppe",
+    "C24 Bank GmbH",
+    "Cefetra Group",
+    "Cloover",
+    "Danske Bank",
+    "Datawords",
+    "Decathlon Digital",
+    "DekaBank Deutsche Girozentrale",
+    "DetailKLANG Mediensysteme GmbH",
+    "Deutsche Telekom",
+    "Diehl Metall",
+    "Dohle Handelsgruppe Holding GmbH & Co. KG",
+    "Dräger",
+    "EDF",
+    "EDITED",
+    "ESPERA-WERKE GMBH",
+    "ETEL S.A.",
+    "Elecnor Group",
+    "Equancy | Groupe EDG",
+    "Esri Deutschland",
+    "Exail",
+    "Fraunhofer FKIE",
+    "Fraunhofer IPK",
+    "GBfoods Deutschland",
+    "Groupe SII",
+    "HIT Handelsgruppe GmbH & Co. KG",
+    "HanseMerkur Grundvermögen AG",
+    "Hartford Advisers",
+    "Helmholtz-Zentrum Berlin",
+    "Horizon Quantum",
+    "Horizon Quantum Computing",
+    "IMA Group",
+    "Infineon Technologies",
+    "Jet Aviation",
+    "KPMG Italy",
+    "L'Usine Nouvelle",
+    "LALUX Assurances",
+    "La Centrale",
+    "MBDA",
+    "Mercedes-Benz Group",
+    "Mercedes-Benz Tech Innovation",
+    "Mi-Jack Europe GmbH",
+    "Müller",
+    "Müller UK & Ireland",
+    "NAVAL GROUP",
+    "NTT DATA Europe & Latam",
+    "Nokia",
+    "Novobiom",
+    "OPmobility",
+    "Orange",
+    "Otto Group one.O",
+    "Politie Nederland",
+    "Porsche",
+    "Porsche Financial Services GmbH",
+    "PwC Danmark",
+    "ROHDE & SCHWARZ GmbH & Co. KG",
+    "RSU GmbH & Co. KG",
+    "Rabot Energy",
+    "Red Hat",
+    "Renault Group",
+    "Rohde & Schwarz",
+    "Rossi SpA",
+    "Seeweb",
+    "Siemens",
+    "Soundsense AI",
+    "Speira",
+    "Stellantis",
+    "TD",
+    "TD Securities",
+    "TOPTICA Photonics",
+    "TOPTICA Photonics SE",
+    "TUI Cruises",
+    "Thales",
+    "The Apprenticeship Guide",
+    "Titan OS",
+    "Toyota Motor Europe",
+    "Trafficon",
+    "Tuttelu",
+    "U IRIS devient U TECH",
+    "University of Lille 1 Sciences and Technology",
+    "VR Bank Augsburg-Ostallgäu eG",
+    "Visibily",
+    "WEP Clinical",
+    "Würth Deutschland",
+    "ZEISS Group",
+    "Zurich Insurance",
+    "roboa",
+    "université paris saclay",
+    "x-root Software GmbH"
+  ],
+  "sample_non_internship_title_signals": [
+    {
+      "id": "58356",
+      "title": "AI & Automation Apprentice",
+      "company": "The Apprenticeship Guide"
+    },
+    {
+      "id": "58362",
+      "title": "Werkstudent IT & Automatisierung (m/w/d)",
+      "company": "DetailKLANG Mediensysteme GmbH"
+    },
+    {
+      "id": "58372",
+      "title": "Werkstudent Power Platform / Power Apps Entwicklung (m/w/d)",
+      "company": "Andreas Schmid Group"
+    },
+    {
+      "id": "58375",
+      "title": "2027 Technology Graduate Programme - AI-Native Data Platform Engineering",
+      "company": "TD Securities"
+    },
+    {
+      "id": "58394",
+      "title": "Studentische/r Mitarbeiter/in (m/w/d) für IT-Servicedesk",
+      "company": "Fraunhofer IPK"
+    },
+    {
+      "id": "58403",
+      "title": "Werkstudent (w/m/d) IT-Onsite Support",
+      "company": "HIT Handelsgruppe GmbH & Co. KG"
+    },
+    {
+      "id": "58407",
+      "title": "Werkstudent:in PPS Engineer & Künstliche Intelligenz (m/w/d)",
+      "company": "Bayer"
+    },
+    {
+      "id": "58413",
+      "title": "Studentische Hilfskraft (w,m,d) im bereich Virtuelle Produktentstehung mit Fokus auf KI-Entwicklung",
+      "company": "Fraunhofer IPK"
+    },
+    {
+      "id": "58414",
+      "title": "Werkstudent IT Support & Workplace (m/w/d)",
+      "company": "Allianz Partners"
+    },
+    {
+      "id": "58417",
+      "title": "2027 Technology Graduate Programme - AI-Native Data Platform Engineering",
+      "company": "TD"
+    },
+    {
+      "id": "58460",
+      "title": "Working Student - IT and AI Support (f/m/div)",
+      "company": "Infineon Technologies"
+    },
+    {
+      "id": "58461",
+      "title": "Werkstudent*in im Team Manufacturing Software (m/w/d)",
+      "company": "TOPTICA Photonics SE"
+    },
+    {
+      "id": "58490",
+      "title": "Junior Support Engineer (f/m/d) - SAP Access - Apprenticeship",
+      "company": "Decathlon Digital"
+    },
+    {
+      "id": "58492",
+      "title": "Werkstudent*in digital Process Innovation",
+      "company": "Mercedes-Benz Group"
+    },
+    {
+      "id": "58518",
+      "title": "Working Student Software Platform in Mobile Communications (C++/Rust/Python) (m/f/d)",
+      "company": "Rohde & Schwarz"
+    },
+    {
+      "id": "58519",
+      "title": "Werkstudent:in Full-Stack Development (m/w/d) (TypeScript/React)",
+      "company": "Bootsschule1"
+    },
+    {
+      "id": "58520",
+      "title": "Werkstudent*in im Team Manufacturing Software (m/w/d)",
+      "company": "TOPTICA Photonics"
+    },
+    {
+      "id": "58521",
+      "title": "Werkstudent IT Automation & Operation Management (m/w/d)",
+      "company": "Rohde & Schwarz"
+    },
+    {
+      "id": "58522",
+      "title": "ALTERNANCE - Logiciel bancs hyperfréquences - F/H",
+      "company": "Thales"
+    },
+    {
+      "id": "58536",
+      "title": "Working Student AI Agents & Robotics Platform (m/f/d)",
+      "company": "Mercedes-Benz Tech Innovation"
+    },
+    {
+      "id": "58537",
+      "title": "Werkstudent (w/m/d) - Conversational AI Testing",
+      "company": "1&1"
+    },
+    {
+      "id": "58538",
+      "title": "Werkstudent (m/w/d) Informationssicherheit",
+      "company": "C24 Bank GmbH"
+    },
+    {
+      "id": "58539",
+      "title": "Werkstudent (m/w/d) IT Development",
+      "company": "C24 Bank GmbH"
+    },
+    {
+      "id": "58540",
+      "title": "Werkstudenten (m/w/d) - Microsoft 365 & KI",
+      "company": "Esri Deutschland"
+    },
+    {
+      "id": "58541",
+      "title": "Working Student (w/m/d) - Mobile Network Capacity Management",
+      "company": "1&1"
+    },
+    {
+      "id": "58542",
+      "title": "Werkstudent (m/w/d) AI & Analytics",
+      "company": "Speira"
+    },
+    {
+      "id": "58544",
+      "title": "Alternance – Data Analyst IA et automatisation (F/H))",
+      "company": "U IRIS devient U TECH"
+    },
+    {
+      "id": "58549",
+      "title": "Werkstudent (w/m/d) IT-Onsite Support",
+      "company": "Dohle Handelsgruppe Holding GmbH & Co. KG"
+    },
+    {
+      "id": "58550",
+      "title": "Werkstudent (w/m/d) IT-Application Management Compliance",
+      "company": "DekaBank Deutsche Girozentrale"
+    },
+    {
+      "id": "58551",
+      "title": "Werkstudent (w/m/d) Anwendungsentwicklung Reconcilation-Systeme",
+      "company": "DekaBank Deutsche Girozentrale"
+    },
+    {
+      "id": "58552",
+      "title": "Werkstudent (w/m/d) Digital Innovation & Program Management",
+      "company": "Siemens"
+    },
+    {
+      "id": "58553",
+      "title": "Werkstudent UX/UI Design (m/w/d)",
+      "company": "ABRIO"
+    },
+    {
+      "id": "58556",
+      "title": "Werkstudent (m/w/d) Organisation und IT - KI Agenten, ESM & DORA Vertragsmanagement",
+      "company": "VR Bank Augsburg-Ostallgäu eG"
+    },
+    {
+      "id": "58560",
+      "title": "Apprentice EFZ / Application Development",
+      "company": "Adobe"
+    },
+    {
+      "id": "58567",
+      "title": "Werkstudent (m/w/d) Cloud Engineering & Automation – Microsoft Azure",
+      "company": "HanseMerkur Grundvermögen AG"
+    },
+    {
+      "id": "58569",
+      "title": "Werkstudent (m/w/d) Data Engineering & Analytics – Schwerpunkt Microsoft Fabric",
+      "company": "HanseMerkur Grundvermögen AG"
+    },
+    {
+      "id": "58570",
+      "title": "Werkstudent (m/w/d) mit Schwerpunkt Software",
+      "company": "ESPERA-WERKE GMBH"
+    },
+    {
+      "id": "58571",
+      "title": "Werkstudent im Bereich IT Compute (m/w/d)",
+      "company": "Dräger"
+    },
+    {
+      "id": "58577",
+      "title": "Werkstudent:in KI & Data Engineering (m/w/d)",
+      "company": "Bayer"
+    },
+    {
+      "id": "58585",
+      "title": "Werkstudent (w/m/d) IT Service",
+      "company": "Helmholtz-Zentrum Berlin"
+    },
+    {
+      "id": "58596",
+      "title": "Working Student Product & Cruise Related System Management",
+      "company": "TUI Cruises"
+    },
+    {
+      "id": "58600",
+      "title": "Werkstudent (Wirtschafts-)Informatik, Data Science oder MINT im Input Management (m/w/d)",
+      "company": "Zurich Insurance"
+    },
+    {
+      "id": "58609",
+      "title": "Werkstudent IT Automation & Operation Management (m/w/d)",
+      "company": "ROHDE & SCHWARZ GmbH & Co. KG"
+    },
+    {
+      "id": "58614",
+      "title": "STUDENTISCHE HILFSKRAFT im Bereich Verteilte Simulation",
+      "company": "Fraunhofer FKIE"
+    }
+  ],
+  "local_published": 928,
+  "local_boards": [
+    {
+      "company__name": "Creative Clicks",
+      "provider": "recruitee",
+      "board_key": "creativeclicks"
+    },
+    {
+      "company__name": "Nelly Solutions",
+      "provider": "ashby",
+      "board_key": "nelly"
+    },
+    {
+      "company__name": "Winamax",
+      "provider": "lever",
+      "board_key": "winamax"
+    },
+    {
+      "company__name": "Protolabs",
+      "provider": "lever",
+      "board_key": "protolabs"
+    },
+    {
+      "company__name": "haebmau",
+      "provider": "personio",
+      "board_key": "haebmau"
+    },
+    {
+      "company__name": "Skytree",
+      "provider": "recruitee",
+      "board_key": "skytree"
+    },
+    {
+      "company__name": "Bosch Group",
+      "provider": "smartrecruiters",
+      "board_key": "BoschGroup"
+    },
+    {
+      "company__name": "Doctolib",
+      "provider": "greenhouse",
+      "board_key": "doctolib"
+    },
+    {
+      "company__name": "Aircall",
+      "provider": "greenhouse",
+      "board_key": "aircallioinc"
+    },
+    {
+      "company__name": "Human Rights Watch",
+      "provider": "greenhouse",
+      "board_key": "humanrightswatch"
+    },
+    {
+      "company__name": "Accor",
+      "provider": "smartrecruiters",
+      "board_key": "accorcorpo"
+    },
+    {
+      "company__name": "IMC",
+      "provider": "greenhouse",
+      "board_key": "imc"
+    },
+    {
+      "company__name": "Presidents Institute",
+      "provider": "greenhouse",
+      "board_key": "presidents"
+    },
+    {
+      "company__name": "Maven",
+      "provider": "greenhouse",
+      "board_key": "mavensecuritiesholdingltd"
+    },
+    {
+      "company__name": "Ubisoft",
+      "provider": "smartrecruiters",
+      "board_key": "ubisoft2"
+    },
+    {
+      "company__name": "Stripe",
+      "provider": "greenhouse",
+      "board_key": "stripe"
+    },
+    {
+      "company__name": "Sopra Steria",
+      "provider": "smartrecruiters",
+      "board_key": "SopraSteria1"
+    },
+    {
+      "company__name": "CERN",
+      "provider": "smartrecruiters",
+      "board_key": "CERN"
+    },
+    {
+      "company__name": "FieldBuddy",
+      "provider": "recruitee",
+      "board_key": "fieldbuddy"
+    },
+    {
+      "company__name": "Vattenfall AB",
+      "provider": "smartrecruiters",
+      "board_key": "Vattenfall"
+    },
+    {
+      "company__name": "Spinnin Records / Warner Music Benelux",
+      "provider": "recruitee",
+      "board_key": "spinninrecordsandwmgbenelux"
+    },
+    {
+      "company__name": "Iris van Herpen",
+      "provider": "recruitee",
+      "board_key": "irisvanherpen"
+    },
+    {
+      "company__name": "SkyGeo",
+      "provider": "recruitee",
+      "board_key": "skygeo"
+    },
+    {
+      "company__name": "Hitachi Energy Sweden AB",
+      "provider": "workday",
+      "board_key": "hitachi.wd1.myworkdayjobs.com/hitachi/hitachi"
+    },
+    {
+      "company__name": "Legora AB",
+      "provider": "ashby",
+      "board_key": "legora"
+    },
+    {
+      "company__name": "Aktiebolaget Electrolux",
+      "provider": "workday",
+      "board_key": "electrolux.wd3.myworkdayjobs.com/electrolux/AdHocAfterAdvertising"
+    },
+    {
+      "company__name": "Airbus",
+      "provider": "workday",
+      "board_key": "ag.wd3.myworkdayjobs.com/ag/Airbus"
+    },
+    {
+      "company__name": "Husqvarna AB",
+      "provider": "workday",
+      "board_key": "husqvarnagroup.wd3.myworkdayjobs.com/husqvarnagroup/External_Career_Site"
+    },
+    {
+      "company__name": "NVIDIA",
+      "provider": "workday",
+      "board_key": "nvidia.wd5.myworkdayjobs.com/nvidia/NVIDIAExternalCareerSite"
+    },
+    {
+      "company__name": "Sanofi",
+      "provider": "workday",
+      "board_key": "sanofi.wd3.myworkdayjobs.com/sanofi/SanofiCareers"
+    },
+    {
+      "company__name": "ZF Group",
+      "provider": "successfactors",
+      "board_key": "zf"
+    },
+    {
+      "company__name": "Schaeffler",
+      "provider": "successfactors",
+      "board_key": "schaeffler"
+    },
+    {
+      "company__name": "SAP",
+      "provider": "successfactors",
+      "board_key": "sap"
+    },
+    {
+      "company__name": "IAEA",
+      "provider": "taleo",
+      "board_key": "iaea-ex"
+    },
+    {
+      "company__name": "Hines",
+      "provider": "icims",
+      "board_key": "hines"
+    },
+    {
+      "company__name": "SAS",
+      "provider": "icims",
+      "board_key": "sas"
+    },
+    {
+      "company__name": "Arthur D. Little",
+      "provider": "icims",
+      "board_key": "adlittle"
+    },
+    {
+      "company__name": "Trinseo",
+      "provider": "icims",
+      "board_key": "trinseo"
+    },
+    {
+      "company__name": "Spotify",
+      "provider": "lever",
+      "board_key": "spotify"
+    },
+    {
+      "company__name": "Joko",
+      "provider": "ashby",
+      "board_key": "joko"
+    }
+  ],
+  "discovery_results": [
+    {
+      "query__provider": "jobsearch_se",
+      "status": "pending",
+      "error_code": "",
+      "n": 1142
+    },
+    {
+      "query__provider": "arbeitnow",
+      "status": "pending",
+      "error_code": "",
+      "n": 570
+    },
+    {
+      "query__provider": "jobsearch_se",
+      "status": "unresolved",
+      "error_code": "",
+      "n": 139
+    },
+    {
+      "query__provider": "linkedin_public",
+      "status": "needs_access",
+      "error_code": "linkedin_no_public_employer_link",
+      "n": 135
+    },
+    {
+      "query__provider": "linkedin_public",
+      "status": "pending",
+      "error_code": "",
+      "n": 87
+    },
+    {
+      "query__provider": "arbeitnow",
+      "status": "unresolved",
+      "error_code": "",
+      "n": 37
+    },
+    {
+      "query__provider": "jobsearch_se",
+      "status": "unsupported_provider",
+      "error_code": "",
+      "n": 27
+    },
+    {
+      "query__provider": "jobsearch_se",
+      "status": "unresolved",
+      "error_code": "unsafe_public_url",
+      "n": 25
+    },
+    {
+      "query__provider": "jobsearch_se",
+      "status": "validated",
+      "error_code": "",
+      "n": 24
+    },
+    {
+      "query__provider": "jobsearch_se",
+      "status": "unresolved",
+      "error_code": "public_fetch_failed",
+      "n": 4
+    },
+    {
+      "query__provider": "jobsearch_se",
+      "status": "unresolved",
+      "error_code": "public_http_error",
+      "n": 1
+    },
+    {
+      "query__provider": "arbeitnow",
+      "status": "unresolved",
+      "error_code": "public_http_error",
+      "n": 1
+    }
+  ],
+  "enrichment": [
+    {
+      "classification": "confirmed",
+      "europe_status": "in_scope",
+      "n": 928
+    },
+    {
+      "classification": "uncertain",
+      "europe_status": "unknown",
+      "n": 836
+    },
+    {
+      "classification": "uncertain",
+      "europe_status": "out_of_scope",
+      "n": 286
+    },
+    {
+      "classification": "uncertain",
+      "europe_status": "in_scope",
+      "n": 274
+    },
+    {
+      "classification": "not_internship",
+      "europe_status": "unknown",
+      "n": 127
+    },
+    {
+      "classification": "not_internship",
+      "europe_status": "in_scope",
+      "n": 78
+    },
+    {
+      "classification": "not_internship",
+      "europe_status": "out_of_scope",
+      "n": 61
+    },
+    {
+      "classification": "confirmed",
+      "europe_status": "unknown",
+      "n": 29
+    },
+    {
+      "classification": "confirmed",
+      "europe_status": "out_of_scope",
+      "n": 13
+    }
+  ],
+  "queries": [
+    {
+      "provider": "linkedin_public",
+      "enabled": true,
+      "n": 47
+    },
+    {
+      "provider": "jobsearch_se",
+      "enabled": true,
+      "n": 15
+    },
+    {
+      "provider": "arbeitnow",
+      "enabled": true,
+      "n": 1
+    }
+  ],
+  "sample_mixed_or_internship_titles_not_counted_as_exclusions": [
+    {
+      "id": "58337",
+      "title": "Mobile | Studentische:r Praktikant:in (m/w/d)",
+      "company": "x-root Software GmbH"
+    },
+    {
+      "id": "58594",
+      "title": "Werkstudent / Praktikant (m/w/d) im Bereich SAP-Datenmigration & Datenqualität",
+      "company": "GBfoods Deutschland"
+    }
+  ],
+  "sample_review_note": "Title-only review, first three pages, nonrandom. Mixed internship/student titles excluded from negative count. Company matching is exact normalized spelling, not entity resolution.",
+  "local_all_offers": 2632,
+  "linkedin_successful_queries": [
+    {
+      "country": "NO",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "FI",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "CZ",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "IS",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "HU",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "SK",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "GB",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "IE",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "IT",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "NL",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "LU",
+      "result_count": 12,
+      "cursor": "10"
+    },
+    {
+      "country": "DK",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "CH",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "AT",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "PL",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "FR",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "ES",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "DE",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "BE",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "SE",
+      "result_count": 10,
+      "cursor": "10"
+    },
+    {
+      "country": "PT",
+      "result_count": 10,
+      "cursor": "10"
+    }
+  ],
+  "local_pending_discovery_rows": 1799
+}

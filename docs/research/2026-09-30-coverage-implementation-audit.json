@@ -1,0 +1,265 @@
+{
+  "checked_at_utc": "2026-09-30T19:44:30.504950+00:00",
+  "public_count": 841,
+  "countries_count": 20,
+  "countries": [
+    {
+      "locations__country_code": "AL",
+      "offers": 1
+    },
+    {
+      "locations__country_code": "AT",
+      "offers": 3
+    },
+    {
+      "locations__country_code": "BE",
+      "offers": 12
+    },
+    {
+      "locations__country_code": "CH",
+      "offers": 18
+    },
+    {
+      "locations__country_code": "CZ",
+      "offers": 4
+    },
+    {
+      "locations__country_code": "DE",
+      "offers": 167
+    },
+    {
+      "locations__country_code": "DK",
+      "offers": 6
+    },
+    {
+      "locations__country_code": "ES",
+      "offers": 64
+    },
+    {
+      "locations__country_code": "FR",
+      "offers": 356
+    },
+    {
+      "locations__country_code": "GB",
+      "offers": 5
+    },
+    {
+      "locations__country_code": "HU",
+      "offers": 51
+    },
+    {
+      "locations__country_code": "IE",
+      "offers": 1
+    },
+    {
+      "locations__country_code": "IT",
+      "offers": 30
+    },
+    {
+      "locations__country_code": "NL",
+      "offers": 29
+    },
+    {
+      "locations__country_code": "NO",
+      "offers": 4
+    },
+    {
+      "locations__country_code": "PL",
+      "offers": 24
+    },
+    {
+      "locations__country_code": "PT",
+      "offers": 53
+    },
+    {
+      "locations__country_code": "RO",
+      "offers": 3
+    },
+    {
+      "locations__country_code": "RS",
+      "offers": 6
+    },
+    {
+      "locations__country_code": "SE",
+      "offers": 5
+    }
+  ],
+  "invalid_public_ids": [],
+  "bypass_query_count": 0,
+  "public_companies_count": 25,
+  "stored_technical_offers": 2545,
+  "registered_boards": 32,
+  "verified_boards": 32,
+  "by_company": [
+    {
+      "company__name": "Bosch Group",
+      "offers": 356
+    },
+    {
+      "company__name": "Airbus",
+      "offers": 216
+    },
+    {
+      "company__name": "Sopra Steria",
+      "offers": 76
+    },
+    {
+      "company__name": "Sanofi",
+      "offers": 52
+    },
+    {
+      "company__name": "Ubisoft",
+      "offers": 27
+    },
+    {
+      "company__name": "Hitachi Energy Sweden AB",
+      "offers": 24
+    },
+    {
+      "company__name": "Doctolib",
+      "offers": 22
+    },
+    {
+      "company__name": "Accor",
+      "offers": 19
+    },
+    {
+      "company__name": "IMC",
+      "offers": 6
+    },
+    {
+      "company__name": "Vattenfall AB",
+      "offers": 5
+    },
+    {
+      "company__name": "Presidents Institute",
+      "offers": 5
+    },
+    {
+      "company__name": "Spinnin Records / Warner Music Benelux",
+      "offers": 5
+    },
+    {
+      "company__name": "Skytree",
+      "offers": 4
+    },
+    {
+      "company__name": "Maven",
+      "offers": 4
+    },
+    {
+      "company__name": "haebmau",
+      "offers": 3
+    },
+    {
+      "company__name": "NVIDIA",
+      "offers": 3
+    },
+    {
+      "company__name": "Joko",
+      "offers": 2
+    },
+    {
+      "company__name": "FieldBuddy",
+      "offers": 2
+    },
+    {
+      "company__name": "Stripe",
+      "offers": 2
+    },
+    {
+      "company__name": "Iris van Herpen",
+      "offers": 2
+    },
+    {
+      "company__name": "Creative Clicks",
+      "offers": 2
+    },
+    {
+      "company__name": "Human Rights Watch",
+      "offers": 1
+    },
+    {
+      "company__name": "SkyGeo",
+      "offers": 1
+    },
+    {
+      "company__name": "CERN",
+      "offers": 1
+    },
+    {
+      "company__name": "Husqvarna AB",
+      "offers": 1
+    }
+  ],
+  "discovery": {
+    "queries": 16,
+    "successful_queries": 11,
+    "leads": 874,
+    "by_status": [
+      {
+        "status": "validated",
+        "count": 16
+      },
+      {
+        "status": "unresolved",
+        "count": 124
+      },
+      {
+        "status": "pending",
+        "count": 710
+      },
+      {
+        "status": "unsupported_provider",
+        "count": 24
+      }
+    ],
+    "validated_sources": [
+      {
+        "company_name": "Vattenfall AB",
+        "provider": "smartrecruiters",
+        "url": "https://careers.smartrecruiters.com/Vattenfall"
+      },
+      {
+        "company_name": "Bosch Group",
+        "provider": "smartrecruiters",
+        "url": "https://careers.smartrecruiters.com/BoschGroup"
+      },
+      {
+        "company_name": "Legora AB",
+        "provider": "ashby",
+        "url": "https://jobs.ashbyhq.com/legora"
+      },
+      {
+        "company_name": "Hitachi Energy Sweden AB",
+        "provider": "workday",
+        "url": "https://hitachi.wd1.myworkdayjobs.com/en-US/hitachi"
+      },
+      {
+        "company_name": "Aktiebolaget Electrolux",
+        "provider": "workday",
+        "url": "https://electrolux.wd3.myworkdayjobs.com/en-US/AdHocAfterAdvertising"
+      },
+      {
+        "company_name": "Husqvarna AB",
+        "provider": "workday",
+        "url": "https://husqvarnagroup.wd3.myworkdayjobs.com/en-US/External_Career_Site"
+      }
+    ]
+  },
+  "boschs_latest": [
+    {
+      "status": "succeeded",
+      "seen_count": 356,
+      "is_full_snapshot": false,
+      "error_code": "partial_snapshot",
+      "diagnostics": [
+        {
+          "code": "snapshot_changed",
+          "external_id": "744000130841037"
+        }
+      ]
+    }
+  ],
+  "backend_tests": 245
+}

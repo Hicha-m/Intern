@@ -34,7 +34,7 @@ def _client():
     )
 
 
-def write_object(bucket, key, data):
+def write_object(bucket, key, data, *, content_type="application/pdf"):
     if bucket == "local":
         path = _path(key)
         path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -44,7 +44,7 @@ def write_object(bucket, key, data):
             stream.write(data)
     else:
         _client().put_object(
-            Bucket=bucket, Key=key, Body=data, ContentType="application/pdf"
+            Bucket=bucket, Key=key, Body=data, ContentType=content_type
         )
 
 

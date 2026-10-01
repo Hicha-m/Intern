@@ -1,0 +1,126 @@
+{
+  "revision": "6b44a1badc9bfbf5cf176f75265cc5729e520e99",
+  "scanned": 21785,
+  "invalid": 2,
+  "registered": 23,
+  "activated": 5,
+  "failures": [],
+  "sources": [
+    {
+      "company": "Accenture Federal Services",
+      "url": "https://job-boards.greenhouse.io/accenturefederalservices",
+      "status": "validated"
+    },
+    {
+      "company": "Accenture Federal Services Careers Marketplace",
+      "url": "https://job-boards.greenhouse.io/afscareersmarketplace",
+      "status": "validated"
+    },
+    {
+      "company": "Apple Tree Dental",
+      "url": "https://jobs.lever.co/appletreedental",
+      "status": "validated"
+    },
+    {
+      "company": "Accenture Infrastructure and Capital Projects, LLC",
+      "url": "https://jobs.lever.co/InfrastructureandCapitalProjects",
+      "status": "validated"
+    },
+    {
+      "company": "Apple Roofing",
+      "url": "https://jobs.ashbyhq.com/apple-roofing",
+      "status": "validated"
+    },
+    {
+      "company": "Philips (Internal Job Postings List For Philips Contingent Workers)",
+      "url": "https://philips.wd3.myworkdayjobs.com/en-US/internal-job-postings-list-for-philips-contingent-workers",
+      "status": "candidate"
+    },
+    {
+      "company": "Philips",
+      "url": "https://philips.wd3.myworkdayjobs.com/en-US/jobs-and-careers",
+      "status": "candidate"
+    },
+    {
+      "company": "Red Hat",
+      "url": "https://redhat.wd5.myworkdayjobs.com/en-US/jobs",
+      "status": "candidate"
+    },
+    {
+      "company": "Orange",
+      "url": "https://orange.wd3.myworkdayjobs.com/en-US/Orange_Career",
+      "status": "candidate"
+    },
+    {
+      "company": "Thales",
+      "url": "https://thales.wd3.myworkdayjobs.com/en-US/careers",
+      "status": "candidate"
+    },
+    {
+      "company": "Accenture Federal Services",
+      "url": "https://careers.smartrecruiters.com/accenturefederalservices",
+      "status": "candidate"
+    },
+    {
+      "company": "Deloitte East Africa",
+      "url": "https://careers.smartrecruiters.com/deloitteeastafrica",
+      "status": "candidate"
+    },
+    {
+      "company": "Deloitte",
+      "url": "https://careers.smartrecruiters.com/deloitte6",
+      "status": "candidate"
+    },
+    {
+      "company": "Deloitte",
+      "url": "https://careers.smartrecruiters.com/deloittenordic",
+      "status": "candidate"
+    },
+    {
+      "company": "Deloitte NZ",
+      "url": "https://careers.smartrecruiters.com/deloittenz",
+      "status": "candidate"
+    },
+    {
+      "company": "Ericsson",
+      "url": "https://careers.smartrecruiters.com/ericsson",
+      "status": "candidate"
+    },
+    {
+      "company": "accenture",
+      "url": "https://careers.smartrecruiters.com/accenture",
+      "status": "candidate"
+    },
+    {
+      "company": "BMW Dealer Careers",
+      "url": "https://careers.smartrecruiters.com/BMWDealerCareers",
+      "status": "candidate"
+    },
+    {
+      "company": "Deloitte",
+      "url": "https://careers.smartrecruiters.com/DeloitteAT",
+      "status": "candidate"
+    },
+    {
+      "company": "EDF UK",
+      "url": "https://careers.smartrecruiters.com/EDF-UK",
+      "status": "candidate"
+    },
+    {
+      "company": "nokia",
+      "url": "https://careers.smartrecruiters.com/nokia",
+      "status": "candidate"
+    },
+    {
+      "company": "Schneider Downs",
+      "url": "https://careers.smartrecruiters.com/schneiderdowns",
+      "status": "candidate"
+    },
+    {
+      "company": "Deloitte Netherlands",
+      "url": "https://careers.smartrecruiters.com/deloittenetherlands",
+      "status": "candidate"
+    }
+  ],
+  "next_offset": null
+}

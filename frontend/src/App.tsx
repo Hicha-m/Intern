@@ -1,25 +1,24 @@
+import { EngineDashboard } from './pages/EngineDashboard'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Logout01Icon } from '@hugeicons/core-free-icons'
 import { useState } from 'react'
-import { BrowserRouter, Link, NavLink, Navigate, Outlet, Route, Routes, useLocation } from 'react-router'
+import { BrowserRouter, Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router'
 import { SessionProvider } from './auth/Session'
 import { useSession } from './auth/session-context'
 import { authError } from './auth/errors'
 import { Onboarding } from './pages/Onboarding'
 import { Resume } from './pages/Resume'
+import { Profile } from './pages/Profile'
 import { Register } from './pages/Register'
 import { Login } from './pages/Login'
 import { ResetPassword } from './pages/ResetPassword'
 import { AuthButton, AuthNotice } from './components/auth/AuthControls'
 import { OnboardingMotion } from './components/onboarding/OnboardingMotion'
+import { Workspace } from './components/dashboard/Workspace'
+import { Dashboard } from './pages/Dashboard'
+import { Offers, OfferDetail } from './pages/Offers'
+import { ApplicationDetail } from './pages/ApplicationDetail'
 import './App.css'
-
-const sections = [
-  { path: '/stages', label: 'Stages', description: 'Recherche, filtres et offres enregistrées.' },
-  { path: '/a-valider', label: 'À valider', description: 'Dossiers préparés à examiner avant chaque envoi.' },
-  { path: '/candidatures', label: 'Candidatures', description: 'Envois, confirmations et suivi.' },
-  { path: '/profil', label: 'Profil et documents', description: 'Parcours, préférences et CV.' },
-] as const
 
 function Section({ title, description }: { title: string; description: string }) {
   return (
@@ -65,23 +64,14 @@ function PrivateLayout() {
     {logoutError && <div className="onboarding-error"><AuthNotice error>{logoutError}</AuthNotice></div>}
     <Outlet />
   </OnboardingMotion>
-  return <div className="app-shell">
-    <aside className="sidebar">
-      <Link className="brand" to="/stages" aria-label="Intern, accueil">Intern<span className="brand-dot">.</span></Link>
-      <nav aria-label="Navigation principale">
-        {sections.map(({ path, label }) => <NavLink key={path} to={path} className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>{label}</NavLink>)}
-      </nav>
-      <div className="sidebar-account"><span>{session.user.email || session.user.username}</span><button type="button" onClick={logout} disabled={loggingOut}>{loggingOut ? 'Déconnexion…' : 'Se déconnecter'}</button>{logoutError && <AuthNotice error>{logoutError}</AuthNotice>}</div>
-    </aside>
-    <Outlet />
-  </div>
+  return <Workspace logout={logout} loggingOut={loggingOut} logoutError={logoutError} />
 }
 
 function App() {
   return <BrowserRouter><SessionProvider>
     <a className="skip-link" href="#main-content">Aller au contenu</a>
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/reset-password" element={<ResetPassword />} />
@@ -89,7 +79,16 @@ function App() {
         <Route path="/onboarding/resume" element={<Resume onboarding />} />
         <Route path="/onboarding/address" element={<Onboarding key="address" step="address" />} />
         <Route path="/onboarding/work-eligibility" element={<Onboarding key="eligibility" step="work-eligibility" />} />
-        {sections.map(({ path, label, description }) => <Route key={path} path={path} element={path === "/profil" ? <Resume /> : <Section title={label} description={description} />} />)}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/engine" element={<EngineDashboard />} />
+        <Route path="/stages" element={<Offers />} />
+        <Route path="/offers/:id" element={<OfferDetail />} />
+        <Route path="/candidatures" element={<Dashboard applicationsOnly />} />
+        <Route path="/a-valider" element={<Dashboard applicationsOnly />} />
+        <Route path="/tracker" element={<Dashboard applicationsOnly />} />
+        <Route path="/applications/:id" element={<ApplicationDetail />} />
+        <Route path="/settings" element={<Navigate to="/profil" replace />} />
+        <Route path="/profil" element={<Profile />} />
         <Route path="*" element={<Section title="Page introuvable" description="Cette adresse ne correspond à aucune page." />} />
       </Route>
     </Routes>

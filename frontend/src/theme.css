@@ -231,6 +231,23 @@
 .light { --resume-shadow: 0 0 0 1px oklch(0 0 0 / 0.06), 0 1px 2px -1px oklch(0 0 0 / 0.06), 0 2px 4px oklch(0 0 0 / 0.04); }
 
 .light, .light-theme {
+  --brand-paper: #f7f5ef;
+  --brand-ink: #252621;
+  --brand-muted: #696a61;
+  --brand-rule: #dcdad2;
+  --brand-field-border: #85867b;
+  --brand-highlight: #e05513;
+}
+.dark, .dark-theme {
+  --brand-paper: #191a17;
+  --brand-ink: #f2f0e8;
+  --brand-muted: #b7b7a9;
+  --brand-rule: #3c3e34;
+  --brand-field-border: #85867b;
+  --brand-highlight: #ff9557;
+}
+
+.light, .light-theme {
   --select-shadow: 0 0 0 1px oklch(0 0 0 / 0.06), 0 4px 8px -2px oklch(0 0 0 / 0.08), 0 12px 32px -8px oklch(0 0 0 / 0.14);
 }
 .dark, .dark-theme {
@@ -242,3 +259,49 @@
   --login-button-shadow-hover: inset 0 1px 0 oklch(1 0 0 / 0.26), 0 0 0 1px oklch(0 0 0 / 0.1), 0 4px 8px -2px oklch(0 0 0 / 0.18);
   --login-button-shadow-pressed: inset 0 1px 2px oklch(0 0 0 / 0.12), 0 0 0 1px oklch(0 0 0 / 0.1);
 }
+
+.dark, .dark-theme, .light, .light-theme {
+  --auth-paper: var(--brand-paper);
+  --auth-ink: var(--brand-ink);
+  --auth-muted: var(--brand-muted);
+  --auth-rule: var(--brand-rule);
+  --auth-field-border: var(--brand-field-border);
+  --auth-highlight: var(--brand-highlight);
+  --dashboard-canvas: var(--brand-paper);
+  --dashboard-surface: var(--brand-paper);
+  --dashboard-subtle: var(--brand-paper);
+  --dashboard-rule: var(--brand-rule);
+  --dashboard-ink: var(--brand-ink);
+  --dashboard-muted: var(--brand-muted);
+  --dashboard-search: transparent;
+  --dashboard-action: var(--button-background);
+  --dashboard-action-hover: var(--button-background-hover);
+  --dashboard-on-action: var(--button-text);
+  --dashboard-active: var(--accent-soft);
+  --dashboard-avatar: var(--accent-soft);
+  --dashboard-card: var(--background);
+  --dashboard-accent-text: var(--accent-text);
+  --dashboard-danger: var(--error-text);
+  --dashboard-danger-bg: var(--error-background);
+}
+.light, .light-theme {
+  --dashboard-success: #357257;
+  --dashboard-success-bg: #eaf1e9;
+  --dashboard-info: #46617e;
+  --dashboard-info-bg: #e9edf0;
+  --dashboard-warning: #8e5b23;
+  --dashboard-warning-bg: #f4ecdb;
+  --dashboard-scrim: rgb(37 38 33 / 0.3);
+}
+.dark, .dark-theme {
+  --dashboard-success: #b0d1b5;
+  --dashboard-success-bg: #28372c;
+  --dashboard-info: #b1c5de;
+  --dashboard-info-bg: #2b333d;
+  --dashboard-warning: #ddc499;
+  --dashboard-warning-bg: #3e3527;
+  --dashboard-scrim: rgb(0 0 0 / 0.5);
+}
+
+/* Original company artwork sits on white in both themes. */
+:root { --company-logo-surface: #fff; }

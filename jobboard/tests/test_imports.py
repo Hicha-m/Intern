@@ -1,4 +1,6 @@
 from unittest.mock import patch
+from datetime import timedelta
+from django.utils import timezone
 
 from django.test import TestCase
 
@@ -43,10 +45,11 @@ class ImportTests(TestCase):
 
     def test_repeat_import_preserves_identity_and_explicit_unknowns(self):
         self.run_import(snapshot(1, 2))
-        before = list(OfferSource.objects.values_list("pk", "offer_id"))
+        before = list(OfferSource.objects.order_by("pk").values_list("pk", "offer_id"))
         self.run_import(snapshot(1, 2))
         self.assertEqual(
-            list(OfferSource.objects.values_list("pk", "offer_id")), before
+            list(OfferSource.objects.order_by("pk").values_list("pk", "offer_id")),
+            before,
         )
         self.assertEqual(Offer.objects.count(), 2)
         offer = Offer.objects.first()
@@ -72,6 +75,20 @@ class ImportTests(TestCase):
             origin_url=first.origin_url,
             apply_url=first.apply_url,
             content_hash="a" * 64,
+        )
+        self.run_import(snapshot())
+        # An empty board is quarantined before absence confirmation begins.
+        self.assertEqual(
+            ImportRun.objects.latest("id").error_code, "snapshot_quarantined"
+        )
+        from jobboard.models import BoardSchedule, SourceObservation
+
+        BoardSchedule.objects.filter(board=self.board).update(
+            quarantine_since=timezone.now() - timedelta(hours=7)
+        )
+        self.run_import(snapshot())
+        SourceObservation.objects.filter(source__board=self.board).update(
+            missing_since=timezone.now() - timedelta(hours=7)
         )
         self.run_import(snapshot())
         first.offer.refresh_from_db()

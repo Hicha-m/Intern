@@ -38,7 +38,7 @@ test('email first, back preserves data, final registration sends contract and CS
   await page.getByRole('button', { name: 'Créer mon compte' }).click()
   await expect(page).toHaveURL(/\/onboarding\/resume$/)
   await page.getByRole('button', { name: 'Se déconnecter' }).click()
-  await page.getByRole('link', { name: 'Pas encore de compte ? Créer un compte' }).click()
+  await page.getByRole('link', { name: 'Créer un compte' }).click()
   await expect(page).toHaveURL(/\/register$/)
 })
 test('email error returns to correct step with associated error and focus', async ({ page }) => {
@@ -77,6 +77,7 @@ test('fullscreen email screen, responsive onboarding and reduced motion', async 
   }
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await fill(page)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   await expect(page.locator('.auth-form')).toHaveCSS('animation-name', 'none')
   await expect(page.getByLabel('Mot de passe', { exact: true })).toHaveAttribute('autocomplete', 'new-password')
   await page.getByRole('button', { name: 'Afficher le mot de passe' }).click()
@@ -84,6 +85,29 @@ test('fullscreen email screen, responsive onboarding and reduced motion', async 
   await page.getByRole('button', { name: 'Créer mon compte' }).scrollIntoViewIfNeeded()
   await expect(page.getByRole('button', { name: 'Créer mon compte' })).toBeInViewport()
   await page.screenshot({ path: info.outputPath('onboarding-password.png'), fullPage: true })
+})
+
+test('keyboard registration announces the active step and preserves a stable focus target', async ({ page }, info) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await prepare(page)
+  await expect(page).toHaveTitle('Créer un compte — Intern')
+  const progress = page.getByRole('list', { name: 'Étapes de création du compte' })
+  await expect(progress.locator('[aria-current="step"]')).toHaveText('E-mail')
+  await page.getByLabel('Adresse e-mail').fill('ada@example.test')
+  await page.keyboard.press('Enter')
+  await expect(page.getByRole('heading', { level: 1 })).toBeFocused()
+  await expect(progress.locator('[aria-current="step"]')).toHaveText('Votre nom')
+  await expect(page.locator('.auth-stage')).toHaveCSS('animation-name', 'none')
+  await page.keyboard.press('Tab')
+  await expect(page.getByLabel('Nom complet')).toBeFocused()
+  await page.keyboard.type('Ada Lovelace')
+  await page.screenshot({ path: info.outputPath('register-name-mobile.png'), fullPage: true })
+  await page.keyboard.press('Enter')
+  await expect(progress.locator('[aria-current="step"]')).toHaveText('Mot de passe')
+  await page.keyboard.press('Tab')
+  await expect(page.getByLabel('Mot de passe', { exact: true })).toBeFocused()
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  await page.screenshot({ path: info.outputPath('register-password-mobile.png'), fullPage: true })
 })
 
 test('existing email is rejected before name and password, editing allows retry', async ({ page }) => {

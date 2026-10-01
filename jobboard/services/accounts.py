@@ -95,6 +95,15 @@ def export_account(user):
             "saved_offers": rows(m.SavedOffer.objects.filter(user=user)),
         }
         for name, model in (
+            ("saved_searches", m.SavedSearch),
+            ("offer_feedback", m.OfferFeedback),
+            ("company_preferences", m.CompanyPreference),
+            ("offer_reports", m.OfferReport),
+            ("alerts", m.AlertEvent),
+            ("external_opportunities", m.ExternalOpportunity),
+        ):
+            data[name] = rows(model.objects.filter(user=user))
+        for name, model in (
             ("experiences", m.Experience),
             ("education", m.Education),
             ("projects", m.Project),

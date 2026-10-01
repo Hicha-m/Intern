@@ -1,14 +1,40 @@
 import { useId, useState } from 'react'
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from 'react'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { ViewIcon, ViewOffSlashIcon } from '@hugeicons/core-free-icons'
 
-type FieldProps = InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string; error?: string; invalid?: boolean; trailingAction?: ReactNode }
-export function AuthField({ label, hint, error, invalid, trailingAction, id: suppliedId, ...props }: FieldProps) {
+type FieldProps = InputHTMLAttributes<HTMLInputElement> & { label: string; hint?: string; error?: string; invalid?: boolean; trailingAction?: ReactNode; floatingLabel?: boolean }
+export function AuthField({ label, hint, error, invalid, trailingAction, floatingLabel = false, id: suppliedId, ...props }: FieldProps) {
   const generatedId = useId()
   const id = suppliedId ?? generatedId
-  return <div className="auth-field">
-    <label htmlFor={id}>{label}</label>
-    <div className="auth-input-wrap"><input {...props} id={id} aria-invalid={invalid || !!error || undefined} aria-describedby={[props['aria-describedby'], hint ? `${id}-hint` : '', error ? `${id}-error` : ''].filter(Boolean).join(' ') || undefined} />{trailingAction}</div>
-    {error && <small className="auth-field-error" id={`${id}-error`}>{error}</small>}
+  const [validationError, setValidationError] = useState<string | null>(null)
+  const fieldError = error || validationError
+  return <div className={`auth-field${floatingLabel ? ' auth-field--floating' : ''}`}>
+    {!floatingLabel && <label htmlFor={id}>{label}</label>}
+    <div className="auth-input-wrap">
+      <input {...props} placeholder={props.placeholder ?? (floatingLabel ? ' ' : undefined)} id={id} aria-invalid={invalid || !!fieldError || undefined} aria-describedby={[props['aria-describedby'], hint ? `${id}-hint` : '', fieldError ? `${id}-error` : ''].filter(Boolean).join(' ') || undefined}
+        onInvalid={event => {
+          props.onInvalid?.(event)
+          if (!floatingLabel) return
+          // Keep browser constraints, but show their feedback inline instead of a tooltip.
+          event.preventDefault()
+          const input = event.currentTarget
+          setValidationError(input.validity.valueMissing ? 'Renseignez ce champ.'
+            : input.validity.typeMismatch && input.type === 'email' ? 'Saisissez une adresse e-mail valide.'
+            : input.validity.tooShort ? `Utilisez au moins ${input.minLength} caractères.`
+            : input.validationMessage)
+          if (input.form?.querySelector('input:invalid') === input) input.focus()
+        }}
+        onChange={event => {
+          setValidationError(null)
+          props.onChange?.(event)
+        }}
+      />
+      {floatingLabel && <label htmlFor={id}>{label}</label>}
+      {floatingLabel && <span className="auth-field-rule" aria-hidden="true" />}
+      {trailingAction}
+    </div>
+    {fieldError && <small className="auth-field-error" id={`${id}-error`} aria-live="polite">{fieldError}</small>}
     {hint && <small id={`${id}-hint`}>{hint}</small>}
   </div>
 }
@@ -18,7 +44,10 @@ export function PasswordField({ label = 'Mot de passe', ...props }: Omit<FieldPr
   const [visible, setVisible] = useState(false)
   return <div className="auth-password-field">
     <AuthField {...props} id={id} label={label} spellCheck={false} autoCapitalize="none" autoCorrect="off" type={visible ? 'text' : 'password'} trailingAction={<button type="button" className="auth-password-toggle" aria-label={visible ? 'Masquer le mot de passe' : 'Afficher le mot de passe'} aria-pressed={visible} aria-controls={id} onClick={() => setVisible(v => !v)}>
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>{visible && <path d="m3 3 18 18"/>}</svg>
+      <span className="auth-password-icons" aria-hidden="true">
+        <HugeiconsIcon className="auth-password-eye" icon={ViewIcon} size={20} strokeWidth={1.5} />
+        <HugeiconsIcon className="auth-password-eye-off" icon={ViewOffSlashIcon} size={20} strokeWidth={1.5} />
+      </span>
     </button>} />
   </div>
 }

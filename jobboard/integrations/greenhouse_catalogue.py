@@ -27,6 +27,31 @@ class _Text(HTMLParser):
         self.parts.append(data)
 
 
+def _office_matches_job(location, office, address):
+    """Office metadata corroborates a job location, never widens its geography.
+
+    Greenhouse may attach the entire department's offices to city-specific jobs.
+    Match complete location labels or their city component, not substrings (York
+    must not match New York). Unknown/remote-only locations stay unknown.
+    """
+
+    def normalized(value):
+        return " ".join(value.casefold().split())
+
+    if not location:
+        return False
+    office_name = office.get("name")
+    aliases = {normalized(address), normalized(address.split(",", 1)[0])}
+    if isinstance(office_name, str):
+        aliases.add(normalized(office_name))
+    aliases -= {"", "remote", "global", "worldwide", "anywhere", "all offices"}
+    for segment in re.split(r"[;|]", location):
+        label = normalized(segment)
+        if label in aliases:
+            return True
+    return False
+
+
 def normalize_snapshot(payload):
     if not isinstance(payload, dict) or not isinstance(payload.get("jobs"), list):
         raise CatalogueImportError("invalid_snapshot")
@@ -75,6 +100,30 @@ def normalize_snapshot(payload):
             not isinstance(location, str) or len(location) > 240
         ):
             raise CatalogueImportError("invalid_location")
+        # Office location is an explicit address label. Office name is only an
+        # organization-defined identifier (e.g. GB-London), not a country fact.
+        details = [{"name": location.strip(), "country": ""}] if location else []
+        offices = job.get("offices", [])
+        if not isinstance(offices, list):
+            raise CatalogueImportError("invalid_location")
+        for office in offices:
+            if not isinstance(office, dict):
+                raise CatalogueImportError("invalid_location")
+            address = office.get("location")
+            if address is None:
+                continue
+            if not isinstance(address, str) or len(address) > 240:
+                raise CatalogueImportError("invalid_location")
+            address = address.strip()
+            if address and _office_matches_job(location, office, address):
+                # The importer resolves this literal country/address component
+                # against known country names; unrecognized cities stay unknown.
+                detail = {
+                    "name": address,
+                    "country": address.rsplit(",", 1)[-1].strip(),
+                }
+                if detail not in details:
+                    details.append(detail)
         parser = _Text()
         parser.feed(html.unescape(content))
         normalized.append(
@@ -84,6 +133,15 @@ def normalize_snapshot(payload):
                 "description": "\n".join(parser.parts),
                 "url": url,
                 "location": location.strip() if location else None,
+                "location_details": details,
+                "work_mode": "remote"
+                if location
+                and re.search(
+                    r"\b(?:remote|télétravail|remoto|home.?office)\b",
+                    location,
+                    re.IGNORECASE,
+                )
+                else "unknown",
                 "hash": hashlib.sha256(
                     json.dumps(
                         job, sort_keys=True, separators=(",", ":"), allow_nan=False
@@ -103,19 +161,22 @@ def fetch_snapshot(board_key):
         raise CatalogueImportError("invalid_board_key")
     url = f"https://boards-api.greenhouse.io/v1/boards/{board_key}/jobs?content=true"
     try:
-        with httpx.Client(
-            timeout=20, follow_redirects=False, trust_env=False
-        ) as client:
-            with client.stream(
+        with (
+            httpx.Client(timeout=20, follow_redirects=False, trust_env=False) as client,
+            client.stream(
                 "GET", url, headers={"Accept": "application/json"}
-            ) as response:
-                if response.status_code != 200:
-                    raise CatalogueImportError("upstream_http_error")
-                data = bytearray()
-                for chunk in response.iter_bytes():
-                    data.extend(chunk)
-                    if len(data) > MAX_RESPONSE_BYTES:
-                        raise CatalogueImportError("response_too_large")
+            ) as response,
+        ):
+            if response.status_code != 200:
+                error = CatalogueImportError("upstream_http_error")
+                retry = response.headers.get("Retry-After", "")
+                error.retry_after = min(int(retry), 86400) if retry.isdigit() else None
+                raise error
+            data = bytearray()
+            for chunk in response.iter_bytes():
+                data.extend(chunk)
+                if len(data) > MAX_RESPONSE_BYTES:
+                    raise CatalogueImportError("response_too_large")
         payload = json.loads(data)
         normalize_snapshot(
             payload

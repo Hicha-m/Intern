@@ -1,0 +1,23 @@
+[
+  {
+    "company": "Airbus",
+    "provider": "workday",
+    "url": "https://ag.wd3.myworkdayjobs.com/en-US/Airbus",
+    "evidence_url": "https://www.airbus.com/en/careers/students-and-graduates/interns/internships-in-france",
+    "notes": "Observed public CXS response on 2026-09-30: Stage 2027 - Stagiaire Amélioration Continue JR10438594, explicit France/FR. Global list is capped at 2000: connector partitions using country facet IDs discovered in response, never hardcodes IDs."
+  },
+  {
+    "company": "NVIDIA",
+    "provider": "workday",
+    "url": "https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite",
+    "evidence_url": "https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/Software-Engineering-Intern---Replay-Tooling---Test-Automation--Autonomous-Driving_JR2022086",
+    "notes": "Official career advertisement observed 2026-09-30: internship explicitly in Munich, Germany. Public list/facets responded 200; employer uses locationHierarchy1 country facets rather than locationCountry."
+  },
+  {
+    "company": "Sanofi",
+    "provider": "workday",
+    "url": "https://sanofi.wd3.myworkdayjobs.com/en-US/SanofiCareers",
+    "evidence_url": "https://jobs.sanofi.com/en/search_jobs/stage",
+    "notes": "Official career results expose French internships. Public CXS list responded 200 on 2026-09-30, 747 global roles, country facets include France, Germany, Hungary and other European countries. Full time is work hours and is never treated as an employment contract. Full read-only sweep verified: 52 normalized confirmed European internships, complete=true, zero record errors (44 seconds). CXS reports total=0 after offset zero, so pagination retains initial total."
+  }
+]

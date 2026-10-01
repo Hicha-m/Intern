@@ -1,0 +1,61 @@
+{
+  "checked_at_utc": "2026-09-30T19:52:15.214704+00:00",
+  "configured_queries": 63,
+  "configured_linkedin_queries": 47,
+  "successful_linkedin_queries": [
+    {
+      "country": "GB",
+      "result_count": 10,
+      "cursor": "10",
+      "truncated": true,
+      "last_error_code": ""
+    },
+    {
+      "country": "IE",
+      "result_count": 10,
+      "cursor": "10",
+      "truncated": true,
+      "last_error_code": ""
+    },
+    {
+      "country": "IT",
+      "result_count": 10,
+      "cursor": "10",
+      "truncated": true,
+      "last_error_code": ""
+    },
+    {
+      "country": "FR",
+      "result_count": 10,
+      "cursor": "10",
+      "truncated": true,
+      "last_error_code": ""
+    },
+    {
+      "country": "ES",
+      "result_count": 10,
+      "cursor": "10",
+      "truncated": true,
+      "last_error_code": ""
+    },
+    {
+      "country": "DE",
+      "result_count": 10,
+      "cursor": "10",
+      "truncated": true,
+      "last_error_code": ""
+    }
+  ],
+  "linkedin_leads": 60,
+  "statuses": [
+    {
+      "status": "needs_access",
+      "count": 8
+    },
+    {
+      "status": "pending",
+      "count": 52
+    }
+  ],
+  "publication_policy": "Discovery leads are not public offers; employer-board validation and strict internship/Europe classification still required."
+}

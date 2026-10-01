@@ -31,6 +31,11 @@ class Company(models.Model):
     domain = models.CharField(max_length=253, null=True, blank=True, db_index=True)
     description = models.TextField(blank=True, default="")
     logo_object_key = models.TextField(null=True, blank=True)
+    logo_attempts = models.PositiveIntegerField(default=0)
+    logo_next_attempt_at = models.DateTimeField(
+        default=timezone.now, null=True, blank=True, db_index=True
+    )
+    logo_last_error = models.CharField(max_length=240, blank=True, default="")
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -253,6 +258,7 @@ class ImportRun(models.Model):
     )
     started_at = models.DateTimeField(default=timezone.now)
     finished_at = models.DateTimeField(null=True, blank=True)
+    diagnostics = models.JSONField(default=list, blank=True)
     is_full_snapshot = models.BooleanField(default=False)
     seen_count = models.PositiveIntegerField(default=0)
     error_code = models.CharField(max_length=80, null=True, blank=True)

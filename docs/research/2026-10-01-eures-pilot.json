@@ -1,0 +1,25 @@
+{
+  "queries": [
+    {
+      "country": "DE",
+      "seen": 20,
+      "accepted_after_audit": 4
+    },
+    {
+      "country": "BE",
+      "seen": 16,
+      "accepted_after_audit": 8
+    },
+    {
+      "country": "FI",
+      "seen": 5,
+      "accepted_after_audit": 1
+    }
+  ],
+  "eures_visible": 16,
+  "audit": "Source contract internship alone rejected after pilot identified non-internship jobs.",
+  "verified_at": "2026-09-30T22:05:56.709999+00:00",
+  "total_visible": 1404,
+  "configured_countries": 31,
+  "tests": 315
+}

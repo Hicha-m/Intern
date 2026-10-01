@@ -93,3 +93,16 @@ uv run ruff check jobboard config --select E4,E7,E9,F,I
 ```
 
 Les tests utilisent une base PostgreSQL dédiée, jamais SQLite. `TEST_DATABASE_NAME` permet un nom isolé. Les tests transactionnels utilisent de vraies connexions concurrentes pour les approbations et les claims du worker. Les appels R2/ATS sont contrôlés dans les tests : ils ne prouvent pas une intégration distante activée et n'envoient aucune candidature réelle.
+
+## Moteur de stages en Europe
+
+Le catalogue public, les recommandations et les suggestions du tableau de bord publient uniquement les **stages confirmés en Europe**, ouverts et récemment vérifiés. Ce périmètre est imposé par le serveur : les paramètres client ne peuvent pas faire apparaître des emplois ordinaires ou des annonces hors Europe. Les données techniques importées d'un board complet ne sont pas toutes publiées.
+
+Voir la [spec et son bilan de livraison](docs/INTERNSHIP_ENGINE_SPEC.md), le [guide d'exploitation](docs/INTERNSHIP_ENGINE_RUNBOOK.md) et le [contrat API](docs/API.md). Le worker du catalogue est séparé du worker d'envoi de candidatures.
+
+```bash
+uv run manage.py run_catalogue_worker --once
+uv run manage.py re_enrich_catalogue --all
+```
+
+Le premier traite une passe de tâches arrivées à échéance ; le second recalcule les preuves et l'éligibilité depuis les données déjà importées, sans réseau ni suppression d'historique. Pour des collectes périodiques, superviser `run_catalogue_worker` sans `--once`, ou utiliser le service Compose `catalogue-worker` après construction de l'image et application des migrations.

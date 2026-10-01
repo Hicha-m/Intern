@@ -1,0 +1,129 @@
+{
+  "started_at": "2026-10-01T06:26:24.095586+00:00",
+  "countries": [
+    "IT",
+    "NL",
+    "ES",
+    "GB",
+    "IE"
+  ],
+  "execute": true,
+  "sources": [
+    {
+      "candidate_id": 1596,
+      "company": "Picnic",
+      "url": "https://job-boards.greenhouse.io/teampicnic",
+      "provider": "greenhouse",
+      "status": "active",
+      "board_id": 1051,
+      "visible_offer_ids": [
+        7538,
+        7539,
+        7550,
+        7556,
+        7613,
+        7650,
+        7651,
+        7652,
+        7653,
+        7654,
+        7655,
+        7656,
+        7673,
+        7730,
+        7815
+      ],
+      "target_offer_ids": [
+        7651,
+        7652,
+        7655,
+        7656
+      ],
+      "new_visible_offer_ids": [
+        7538,
+        7539,
+        7550,
+        7556,
+        7613,
+        7650,
+        7651,
+        7652,
+        7653,
+        7654,
+        7655,
+        7656,
+        7673,
+        7730,
+        7815
+      ],
+      "new_target_offer_ids": [
+        7651,
+        7652,
+        7655,
+        7656
+      ]
+    },
+    {
+      "candidate_id": 1597,
+      "company": "HubSpot",
+      "url": "https://job-boards.greenhouse.io/hubspotjobs",
+      "provider": "greenhouse",
+      "status": "paused_no_target_internships",
+      "board_id": 1052,
+      "visible_offer_ids": [],
+      "target_offer_ids": [],
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "candidate_id": 1598,
+      "company": "Satispay",
+      "url": "https://jobs.lever.co/satispay",
+      "provider": "lever",
+      "status": "paused_no_target_internships",
+      "board_id": 1053,
+      "visible_offer_ids": [],
+      "target_offer_ids": [],
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "candidate_id": 1599,
+      "company": "Mollie",
+      "url": "https://jobs.ashbyhq.com/mollie",
+      "provider": "ashby",
+      "status": "paused_no_target_internships",
+      "board_id": 1054,
+      "visible_offer_ids": [],
+      "target_offer_ids": [],
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "candidate_id": 1600,
+      "company": "Satispay",
+      "url": "https://jobs.ashbyhq.com/satispay",
+      "provider": "ashby",
+      "status": "paused_no_target_internships",
+      "board_id": 1055,
+      "visible_offer_ids": [],
+      "target_offer_ids": [],
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    },
+    {
+      "candidate_id": 1601,
+      "company": "Ryanair",
+      "url": "https://apply.workable.com/ryanair",
+      "provider": "workable",
+      "status": "paused_no_target_internships",
+      "board_id": 1056,
+      "visible_offer_ids": [],
+      "target_offer_ids": [],
+      "new_visible_offer_ids": [],
+      "new_target_offer_ids": []
+    }
+  ],
+  "counting_note": "Visible offer IDs, not guaranteed unique vacancies across sources. Other workers excluded from source counts.",
+  "finished_at": "2026-10-01T06:26:39.004245+00:00"
+}

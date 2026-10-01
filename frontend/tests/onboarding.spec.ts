@@ -48,9 +48,9 @@ test('unfinished onboarding is mandatory on entry and reload; saved address surv
     await page.screenshot({ path: info.outputPath(`eligibility-${width}.png`), fullPage: true, animations: 'disabled' })
   }
   await page.getByRole('button', { name: 'Terminer mon inscription' }).click()
-  await expect(page).toHaveURL(/\/stages$/)
+  await expect(page).toHaveURL(/\/dashboard$/)
   await page.reload()
-  await expect(page).toHaveURL(/\/stages$/)
+  await expect(page).toHaveURL(/\/dashboard$/)
 })
 test('direct future step and private deep link return to first incomplete step', async ({ page }) => {
   await prepare(page, 'resume')

@@ -1,0 +1,6 @@
+.coverage-table { width: 100%; border-collapse: collapse; font-size: var(--font-size-sm); }
+.coverage-table th, .coverage-table td { padding: var(--space-3) var(--space-4); text-align: left; vertical-align: top; border-bottom: var(--border-width) solid var(--dashboard-rule); }
+.coverage-table th { font-weight: var(--font-weight-medium); }
+.coverage-table td { min-width: var(--coverage-cell-width); }
+.coverage-table details { min-width: var(--coverage-error-width); }
+.coverage-table p { margin-block: var(--space-2); }

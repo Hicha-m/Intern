@@ -5,6 +5,9 @@ async function prepare(page: Page, current: number | null = null) {
   await page.route('**/api/v1/auth/me/', route => route.fulfill({ json: { user: { id: 1, username: 'ada', email: 'ada@example.test' } } }))
   await page.route('**/api/v1/auth/csrf/', route => route.fulfill({ json: { csrf_token: 'resume-csrf' } }))
   await page.route('**/api/v1/profile/', route => route.fulfill({ json: { current_resume_id: current } }))
+  await page.route(/\/api\/v1\/(?:profile\/(?:education|experiences|projects|work-authorizations)|catalogue|documents)\/(?:\?.*)?$/, route => route.fulfill({ json: { results: [], count: 0, page: 1, page_size: 100 } }))
+  await page.route('**/api/v1/preferences/', route => route.fulfill({ json: { contracts: [], work_modes: [], role_ids: [], location_ids: [] } }))
+  await page.route('**/api/v1/onboarding/', route => route.fulfill({ json: { address: {}, citizenships: [], countries: [], work_authorizations: [] } }))
 }
 test('multipart upload then failed association retries without duplicate upload', async ({ page }) => {
   await prepare(page)

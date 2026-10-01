@@ -1,0 +1,46 @@
+{
+  "revision": "6b44a1badc9bfbf5cf176f75265cc5729e520e99",
+  "scanned": 6216,
+  "invalid": 0,
+  "registered": 6,
+  "activated": 5,
+  "failures": [
+    {
+      "url": "https://talan.teamtailor.com",
+      "code": "upstream_http_error"
+    }
+  ],
+  "sources": [
+    {
+      "company": "swan.io",
+      "url": "https://swanio.teamtailor.com",
+      "status": "validated"
+    },
+    {
+      "company": "talan",
+      "url": "https://talan.teamtailor.com",
+      "status": "validation_failed"
+    },
+    {
+      "company": "Fifty-Five",
+      "url": "https://apply.workable.com/fifty-five",
+      "status": "validated"
+    },
+    {
+      "company": "Flowdesk",
+      "url": "https://apply.workable.com/flowdesk",
+      "status": "validated"
+    },
+    {
+      "company": "Sézane",
+      "url": "https://apply.workable.com/sezane-3",
+      "status": "validated"
+    },
+    {
+      "company": "Skeepers",
+      "url": "https://apply.workable.com/skeepers",
+      "status": "validated"
+    }
+  ],
+  "next_offset": null
+}

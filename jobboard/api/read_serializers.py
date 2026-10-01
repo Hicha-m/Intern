@@ -32,9 +32,20 @@ def projection(name, model, fields):
     )
 
 
-CompanySerializer = projection(
-    "CompanySerializer", m.Company, ("id", "name", "website_url")
-)
+class CompanySerializer(ReadModelSerializer):
+    logo_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = m.Company
+        fields = ("id", "name", "website_url", "logo_url")
+
+    def get_logo_url(self, company):
+        if not company.logo_object_key:
+            return None
+        version = company.logo_object_key.rsplit("/", 1)[-1].removesuffix(".png")
+        return f"/api/v1/companies/{company.pk}/logo/?v={version}"
+
+
 RoleSerializer = projection("RoleSerializer", m.Role, ("id", "name", "slug"))
 SkillSerializer = projection("SkillSerializer", m.Skill, ("id", "name", "slug"))
 LocationSerializer = projection(

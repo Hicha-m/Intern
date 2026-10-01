@@ -20,6 +20,7 @@ from jobboard.models import (
     Skill,
     SourceBoard,
 )
+from jobboard.tests.engine_fixtures import publishable
 
 urlpatterns = [path("api/v1/", include("jobboard.api.catalogue"))]
 
@@ -38,6 +39,7 @@ class CatalogueAPITests(TestCase):
             company=self.company,
             contract_type="internship",
         )
+        publishable(self.offer)
         self.client.force_login(self.user)
 
     def test_feed_excludes_closed_expired_hidden_and_filters_search(self):
@@ -85,6 +87,8 @@ class CatalogueAPITests(TestCase):
                 for i in range(25)
             ]
         )
+        for offer in Offer.objects.all():
+            publishable(offer)
         with CaptureQueriesContext(connection) as small:
             self.client.get("/api/v1/offers/?page_size=1")
         with CaptureQueriesContext(connection) as large:
@@ -116,7 +120,8 @@ class CatalogueAPITests(TestCase):
 
     def test_authentication_required(self):
         self.client.logout()
-        self.assertEqual(self.client.get("/api/v1/offers/").status_code, 401)
+        self.assertEqual(self.client.get("/api/v1/offers/").status_code, 200)
+        self.assertEqual(self.client.get("/api/v1/saved-offers/").status_code, 401)
 
     def preference(self, **kwargs):
         profile, _ = CandidateProfile.objects.get_or_create(
@@ -213,7 +218,7 @@ class CatalogueAPITests(TestCase):
                 maximum=maximum,
                 **{"currency": "EUR", "period": "year", "gross_net": "gross", **kwargs},
             )
-            return offer
+            return publishable(offer)
 
         sufficient = offer_with_salary("enough", "45000", "55000")
         insufficient = offer_with_salary("too-low", "35000", "45000")

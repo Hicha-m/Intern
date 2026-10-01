@@ -1,0 +1,82 @@
+{
+  "verified_at": "2026-09-30T22:12:09.113847+00:00",
+  "wttj_visible": 111,
+  "total_visible": 1571,
+  "tests": 320,
+  "configured_countries": 47,
+  "pilot": [
+    {
+      "query_id": 133,
+      "country": "FR",
+      "seen": 0,
+      "imported": 0,
+      "source_total": 2401,
+      "next_cursor": "1790369015:1790806222:0",
+      "truncated": true
+    },
+    {
+      "query_id": 134,
+      "country": "BE",
+      "seen": 28,
+      "imported": 20,
+      "source_total": 28,
+      "next_cursor": "",
+      "truncated": false
+    },
+    {
+      "query_id": 135,
+      "country": "DE",
+      "seen": 50,
+      "imported": 14,
+      "source_total": 58,
+      "next_cursor": "0:1790806227:1",
+      "truncated": false
+    },
+    {
+      "query_id": 136,
+      "country": "ES",
+      "seen": 50,
+      "imported": 21,
+      "source_total": 86,
+      "next_cursor": "0:1790806227:1",
+      "truncated": false
+    },
+    {
+      "query_id": 137,
+      "country": "NL",
+      "seen": 30,
+      "imported": 18,
+      "source_total": 30,
+      "next_cursor": "",
+      "truncated": false
+    }
+  ],
+  "fr_resume": [
+    {
+      "query_id": 133,
+      "country": "FR",
+      "seen": 50,
+      "imported": 38,
+      "source_total": 750,
+      "next_cursor": "1790587619:1790806222:1",
+      "truncated": false
+    }
+  ],
+  "decisions": [
+    {
+      "status": "out_of_scope",
+      "error_code": "",
+      "count": 27
+    },
+    {
+      "status": "uncertain",
+      "error_code": "",
+      "count": 70
+    },
+    {
+      "status": "imported",
+      "error_code": "",
+      "count": 111
+    }
+  ]
+}

@@ -6,7 +6,7 @@ for (const theme of ['light', 'dark']) {
     await page.goto('/login')
     await expect(page.getByRole('button', { name: 'Se connecter', exact: true })).toBeEnabled()
     await page.evaluate(theme => { document.documentElement.className = theme }, theme)
-    await expect(page.getByLabel('Adresse e-mail')).toHaveCSS('background-color', theme === 'light' ? 'rgb(255, 255, 255)' : 'rgb(17, 17, 17)')
+    await expect(page.getByLabel('Adresse e-mail')).toHaveCSS('background-color', theme === 'light' ? 'rgb(247, 245, 239)' : 'rgb(25, 26, 23)')
     const contrast = await page.evaluate(() => {
       function rgb(color: string) {
         // Resolve CSS colors through canvas into sRGB, including display-p3 overrides.
@@ -23,11 +23,12 @@ for (const theme of ['light', 'dark']) {
       const root = getComputedStyle(document.documentElement)
       const input = getComputedStyle(document.querySelector('input')!)
       const button = getComputedStyle(document.querySelector('.auth-submit')!)
-      const muted = getComputedStyle(document.querySelector('.auth-heading p')!)
-      const background = root.backgroundColor
+      const muted = getComputedStyle(document.querySelector('.auth-field label')!)
+      const spread = getComputedStyle(document.querySelector('.auth-layout')!)
+      const background = spread.backgroundColor
       return {
-        body: ratio(root.color, background), muted: ratio(muted.color, background),
-        button: ratio(button.color, button.backgroundColor), border: ratio(input.borderColor, input.backgroundColor),
+        body: ratio(spread.color, background), muted: ratio(muted.color, background),
+        button: ratio(button.color, button.backgroundColor), border: ratio(input.borderBottomColor, input.backgroundColor),
         focus: ratio(root.getPropertyValue('--focus-ring'), input.backgroundColor),
         error: ratio(root.getPropertyValue('--error-text'), root.getPropertyValue('--error-background')),
       }
@@ -49,6 +50,7 @@ for (const theme of ['light', 'dark']) {
     await page.setViewportSize({ width: 640, height: 960 })
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
     await page.getByLabel('Mot de passe', { exact: true }).focus()
-    await expect(page.getByLabel('Mot de passe', { exact: true })).toHaveCSS('outline-style', 'solid')
+    await expect(page.getByLabel('Mot de passe', { exact: true })).toHaveCSS('outline-style', 'none')
+    await expect(page.locator('.auth-password-field .auth-field-rule')).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)')
   })
 }

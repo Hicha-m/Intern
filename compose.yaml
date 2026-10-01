@@ -51,6 +51,72 @@ services:
     depends_on:
       db:
         condition: service_healthy
+  catalogue-worker:
+    build: .
+    profiles: [app]
+    command: [".venv/bin/python", "manage.py", "run_catalogue_worker"]
+    environment: *app_environment
+    volumes:
+      - intern_media:/app/.private-media
+    depends_on:
+      db:
+        condition: service_healthy
+  jobspy-worker:
+    build: .
+    profiles: [app]
+    command: [".venv/bin/python", "manage.py", "run_jobspy_worker", "--poll-interval", "30", "--limit", "1"]
+    environment: *app_environment
+    depends_on:
+      db:
+        condition: service_healthy
+
+  eures-worker:
+    build: .
+    profiles: [app]
+    command: [".venv/bin/python", "manage.py", "run_eures_worker", "--poll-interval", "30", "--limit", "1"]
+    environment: *app_environment
+    depends_on:
+      db:
+        condition: service_healthy
+
+  wttj-worker:
+    build: .
+    profiles: [app]
+    command: [".venv/bin/python", "manage.py", "run_wttj_worker", "--poll-interval", "30", "--limit", "1"]
+    environment: *app_environment
+    depends_on:
+      db:
+        condition: service_healthy
+
+  jobtech-worker:
+    build: .
+    profiles: [app]
+    command: [".venv/bin/python", "manage.py", "run_jobtech_worker", "--poll-interval", "30", "--limit", "1"]
+    environment: *app_environment
+    depends_on:
+      db:
+        condition: service_healthy
+
+  bundesagentur-worker:
+    build: .
+    profiles: [app]
+    command: [".venv/bin/python", "manage.py", "run_bundesagentur_worker", "--poll-interval", "30", "--limit", "1"]
+    environment: *app_environment
+    depends_on:
+      db:
+        condition: service_healthy
+
+  nav-worker:
+    build: .
+    profiles: [app]
+    command: [".venv/bin/python", "manage.py", "run_nav_worker", "--poll-interval", "10", "--limit", "1"]
+    environment:
+      <<: *app_environment
+      NAV_FEED_TOKEN: ${NAV_FEED_TOKEN:-}
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   intern_pgdata:
   intern_media:
