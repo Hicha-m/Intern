@@ -34,16 +34,26 @@ def projection(name, model, fields):
 
 class CompanySerializer(ReadModelSerializer):
     logo_url = serializers.SerializerMethodField()
+    domain = serializers.SerializerMethodField()
 
     class Meta:
         model = m.Company
-        fields = ("id", "name", "website_url", "logo_url")
+        fields = ("id", "name", "website_url", "domain", "logo_url")
 
     def get_logo_url(self, company):
         if not company.logo_object_key:
             return None
         version = company.logo_object_key.rsplit("/", 1)[-1].removesuffix(".png")
+        from jobboard.services.company_logos import REJECTED_LOGO_DIGESTS
+
+        if version in REJECTED_LOGO_DIGESTS:
+            return None
         return f"/api/v1/companies/{company.pk}/logo/?v={version}"
+
+    def get_domain(self, company):
+        from jobboard.services.company_logos import employer_domain
+
+        return employer_domain(company.domain)
 
 
 RoleSerializer = projection("RoleSerializer", m.Role, ("id", "name", "slug"))
@@ -122,6 +132,9 @@ class ProfileSerializer(ReadModelSerializer):
 
 
 class PreferenceSerializer(ReadModelSerializer):
+    domains = serializers.SlugRelatedField(many=True, read_only=True, slug_field="slug", source="job_domains")
+    subdomains = serializers.SlugRelatedField(many=True, read_only=True, slug_field="slug", source="job_subdomains")
+    excluded_subdomains = serializers.SlugRelatedField(many=True, read_only=True, slug_field="slug", source="excluded_job_subdomains")
     role_ids = serializers.SerializerMethodField()
     location_ids = serializers.SerializerMethodField()
     contracts = serializers.SerializerMethodField()

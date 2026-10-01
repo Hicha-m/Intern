@@ -27,7 +27,7 @@ class _Text(HTMLParser):
         self.parts.append(data)
 
 
-def _office_matches_job(location, office, address):
+def _office_matches_job(location, office, address, explicit_locations=()):
     """Office metadata corroborates a job location, never widens its geography.
 
     Greenhouse may attach the entire department's offices to city-specific jobs.
@@ -45,7 +45,13 @@ def _office_matches_job(location, office, address):
     if isinstance(office_name, str):
         aliases.add(normalized(office_name))
     aliases -= {"", "remote", "global", "worldwide", "anywhere", "all offices"}
-    for segment in re.split(r"[;|]", location):
+    segments = re.split(r"[;|]", location)
+    comma_labels = [normalized(value) for value in location.split(",")]
+    if len(comma_labels) > 1 and set(comma_labels) == {
+        normalized(value) for value in explicit_locations
+    }:
+        segments = location.split(",")
+    for segment in segments:
         label = normalized(segment)
         if label in aliases:
             return True
@@ -106,6 +112,23 @@ def normalize_snapshot(payload):
         offices = job.get("offices", [])
         if not isinstance(offices, list):
             raise CatalogueImportError("invalid_location")
+        metadata = job.get("metadata") or []
+        location_fields = (
+            [
+                field.get("value")
+                for field in metadata
+                if isinstance(field, dict)
+                and field.get("name") == "Locations"
+                and field.get("value_type") == "multi_select"
+            ]
+            if isinstance(metadata, list)
+            else []
+        )
+        explicit_locations = location_fields[0] if len(location_fields) == 1 else []
+        if not isinstance(explicit_locations, list) or not all(
+            isinstance(value, str) and value.strip() for value in explicit_locations
+        ):
+            explicit_locations = []
         for office in offices:
             if not isinstance(office, dict):
                 raise CatalogueImportError("invalid_location")
@@ -115,7 +138,9 @@ def normalize_snapshot(payload):
             if not isinstance(address, str) or len(address) > 240:
                 raise CatalogueImportError("invalid_location")
             address = address.strip()
-            if address and _office_matches_job(location, office, address):
+            if address and _office_matches_job(
+                location, office, address, explicit_locations
+            ):
                 # The importer resolves this literal country/address component
                 # against known country names; unrecognized cities stay unknown.
                 detail = {

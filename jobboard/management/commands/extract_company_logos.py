@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.db.models import Count, Q
 
 from jobboard.integrations.greenhouse_catalogue import CatalogueImportError
 from jobboard.models import Company
@@ -17,19 +18,34 @@ class Command(BaseCommand):
             "--image-url", help="Verified employer logo, for a single company"
         )
         parser.add_argument("--refresh", action="store_true")
+        parser.add_argument(
+            "--provider",
+            help="Limit to companies with this source provider, e.g. wttj.",
+        )
+        parser.add_argument(
+            "--limit", type=int, default=25, help="Bound the run (default 25)."
+        )
 
     def handle(self, *args, **options):
         if (options["page_url"] or options["image_url"]) and not options["company_id"]:
             raise CommandError("An explicit source requires --company-id.")
-        companies = Company.objects.order_by("pk")
+        if not 1 <= options["limit"] <= 500:
+            raise CommandError("--limit must be between 1 and 500.")
+        companies = Company.objects.annotate(offer_count=Count("offers")).order_by(
+            "-offer_count", "pk"
+        )
+        if options["provider"]:
+            companies = companies.filter(
+                source_boards__provider=options["provider"]
+            ).distinct()
         if options["company_id"]:
             companies = companies.filter(pk=options["company_id"])
         elif not options["refresh"]:
             companies = companies.filter(
-                logo_object_key__isnull=True
-            ) | companies.filter(logo_object_key="")
+                Q(logo_object_key__isnull=True) | Q(logo_object_key="")
+            )
         successful = failed = 0
-        for company in companies:
+        for company in companies[: options["limit"]]:
             try:
                 if options["image_url"]:
                     cache_logo(company, options["image_url"])

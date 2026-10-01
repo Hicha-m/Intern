@@ -27,6 +27,36 @@ def detail(**changes):
 
 
 class EightfoldTests(SimpleTestCase):
+    def test_requests_are_spaced_and_429_is_not_retried(self):
+        now = [100.0]
+        starts = []
+
+        def sleep(seconds):
+            now[0] += seconds
+
+        def read(url, **kwargs):
+            starts.append(now[0])
+            if len(starts) == 2:
+                raise CatalogueImportError("upstream_rate_limited")
+            return {"status": 200, "data": {"count": 0, "positions": []}}
+
+        with (
+            patch(
+                "jobboard.integrations.eightfold_catalogue.time.monotonic",
+                side_effect=lambda: now[0],
+            ),
+            patch(
+                "jobboard.integrations.eightfold_catalogue.time.sleep",
+                side_effect=sleep,
+            ),
+            patch(
+                "jobboard.integrations.eightfold_catalogue.read_json", side_effect=read
+            ),
+            self.assertRaises(CatalogueImportError),
+        ):
+            fetch_eightfold("microsoft")
+        self.assertEqual(starts, [100.0, 102.0])
+
     def test_identity_country_and_full_description(self):
         row = normalize_eightfold(detail(), "nvidia", "123")
         self.assertEqual(row["external_id"], "123")

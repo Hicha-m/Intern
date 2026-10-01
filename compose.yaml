@@ -117,6 +117,16 @@ services:
       db:
         condition: service_healthy
 
+  ats-probe-worker:
+    build: .
+    profiles: [app]
+    restart: unless-stopped
+    command: [".venv/bin/python", "manage.py", "run_ats_probe_worker", "--poll-interval", "60", "--limit", "1"]
+    environment: *app_environment
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   intern_pgdata:
   intern_media:

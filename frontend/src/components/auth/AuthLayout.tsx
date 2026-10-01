@@ -5,6 +5,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons'
 import './auth.css'
 import './auth-editorial.css'
+import { logoDevEnabled } from '../../lib/companyLogos'
 
 type AuthMode = 'login' | 'register' | 'reset'
 
@@ -40,7 +41,7 @@ export function AuthLayout({ children, mode = 'login' }: { children: ReactNode; 
     <div className="auth-spread">
       <AuthVisual />
       <main className="auth-panel" id="main-content" tabIndex={-1}>
-        <div className="auth-form-wrap">{children}</div>
+        <div className="auth-form-wrap">{children}{logoDevEnabled && <p className="auth-logo-credit"><a href="https://www.logo.dev" target="_blank" rel="noopener">Logos fournis par Logo.dev</a></p>}</div>
       </main>
     </div>
   </div>

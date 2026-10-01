@@ -27,6 +27,11 @@
 .offers-heading h1 { margin: 0; font-size: var(--font-size-lg); line-height: var(--line-height-tight); font-weight: var(--font-weight-medium); letter-spacing: var(--tracking-heading); }
 .offers-results-heading { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-4); }
 .offers-results-heading h3 { margin: 0; font-size: var(--font-size-sm); font-weight: var(--font-weight-regular); color: var(--dashboard-muted); }
+.offers-suggestions { margin-top: var(--space-4); }
+.offers-suggestions p { color: var(--dashboard-muted); font-size: var(--font-size-sm); }
+.offers-suggestions ul { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: 0; list-style: none; }
+.offers-suggestions li { min-width: 0; max-width: 100%; }
+.offers-suggestions a { min-height: var(--target-size); white-space: normal; overflow-wrap: anywhere; }
 .offers-page .dashboard-offers { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
 .offers-page .catalogue-card { padding: 0; border: var(--border-width) solid var(--dashboard-rule); border-radius: var(--radius-control); background: var(--dashboard-card); overflow: hidden; }
 .catalogue-card-link { display: flex; flex-direction: column; min-height: var(--offers-card-height); height: 100%; padding: var(--space-5); color: var(--dashboard-ink); text-decoration: none; }

@@ -22,6 +22,7 @@ from .catalogue import (
     Skill,
     SourceBoard,
 )
+from .company_profiles import CompanyProfile
 from .documents import Document
 from .engine import (
     AlertEvent,
@@ -54,6 +55,7 @@ from .profiles import (
     SearchPreference,
     WorkAuthorization,
 )
+from .taxonomy import JobDomain, JobSubdomain
 
 __all__ = [
     "AgentRun",
@@ -64,6 +66,7 @@ __all__ = [
     "CandidateProfile",
     "CandidateSkill",
     "Company",
+    "CompanyProfile",
     "CompensationBand",
     "DeletionRequest",
     "Document",
@@ -71,6 +74,8 @@ __all__ = [
     "Experience",
     "ImportRun",
     "Interview",
+    "JobDomain",
+    "JobSubdomain",
     "Location",
     "Offer",
     "OfferLocation",
@@ -113,3 +118,7 @@ __all__ += ["OfferMergeDecision"]
 __all__ += ["SourceDiscoverySeed"]
 
 __all__ += ["DiscoveryQuery", "DiscoveryResult"]
+
+from .ats_probe import AtsProbe
+
+__all__ += ["AtsProbe"]

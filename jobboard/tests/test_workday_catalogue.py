@@ -149,13 +149,118 @@ class WorkdayTests(SimpleTestCase):
         self.assertFalse(result.complete)
         self.assertTrue(result.errors)
 
-    def test_missing_facets_fails_without_asserting_empty_catalogue(self):
-        with self.assertRaisesMessage(
-            CatalogueImportError, "country_facets_unavailable"
-        ):
-            self._fetch(
-                lambda req: httpx.Response(200, json={"total": 0, "jobPostings": []})
+    def test_missing_facets_empty_is_partial(self):
+        result = self._fetch(
+            lambda req: httpx.Response(200, json={"total": 0, "jobPostings": []})
+        )
+        self.assertEqual(len(result), 0)
+        self.assertFalse(result.complete)
+        self.assertEqual(result.errors[0]["code"], "country_facets_fallback")
+
+    def test_custom_country_parameter_requires_explicit_label(self):
+        facets = [
+            {
+                "facetParameter": "Custom_Country",
+                "descriptor": "Country/Region",
+                "values": [{"descriptor": "France", "id": "fr"}],
+            }
+        ]
+        self.assertEqual(_country_partitions(facets), [("Custom_Country", "fr", "FR")])
+        facets[0]["descriptor"] = "Job Family"
+        self.assertEqual(_country_partitions(facets), [])
+        facets[0]["descriptor"] = "Country"
+        facets[0]["facetParameter"] = "../unsafe"
+        self.assertEqual(_country_partitions(facets), [])
+
+    def test_global_fallback_filters_details_and_reuses_initial_page(self):
+        offsets = []
+
+        def handler(request):
+            if request.method == "POST":
+                body = json.loads(request.content)
+                self.assertEqual(body["appliedFacets"], {})
+                offsets.append(body["offset"])
+                posts = [
+                    {
+                        "externalPath": f"/job/Paris/Stage_JR{i}",
+                        "title": "Stage finance",
+                    }
+                    for i in range(body["offset"], min(body["offset"] + 20, 21))
+                ]
+                return httpx.Response(
+                    200,
+                    json={
+                        "total": 21 if not body["offset"] else 0,
+                        "jobPostings": posts,
+                    },
+                )
+            i = int(request.url.path.split("JR")[-1])
+            return httpx.Response(
+                200, json=detail(country="US" if i else "FR", jobReqId=f"JR{i}")
             )
+
+        result = self._fetch(handler)
+        self.assertEqual(offsets, [0, 20])
+        self.assertEqual(len(result), 1)
+        self.assertFalse(result.complete)
+
+    def test_global_fallback_cap_is_explicit(self):
+        calls = []
+
+        def handler(request):
+            body = json.loads(request.content)
+            calls.append(body["offset"])
+            return httpx.Response(
+                200,
+                json={
+                    "total": 45 if not body["offset"] else 0,
+                    "jobPostings": [
+                        {
+                            "externalPath": f"/job/Paris/Job_{i}",
+                            "title": "Finance Manager",
+                        }
+                        for i in range(body["offset"], body["offset"] + 20)
+                    ],
+                },
+            )
+
+        with patch("jobboard.integrations.workday_catalogue.FALLBACK_MAX_LISTINGS", 40):
+            result = self._fetch(handler)
+        self.assertEqual(calls, [0, 20])
+        self.assertFalse(result.complete)
+        self.assertIn("fallback_listing_cap", [e["code"] for e in result.errors])
+
+    def test_fallback_duplicate_and_rate_limit_stop(self):
+        for limited in [False, True]:
+            with self.subTest(limited=limited):
+
+                def handler(request, limited=limited):
+                    body = json.loads(request.content)
+                    if body["offset"] and limited:
+                        return httpx.Response(429, headers={"Retry-After": "60"})
+                    return httpx.Response(
+                        200,
+                        json={
+                            "total": 40 if not body["offset"] else 0,
+                            "jobPostings": [
+                                {
+                                    "externalPath": f"/job/Paris/Job_{i}",
+                                    "title": "Finance Manager",
+                                }
+                                for i in range(20)
+                            ],
+                        },
+                    )
+
+                if limited:
+                    with self.assertRaises(CatalogueImportError) as caught:
+                        self._fetch(handler)
+                    self.assertEqual(caught.exception.code, "upstream_rate_limited")
+                    self.assertEqual(caught.exception.retry_after, 60)
+                else:
+                    result = self._fetch(handler)
+                    self.assertFalse(result.complete)
+                    self.assertIn("duplicate_job", [e["code"] for e in result.errors])
 
     def test_rate_limit_does_not_follow_or_close(self):
         with self.assertRaisesMessage(CatalogueImportError, "upstream_rate_limited"):

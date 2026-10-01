@@ -8,7 +8,7 @@ from django.db.models import Q
 
 from .engine_quality import EUROPE_SCOPE_VERSION, EXTRACTOR_VERSION
 
-MATCHER_VERSION = "rules-1"
+MATCHER_VERSION = "rules-2"
 
 
 def _get(profile, key, default=None):
@@ -69,7 +69,12 @@ def evaluate_match(offer, profile, criteria=None):
 
     def mandatory(field):
         value = facts.get(field)
-        if not value or not value.get("required"):
+        if (
+            not value
+            or not value.get("required")
+            or value.get("status") in {"conflict", "ambiguous"}
+            or value.get("value") is None
+        ):
             return None
         if not value.get("source_revision_id") or not value.get("evidence_text"):
             unknown(field, "Condition non reliée à une preuve source conservée.")
@@ -146,12 +151,16 @@ def evaluate_match(offer, profile, criteria=None):
         value = duration["value"]
         # Compare like units. Calendar months are not approximated as four weeks.
         minimum, unit = value["minimum"], value["unit"]
+        if minimum is None:
+            # An upper bound alone cannot prove the minimum length required.
+            unknown("duration", "La durée minimale du stage n’est pas précisée.")
+            minimum = 0
         mismatch = False
         if duration_max_months is not None:
             if unit == "months":
                 mismatch = minimum > duration_max_months
             elif start and isinstance(duration_max_months, int):
-                mismatch = start + timedelta(weeks=minimum) > _add_months(
+                mismatch = start + timedelta(**{unit: minimum}) > _add_months(
                     start, duration_max_months
                 )
             else:
@@ -164,7 +173,7 @@ def evaluate_match(offer, profile, criteria=None):
                 earliest_end = (
                     _add_months(start, minimum)
                     if unit == "months"
-                    else start + timedelta(weeks=minimum)
+                    else start + timedelta(**{unit: minimum})
                 )
                 mismatch |= earliest_end > available_until
             else:
@@ -186,6 +195,11 @@ def evaluate_match(offer, profile, criteria=None):
     elif duration_max_months is not None or available_until:
         unknown("duration", "La durée du stage n’est pas précisée ou prouvée.")
 
+    if facts.get("language_conflicts"):
+        unknown(
+            "language_conflicts",
+            "Les exigences de langue se contredisent dans l’annonce.",
+        )
     required_languages = mandatory("required_languages")
     if required_languages:
         languages = criteria.get("languages", _get(profile, "languages"))
@@ -207,6 +221,25 @@ def evaluate_match(offer, profile, criteria=None):
                         "Vérifie le niveau de langue exigé dans l’extrait source.",
                     )
 
+    alternatives = mandatory("language_alternatives")
+    if alternatives:
+        known_languages = criteria.get("languages", _get(profile, "languages"))
+        for group in alternatives["value"]:
+            if known_languages is None or not set(group["codes"]).intersection(
+                known_languages
+            ):
+                unknown(
+                    "language_alternative",
+                    "Confirme au moins une des langues acceptées : "
+                    + " / ".join(group["codes"])
+                    + ".",
+                )
+            else:
+                unknown(
+                    "language_alternative_level",
+                    "Vérifie le niveau exigé pour la langue choisie dans l’extrait source.",
+                )
+
     sponsor = mandatory("sponsorship_available")
     needs_sponsorship = criteria.get("needs_sponsorship")
     if (
@@ -217,9 +250,15 @@ def evaluate_match(offer, profile, criteria=None):
         and len(enrichment.country_codes) == 1
     ):
         # Only use a confirmation when the role has one unambiguous country.
-        authorization = profile.work_authorizations.filter(
-            country_code=enrichment.country_codes[0], confirmed_at__isnull=False
-        ).first()
+        authorization = next(
+            (
+                item
+                for item in profile.work_authorizations.all()
+                if item.country_code == enrichment.country_codes[0]
+                and item.confirmed_at
+            ),
+            None,
+        )
         if authorization:
             needs_sponsorship = authorization.needs_sponsorship
     if needs_sponsorship is True:
@@ -264,6 +303,9 @@ def evaluate_match(offer, profile, criteria=None):
 def preselect_offers(queryset, criteria=None):
     """Indexed/SQL shortlist; unknown inclusion is explicit and does not invent facts."""
     criteria = criteria or {}
+    from .job_taxonomy import filter_taxonomy
+
+    queryset = filter_taxonomy(queryset, criteria)
     include_unknown = criteria.get("unknown_policy", "include") == "include"
     missing = Q(enrichment__isnull=True)
     if criteria.get("country_codes"):

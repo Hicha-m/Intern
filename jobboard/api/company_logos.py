@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 
 from jobboard.integrations.storage import read_object, storage_bucket
 from jobboard.models import Company
+from jobboard.services.company_logos import REJECTED_LOGO_DIGESTS
 
 
 @api_view(["GET"])
@@ -16,6 +17,8 @@ def company_logo(request, company_id):
     company = get_object_or_404(Company, pk=company_id)
     key = company.logo_object_key or ""
     if not re.fullmatch(rf"company-logos/{company_id}/[a-f0-9]{{64}}\.png", key):
+        raise Http404
+    if key.rsplit("/", 1)[-1].removesuffix(".png") in REJECTED_LOGO_DIGESTS:
         raise Http404
     try:
         data = read_object(storage_bucket(), key)

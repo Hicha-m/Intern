@@ -18,6 +18,7 @@ import { Workspace } from './components/dashboard/Workspace'
 import { Dashboard } from './pages/Dashboard'
 import { Offers, OfferDetail } from './pages/Offers'
 import { ApplicationDetail } from './pages/ApplicationDetail'
+import { CompanyDetail } from './pages/CompanyDetail'
 import './App.css'
 
 function Section({ title, description }: { title: string; description: string }) {
@@ -83,6 +84,7 @@ function App() {
         <Route path="/engine" element={<EngineDashboard />} />
         <Route path="/stages" element={<Offers />} />
         <Route path="/offers/:id" element={<OfferDetail />} />
+        <Route path="/companies/:id" element={<CompanyDetail />} />
         <Route path="/candidatures" element={<Dashboard applicationsOnly />} />
         <Route path="/a-valider" element={<Dashboard applicationsOnly />} />
         <Route path="/tracker" element={<Dashboard applicationsOnly />} />

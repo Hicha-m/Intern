@@ -79,7 +79,10 @@ def coverage_metrics(visible):
         }
         for provider in sorted(set(counts) | set(queries) | set(boards))
     ]
+    from jobboard.services.ats_probing import metrics
+
     return {
+        "ats_queue": metrics(),
         "measured_at": now,
         "published_offers": visible.count(),
         "providers": providers,

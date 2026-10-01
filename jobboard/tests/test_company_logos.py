@@ -1,4 +1,5 @@
 import io
+import json
 import socket
 import tempfile
 from unittest.mock import MagicMock, patch
@@ -11,7 +12,14 @@ from jobboard.api.read_serializers import CompanySerializer
 from jobboard.integrations.greenhouse_catalogue import CatalogueImportError
 from jobboard.integrations.public_html import fetch_public
 from jobboard.models import Company
-from jobboard.services.company_logos import LogoParser, cache_logo, normalize_logo
+from jobboard.services.company_logos import (
+    REJECTED_LOGO_DIGESTS,
+    LogoParser,
+    cache_logo,
+    employer_domain,
+    extract_logo,
+    normalize_logo,
+)
 
 
 def png():
@@ -21,6 +29,93 @@ def png():
 
 
 class LogoExtractionTests(SimpleTestCase):
+    def test_employer_image_on_linkedin_is_distinct_from_platform_icon(self):
+        parser = LogoParser("https://www.linkedin.com/jobs/view/123", "Example")
+        parser.feed(
+            '<link rel="icon" href="/favicon.png"><img class="artdeco-entity-image" alt="Example" src="data:image/gif;base64,placeholder" data-delayed-url="https://media.licdn.com/company-logo.png">'
+        )
+        self.assertEqual(parser.urls(), ["https://media.licdn.com/company-logo.png"])
+
+    def test_platform_favicons_and_social_images_are_excluded(self):
+        for host in (
+            "www.linkedin.com",
+            "fr.linkedin.com",
+            "www.welcometothejungle.com",
+            "example.recruitee.com",
+            "ag.wd3.myworkdayjobs.com",
+            "www.indeed.com",
+            "jobs.personio.de",
+        ):
+            with self.subTest(host=host):
+                parser = LogoParser(f"https://{host}/example", "Example")
+                parser.feed(
+                    '<link rel="icon" href="/favicon.png"><link rel="apple-touch-icon" href="/apple.png"><img alt="LinkedIn logo" src="/linkedin.png"><img alt="logo" src="/platform.png">'
+                )
+                self.assertEqual(parser.urls(), [])
+
+    def test_structured_employer_logo_and_homepage(self):
+        parser = LogoParser("https://www.welcometothejungle.com/fr/jobs/123", "Example")
+        parser.feed(
+            '<script type="application/ld+json">'
+            + json.dumps(
+                {
+                    "@graph": [
+                        {
+                            "@type": "Organization",
+                            "name": "Other",
+                            "logo": "https://other.com/logo.png",
+                        },
+                        {
+                            "@type": "JobPosting",
+                            "hiringOrganization": {
+                                "@type": "Organization",
+                                "name": "Example",
+                                "url": "https://example.com/",
+                                "logo": {
+                                    "@type": "ImageObject",
+                                    "contentUrl": "https://cdn.example.com/logo.png",
+                                },
+                            },
+                        },
+                    ]
+                }
+            )
+            + "</script>"
+        )
+        self.assertEqual(parser.urls(), ["https://cdn.example.com/logo.png"])
+        self.assertEqual(parser.structured_homepages, ["https://example.com/"])
+        self.assertEqual(parser.kinds[parser.urls()[0]], "structured_logo")
+
+    def test_invalid_json_and_urls_do_not_break_extraction(self):
+        parser = LogoParser("https://example.com", "Example")
+        parser.feed(
+            '<script type="application/ld+json">not json</script><img alt="Example logo" src="https://[bad/logo.png"><link rel="icon" href="/favicon.png">'
+        )
+        self.assertEqual(parser.urls(), ["https://example.com/favicon.png"])
+
+    def test_explicit_brand_logo_precedes_icon(self):
+        parser = LogoParser("https://example.com", "Example")
+        parser.feed(
+            '<link rel="apple-touch-icon" href="/icon.png"><img alt="Example logo" data-src="/brand.png">'
+        )
+        self.assertEqual(parser.urls()[0], "https://example.com/brand.png")
+
+    def test_official_domain_validation(self):
+        self.assertEqual(employer_domain("https://www.example.com/"), "www.example.com")
+        for value in (
+            "linkedin.com",
+            "www.linkedin.com",
+            "example.recruitee.com",
+            "localhost",
+            "127.0.0.1",
+            "https://user@example.com",
+            "https://example.com:444",
+            "https://example.com/?redirect=evil.com",
+            "https://[bad",
+            "example.com/evil",
+        ):
+            self.assertIsNone(employer_domain(value), value)
+
     def test_platform_icon_is_not_an_employer_logo(self):
         parser = LogoParser("https://jobs.ashbyhq.com/example", "Example")
         parser.feed(
@@ -82,6 +177,74 @@ class LogoExtractionTests(SimpleTestCase):
 
 
 class CachedLogoTests(TestCase):
+    def test_malformed_provider_logo_is_reported_as_an_extraction_failure(self):
+        company = Company.objects.create(name="Example")
+        with self.assertRaisesMessage(CatalogueImportError, "unsafe_public_url"):
+            cache_logo(company, "https://[bad/image.png")
+
+    def test_rejected_legacy_logo_is_not_serialized_or_served(self):
+        company = Company.objects.create(name="Bad")
+        company.logo_object_key = (
+            f"company-logos/{company.pk}/{next(iter(REJECTED_LOGO_DIGESTS))}.png"
+        )
+        company.save()
+        self.assertIsNone(CompanySerializer(company).data["logo_url"])
+        user = get_user_model().objects.create_user(username="bad-logo-test")
+        self.client.force_login(user)
+        with patch("jobboard.api.company_logos.read_object") as read:
+            self.assertEqual(
+                self.client.get(f"/api/v1/companies/{company.pk}/logo/").status_code,
+                404,
+            )
+            read.assert_not_called()
+
+    def test_platform_domain_is_not_exposed_as_employer_identity(self):
+        company = Company(name="Example", domain="fr.linkedin.com")
+        self.assertIsNone(CompanySerializer(company).data["domain"])
+
+    def test_provider_company_logo_is_cached_without_reading_generic_site(self):
+        from jobboard.models import Offer, OfferSource, SourceBoard
+
+        company = Company.objects.create(name="Example")
+        board = SourceBoard.objects.create(
+            company=company,
+            provider="jobspy",
+            instance="global",
+            board_key="example",
+            base_url="https://www.linkedin.com",
+        )
+        offer = Offer.objects.create(
+            company=company, title="Stage", description="Stage"
+        )
+        OfferSource.objects.create(
+            offer=offer,
+            board=board,
+            external_id="123",
+            origin_url="https://www.linkedin.com/jobs/view/123",
+            apply_url="https://www.linkedin.com/jobs/view/123",
+            content_hash="a" * 64,
+            raw_payload={
+                "company": "Example",
+                "company_logo": "https://media.licdn.com/company-logo.png",
+            },
+        )
+        with (
+            tempfile.TemporaryDirectory() as root,
+            override_settings(
+                PRIVATE_STORAGE_BACKEND="local", PRIVATE_STORAGE_ROOT=root
+            ),
+            patch(
+                "jobboard.services.company_logos.fetch_public",
+                return_value=("https://media.licdn.com/company-logo.png", png()),
+            ) as fetch,
+        ):
+            extract_logo(company)
+        fetch.assert_called_once()
+        self.assertTrue(fetch.call_args.kwargs["image"])
+        company.refresh_from_db()
+        self.assertEqual(company.logo_source_kind, "source_metadata")
+        self.assertIsNone(company.domain)
+
     def test_cached_logo_serialization_and_authenticated_delivery(self):
         company = Company.objects.create(name="Example")
         self.assertIsNone(CompanySerializer(company).data["logo_url"])
@@ -97,6 +260,10 @@ class CachedLogoTests(TestCase):
         ):
             cache_logo(company, "https://example.com/logo.png")
             cache_logo(company, "https://example.com/logo.png")
+            company.refresh_from_db()
+            self.assertEqual(company.logo_source_url, "https://example.com/logo.png")
+            self.assertEqual(company.logo_source_kind, "manual")
+            self.assertIsNotNone(company.logo_fetched_at)
             self.assertEqual(fetch.call_count, 2)
             url = CompanySerializer(company).data["logo_url"]
             self.assertIn(f"/companies/{company.pk}/logo/", url)
@@ -115,6 +282,135 @@ class CachedLogoTests(TestCase):
             company.logo_object_key = "documents/private.pdf"
             company.save()
             self.assertEqual(self.client.get(url).status_code, 404)
+
+    def test_rejected_digest_is_never_cached(self):
+        company = Company.objects.create(name="Example")
+        with (
+            patch(
+                "jobboard.services.company_logos.fetch_public",
+                return_value=("https://example.com/image.png", png()),
+            ),
+            patch("jobboard.services.company_logos.hashlib.sha256") as digest,
+            patch("jobboard.services.company_logos.write_object") as write,
+        ):
+            digest.return_value.hexdigest.return_value = next(
+                iter(REJECTED_LOGO_DIGESTS)
+            )
+            with self.assertRaisesMessage(
+                CatalogueImportError, "platform_logo_rejected"
+            ):
+                cache_logo(company, "https://example.com/image.png")
+            write.assert_not_called()
+        company.refresh_from_db()
+        self.assertIsNone(company.logo_object_key)
+
+    def test_successful_official_extraction_records_domain_and_provenance(self):
+        company = Company.objects.create(
+            name="Example", website_url="https://www.linkedin.com"
+        )
+        from jobboard.models import Offer, OfferSource, SourceBoard
+
+        board = SourceBoard.objects.create(
+            company=company,
+            provider="wttj",
+            instance="global",
+            board_key="example",
+            base_url="https://www.welcometothejungle.com",
+        )
+        offer = Offer.objects.create(
+            company=company, title="Stage", description="Stage"
+        )
+        OfferSource.objects.create(
+            offer=offer,
+            board=board,
+            external_id="123",
+            origin_url="https://www.welcometothejungle.com/fr/jobs/123",
+            apply_url="https://example.com/jobs/123",
+            content_hash="a" * 64,
+        )
+        # An invalid platform website must not prevent repairing the employer identity.
+        company.website_url = None
+        company.save()
+        html = (
+            '<script type="application/ld+json">'
+            + json.dumps(
+                {
+                    "@type": "JobPosting",
+                    "hiringOrganization": {
+                        "@type": "Organization",
+                        "name": "Example",
+                        "url": "https://example.com/",
+                        "logo": "https://cdn.example.com/logo.png",
+                    },
+                }
+            )
+            + "</script>"
+        )
+        calls = []
+
+        def fetch(url, **kwargs):
+            calls.append(url)
+            return url, png() if kwargs.get("image") else html
+
+        with (
+            tempfile.TemporaryDirectory() as root,
+            override_settings(
+                PRIVATE_STORAGE_BACKEND="local", PRIVATE_STORAGE_ROOT=root
+            ),
+            patch("jobboard.services.company_logos.fetch_public", side_effect=fetch),
+        ):
+            extract_logo(company)
+        self.assertEqual(
+            calls,
+            [
+                "https://www.welcometothejungle.com/fr/jobs/123",
+                "https://cdn.example.com/logo.png",
+            ],
+        )
+        company.refresh_from_db()
+        self.assertEqual(company.domain, "example.com")
+        self.assertEqual(company.logo_source_kind, "structured_logo")
+
+    def test_refresh_failure_preserves_previous_logo(self):
+        company = Company.objects.create(
+            name="Example",
+            website_url="https://example.com/",
+            logo_object_key="company-logos/1/" + "a" * 64 + ".png",
+        )
+        with (
+            patch(
+                "jobboard.services.company_logos.fetch_public",
+                side_effect=CatalogueImportError("public_http_error"),
+            ),
+            self.assertRaises(CatalogueImportError),
+        ):
+            extract_logo(company)
+        company.refresh_from_db()
+        self.assertTrue(company.logo_object_key)
+
+    def test_repair_only_revokes_confirmed_platform_digest(self):
+        from importlib import import_module
+
+        from django.apps import apps
+        from django.db import connection
+
+        bad = Company.objects.create(
+            name="Bad",
+            logo_object_key="company-logos/1/"
+            + next(iter(REJECTED_LOGO_DIGESTS))
+            + ".png",
+        )
+        good = Company.objects.create(
+            name="Good", logo_object_key="company-logos/2/" + "a" * 64 + ".png"
+        )
+        import_module(
+            "jobboard.migrations.0026_company_logo_provenance"
+        ).reject_linkedin_favicon(apps, connection.schema_editor())
+        bad.refresh_from_db()
+        good.refresh_from_db()
+        self.assertIsNone(bad.logo_object_key)
+        self.assertEqual(bad.logo_last_error, "platform_logo_rejected")
+        self.assertTrue(good.logo_object_key)
 
 
 class LogoQueueTests(TestCase):

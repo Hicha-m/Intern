@@ -1,8 +1,10 @@
 import { expect, test, type Page } from '@playwright/test'
 import { prepareDashboard } from './fixtures/dashboard'
+import { prepareTaxonomy } from './fixtures/taxonomy'
 
 async function prepareEngine(page: Page) {
   await prepareDashboard(page)
+  await prepareTaxonomy(page)
   const requests: { path: string; method: string; body: any }[] = []
   let searches: any[] = [], external: any[] = [], read = false
   await page.route('**/api/v1/coverage/', route => route.fulfill({ json: { active_sources: 3, verified_sources: 2, latest_verification: '2026-09-30T18:00:00Z' } }))
@@ -37,8 +39,10 @@ test('Europe filters persist and secondary tools are absent', async ({ page }, i
   expect(catalog.at(-1)?.searchParams.get('europe_scope')).toBe('in_scope')
   await page.getByRole('combobox', { name: 'Pays', exact: true }).fill('France')
   await page.getByRole('option', { name: 'France', exact: true }).click()
-  await page.getByRole('combobox', { name: 'Domaine', exact: true }).fill('finance')
-  await page.getByRole('option', { name: 'Finance et comptabilité', exact: true }).click()
+  await page.getByRole('button', { name: 'Domaines et métiers', exact: true }).click()
+  await page.getByRole('searchbox', { name: 'Rechercher un métier' }).fill('finance')
+  await page.getByRole('checkbox', { name: 'Tout le domaine', exact: false }).check()
+  await page.getByRole('button', { name: 'Voir les offres' }).click()
   await page.getByText('Filtres avancés', { exact: true }).click()
   await page.getByLabel('Début au plus tôt').fill('2027-03-01')
   await page.getByLabel('Début au plus tard').fill('2027-06-30')
@@ -66,7 +70,7 @@ test('details show field evidence and fresh check, report and private feedback d
   await page.goto('/offers/2')
   await expect(page.getByText('Dernière vérification :', { exact: false })).toBeVisible()
   await page.getByText('Informations extraites et preuves').click()
-  await expect(page.getByText('Stage de six mois', { exact: true })).toBeVisible()
+  await expect(page.locator('.engine-evidence').getByText('Stage de six mois', { exact: true })).toBeVisible()
   await page.getByRole('button', { name: 'Masquer des recommandations' }).click()
   await expect(page.locator('[data-sonner-toast]').filter({ hasText: 'Offre masquée' })).toBeVisible()
   await page.getByRole('button', { name: 'Signaler : ce n’est pas un stage' }).click()
@@ -137,7 +141,7 @@ test('custom filters support keyboard, cancellation, empty search and removing a
   await country.press('ArrowDown')
   await country.press('Tab')
   await expect(country).toHaveAttribute('aria-expanded', 'false')
-  await expect(page.getByRole('combobox', { name: 'Domaine', exact: true })).toBeFocused()
+  await expect(page.getByRole('button', { name: 'Domaines et métiers', exact: true })).toBeFocused()
   await page.getByRole('button', { name: 'Rechercher', exact: true }).click()
   await expect(page).toHaveURL(/country_codes=FR/)
   await page.getByRole('button', { name: 'Retirer Pays : France', exact: true }).click()

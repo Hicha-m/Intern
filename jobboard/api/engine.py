@@ -32,6 +32,8 @@ def empty_validated(request):
 
 
 class Criteria(CatalogueFilters):
+    domains = serializers.ListField(child=serializers.SlugField(max_length=80), max_length=24, required=False)
+    subdomains = serializers.ListField(child=serializers.SlugField(max_length=100), max_length=250, required=False)
     q = serializers.CharField(max_length=300, required=False, allow_blank=True)
     country_codes = serializers.ListField(
         child=serializers.RegexField(r"^[A-Z]{2}$"), max_length=60, required=False
@@ -62,6 +64,18 @@ class Criteria(CatalogueFilters):
 
     def validate(self, attrs):
         attrs = super().validate(attrs)
+        from jobboard.services.job_taxonomy import validate_selection
+
+        try:
+            domains, subdomains = validate_selection(attrs.get("domains", []), attrs.get("subdomains", []))
+        except ValueError as exc:
+            raise serializers.ValidationError(str(exc)) from exc
+        if "domains" in attrs:
+            attrs["domains"] = domains
+        if "subdomains" in attrs:
+            attrs["subdomains"] = subdomains
+        if attrs.get("domain") and (domains or subdomains):
+            raise serializers.ValidationError("Use either legacy domain or domains/subdomains.")
         if "include_unknown" in attrs:
             attrs["unknown_policy"] = (
                 "include" if attrs["include_unknown"] == "true" else "exclude"

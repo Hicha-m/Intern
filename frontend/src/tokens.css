@@ -211,3 +211,13 @@
   --coverage-cell-width: 8rem;
   --coverage-error-width: 12rem;
 }
+
+/* Search taxonomy dialog. */
+:root {
+  --job-taxonomy-dialog-width: 40rem;
+  --job-taxonomy-dialog-height: 44rem;
+  --job-taxonomy-dialog-title: 1.375rem;
+  --job-taxonomy-dialog-radius: 1.5rem;
+  --job-taxonomy-group-height: 3.5rem;
+  --job-taxonomy-backdrop: rgb(0 0 0 / 40%);
+}

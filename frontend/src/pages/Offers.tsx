@@ -9,19 +9,37 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { UserCircleIcon, ArrowRight01Icon } from '@hugeicons/core-free-icons'
 import { EngineFilters, engineCriteria } from './EngineControls'
 
-function CatalogueCard({ offer }: { offer: Offer }) {
+export function CatalogueCard({ offer }: { offer: Offer }) {
   const catalogue = useLocation()
   const detailState = { returnTo: `${catalogue.pathname}${catalogue.search}` }
   const location = offerLocationLabel(offer.locations)
   const mode = { remote: 'À distance', hybrid: 'Hybride', onsite: 'Sur place', on_site: 'Sur place' }[offer.work_mode ?? '']
   return <article className="offer-card catalogue-card">
     <Link to={`/offers/${offer.id}`} state={detailState} className="catalogue-card-link" aria-label={`Voir l’offre : ${offer.title} chez ${offer.company.name}`}>
-      <span className="offer-card-company"><CompanyMark name={offer.company.name} id={offer.company.id} logoUrl={offer.company.logo_url} /><span>{offer.company.name}</span></span>
+      <span className="offer-card-company"><CompanyMark name={offer.company.name} id={offer.company.id} logoUrl={offer.company.logo_url} domain={offer.company.domain} /><span>{offer.company.name}</span></span>
       <h3>{offer.title}</h3>
+      {offer.taxonomy?.subdomain && ['classified', 'broad'].includes(offer.taxonomy.status) && <span className="catalogue-job-family">{offer.taxonomy.subdomain.name}</span>}
       <span className="catalogue-card-meta">Stage{mode && ` · ${mode}`}</span>
       <span className="catalogue-card-bottom"><span className="catalogue-location">{location}</span><span className="catalogue-card-action">Voir l’offre <HugeiconsIcon icon={ArrowRight01Icon} size={16} strokeWidth={1.5} aria-hidden="true" /></span></span>
     </Link>
   </article>
+}
+
+function SearchSuggestions({ filters, params }: { filters: URLSearchParams; params: URLSearchParams }) {
+  const suggestionFilters = new URLSearchParams(filters)
+  suggestionFilters.delete('page')
+  suggestionFilters.delete('page_size')
+  const { data } = useApiQuery<{ suggestions: { query: string }[] }>(`/offers/suggestions/?${suggestionFilters}`)
+  if (!data?.suggestions.length) return null
+  return <div className="offers-suggestions" role="region" aria-label="Suggestions de recherche">
+    <p>Essayez plutôt :</p>
+    <ul>{data.suggestions.map(suggestion => {
+      const next = new URLSearchParams(params)
+      next.set('q', suggestion.query)
+      next.delete('page')
+      return <li key={suggestion.query}><Link className="dashboard-button" to={`?${next}`}>{suggestion.query}</Link></li>
+    })}</ul>
+  </div>
 }
 
 export function Offers() {
@@ -47,6 +65,7 @@ export function Offers() {
     <div className="offers-heading"><h1>Stages en Europe</h1></div>
     <div className="offers-results-heading"><h3 id="offers-results" ref={resultsHeading} tabIndex={-1}>{query ? `Résultats pour « ${query} »` : 'Les offres à découvrir'}{!loading && !error && <span className="offers-count">{data?.count ?? 0}</span>}</h3></div>
     {error ? <div className="dashboard-error" role="alert">{error}<button className="dashboard-button" onClick={reload}>Réessayer</button></div> : loading ? <p role="status" className="dashboard-muted">Chargement des offres…</p> : data?.results.length ? <div className="dashboard-offers">{data.results.map(offer => <CatalogueCard key={offer.id} offer={offer} />)}</div> : <DashboardEmpty offers title="Aucune offre trouvée" detail="Essayez un autre mot-clé ou élargissez vos filtres pour découvrir plus de stages." />}
+    {!loading && !error && data?.count === 0 && query.trim() && <SearchSuggestions filters={filters} params={params} />}
     {data && !error && <Pagination page={data.page} pageSize={data.page_size} count={data.count} params={params} onNavigate={() => { paginationNavigation.current = true }} />}
   </main>
 }

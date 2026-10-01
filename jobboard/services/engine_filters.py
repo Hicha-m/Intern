@@ -96,7 +96,14 @@ def filter_catalogue(queryset, criteria):
             selected |= missing_enrichment | Q(enrichment__country_codes=[])
         queryset = queryset.filter(selected)
     if criteria.get("start_from") or criteria.get("start_to"):
-        selected = Q(enrichment__facts__has_key="start_date")
+        selected = (
+            Q(enrichment__facts__has_key="start_date")
+            & ~Q(enrichment__facts__start_date__value=None)
+            & (
+                Q(enrichment__facts__start_date__status__isnull=True)
+                | ~Q(enrichment__facts__start_date__status="conflict")
+            )
+        )
         if criteria.get("start_from"):
             selected &= Q(
                 enrichment__facts__start_date__value__gte=str(criteria["start_from"])
@@ -106,7 +113,12 @@ def filter_catalogue(queryset, criteria):
                 enrichment__facts__start_date__value__lte=str(criteria["start_to"])
             )
         if include_unknown:
-            selected |= missing_enrichment | ~Q(enrichment__facts__has_key="start_date")
+            selected |= (
+                missing_enrichment
+                | ~Q(enrichment__facts__has_key="start_date")
+                | Q(enrichment__facts__start_date__value=None)
+                | Q(enrichment__facts__start_date__status="conflict")
+            )
         queryset = queryset.filter(selected)
     if criteria.get("duration_min") or criteria.get("duration_max"):
         requested_unit = criteria["duration_unit"]
@@ -126,20 +138,21 @@ def filter_catalogue(queryset, criteria):
                         criteria["duration_min"] * numerator + denominator - 1
                     )
                     // denominator
-                )
+                ) | Q(enrichment__facts__duration__value__maximum=None)
             if criteria.get("duration_max"):
                 branch &= Q(
                     enrichment__facts__duration__value__minimum__lte=(
                         criteria["duration_max"] * numerator
                     )
                     // denominator
-                )
+                ) | Q(enrichment__facts__duration__value__minimum=None)
             selected |= branch
         if include_unknown:
             selected |= (
                 missing_enrichment
                 | ~Q(enrichment__facts__has_key="duration")
                 | ~Q(enrichment__facts__duration__value__unit__in=units)
+                | Q(enrichment__facts__duration__status="conflict")
             )
         queryset = queryset.filter(selected)
     if criteria.get("required_language"):
@@ -147,10 +160,24 @@ def filter_catalogue(queryset, criteria):
             enrichment__facts__required_languages__value__contains=[
                 {"code": criteria["required_language"]}
             ]
+        ) | Q(
+            enrichment__facts__language_alternatives__value__contains=[
+                {"codes": [criteria["required_language"]]}
+            ]
         )
         if include_unknown:
-            selected |= missing_enrichment | ~Q(
-                enrichment__facts__has_key="required_languages"
+            selected |= missing_enrichment | (
+                ~Q(enrichment__facts__has_key="required_languages")
+                & ~Q(enrichment__facts__has_key="language_alternatives")
+            )
+            selected |= Q(
+                enrichment__facts__language_conflicts__value__contains=[
+                    criteria["required_language"]
+                ]
+            ) | Q(
+                enrichment__facts__language_requirements__value__contains=[
+                    {"codes": [criteria["required_language"]], "modality": "unknown"}
+                ]
             )
         queryset = queryset.filter(selected)
     if criteria.get("freshness") in ("fresh", "stale"):

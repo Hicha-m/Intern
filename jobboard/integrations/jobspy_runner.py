@@ -79,6 +79,8 @@ def main():
                 "id": job.id,
                 "title": job.title,
                 "company": job.company_name,
+                "company_logo": job.company_logo,
+                "company_website": job.company_url_direct,
                 "url": job.job_url,
                 "direct_url": job.job_url_direct,
                 "description": job.description,

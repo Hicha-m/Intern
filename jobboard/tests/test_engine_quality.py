@@ -14,6 +14,25 @@ from jobboard.services.engine_quality import enrich_offer, extract_facts
 
 
 class ExtractionCorpusTests(SimpleTestCase):
+    def test_english_intern_role_needs_description_corroboration(self):
+        self.assertEqual(
+            extract_facts(
+                "Intern Deal Operations and Analysis",
+                "As a Deal Operations & Analysis Intern, you will manage provisioning.",
+            )["classification"],
+            "confirmed",
+        )
+        for title, description in [
+            ("Intern Deal Operations", "We support internal operations."),
+            ("Internal Auditor", "As an intern you may have learned audit."),
+            ("Intern Softwareentwickler", "Diese Stelle wird intern besetzt."),
+            ("Intern Analyst", "Experience as an analyst. Mentor an intern."),
+        ]:
+            with self.subTest(title=title):
+                self.assertNotEqual(
+                    extract_facts(title, description)["classification"], "confirmed"
+                )
+
     def test_recruitment_events_override_internship_metadata(self):
         for title in [
             "Tax & Legal Talent Class 2026-2027",
@@ -21,10 +40,20 @@ class ExtractionCorpusTests(SimpleTestCase):
             "Business Course: Future of Energy 2026",
         ]:
             with self.subTest(title=title):
-                self.assertEqual(extract_facts(title, "Discover our internships",
-                    contract_type="internship")["classification"], "not_internship")
-        self.assertEqual(extract_facts("Event Management Internship", "Organise a career fair",
-            contract_type="internship")["classification"], "confirmed")
+                self.assertEqual(
+                    extract_facts(
+                        title, "Discover our internships", contract_type="internship"
+                    )["classification"],
+                    "not_internship",
+                )
+        self.assertEqual(
+            extract_facts(
+                "Event Management Internship",
+                "Organise a career fair",
+                contract_type="internship",
+            )["classification"],
+            "confirmed",
+        )
 
     def test_explicit_multilingual_internship_forms(self):
         for title in [
@@ -162,6 +191,7 @@ class ExtractionCorpusTests(SimpleTestCase):
             "Master Thesis Robotics",
             "Abschlussarbeit Robotik",
             "HR Generalist – Student Position (Romanian speaker)",
+            "hbo-afstudeeropdracht: ontwerp remote beheer- en monitoringsoplossing",
         ]:
             with self.subTest(title=title):
                 self.assertEqual(
@@ -173,7 +203,6 @@ class ExtractionCorpusTests(SimpleTestCase):
         for title in [
             "Internship Thesis Robotics",
             "Praktikum und Abschlussarbeit Robotik",
-            "hbo-afstudeeropdracht: ontwerp remote beheer- en monitoringsoplossing",
         ]:
             with self.subTest(title=title):
                 self.assertEqual(

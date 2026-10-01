@@ -11,6 +11,8 @@ from jobboard.models import (
     CandidateProfile,
     Education,
     Experience,
+    JobDomain,
+    JobSubdomain,
     Location,
     PreferenceContract,
     PreferenceWorkMode,
@@ -76,7 +78,15 @@ PREFERENCE_FIELDS = (
     "salary_gross_net",
     "willing_to_relocate",
 )
-PREFERENCE_RELATIONS = ("role_ids", "location_ids", "contracts", "work_modes")
+PREFERENCE_RELATIONS = (
+    "role_ids",
+    "location_ids",
+    "contracts",
+    "work_modes",
+    "domains",
+    "subdomains",
+    "excluded_subdomains",
+)
 
 
 def locked_profile(user):
@@ -182,6 +192,21 @@ def preference_data(preference):
         work_modes=list(
             preference.work_modes.order_by("value").values_list("value", flat=True)
         ),
+        domains=list(
+            preference.job_domains.order_by("position", "slug").values_list(
+                "slug", flat=True
+            )
+        ),
+        subdomains=list(
+            preference.job_subdomains.order_by(
+                "domain__position", "position", "slug"
+            ).values_list("slug", flat=True)
+        ),
+        excluded_subdomains=list(
+            preference.excluded_job_subdomains.order_by(
+                "domain__position", "position", "slug"
+            ).values_list("slug", flat=True)
+        ),
     )
     return result
 
@@ -217,5 +242,23 @@ def update_preferences(user, data):
                 row.full_clean(validate_unique=False, validate_constraints=False)
             getattr(preference, key).all().delete()
             model.objects.bulk_create(rows)
+    for key, model, relation in [
+        ("domains", JobDomain, "job_domains"),
+        ("subdomains", JobSubdomain, "job_subdomains"),
+        ("excluded_subdomains", JobSubdomain, "excluded_job_subdomains"),
+    ]:
+        if key in data:
+            values = data[key]
+            if (
+                not isinstance(values, list)
+                or len(values) > 250
+                or any(not isinstance(v, str) for v in values)
+                or len(set(values)) != len(values)
+            ):
+                raise APIError("invalid_choices", "Expected unique taxonomy slugs.")
+            rows = list(model.objects.filter(slug__in=values))
+            if len(rows) != len(values):
+                raise APIError("invalid_choices", "Unknown taxonomy choice.")
+            getattr(preference, relation).set(rows)
     bump(profile)
     return preference

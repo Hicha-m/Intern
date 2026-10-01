@@ -36,6 +36,9 @@ class Company(models.Model):
         default=timezone.now, null=True, blank=True, db_index=True
     )
     logo_last_error = models.CharField(max_length=240, blank=True, default="")
+    logo_source_url = models.URLField(max_length=2048, blank=True, default="")
+    logo_source_kind = models.CharField(max_length=32, blank=True, default="")
+    logo_fetched_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -68,6 +71,22 @@ class Offer(models.Model):
     ContractType = ContractType
     WorkMode = WorkMode
     Status = OfferStatus
+
+    job_subdomain = models.ForeignKey(
+        "JobSubdomain", on_delete=models.PROTECT, null=True, blank=True,
+        related_name="offers",
+    )
+    secondary_subdomains = models.ManyToManyField(
+        "JobSubdomain", blank=True, related_name="secondary_offers",
+    )
+    taxonomy_status = models.CharField(
+        max_length=20, default="unclassified",
+        choices=[(v, v) for v in ("classified", "broad", "needs_review", "unclassified")],
+    )
+    taxonomy_version = models.CharField(max_length=80, blank=True)
+    taxonomy_input_hash = models.CharField(max_length=64, blank=True)
+    taxonomy_evidence = models.JSONField(default=dict)
+    taxonomy_manual = models.BooleanField(default=False)
 
     title = models.CharField(max_length=300)
     company = models.ForeignKey(
@@ -125,9 +144,20 @@ class Offer(models.Model):
         output_field=SearchVectorField(),
         db_persist=True,
     )
+    # Database triggers maintain these for every write path, including imports
+    # and company renames. They are never writable through the candidate API.
+    search_document = SearchVectorField(null=True, editable=False)
+    search_title = models.TextField(default="", editable=False)
 
     class Meta:
         constraints = [
+            allowed("taxonomy_status", ("classified", "broad", "needs_review", "unclassified"), "offer_taxonomy_status_valid"),
+            models.CheckConstraint(
+                condition=Q(taxonomy_status__in=["classified", "broad"], job_subdomain__isnull=False)
+                | Q(taxonomy_status__in=["needs_review", "unclassified"], job_subdomain__isnull=True)
+                | Q(taxonomy_status="needs_review", taxonomy_manual=True),
+                name="offer_taxonomy_assignment_valid",
+            ),
             allowed("contract_type", ContractType.values, "offer_contract_valid"),
             allowed("work_mode", WorkMode.values, "offer_work_mode_valid"),
             allowed("status", OfferStatus.values, "offer_status_valid"),
@@ -161,6 +191,12 @@ class Offer(models.Model):
                 name="offer_filters_idx",
             ),
             GinIndex(fields=["search_vector"], name="offer_search_idx"),
+            GinIndex(fields=["search_document"], name="offer_document_idx"),
+            GinIndex(
+                fields=["search_title"],
+                opclasses=["gin_trgm_ops"],
+                name="offer_title_trgm_idx",
+            ),
         ]
 
     def __str__(self):

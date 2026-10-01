@@ -163,10 +163,14 @@ def import_board(board_id, *, supplied_snapshot=None):
                     board=locked, external_id=job["external_id"]
                 ).first()
                 reopening = bool(source and source.source_status == "closed")
+                preferred = False
                 if source:
                     offer = Offer.objects.select_for_update().get(pk=source.offer_id)
-                    # Cross-source content conflicts must not silently overwrite canonical content.
-                    if not offer.sources.exclude(board=locked).exists():
+                    # A verified merge retains the employer board as content authority.
+                    from jobboard.services.engine_merges import preferred_content_board
+                    shared = offer.sources.exclude(board=locked).exists()
+                    preferred = shared and preferred_content_board(offer, locked)
+                    if preferred or not shared:
                         offer.title, offer.description = (
                             job["title"],
                             job["description"],
@@ -218,7 +222,7 @@ def import_board(board_id, *, supplied_snapshot=None):
                         defaults={"name": label, "country_code": code},
                     )
                     locations.append(location)
-                if source and offer.sources.exclude(board=locked).exists():
+                if source and not preferred and offer.sources.exclude(board=locked).exists():
                     offer.locations.add(*locations)
                 else:
                     offer.locations.set(locations)

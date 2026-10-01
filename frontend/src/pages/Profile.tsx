@@ -7,6 +7,7 @@ import { useApiQuery } from '../lib/useApiQuery'
 import { AuthNotice } from '../components/auth/AuthControls'
 import { Resume } from './Resume'
 import './Profile.css'
+import { PreferenceTaxonomyPicker, TaxonomyNames } from '../components/offers/JobTaxonomyPicker'
 
 type Value = string | number | boolean | null | number[] | string[]
 type RecordData = Record<string, Value>
@@ -41,6 +42,9 @@ const collections: { name: string; title: string; hint: string; fields: Field[] 
   { name: 'work-authorizations', title: 'Autorisations de travail', hint: 'Vos déclarations par pays. Aucune autorisation n’est déduite de votre nationalité.', fields: [{ key: 'country_code', label: 'Pays (code à deux lettres)', required: true, max: 2, hint: 'Ex. FR, MA, GB ou US.' }, { key: 'authorized', label: 'Autorisé à travailler', type: 'boolean', nullable: true, choices: yesNo }, { key: 'needs_sponsorship', label: 'Besoin d’un visa sponsorisé', type: 'boolean', nullable: true, choices: yesNo }] },
 ]
 const preferences: Field[] = [
+  { key: 'domains', label: 'Domaines et métiers', type: 'taxonomy' },
+  { key: 'subdomains', label: 'Spécialités recherchées', type: 'taxonomy-hidden' },
+  { key: 'excluded_subdomains', label: 'Métiers à exclure', type: 'taxonomy-exclusions' },
   { key: 'role_ids', label: 'Métiers recherchés', catalogue: 'roles' },
   { key: 'location_ids', label: 'Lieux recherchés', catalogue: 'locations' },
   { key: 'contracts', label: 'Contrats acceptés', type: 'multi', choices: [['internship', 'Stage'], ['apprenticeship', 'Alternance'], ['employment', 'Emploi salarié'], ['contractor', 'Freelance / prestation'], ['temporary', 'Intérim']] },
@@ -108,7 +112,7 @@ function CataloguePicker({ field, value, onChange }: { field: Field; value: numb
 }
 
 function Editor({ fields, initial, path, method = 'PATCH', onSaved, onCancel }: { fields: Field[]; initial: RecordData; path: `/${string}`; method?: 'PATCH' | 'POST' | 'PUT'; onSaved: () => void; onCancel: () => void }) {
-  const [draft, setDraft] = useState<RecordData>(() => Object.fromEntries(fields.map(field => [field.key, (initial[field.key] != null && (field.type === 'year' || field.type === 'month') ? String(initial[field.key]).slice(0, field.type === 'year' ? 4 : 7) : initial[field.key]) ?? (field.catalogue || field.type === 'multi' ? [] : field.key === 'is_current' ? false : field.choices && !field.nullable ? field.choices[0][0] : '')])))
+  const [draft, setDraft] = useState<RecordData>(() => Object.fromEntries(fields.map(field => [field.key, (initial[field.key] != null && (field.type === 'year' || field.type === 'month') ? String(initial[field.key]).slice(0, field.type === 'year' ? 4 : 7) : initial[field.key]) ?? (field.catalogue || ['multi', 'taxonomy', 'taxonomy-hidden', 'taxonomy-exclusions'].includes(field.type ?? '') ? [] : field.key === 'is_current' ? false : field.choices && !field.nullable ? field.choices[0][0] : '')])))
   const [pending, setPending] = useState(false), [error, setError] = useState<string | null>(null)
   const [dirty, setDirty] = useState(false)
   const busy = useRef(false), form = useRef<HTMLFormElement>(null), uid = useId()
@@ -159,6 +163,9 @@ function Editor({ fields, initial, path, method = 'PATCH', onSaved, onCancel }: 
     <legend className="profile-sr-only">Modifier les informations</legend>
     {fields.map(field => {
       const value = draft[field.key], id = `${uid}-${field.key}`
+      if (field.type === 'taxonomy-exclusions') return <PreferenceTaxonomyPicker key={field.key} exclusions value={{ domains: [], subdomains: (draft.excluded_subdomains as string[]) ?? [] }} onChange={next => update('excluded_subdomains', next.subdomains)} />
+      if (field.type === 'taxonomy-hidden') return null
+      if (field.type === 'taxonomy') return <PreferenceTaxonomyPicker key={field.key} value={{ domains: (draft.domains as string[]) ?? [], subdomains: (draft.subdomains as string[]) ?? [] }} onChange={next => { update('domains', next.domains); update('subdomains', next.subdomains) }} />
       if (field.catalogue) return <CataloguePicker key={field.key} field={field} value={value as number[]} onChange={v => update(field.key, v)} />
       if (field.type === 'multi') return <fieldset key={field.key} className="profile-catalogue"><legend>{field.label}</legend><div className="profile-options">{field.choices?.map(([key, label]) => <label key={key}><input type="checkbox" checked={(value as string[]).includes(key)} onChange={event => update(field.key, event.target.checked ? [...value as string[], key] : (value as string[]).filter(v => v !== key))} />{label}</label>)}</div></fieldset>
       return <div key={field.key} className={`profile-field${field.type === 'textarea' ? ' profile-field-wide' : ''}`}><label htmlFor={id}>{field.label}{field.required ? ' *' : ''}</label>
@@ -191,7 +198,7 @@ function Summary({ fields, data, filledOnly = false }: { fields: Field[]; data: 
   return <dl className={`profile-summary${fields.length === 1 ? ' profile-summary--single' : ''}`}>{shown.map(field => {
     const value = data[field.key]
     const empty = value == null || value === '' || (Array.isArray(value) && value.length === 0)
-    return <div key={field.key}><dt>{field.label}</dt><dd className={empty ? 'profile-value-empty' : undefined}>{field.catalogue ? <SelectedNames kind={field.catalogue} ids={(value as number[]) ?? []} /> : display(value, field, data.date_precision)}</dd></div>
+    return <div key={field.key}><dt>{field.label}</dt><dd className={empty ? 'profile-value-empty' : undefined}>{['taxonomy', 'taxonomy-hidden', 'taxonomy-exclusions'].includes(field.type ?? '') ? <TaxonomyNames values={(value as string[]) ?? []} domains={field.type === 'taxonomy'} /> : field.catalogue ? <SelectedNames kind={field.catalogue} ids={(value as number[]) ?? []} /> : display(value, field, data.date_precision)}</dd></div>
   })}</dl>
 }
 function Editable({ id, title, hint, fields, data, path = '/profile/', method, reload, filledOnly = false }: { id: string; title: string; hint?: string; fields: Field[]; data: RecordData; path?: `/${string}`; method?: 'PATCH' | 'PUT'; reload: () => void; filledOnly?: boolean }) {

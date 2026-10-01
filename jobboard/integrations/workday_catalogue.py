@@ -20,12 +20,113 @@ WORKDAY_SCOPE = "europe-title-internships-v1"
 MAX_SECONDS = 600
 MAX_REQUESTS = 1800
 MAX_BYTES = 80 * 1024 * 1024
+FALLBACK_MAX_LISTINGS = 2000
+COUNTRY_FACET_LABELS = {
+    "country",
+    "country/region",
+    "location country",
+    "location country / territory",
+}
 COUNTRIES = dict(
     zip(
-        "AL AD AT BY BE BA BG HR CY CZ DK EE FI FR DE GR HU IS IE IT XK LV LI LT LU MT MD MC ME NL MK NO PL PT RO SM RS SK SI ES SE CH UA GB VA FO GI".split(),
-        "Albania|Andorra|Austria|Belarus|Belgium|Bosnia and Herzegovina|Bulgaria|Croatia|Cyprus|Czechia|Denmark|Estonia|Finland|France|Germany|Greece|Hungary|Iceland|Ireland|Italy|Kosovo|Latvia|Liechtenstein|Lithuania|Luxembourg|Malta|Moldova|Monaco|Montenegro|Netherlands|North Macedonia|Norway|Poland|Portugal|Romania|San Marino|Serbia|Slovakia|Slovenia|Spain|Sweden|Switzerland|Ukraine|United Kingdom|Vatican City|Faroe Islands|Gibraltar".split(
-            "|"
-        ),
+        [
+            "AL",
+            "AD",
+            "AT",
+            "BY",
+            "BE",
+            "BA",
+            "BG",
+            "HR",
+            "CY",
+            "CZ",
+            "DK",
+            "EE",
+            "FI",
+            "FR",
+            "DE",
+            "GR",
+            "HU",
+            "IS",
+            "IE",
+            "IT",
+            "XK",
+            "LV",
+            "LI",
+            "LT",
+            "LU",
+            "MT",
+            "MD",
+            "MC",
+            "ME",
+            "NL",
+            "MK",
+            "NO",
+            "PL",
+            "PT",
+            "RO",
+            "SM",
+            "RS",
+            "SK",
+            "SI",
+            "ES",
+            "SE",
+            "CH",
+            "UA",
+            "GB",
+            "VA",
+            "FO",
+            "GI",
+        ],
+        [
+            "Albania",
+            "Andorra",
+            "Austria",
+            "Belarus",
+            "Belgium",
+            "Bosnia and Herzegovina",
+            "Bulgaria",
+            "Croatia",
+            "Cyprus",
+            "Czechia",
+            "Denmark",
+            "Estonia",
+            "Finland",
+            "France",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "Iceland",
+            "Ireland",
+            "Italy",
+            "Kosovo",
+            "Latvia",
+            "Liechtenstein",
+            "Lithuania",
+            "Luxembourg",
+            "Malta",
+            "Moldova",
+            "Monaco",
+            "Montenegro",
+            "Netherlands",
+            "North Macedonia",
+            "Norway",
+            "Poland",
+            "Portugal",
+            "Romania",
+            "San Marino",
+            "Serbia",
+            "Slovakia",
+            "Slovenia",
+            "Spain",
+            "Sweden",
+            "Switzerland",
+            "Ukraine",
+            "United Kingdom",
+            "Vatican City",
+            "Faroe Islands",
+            "Gibraltar",
+        ],
         strict=True,
     )
 )
@@ -83,7 +184,12 @@ def _country_partitions(facets):
         if not isinstance(values, list):
             raise CatalogueImportError("invalid_facets")
         parameter = node.get("facetParameter")
-        if parameter in ("locationCountry", "locationHierarchy1"):
+        is_country = parameter in ("locationCountry", "locationHierarchy1") or (
+            isinstance(parameter, str)
+            and TOKEN.fullmatch(parameter)
+            and str(node.get("descriptor", "")).casefold() in COUNTRY_FACET_LABELS
+        )
+        if is_country:
             for item in values:
                 if not isinstance(item, dict):
                     raise CatalogueImportError("invalid_facets")
@@ -107,11 +213,11 @@ def _candidate(title):
     )
 
     return isinstance(title, str) and bool(
-        re.search(INTERN + r"|\bplacement\b", title, re.I)
+        re.search(INTERN + r"|\bplacement\b", title, re.IGNORECASE)
         and not re.search(
             APPRENTICESHIP_TITLE + "|" + NEGATIVE_TITLE + "|" + NON_INTERNSHIP_TITLE,
             title,
-            re.I,
+            re.IGNORECASE,
         )
     )
 
@@ -148,7 +254,7 @@ def normalize_workday(payload, *, host, site, path):
     if (
         not isinstance(code, str)
         or code not in COUNTRIES
-        or re.search(r"\bremote\b", location, re.I)
+        or re.search(r"\bremote\b", location, re.IGNORECASE)
     ):
         return None
     url = f"https://{host}/en-US/{site}{path}"
@@ -257,13 +363,23 @@ def fetch_workday_snapshot(key):
 
         initial = listing({}, 0)
         partitions = _country_partitions(initial.get("facets"))
-        if not partitions:
-            raise CatalogueImportError("country_facets_unavailable")
+        fallback = not partitions
+        if fallback:
+            # No trustworthy country partition: scan a bounded global listing.
+            # Always partial: this path may collect, never infer disappeared jobs.
+            error("", "country_facets_fallback")
+            partitions = [(None, "global_fallback", None)]
         for parameter, identity, _code in partitions:
             offset, total, partition_seen = 0, None, set()
             try:
                 while True:
-                    payload = listing({parameter: [identity]}, offset)
+                    payload = (
+                        initial
+                        if fallback and offset == 0
+                        else listing(
+                            {parameter: [identity]} if parameter else {}, offset
+                        )
+                    )
                     if total is None:
                         total = payload["total"]
                         if total >= 2000:
@@ -308,12 +424,19 @@ def fetch_workday_snapshot(key):
                             ):
                                 raise
                     offset += len(batch)
+                    if fallback and offset >= FALLBACK_MAX_LISTINGS and offset < total:
+                        error(identity, "fallback_listing_cap")
+                        break
                     if offset >= total:
                         if offset != total:
                             raise CatalogueImportError("snapshot_changed")
                         break
             except CatalogueImportError as exc:
                 error(identity, str(exc))
-                if str(exc) in ("snapshot_budget_exceeded", "upstream_rate_limited"):
+                if exc.code == "upstream_rate_limited":
+                    # Do not immediately re-import a partial preflight after 429.
+                    # Keep Retry-After available to both probe and board schedulers.
+                    raise
+                if exc.code == "snapshot_budget_exceeded":
                     break
     return CatalogueSnapshot(rows, complete=not errors, errors=errors)

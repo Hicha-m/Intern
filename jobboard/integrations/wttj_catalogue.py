@@ -23,6 +23,7 @@ FIELDS = [
     "name",
     "organization.name",
     "organization.slug",
+    "organization.logo.url",
     "slug",
     "offices",
     "contract_type",
@@ -42,11 +43,19 @@ class WttjPage:
     truncated: bool = False
 
 
-def query_index(country, low, high, page):
-    deadline = time.monotonic() + 30
+def query_index(country, low, high, page, *, company_slug=None, deadline=None):
+    deadline = deadline or time.monotonic() + 30
+    if company_slug is not None and not re.fullmatch(
+        r"[A-Za-z0-9_-][A-Za-z0-9_.-]{0,349}", company_slug
+    ):
+        raise CatalogueImportError("wttj_invalid_company")
     try:
         with (
-            httpx.Client(timeout=20, follow_redirects=False, trust_env=False) as client,
+            httpx.Client(
+                timeout=max(0.1, min(20, deadline - time.monotonic())),
+                follow_redirects=False,
+                trust_env=False,
+            ) as client,
             client.stream(
                 "POST",
                 INDEX_URL,
@@ -58,13 +67,17 @@ def query_index(country, low, high, page):
                     "User-Agent": "InternCatalogue/1.0",
                 },
                 json={
-                    "filters": f"contract_type:internship AND offices.country_code:{country}",
-                    "numericFilters": [
+                    "filters": f'organization.slug:"{company_slug}"'
+                    if company_slug
+                    else f"contract_type:internship AND offices.country_code:{country}",
+                    "numericFilters": []
+                    if company_slug
+                    else [
                         f"published_at_timestamp>={low}",
                         f"published_at_timestamp<={high}",
                     ],
                     "page": page,
-                    "hitsPerPage": PAGE_SIZE,
+                    "hitsPerPage": 1 if company_slug else PAGE_SIZE,
                     "attributesToRetrieve": FIELDS,
                     "attributesToHighlight": [],
                     "attributesToSnippet": [],
@@ -93,6 +106,31 @@ def query_index(country, low, high, page):
     return payload
 
 
+def company_logo(slug, company_name, *, deadline=None):
+    """Reuse the public job index for a known employer slug, never fuzzy name search."""
+    payload = query_index(
+        "FR", 0, int(time.time()), 0, company_slug=slug, deadline=deadline
+    )
+    hits = payload.get("hits")
+    if not isinstance(hits, list) or not hits or not isinstance(hits[0], dict):
+        raise CatalogueImportError("wttj_logo_not_found")
+    organization = hits[0].get("organization")
+    from jobboard.services.company_logos import same_name
+
+    if (
+        not isinstance(organization, dict)
+        or organization.get("slug") != slug
+        or not isinstance(organization.get("name"), str)
+        or not same_name(organization["name"], company_name)
+    ):
+        raise CatalogueImportError("wttj_logo_company_mismatch")
+    logo = organization.get("logo")
+    url = logo.get("url") if isinstance(logo, dict) else None
+    if not isinstance(url, str) or len(url) > 2048:
+        raise CatalogueImportError("wttj_logo_not_found")
+    return url
+
+
 def source_record(hit):
     if not isinstance(hit, dict):
         raise CatalogueImportError("wttj_invalid_hit")
@@ -115,6 +153,9 @@ def source_record(hit):
         "id": identity,
         "company": org.get("name"),
         "company_slug": company_slug,
+        "company_logo": (org.get("logo") or {}).get("url")
+        if isinstance(org.get("logo"), dict)
+        else None,
         "url": f"{ORIGIN}/fr/companies/{company_slug}/jobs/{slug}",
         "description_kind": "source_summary",
     }

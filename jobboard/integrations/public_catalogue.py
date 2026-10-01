@@ -156,7 +156,13 @@ def normalize_ashby(payload):
         ) + [_ashby_location(item) for item in secondary if item.get("location")]
         if job.get("employmentType") == "Intern":
             row["contract_type"] = "internship"
-        if job.get("isRemote") is True:
+        # Hybrid postings can also set isRemote=True; the enum is more precise.
+        workplace = {"Hybrid": "hybrid", "OnSite": "onsite", "Remote": "remote"}.get(
+            job.get("workplaceType")
+        )
+        if workplace:
+            row["work_mode"] = workplace
+        elif job.get("isRemote") is True:
             row["work_mode"] = "remote"
         if identity in seen:
             raise CatalogueImportError("duplicate_job")
@@ -204,6 +210,36 @@ def normalize_lever(payload):
             job.get("applyUrl", job.get("hostedUrl")),
             locations,
         )
+        country = job.get("country")
+        primary = categories.get("location")
+        if isinstance(country, str) and re.fullmatch(r"[A-Za-z]{2}", country):
+            row["location_details"] = [
+                {"name": label, "country": country.upper() if label == primary else ""}
+                for label in locations
+            ]
+        # A generic label may hide a role-specific country list in the public text.
+        from .lever_locations import explicit_role_locations
+
+        if job.get("workplaceType") == "remote":
+            row["work_mode"] = "remote"
+        elif not job.get("country"):
+            resolved = explicit_role_locations(
+                job.get("descriptionPlain", ""), locations
+            )
+            if resolved:
+                row["location_details"] = resolved["details"]
+                row["locations"] = [place["name"] for place in resolved["details"]]
+                row["location"] = row["locations"][0]
+                row["raw"] = dict(
+                    job,
+                    location_resolution={
+                        "method": "explicit_role_country_list_v1",
+                        "source_field": "descriptionPlain",
+                        "evidence": resolved["evidence"],
+                        "locations": resolved["details"],
+                    },
+                )
+                row["hash"] = digest(row["raw"])
         if row["external_id"] in seen:
             raise CatalogueImportError("duplicate_job")
         seen.add(row["external_id"])

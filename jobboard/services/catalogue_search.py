@@ -8,10 +8,9 @@ from operator import and_, or_
 from django.contrib.postgres.search import (
     SearchQuery,
     SearchRank,
-    SearchVector,
-    SearchVectorField,
+    TrigramWordSimilarity,
 )
-from django.db.models import F, Func
+from django.db.models import F, Func, TextField, Value
 
 # Deliberately small, reviewed equivalents; never change the publication boundary.
 ALIASES = (
@@ -19,11 +18,16 @@ ALIASES = (
     (
         "développeur",
         "developpeur",
+        "développeuse",
+        "développeur logiciel",
+        "développeuse logiciel",
         "développement logiciel",
+        "software development",
         "software developer",
         "software engineer",
         "software engineering",
         "softwareentwicklung",
+        "swe",
     ),
     ("science des données", "data science", "data scientist"),
     ("analyse de données", "data analyst", "data analytics"),
@@ -47,10 +51,31 @@ ALIAS_MAP = {normalized(alias): group for group in ALIASES for alias in group}
 MAX_ALIAS_WORDS = max(len(alias.split()) for alias in ALIAS_MAP)
 
 
+def search_text(text):
+    """Use the same database normalizer as the stored document."""
+    return Func(
+        Value(text), function="intern_search_normalize", output_field=TextField()
+    )
+
+
+def clause(text, search_type="phrase"):
+    return SearchQuery(search_text(text), config="simple", search_type=search_type)
+
+
+class PreparedSearchQuery(SearchQuery):
+    """An uncorrelated subquery prepares the tsquery once per SQL expression.
+
+    Otherwise PostgreSQL can repeat normalization/parsing for every ranked row,
+    especially with multilingual alternatives. The GIN still accepts this RHS.
+    """
+
+    template = "(SELECT %(expressions)s)"
+
+
 def search_query(text):
     # Explicit web-search operators and quoted phrases retain PostgreSQL semantics.
     if re.search(r'"|(?:^|\s)-\S|\bOR\b', text):
-        return SearchQuery(text, config="simple", search_type="websearch")
+        return clause(text, "websearch")
     words = text.split()
     clauses = []
     offset = 0
@@ -62,44 +87,55 @@ def search_query(text):
                 clauses.append(
                     reduce(
                         or_,
-                        (
-                            SearchQuery(alias, config="simple", search_type="phrase")
-                            for alias in group
-                        ),
+                        (clause(alias) for alias in group),
                     )
                 )
                 offset += size
                 break
         else:
-            clauses.append(SearchQuery(words[offset], config="simple"))
+            clauses.append(clause(words[offset], "plain"))
             offset += 1
-    return reduce(and_, clauses)
+    return reduce(and_, clauses) if clauses else clause("", "plain")
 
 
 def search_offers(queryset, text):
     text = text.strip()
     if not text:
         return queryset
-    query = search_query(text)
-    # Company participates in mixed queries (e.g. 'Bosch software'), without
-    # copying company names into every offer when an employer is renamed.
-    company = SearchVector("company__name", config="simple", weight="A")
-    title = SearchVector("title", config="simple", weight="A")
-    document = Func(
-        F("search_vector"),
-        company,
-        function="",
-        template="(%(expressions)s)",
-        arg_joiner=" || ",
-        output_field=SearchVectorField(),
-    )
-    return (
-        queryset.annotate(
-            search_document=document,
-        )
-        .filter(search_document=query)
-        .annotate(
-            search_rank=SearchRank(document, query)
-            + 4 * SearchRank(title + company, query),
+    query = PreparedSearchQuery(search_query(text))
+    return queryset.filter(search_document=query).annotate(
+        search_rank=SearchRank(
+            F("search_document"), query, weights=[0.05, 0.1, 0.2, 1.0], normalization=32
         )
     )
+
+
+def suggest_offers(queryset, text):
+    """Explicit alternatives from an already filtered publication boundary.
+
+    The operator (rather than a similarity-function WHERE) uses the trigram
+    index. No correction of quotes, OR or exclusions, and no unbounded list.
+    """
+    text = text.strip()
+    if (
+        not 3 <= len(text) <= 100
+        or len(text.split()) > 8
+        or sum(character.isalnum() for character in text) < 3
+        or re.search(r'"|(?:^|\s)-\S|\bOR\b', text)
+    ):
+        return []
+    candidates = (
+        queryset.filter(search_title__trigram_word_similar=search_text(text))
+        .annotate(similarity=TrigramWordSimilarity(search_text(text), "search_title"))
+        .order_by("-similarity", F("published_at").desc(nulls_last=True), "-id")
+        .values("title", "search_title")[:12]
+    )
+    suggestions, seen = [], set()
+    for item in candidates:
+        if item["search_title"] in seen:
+            continue
+        seen.add(item["search_title"])
+        suggestions.append({"query": item["title"]})
+        if len(suggestions) == 3:
+            break
+    return suggestions

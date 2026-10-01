@@ -1,0 +1,3017 @@
+{
+  "version": "job-taxonomy-1",
+  "domains": [
+    {
+      "slug": "software-it",
+      "name": "Informatique et systèmes",
+      "position": 0,
+      "subdomains": [
+        {
+          "slug": "frontend",
+          "name": "Frontend",
+          "aliases": [
+            "Frontend",
+            "front end",
+            "front-end",
+            "frontend developer",
+            "frontend engineer",
+            "développeur frontend",
+            "frontendentwickler"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "backend",
+          "name": "Backend",
+          "aliases": [
+            "Backend",
+            "back end",
+            "back-end",
+            "backend developer",
+            "backend engineer",
+            "développement serveur",
+            "backendentwickler"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "full-stack",
+          "name": "Full stack",
+          "aliases": [
+            "Full stack",
+            "fullstack",
+            "full-stack",
+            "full stack developer"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "mobile",
+          "name": "Mobile",
+          "aliases": [
+            "Mobile",
+            "mobile developer",
+            "mobile engineer",
+            "android developer",
+            "ios developer",
+            "développeur mobile"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "software-generalist",
+          "name": "Développement logiciel généraliste",
+          "aliases": [
+            "Développement logiciel généraliste",
+            "software engineer",
+            "software engineering",
+            "software developer",
+            "software development",
+            "développeur logiciel",
+            "développement logiciel",
+            "softwareentwickler",
+            "softwareentwicklung",
+            "développeur",
+            "développeuse",
+            "software engineering internship",
+            "informatique",
+            "it intern",
+            "software",
+            "software intern",
+            "développement informatique"
+          ],
+          "generalist": true,
+          "position": 4
+        },
+        {
+          "slug": "embedded-software",
+          "name": "Systèmes embarqués et firmware",
+          "aliases": [
+            "Systèmes embarqués et firmware",
+            "embedded software",
+            "embedded systems",
+            "firmware",
+            "logiciel embarqué",
+            "systèmes embarqués"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "game-development",
+          "name": "Jeux vidéo et moteurs graphiques",
+          "aliases": [
+            "Jeux vidéo et moteurs graphiques",
+            "game developer",
+            "game development",
+            "gameplay",
+            "graphics programmer"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "software-testing",
+          "name": "QA et automatisation des tests",
+          "aliases": [
+            "QA et automatisation des tests",
+            "software testing",
+            "qa engineer",
+            "test automation",
+            "software quality",
+            "quality assurance engineer",
+            "automatisation des tests"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "devops-sre",
+          "name": "DevOps et SRE",
+          "aliases": [
+            "DevOps et SRE",
+            "devops",
+            "site reliability",
+            "sre",
+            "devsecops"
+          ],
+          "generalist": false,
+          "position": 8
+        },
+        {
+          "slug": "cloud-platform",
+          "name": "Cloud et plateforme",
+          "aliases": [
+            "Cloud et plateforme",
+            "cloud engineer",
+            "platform engineer",
+            "cloud engineering",
+            "cloud architecture"
+          ],
+          "generalist": false,
+          "position": 9
+        },
+        {
+          "slug": "systems-networks",
+          "name": "Systèmes et réseaux",
+          "aliases": [
+            "Systèmes et réseaux",
+            "system administrator",
+            "network engineer",
+            "administrateur système",
+            "réseaux informatiques",
+            "it infrastructure"
+          ],
+          "generalist": false,
+          "position": 10
+        },
+        {
+          "slug": "it-support",
+          "name": "Support et services informatiques",
+          "aliases": [
+            "Support et services informatiques",
+            "it support",
+            "technical support",
+            "support informatique",
+            "service desk"
+          ],
+          "generalist": false,
+          "position": 11
+        }
+      ]
+    },
+    {
+      "slug": "data-ai",
+      "name": "Data, IA et statistiques",
+      "position": 1,
+      "subdomains": [
+        {
+          "slug": "analytics",
+          "name": "Analyse de données",
+          "aliases": [
+            "Analyse de données",
+            "data analyst",
+            "data analytics",
+            "analyste de données",
+            "datenanalyse",
+            "analista de datos",
+            "analista dati"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "business-intelligence",
+          "name": "Business intelligence",
+          "aliases": [
+            "Business intelligence",
+            "business intelligence",
+            "bi analyst",
+            "business-intelligence"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "data-engineering",
+          "name": "Data engineering",
+          "aliases": [
+            "Data engineering",
+            "data engineer",
+            "data engineering",
+            "ingénieur données",
+            "data pipelines"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "data-science",
+          "name": "Data science",
+          "aliases": [
+            "Data science",
+            "data scientist",
+            "data science",
+            "data-science"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "machine-learning",
+          "name": "Machine learning",
+          "aliases": [
+            "Machine learning",
+            "machine learning",
+            "apprentissage automatique",
+            "deep learning"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "generative-ai-nlp",
+          "name": "IA générative et NLP",
+          "aliases": [
+            "IA générative et NLP",
+            "generative ai",
+            "natural language processing",
+            "nlp",
+            "large language model",
+            "llm engineer",
+            "ia générative"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "computer-vision",
+          "name": "Vision par ordinateur",
+          "aliases": [
+            "Vision par ordinateur",
+            "computer vision",
+            "vision par ordinateur",
+            "image recognition",
+            "traitement d'images"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "mlops",
+          "name": "MLOps",
+          "aliases": [
+            "MLOps",
+            "mlops",
+            "ml ops"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "statistics",
+          "name": "Statistiques et biostatistiques",
+          "aliases": [
+            "Statistiques et biostatistiques",
+            "statistician",
+            "statistics",
+            "biostatistics",
+            "statistiques",
+            "biostatistiques"
+          ],
+          "generalist": false,
+          "position": 8
+        },
+        {
+          "slug": "data-governance",
+          "name": "Gouvernance et qualité des données",
+          "aliases": [
+            "Gouvernance et qualité des données",
+            "data governance",
+            "data quality",
+            "gouvernance des données",
+            "qualité des données"
+          ],
+          "generalist": false,
+          "position": 9
+        },
+        {
+          "slug": "data-ai-generalist",
+          "name": "Généraliste — Data, IA et statistiques",
+          "aliases": [
+            "data intern",
+            "data internship",
+            "artificial intelligence",
+            "intelligence artificielle",
+            "data analytics intern",
+            "IA",
+            "AI"
+          ],
+          "generalist": true,
+          "position": 10
+        }
+      ]
+    },
+    {
+      "slug": "cybersecurity",
+      "name": "Cybersécurité",
+      "position": 2,
+      "subdomains": [
+        {
+          "slug": "security-operations",
+          "name": "SOC et détection",
+          "aliases": [
+            "SOC et détection",
+            "security operations",
+            "soc analyst",
+            "cyber defense",
+            "security monitoring"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "incident-response",
+          "name": "Réponse à incident et investigation",
+          "aliases": [
+            "Réponse à incident et investigation",
+            "incident response",
+            "digital forensics",
+            "réponse à incident"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "pentesting",
+          "name": "Pentest et sécurité offensive",
+          "aliases": [
+            "Pentest et sécurité offensive",
+            "penetration testing",
+            "pentest",
+            "ethical hacking",
+            "offensive security"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "application-security",
+          "name": "Sécurité applicative",
+          "aliases": [
+            "Sécurité applicative",
+            "application security",
+            "appsec",
+            "sécurité applicative"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "cloud-security",
+          "name": "Sécurité cloud et infrastructure",
+          "aliases": [
+            "Sécurité cloud et infrastructure",
+            "cloud security",
+            "infrastructure security"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "identity-access",
+          "name": "Identités et accès",
+          "aliases": [
+            "Identités et accès",
+            "identity and access",
+            "identity access",
+            "iam",
+            "gestion des identités"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "cyber-governance",
+          "name": "Gouvernance, risques et conformité cyber",
+          "aliases": [
+            "Gouvernance, risques et conformité cyber",
+            "cyber governance",
+            "cybersecurity governance",
+            "grc cyber",
+            "information security risk"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "cryptography",
+          "name": "Cryptographie et recherche sécurité",
+          "aliases": [
+            "Cryptographie et recherche sécurité",
+            "cryptography",
+            "cryptographie"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "cybersecurity-generalist",
+          "name": "Généraliste — Cybersécurité",
+          "aliases": [
+            "cybersecurity",
+            "cyber security",
+            "cybersécurité",
+            "information security",
+            "it security"
+          ],
+          "generalist": true,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "slug": "engineering",
+      "name": "Ingénierie et conception technique",
+      "position": 3,
+      "subdomains": [
+        {
+          "slug": "mechanical",
+          "name": "Mécanique",
+          "aliases": [
+            "Mécanique",
+            "mechanical",
+            "mécanique",
+            "maschinenbau",
+            "mechanik"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "electronics",
+          "name": "Électronique",
+          "aliases": [
+            "Électronique",
+            "electronics",
+            "electronic design",
+            "elektronik",
+            "électronique"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "electrical",
+          "name": "Électrotechnique",
+          "aliases": [
+            "Électrotechnique",
+            "electrical engineer",
+            "electrical engineering",
+            "elektrotechnik",
+            "électrotechnique",
+            "génie électrique"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "control-engineering",
+          "name": "Automatique et contrôle",
+          "aliases": [
+            "Automatique et contrôle",
+            "control engineering",
+            "control systems",
+            "automatique",
+            "regelungstechnik"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "robotics",
+          "name": "Robotique et mécatronique",
+          "aliases": [
+            "Robotique et mécatronique",
+            "robotics",
+            "robotique",
+            "mechatronics",
+            "mécatronique"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "telecommunications",
+          "name": "Télécommunications",
+          "aliases": [
+            "Télécommunications",
+            "telecommunications",
+            "télécommunications",
+            "telecom"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "materials-engineering",
+          "name": "Matériaux",
+          "aliases": [
+            "Matériaux",
+            "materials engineer",
+            "ingénieur matériaux"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "simulation",
+          "name": "Simulation et calcul",
+          "aliases": [
+            "Simulation et calcul",
+            "simulation engineer",
+            "numerical simulation",
+            "simulation numérique",
+            "calcul mécanique"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "systems-testing",
+          "name": "Systèmes et essais",
+          "aliases": [
+            "Systèmes et essais",
+            "systems engineering",
+            "system engineering",
+            "systems test",
+            "test engineer",
+            "ingénierie système"
+          ],
+          "generalist": false,
+          "position": 8
+        },
+        {
+          "slug": "process-engineering",
+          "name": "Conception de procédés",
+          "aliases": [
+            "Conception de procédés",
+            "process engineer",
+            "process engineering",
+            "génie des procédés"
+          ],
+          "generalist": false,
+          "position": 9
+        },
+        {
+          "slug": "engineering-generalist",
+          "name": "Généraliste — Ingénierie et conception technique",
+          "aliases": [
+            "engineering intern",
+            "engineer intern",
+            "ingénieur",
+            "ingénierie",
+            "ingenieur",
+            "engineering internship"
+          ],
+          "generalist": true,
+          "position": 10
+        }
+      ]
+    },
+    {
+      "slug": "industrial-operations",
+      "name": "Production, qualité et maintenance",
+      "position": 4,
+      "subdomains": [
+        {
+          "slug": "manufacturing",
+          "name": "Production et fabrication",
+          "aliases": [
+            "Production et fabrication",
+            "manufacturing",
+            "production industrielle",
+            "fertigung"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "industrial-methods",
+          "name": "Méthodes et industrialisation",
+          "aliases": [
+            "Méthodes et industrialisation",
+            "industrial engineering",
+            "industrialisation",
+            "méthodes industrielles"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "continuous-improvement",
+          "name": "Amélioration continue",
+          "aliases": [
+            "Amélioration continue",
+            "continuous improvement",
+            "lean manufacturing",
+            "amélioration continue"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "quality-metrology",
+          "name": "Qualité et métrologie",
+          "aliases": [
+            "Qualité et métrologie",
+            "quality engineer",
+            "quality management",
+            "quality assurance",
+            "métrologie",
+            "qualité industrielle",
+            "qualitätsmanagement",
+            "qualitaetsmanagement",
+            "qualitätsprüfung"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "maintenance",
+          "name": "Maintenance et fiabilité",
+          "aliases": [
+            "Maintenance et fiabilité",
+            "maintenance engineer",
+            "maintenance industrielle",
+            "instandhaltung"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "safety",
+          "name": "Hygiène et sécurité au travail",
+          "aliases": [
+            "Hygiène et sécurité au travail",
+            "occupational safety",
+            "health and safety",
+            "hse",
+            "ehs",
+            "sécurité au travail"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "production-planning",
+          "name": "Planification industrielle",
+          "aliases": [
+            "Planification industrielle",
+            "production planning",
+            "planification industrielle"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "industrial-operations-generalist",
+          "name": "Généraliste — Production, qualité et maintenance",
+          "aliases": [
+            "industrial operations",
+            "industrie",
+            "industrial intern",
+            "production intern",
+            "quality intern"
+          ],
+          "generalist": true,
+          "position": 7
+        }
+      ]
+    },
+    {
+      "slug": "construction",
+      "name": "Construction, architecture et urbanisme",
+      "position": 5,
+      "subdomains": [
+        {
+          "slug": "civil-engineering",
+          "name": "Génie civil et structures",
+          "aliases": [
+            "Génie civil et structures",
+            "civil engineering",
+            "génie civil",
+            "bauingenieur",
+            "structural engineering"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "construction-management",
+          "name": "Conduite de travaux",
+          "aliases": [
+            "Conduite de travaux",
+            "construction management",
+            "conduite de travaux",
+            "chantier",
+            "bauleitung",
+            "conducteur de travaux",
+            "conducteur.rice de travaux",
+            "conductrice de travaux"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "architecture",
+          "name": "Architecture",
+          "aliases": [
+            "Architecture",
+            "architectural",
+            "architecte",
+            "architecture bâtiment"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "bim",
+          "name": "BIM et modélisation bâtiment",
+          "aliases": [
+            "BIM et modélisation bâtiment",
+            "bim",
+            "building information modeling"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "geotechnical",
+          "name": "Géotechnique",
+          "aliases": [
+            "Géotechnique",
+            "geotechnical",
+            "géotechnique"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "surveying",
+          "name": "Topographie",
+          "aliases": [
+            "Topographie",
+            "surveyor",
+            "topographie",
+            "géomètre"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "urban-planning",
+          "name": "Urbanisme et aménagement",
+          "aliases": [
+            "Urbanisme et aménagement",
+            "urban planning",
+            "urbanisme"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "construction-economics",
+          "name": "Économie de la construction",
+          "aliases": [
+            "Économie de la construction",
+            "quantity surveyor",
+            "économie de la construction"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "construction-generalist",
+          "name": "Généraliste — Construction, architecture et urbanisme",
+          "aliases": [
+            "construction",
+            "building intern",
+            "bâtiment"
+          ],
+          "generalist": true,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "slug": "energy-environment",
+      "name": "Énergie et environnement",
+      "position": 6,
+      "subdomains": [
+        {
+          "slug": "energy-systems",
+          "name": "Systèmes énergétiques",
+          "aliases": [
+            "Systèmes énergétiques",
+            "energy engineering",
+            "systèmes énergétiques",
+            "energietechnik"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "renewables",
+          "name": "Énergies renouvelables",
+          "aliases": [
+            "Énergies renouvelables",
+            "renewable energy",
+            "énergies renouvelables",
+            "solar energy",
+            "wind energy"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "energy-efficiency",
+          "name": "Efficacité énergétique",
+          "aliases": [
+            "Efficacité énergétique",
+            "energy efficiency",
+            "efficacité énergétique"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "water",
+          "name": "Eau et assainissement",
+          "aliases": [
+            "Eau et assainissement",
+            "wastewater",
+            "water treatment",
+            "assainissement",
+            "traitement des eaux"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "waste-circular-economy",
+          "name": "Déchets et économie circulaire",
+          "aliases": [
+            "Déchets et économie circulaire",
+            "waste management",
+            "circular economy",
+            "économie circulaire"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "ecology",
+          "name": "Écologie et biodiversité",
+          "aliases": [
+            "Écologie et biodiversité",
+            "ecology",
+            "biodiversity",
+            "écologie",
+            "biodiversité"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "carbon-climate",
+          "name": "Évaluation carbone et climat",
+          "aliases": [
+            "Évaluation carbone et climat",
+            "carbon accounting",
+            "climate analyst",
+            "bilan carbone",
+            "climat"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "environmental-engineering",
+          "name": "Ingénierie environnementale",
+          "aliases": [
+            "Ingénierie environnementale",
+            "environmental engineer",
+            "ingénieur environnement"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "sustainability",
+          "name": "Développement durable et RSE",
+          "aliases": [
+            "Développement durable et RSE",
+            "sustainability",
+            "csr",
+            "rse",
+            "développement durable"
+          ],
+          "generalist": false,
+          "position": 8
+        },
+        {
+          "slug": "energy-environment-generalist",
+          "name": "Généraliste — Énergie et environnement",
+          "aliases": [
+            "environment",
+            "environnement",
+            "energy intern",
+            "énergie"
+          ],
+          "generalist": true,
+          "position": 9
+        }
+      ]
+    },
+    {
+      "slug": "science-research",
+      "name": "Sciences et recherche",
+      "position": 7,
+      "subdomains": [
+        {
+          "slug": "biology",
+          "name": "Biologie et biotechnologies",
+          "aliases": [
+            "Biologie et biotechnologies",
+            "biology",
+            "biologie",
+            "biotechnology",
+            "biotechnologie"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "chemistry",
+          "name": "Chimie",
+          "aliases": [
+            "Chimie",
+            "chemistry",
+            "chimie",
+            "chemist",
+            "chemiker"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "physics",
+          "name": "Physique",
+          "aliases": [
+            "Physique",
+            "physics",
+            "physique",
+            "physicist"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "applied-mathematics",
+          "name": "Mathématiques appliquées",
+          "aliases": [
+            "Mathématiques appliquées",
+            "applied mathematics",
+            "mathématiques appliquées"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "geoscience",
+          "name": "Géosciences",
+          "aliases": [
+            "Géosciences",
+            "geology",
+            "géologie",
+            "geoscience"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "materials-science",
+          "name": "Sciences des matériaux",
+          "aliases": [
+            "Sciences des matériaux",
+            "materials science",
+            "sciences des matériaux"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "laboratory",
+          "name": "Recherche expérimentale et laboratoire",
+          "aliases": [
+            "Recherche expérimentale et laboratoire",
+            "laboratory",
+            "laboratoire",
+            "laboratory technician",
+            "laborantin"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "social-science",
+          "name": "Sciences humaines et sociales",
+          "aliases": [
+            "Sciences humaines et sociales",
+            "social science",
+            "sciences sociales",
+            "sociologie"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "science-research-generalist",
+          "name": "Généraliste — Sciences et recherche",
+          "aliases": [
+            "research intern",
+            "research internship",
+            "research assistant",
+            "recherche",
+            "wissenschaft"
+          ],
+          "generalist": true,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "slug": "health",
+      "name": "Santé et recherche clinique",
+      "position": 8,
+      "subdomains": [
+        {
+          "slug": "clinical-research",
+          "name": "Recherche clinique",
+          "aliases": [
+            "Recherche clinique",
+            "clinical research",
+            "recherche clinique",
+            "clinical trials"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "public-health",
+          "name": "Santé publique et épidémiologie",
+          "aliases": [
+            "Santé publique et épidémiologie",
+            "public health",
+            "santé publique",
+            "epidemiology",
+            "épidémiologie"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "health-regulatory",
+          "name": "Affaires réglementaires santé",
+          "aliases": [
+            "Affaires réglementaires santé",
+            "pharmaceutical regulatory",
+            "medical regulatory",
+            "affaires réglementaires santé"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "pharmacovigilance",
+          "name": "Pharmacovigilance",
+          "aliases": [
+            "Pharmacovigilance",
+            "pharmacovigilance",
+            "drug safety"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "nursing",
+          "name": "Soins et paramédical",
+          "aliases": [
+            "Soins et paramédical",
+            "nursing",
+            "nurse",
+            "infirmier",
+            "infirmière",
+            "paramédical"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "psychology",
+          "name": "Psychologie",
+          "aliases": [
+            "Psychologie",
+            "psychology",
+            "psychologie",
+            "psychologist"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "nutrition",
+          "name": "Nutrition et diététique",
+          "aliases": [
+            "Nutrition et diététique",
+            "nutrition",
+            "diététique"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "biomedical",
+          "name": "Ingénierie biomédicale",
+          "aliases": [
+            "Ingénierie biomédicale",
+            "biomedical",
+            "biomédical"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "health-generalist",
+          "name": "Généraliste — Santé et recherche clinique",
+          "aliases": [
+            "health intern",
+            "medical",
+            "santé",
+            "healthcare"
+          ],
+          "generalist": true,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "slug": "finance",
+      "name": "Finance, banque et assurance",
+      "position": 9,
+      "subdomains": [
+        {
+          "slug": "corporate-finance",
+          "name": "Finance d’entreprise et FP&A",
+          "aliases": [
+            "Finance d’entreprise et FP&A",
+            "corporate finance",
+            "fp&a",
+            "financial planning",
+            "finance d'entreprise"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "financial-analysis",
+          "name": "Analyse financière",
+          "aliases": [
+            "Analyse financière",
+            "financial analyst",
+            "financial analysis",
+            "analyste financier"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "investment-banking",
+          "name": "Banque d’investissement et M&A",
+          "aliases": [
+            "Banque d’investissement et M&A",
+            "investment banking",
+            "m&a",
+            "mergers and acquisitions",
+            "fusions acquisitions"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "trading",
+          "name": "Marchés et trading",
+          "aliases": [
+            "Marchés et trading",
+            "trading",
+            "capital markets",
+            "sales and trading",
+            "marchés financiers"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "quantitative-finance",
+          "name": "Recherche quantitative",
+          "aliases": [
+            "Recherche quantitative",
+            "quantitative finance",
+            "quantitative analyst",
+            "quant researcher",
+            "finance quantitative"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "asset-management",
+          "name": "Gestion d’actifs",
+          "aliases": [
+            "Gestion d’actifs",
+            "asset management",
+            "portfolio management",
+            "gestion d'actifs"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "private-equity",
+          "name": "Capital investissement et venture capital",
+          "aliases": [
+            "Capital investissement et venture capital",
+            "private equity",
+            "venture capital",
+            "capital investissement"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "financial-risk",
+          "name": "Risques financiers",
+          "aliases": [
+            "Risques financiers",
+            "financial risk",
+            "credit risk",
+            "market risk",
+            "risk analyst",
+            "risques financiers"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "credit",
+          "name": "Crédit",
+          "aliases": [
+            "Crédit",
+            "credit analyst",
+            "analyse crédit"
+          ],
+          "generalist": false,
+          "position": 8
+        },
+        {
+          "slug": "actuarial",
+          "name": "Actuariat et assurance",
+          "aliases": [
+            "Actuariat et assurance",
+            "actuarial",
+            "actuariat",
+            "actuaire",
+            "insurance analyst"
+          ],
+          "generalist": false,
+          "position": 9
+        },
+        {
+          "slug": "finance-generalist",
+          "name": "Généraliste — Finance, banque et assurance",
+          "aliases": [
+            "finance intern",
+            "finance internship",
+            "finance",
+            "financial intern",
+            "banking",
+            "assurance"
+          ],
+          "generalist": true,
+          "position": 10
+        }
+      ]
+    },
+    {
+      "slug": "accounting-audit",
+      "name": "Comptabilité, audit et contrôle",
+      "position": 10,
+      "subdomains": [
+        {
+          "slug": "accounting",
+          "name": "Comptabilité générale",
+          "aliases": [
+            "Comptabilité générale",
+            "accounting",
+            "accountant",
+            "comptabilité",
+            "comptable",
+            "buchhaltung"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "accounts-payable-receivable",
+          "name": "Comptabilité fournisseurs et clients",
+          "aliases": [
+            "Comptabilité fournisseurs et clients",
+            "accounts payable",
+            "accounts receivable",
+            "comptabilité fournisseurs",
+            "comptabilité clients"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "financial-audit",
+          "name": "Audit financier",
+          "aliases": [
+            "Audit financier",
+            "financial audit",
+            "audit financier",
+            "external audit"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "management-control",
+          "name": "Contrôle de gestion",
+          "aliases": [
+            "Contrôle de gestion",
+            "controlling",
+            "controller",
+            "contrôle de gestion"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "tax",
+          "name": "Fiscalité",
+          "aliases": [
+            "Fiscalité",
+            "tax",
+            "fiscalité",
+            "steuerrecht"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "treasury",
+          "name": "Trésorerie",
+          "aliases": [
+            "Trésorerie",
+            "treasury",
+            "trésorerie"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "internal-audit",
+          "name": "Audit interne et contrôle interne",
+          "aliases": [
+            "Audit interne et contrôle interne",
+            "internal audit",
+            "audit interne",
+            "internal control"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "accounting-audit-generalist",
+          "name": "Généraliste — Comptabilité, audit et contrôle",
+          "aliases": [
+            "audit intern",
+            "audit internship",
+            "audit",
+            "comptabilité et audit"
+          ],
+          "generalist": true,
+          "position": 7
+        }
+      ]
+    },
+    {
+      "slug": "legal-compliance",
+      "name": "Droit et conformité",
+      "position": 11,
+      "subdomains": [
+        {
+          "slug": "business-law",
+          "name": "Droit des affaires et contrats",
+          "aliases": [
+            "Droit des affaires et contrats",
+            "business law",
+            "contract law",
+            "droit des affaires",
+            "droit des contrats",
+            "droit commercial"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "employment-law",
+          "name": "Droit social",
+          "aliases": [
+            "Droit social",
+            "employment law",
+            "labor law",
+            "droit social",
+            "droit du travail"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "public-law",
+          "name": "Droit public",
+          "aliases": [
+            "Droit public",
+            "public law",
+            "droit public"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "intellectual-property",
+          "name": "Propriété intellectuelle",
+          "aliases": [
+            "Propriété intellectuelle",
+            "intellectual property",
+            "propriété intellectuelle",
+            "patent law"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "data-protection",
+          "name": "Protection des données",
+          "aliases": [
+            "Protection des données",
+            "data protection",
+            "privacy officer",
+            "protection des données",
+            "dpo"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "regulatory-compliance",
+          "name": "Conformité réglementaire",
+          "aliases": [
+            "Conformité réglementaire",
+            "regulatory compliance",
+            "compliance officer",
+            "conformité réglementaire",
+            "compliance"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "litigation",
+          "name": "Contentieux",
+          "aliases": [
+            "Contentieux",
+            "litigation",
+            "contentieux"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "international-law",
+          "name": "Droit international et européen",
+          "aliases": [
+            "Droit international et européen",
+            "international law",
+            "european law",
+            "droit international",
+            "droit européen"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "legal-compliance-generalist",
+          "name": "Généraliste — Droit et conformité",
+          "aliases": [
+            "legal",
+            "juridique",
+            "droit",
+            "rechtswissenschaft",
+            "recht",
+            "juriste",
+            "law intern",
+            "law internship"
+          ],
+          "generalist": true,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "slug": "consulting-strategy",
+      "name": "Conseil, stratégie et organisation",
+      "position": 12,
+      "subdomains": [
+        {
+          "slug": "corporate-strategy",
+          "name": "Stratégie d’entreprise",
+          "aliases": [
+            "Stratégie d’entreprise",
+            "corporate strategy",
+            "business strategy",
+            "stratégie d'entreprise"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "management-consulting",
+          "name": "Conseil en management",
+          "aliases": [
+            "Conseil en management",
+            "management consulting",
+            "strategy consulting",
+            "conseil en management"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "process-consulting",
+          "name": "Conseil en organisation et processus",
+          "aliases": [
+            "Conseil en organisation et processus",
+            "process consulting",
+            "organisation et processus"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "transformation",
+          "name": "Transformation",
+          "aliases": [
+            "Transformation",
+            "digital transformation",
+            "business transformation",
+            "transformation numérique"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "economic-research",
+          "name": "Études économiques",
+          "aliases": [
+            "Études économiques",
+            "economic research",
+            "economist",
+            "études économiques",
+            "économiste"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "policy-consulting",
+          "name": "Conseil en politiques publiques",
+          "aliases": [
+            "Conseil en politiques publiques",
+            "policy consulting",
+            "conseil en politiques publiques"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "business-analysis",
+          "name": "Business analysis",
+          "aliases": [
+            "Business analysis",
+            "business analyst",
+            "business analysis"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "change-management",
+          "name": "Conduite du changement",
+          "aliases": [
+            "Conduite du changement",
+            "change management",
+            "conduite du changement"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "consulting-strategy-generalist",
+          "name": "Généraliste — Conseil, stratégie et organisation",
+          "aliases": [
+            "consulting",
+            "consultant",
+            "conseil",
+            "strategy intern",
+            "stratégie"
+          ],
+          "generalist": true,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "slug": "product-project",
+      "name": "Produit et gestion de projet",
+      "position": 13,
+      "subdomains": [
+        {
+          "slug": "product-management",
+          "name": "Product management",
+          "aliases": [
+            "Product management",
+            "product manager",
+            "product management",
+            "product owner",
+            "chef de produit digital"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "product-operations",
+          "name": "Product operations",
+          "aliases": [
+            "Product operations",
+            "product operations",
+            "product ops"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "digital-project",
+          "name": "Gestion de projet numérique",
+          "aliases": [
+            "Gestion de projet numérique",
+            "digital project",
+            "it project",
+            "projet numérique",
+            "projet informatique"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "pmo",
+          "name": "PMO",
+          "aliases": [
+            "PMO",
+            "pmo",
+            "project management office"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "project-management",
+          "name": "Gestion de projet généraliste",
+          "aliases": [
+            "Gestion de projet généraliste",
+            "project manager",
+            "project management",
+            "chef de projet",
+            "gestion de projet"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "program-coordination",
+          "name": "Coordination de programmes",
+          "aliases": [
+            "Coordination de programmes",
+            "program coordinator",
+            "programme coordinator",
+            "coordination de programmes"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "agile",
+          "name": "Méthodes agiles et facilitation",
+          "aliases": [
+            "Méthodes agiles et facilitation",
+            "agile coach",
+            "scrum master",
+            "agile facilitation"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "product-project-generalist",
+          "name": "Généraliste — Produit et gestion de projet",
+          "aliases": [
+            "project intern",
+            "projet",
+            "product intern",
+            "programme intern"
+          ],
+          "generalist": true,
+          "position": 7
+        }
+      ]
+    },
+    {
+      "slug": "marketing",
+      "name": "Marketing et acquisition",
+      "position": 14,
+      "subdomains": [
+        {
+          "slug": "strategic-marketing",
+          "name": "Marketing stratégique",
+          "aliases": [
+            "Marketing stratégique",
+            "strategic marketing",
+            "marketing stratégique"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "market-research",
+          "name": "Études de marché",
+          "aliases": [
+            "Études de marché",
+            "market research",
+            "consumer insights",
+            "études de marché"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "product-marketing",
+          "name": "Marketing produit",
+          "aliases": [
+            "Marketing produit",
+            "product marketing",
+            "chef de produit marketing"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "brand-management",
+          "name": "Brand management",
+          "aliases": [
+            "Brand management",
+            "brand management",
+            "brand manager",
+            "chef de marque"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "growth",
+          "name": "Growth et acquisition",
+          "aliases": [
+            "Growth et acquisition",
+            "growth marketing",
+            "growth",
+            "performance marketing",
+            "acquisition marketing"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "seo-sea",
+          "name": "SEO et SEA",
+          "aliases": [
+            "SEO et SEA",
+            "seo",
+            "sea",
+            "search engine optimization",
+            "paid search"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "crm-marketing",
+          "name": "CRM et fidélisation",
+          "aliases": [
+            "CRM et fidélisation",
+            "crm marketing",
+            "email marketing",
+            "emailing",
+            "fidélisation",
+            "customer relationship marketing"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "content-marketing",
+          "name": "Marketing de contenu",
+          "aliases": [
+            "Marketing de contenu",
+            "content marketing",
+            "marketing de contenu"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "operational-marketing",
+          "name": "Marketing opérationnel",
+          "aliases": [
+            "Marketing opérationnel",
+            "operational marketing",
+            "trade marketing",
+            "marketing opérationnel"
+          ],
+          "generalist": false,
+          "position": 8
+        },
+        {
+          "slug": "ecommerce",
+          "name": "E-commerce et merchandising numérique",
+          "aliases": [
+            "E-commerce et merchandising numérique",
+            "ecommerce",
+            "e-commerce",
+            "merchandising numérique"
+          ],
+          "generalist": false,
+          "position": 9
+        },
+        {
+          "slug": "marketing-generalist",
+          "name": "Généraliste — Marketing et acquisition",
+          "aliases": [
+            "marketing",
+            "market intern",
+            "chef de produit",
+            "chef.fe de produit",
+            "chef·fe de produit"
+          ],
+          "generalist": true,
+          "position": 10
+        }
+      ]
+    },
+    {
+      "slug": "communication-media",
+      "name": "Communication, médias et rédaction",
+      "position": 15,
+      "subdomains": [
+        {
+          "slug": "internal-communication",
+          "name": "Communication interne",
+          "aliases": [
+            "Communication interne",
+            "internal communications",
+            "communication interne"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "external-communication",
+          "name": "Communication externe",
+          "aliases": [
+            "Communication externe",
+            "external communications",
+            "communication externe"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "press-relations",
+          "name": "Relations presse",
+          "aliases": [
+            "Relations presse",
+            "press relations",
+            "relations presse",
+            "press officer"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "public-relations",
+          "name": "Relations publiques",
+          "aliases": [
+            "Relations publiques",
+            "public relations",
+            "relations publiques"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "social-media",
+          "name": "Réseaux sociaux et community management",
+          "aliases": [
+            "Réseaux sociaux et community management",
+            "social media",
+            "community manager",
+            "community management",
+            "réseaux sociaux"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "journalism",
+          "name": "Journalisme",
+          "aliases": [
+            "Journalisme",
+            "journalism",
+            "journalist",
+            "journalisme",
+            "journaliste"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "writing-editing",
+          "name": "Rédaction et édition",
+          "aliases": [
+            "Rédaction et édition",
+            "editorial",
+            "copywriting",
+            "rédaction",
+            "édition"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "event-communication",
+          "name": "Communication événementielle",
+          "aliases": [
+            "Communication événementielle",
+            "event communications",
+            "communication événementielle"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "translation",
+          "name": "Traduction et localisation",
+          "aliases": [
+            "Traduction et localisation",
+            "translation",
+            "translator",
+            "traduction",
+            "traducteur",
+            "localisation linguistique"
+          ],
+          "generalist": false,
+          "position": 8
+        },
+        {
+          "slug": "communication-media-generalist",
+          "name": "Généraliste — Communication, médias et rédaction",
+          "aliases": [
+            "communication",
+            "communications",
+            "media intern",
+            "médias"
+          ],
+          "generalist": true,
+          "position": 9
+        }
+      ]
+    },
+    {
+      "slug": "sales-customer",
+      "name": "Commerce et relation client",
+      "position": 16,
+      "subdomains": [
+        {
+          "slug": "business-development",
+          "name": "Business development",
+          "aliases": [
+            "Business development",
+            "business development",
+            "business developer",
+            "développement commercial"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "b2b-sales",
+          "name": "Vente B2B",
+          "aliases": [
+            "Vente B2B",
+            "b2b sales",
+            "sales development",
+            "vente b2b"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "retail-sales",
+          "name": "Vente et distribution B2C",
+          "aliases": [
+            "Vente et distribution B2C",
+            "retail sales",
+            "vente en magasin",
+            "vendeur",
+            "conseiller de vente"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "account-management",
+          "name": "Account management",
+          "aliases": [
+            "Account management",
+            "account manager",
+            "account management",
+            "gestion de comptes"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "customer-success",
+          "name": "Customer success",
+          "aliases": [
+            "Customer success",
+            "customer success"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "customer-support",
+          "name": "Support client",
+          "aliases": [
+            "Support client",
+            "customer support",
+            "customer service",
+            "service client",
+            "support client",
+            "relation client",
+            "relations clients"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "sales-operations",
+          "name": "Sales operations",
+          "aliases": [
+            "Sales operations",
+            "sales operations",
+            "sales ops"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "international-sales",
+          "name": "Commerce international et export",
+          "aliases": [
+            "Commerce international et export",
+            "international sales",
+            "export sales",
+            "commerce international"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "sales-customer-generalist",
+          "name": "Généraliste — Commerce et relation client",
+          "aliases": [
+            "sales",
+            "commercial",
+            "vente",
+            "vertrieb"
+          ],
+          "generalist": true,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "slug": "human-resources",
+      "name": "Ressources humaines",
+      "position": 17,
+      "subdomains": [
+        {
+          "slug": "recruitment",
+          "name": "Recrutement",
+          "aliases": [
+            "Recrutement",
+            "recruitment",
+            "recruiting",
+            "recruiter",
+            "recrutement",
+            "talent acquisition",
+            "recruiting intern",
+            "rekrutierung",
+            "recrutador"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "hr-administration",
+          "name": "Administration RH",
+          "aliases": [
+            "Administration RH",
+            "hr administration",
+            "administration rh",
+            "administration du personnel"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "payroll",
+          "name": "Paie",
+          "aliases": [
+            "Paie",
+            "payroll",
+            "paie",
+            "gestionnaire de paie"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "learning-development",
+          "name": "Formation et développement",
+          "aliases": [
+            "Formation et développement",
+            "learning and development",
+            "talent development",
+            "formation rh"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "employee-relations",
+          "name": "Relations sociales",
+          "aliases": [
+            "Relations sociales",
+            "employee relations",
+            "labor relations",
+            "relations sociales"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "people-analytics",
+          "name": "People analytics",
+          "aliases": [
+            "People analytics",
+            "people analytics",
+            "hr analytics"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "talent-management",
+          "name": "Mobilité et gestion des talents",
+          "aliases": [
+            "Mobilité et gestion des talents",
+            "talent management",
+            "gestion des talents",
+            "mobilité rh"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "employer-branding",
+          "name": "Marque employeur",
+          "aliases": [
+            "Marque employeur",
+            "employer branding",
+            "marque employeur"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "human-resources-generalist",
+          "name": "Généraliste — Ressources humaines",
+          "aliases": [
+            "human resources",
+            "human resource",
+            "ressources humaines",
+            "hr intern",
+            "rh",
+            "personalwesen"
+          ],
+          "generalist": true,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "slug": "supply-chain",
+      "name": "Achats, logistique et transport",
+      "position": 18,
+      "subdomains": [
+        {
+          "slug": "procurement",
+          "name": "Achats",
+          "aliases": [
+            "Achats",
+            "procurement",
+            "purchasing",
+            "buyer",
+            "achats",
+            "acheteur",
+            "einkauf"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "supplier-sourcing",
+          "name": "Sourcing fournisseurs",
+          "aliases": [
+            "Sourcing fournisseurs",
+            "supplier sourcing",
+            "sourcing fournisseurs"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "supply-chain",
+          "name": "Supply chain",
+          "aliases": [
+            "Supply chain",
+            "supply chain",
+            "supply-chain"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "demand-planning",
+          "name": "Prévision de la demande",
+          "aliases": [
+            "Prévision de la demande",
+            "demand planning",
+            "demand planner",
+            "prévision de la demande"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "logistics",
+          "name": "Logistique et entreposage",
+          "aliases": [
+            "Logistique et entreposage",
+            "logistics",
+            "logistique",
+            "logistik",
+            "warehouse"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "transport",
+          "name": "Transport",
+          "aliases": [
+            "Transport",
+            "transport planning",
+            "transport operations",
+            "gestion du transport"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "customs",
+          "name": "Import-export et douanes",
+          "aliases": [
+            "Import-export et douanes",
+            "customs",
+            "douanes",
+            "import export"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "supply-planning",
+          "name": "Planification des approvisionnements",
+          "aliases": [
+            "Planification des approvisionnements",
+            "supply planning",
+            "supply planner",
+            "approvisionnements"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "supply-chain-generalist",
+          "name": "Généraliste — Achats, logistique et transport",
+          "aliases": [
+            "operations logistics",
+            "logistics intern",
+            "logistique",
+            "supply chain intern"
+          ],
+          "generalist": true,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "slug": "design-creative",
+      "name": "Design, création et audiovisuel",
+      "position": 19,
+      "subdomains": [
+        {
+          "slug": "ux-research",
+          "name": "UX research",
+          "aliases": [
+            "UX research",
+            "ux research",
+            "user research",
+            "recherche utilisateur"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "ux-design",
+          "name": "UX design",
+          "aliases": [
+            "UX design",
+            "ux design",
+            "ux designer",
+            "user experience design"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "ui-design",
+          "name": "UI et product design",
+          "aliases": [
+            "UI et product design",
+            "ui design",
+            "ui designer",
+            "product designer",
+            "product design",
+            "design d'interface"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "graphic-design",
+          "name": "Design graphique",
+          "aliases": [
+            "Design graphique",
+            "graphic design",
+            "graphic designer",
+            "graphisme",
+            "graphiste"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "motion-design",
+          "name": "Motion design et animation",
+          "aliases": [
+            "Motion design et animation",
+            "motion design",
+            "motion designer",
+            "animation 3d"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "industrial-design",
+          "name": "Design industriel",
+          "aliases": [
+            "Design industriel",
+            "industrial design",
+            "design industriel"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "fashion-design",
+          "name": "Mode et textile",
+          "aliases": [
+            "Mode et textile",
+            "fashion design",
+            "fashion designer",
+            "design textile",
+            "styliste"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "photography",
+          "name": "Photographie",
+          "aliases": [
+            "Photographie",
+            "photography",
+            "photographe",
+            "photographie"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "video-production",
+          "name": "Vidéo et production audiovisuelle",
+          "aliases": [
+            "Vidéo et production audiovisuelle",
+            "video production",
+            "audiovisuel",
+            "vidéaste",
+            "montage vidéo"
+          ],
+          "generalist": false,
+          "position": 8
+        },
+        {
+          "slug": "audio-production",
+          "name": "Son et musique",
+          "aliases": [
+            "Son et musique",
+            "sound design",
+            "audio production",
+            "production sonore"
+          ],
+          "generalist": false,
+          "position": 9
+        },
+        {
+          "slug": "design-creative-generalist",
+          "name": "Généraliste — Design, création et audiovisuel",
+          "aliases": [
+            "design",
+            "creative",
+            "arts",
+            "création"
+          ],
+          "generalist": true,
+          "position": 10
+        }
+      ]
+    },
+    {
+      "slug": "agriculture-food",
+      "name": "Agriculture, alimentation et animal",
+      "position": 20,
+      "subdomains": [
+        {
+          "slug": "agronomy",
+          "name": "Agronomie",
+          "aliases": [
+            "Agronomie",
+            "agronomy",
+            "agronomie"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "crop-production",
+          "name": "Productions végétales",
+          "aliases": [
+            "Productions végétales",
+            "crop production",
+            "productions végétales"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "animal-production",
+          "name": "Productions animales",
+          "aliases": [
+            "Productions animales",
+            "animal production",
+            "productions animales"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "agroecology",
+          "name": "Agroécologie",
+          "aliases": [
+            "Agroécologie",
+            "agroecology",
+            "agroécologie"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "food-research",
+          "name": "R&D alimentaire",
+          "aliases": [
+            "R&D alimentaire",
+            "food science",
+            "food research",
+            "food development",
+            "r&d alimentaire"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "food-quality",
+          "name": "Qualité et sécurité alimentaire",
+          "aliases": [
+            "Qualité et sécurité alimentaire",
+            "food quality",
+            "food safety",
+            "sécurité alimentaire"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "forestry",
+          "name": "Gestion forestière",
+          "aliases": [
+            "Gestion forestière",
+            "forestry",
+            "gestion forestière"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "animal-care",
+          "name": "Santé et soins animaliers",
+          "aliases": [
+            "Santé et soins animaliers",
+            "veterinary",
+            "vétérinaire",
+            "animal care"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "agriculture-food-generalist",
+          "name": "Généraliste — Agriculture, alimentation et animal",
+          "aliases": [
+            "agriculture",
+            "agricole",
+            "agroalimentaire",
+            "agricultural"
+          ],
+          "generalist": true,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "slug": "hospitality-tourism",
+      "name": "Hôtellerie, restauration et tourisme",
+      "position": 21,
+      "subdomains": [
+        {
+          "slug": "reception",
+          "name": "Accueil et réception",
+          "aliases": [
+            "Accueil et réception",
+            "receptionist",
+            "front desk",
+            "réceptionniste"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "hotel-management",
+          "name": "Gestion hôtelière",
+          "aliases": [
+            "Gestion hôtelière",
+            "hotel management",
+            "hospitality management",
+            "gestion hôtelière"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "catering",
+          "name": "Restauration et cuisine",
+          "aliases": [
+            "Restauration et cuisine",
+            "catering",
+            "chef cuisinier",
+            "cuisine",
+            "restauration"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "travel-tourism",
+          "name": "Tourisme et voyages",
+          "aliases": [
+            "Tourisme et voyages",
+            "travel agent",
+            "tourism",
+            "tourisme",
+            "travel consultant"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "event-management",
+          "name": "Gestion d’événements",
+          "aliases": [
+            "Gestion d’événements",
+            "event management",
+            "event planner",
+            "gestion d'événements",
+            "événementiel"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "revenue-management",
+          "name": "Revenue management",
+          "aliases": [
+            "Revenue management",
+            "revenue management",
+            "revenue manager"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "leisure",
+          "name": "Loisirs et animation",
+          "aliases": [
+            "Loisirs et animation",
+            "leisure",
+            "loisirs",
+            "animation touristique"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "hospitality-tourism-generalist",
+          "name": "Généraliste — Hôtellerie, restauration et tourisme",
+          "aliases": [
+            "hospitality",
+            "hôtellerie",
+            "tourisme",
+            "hotel",
+            "hotellerie"
+          ],
+          "generalist": true,
+          "position": 7
+        }
+      ]
+    },
+    {
+      "slug": "education-social-public",
+      "name": "Éducation, social et action publique",
+      "position": 22,
+      "subdomains": [
+        {
+          "slug": "teaching",
+          "name": "Enseignement et pédagogie",
+          "aliases": [
+            "Enseignement et pédagogie",
+            "teaching",
+            "teacher",
+            "enseignement",
+            "pédagogie"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "learning-design",
+          "name": "Ingénierie de formation",
+          "aliases": [
+            "Ingénierie de formation",
+            "instructional design",
+            "learning design",
+            "ingénierie de formation"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "social-work",
+          "name": "Accompagnement social",
+          "aliases": [
+            "Accompagnement social",
+            "social work",
+            "social worker",
+            "accompagnement social"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "career-guidance",
+          "name": "Insertion et orientation",
+          "aliases": [
+            "Insertion et orientation",
+            "career guidance",
+            "orientation professionnelle",
+            "insertion professionnelle"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "humanitarian",
+          "name": "Action humanitaire",
+          "aliases": [
+            "Action humanitaire",
+            "humanitarian",
+            "humanitaire"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "international-relations",
+          "name": "Relations internationales et coopération",
+          "aliases": [
+            "Relations internationales et coopération",
+            "international relations",
+            "relations internationales"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "public-administration",
+          "name": "Administration publique",
+          "aliases": [
+            "Administration publique",
+            "public administration",
+            "administration publique"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "local-development",
+          "name": "Développement territorial",
+          "aliases": [
+            "Développement territorial",
+            "local development",
+            "développement territorial"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "cultural-mediation",
+          "name": "Médiation culturelle",
+          "aliases": [
+            "Médiation culturelle",
+            "cultural mediation",
+            "médiation culturelle"
+          ],
+          "generalist": false,
+          "position": 8
+        },
+        {
+          "slug": "nonprofit-projects",
+          "name": "Gestion de projets associatifs",
+          "aliases": [
+            "Gestion de projets associatifs",
+            "nonprofit project",
+            "projets associatifs"
+          ],
+          "generalist": false,
+          "position": 9
+        },
+        {
+          "slug": "education-social-public-generalist",
+          "name": "Généraliste — Éducation, social et action publique",
+          "aliases": [
+            "nonprofit",
+            "non-profit",
+            "ngo",
+            "ong",
+            "public policy",
+            "education intern",
+            "social intern"
+          ],
+          "generalist": true,
+          "position": 10
+        }
+      ]
+    },
+    {
+      "slug": "administration-real-estate",
+      "name": "Administration, gestion et immobilier",
+      "position": 23,
+      "subdomains": [
+        {
+          "slug": "administration",
+          "name": "Assistanat et coordination administrative",
+          "aliases": [
+            "Assistanat et coordination administrative",
+            "administrative assistant",
+            "administration assistant",
+            "assistanat administratif",
+            "assistant administratif"
+          ],
+          "generalist": false,
+          "position": 0
+        },
+        {
+          "slug": "document-management",
+          "name": "Gestion documentaire",
+          "aliases": [
+            "Gestion documentaire",
+            "document management",
+            "gestion documentaire",
+            "documentaliste"
+          ],
+          "generalist": false,
+          "position": 1
+        },
+        {
+          "slug": "business-operations",
+          "name": "Gestion des opérations générales",
+          "aliases": [
+            "Gestion des opérations générales",
+            "business operations",
+            "operations intern",
+            "opérations générales"
+          ],
+          "generalist": false,
+          "position": 2
+        },
+        {
+          "slug": "office-management",
+          "name": "Office management",
+          "aliases": [
+            "Office management",
+            "office management",
+            "office manager"
+          ],
+          "generalist": false,
+          "position": 3
+        },
+        {
+          "slug": "real-estate-management",
+          "name": "Gestion immobilière",
+          "aliases": [
+            "Gestion immobilière",
+            "real estate management",
+            "gestion immobilière"
+          ],
+          "generalist": false,
+          "position": 4
+        },
+        {
+          "slug": "real-estate-investment",
+          "name": "Analyse et investissement immobilier",
+          "aliases": [
+            "Analyse et investissement immobilier",
+            "real estate investment",
+            "immobilier investissement"
+          ],
+          "generalist": false,
+          "position": 5
+        },
+        {
+          "slug": "property-management",
+          "name": "Gestion locative",
+          "aliases": [
+            "Gestion locative",
+            "property management",
+            "gestion locative"
+          ],
+          "generalist": false,
+          "position": 6
+        },
+        {
+          "slug": "facilities-management",
+          "name": "Gestion des services et installations",
+          "aliases": [
+            "Gestion des services et installations",
+            "facilities management",
+            "facility management",
+            "services généraux"
+          ],
+          "generalist": false,
+          "position": 7
+        },
+        {
+          "slug": "administration-real-estate-generalist",
+          "name": "Généraliste — Administration, gestion et immobilier",
+          "aliases": [
+            "administration",
+            "administrative",
+            "immobilier",
+            "real estate"
+          ],
+          "generalist": true,
+          "position": 8
+        }
+      ]
+    }
+  ]
+}

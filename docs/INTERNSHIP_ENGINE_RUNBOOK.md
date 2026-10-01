@@ -464,3 +464,191 @@ Sauvegarde : `~/.codex/backups/intern-coverage-v13-20261001/before-nav.dump`.
 Désactiver les requêtes NAV pour suspendre la collecte ; désactiver ses boards
 pour retirer immédiatement cette source du catalogue. Sans progression du flux,
 la règle de fraîcheur empêche les offres de rester visibles indéfiniment.
+
+### File de vérification des candidats ATS (lot 23)
+
+- Admettre et tester au maximum 100 nouvelles sources :
+  `uv run python manage.py run_ats_probe_worker --enroll 100 --once --limit 100 --report /tmp/ats-probes.jsonl`.
+- Poursuivre uniquement les sources inscrites :
+  `uv run python manage.py run_ats_probe_worker --poll-interval 60 --limit 1`.
+- Bilan : `/engine`, champ `ats_queue` de `/api/v1/coverage/`, modèle `AtsProbe`.
+- Ne pas réutiliser `--enroll` à chaque démarrage : cela admet un nouveau lot.
+- Une source vide revient après 7 jours ; erreur après 1 h à 7 jours. Les
+  snapshots partiels vides ne prouvent pas une absence de stages. Bail de 30 min
+  après arrêt brutal ; ne pas remettre tous les baux à zéro pendant une collecte.
+- Pour arrêter une entrée : `AtsProbe.enabled=False`. Pour une source déjà
+  active, son actualisation dépend du `BoardSchedule` du collecteur catalogue.
+- Service Compose `ats-probe-worker` (profil app), migration 0027 requise.
+
+### Sources guidées par les stages publiés (lot 24)
+
+`uv run python manage.py discover_ats_from_offers --registry --limit 50 --report /tmp/offer-led-discovery.json`
+inscrit au plus 50 nouvelles pistes dans AtsProbe. Sans `--registry`, seuls les
+liens ATS stockés avec les offres sont exploités. Le rapport distingue liens et
+correspondances exactes de noms, conserve les IDs de probes et signale un éventuel
+manque de candidats. Utiliser un nouveau fichier pour chaque rapport.
+
+`uv run python manage.py run_ats_probe_worker --probe-ids ID1 ID2 --once --limit 50`
+traite les entrées dues du lot choisi. Les baux en cours et dates de retry restent
+respectés. Les entrées déjà actives sont exclues. Après exécution, contrôler les
+identités d'employeurs ambiguës et les doublons possibles avant d'annoncer un gain.
+
+### Audit ciblé des doublons (lot 25)
+
+`uv run python manage.py audit_offer_duplicates --input docs/research/2026-10-01-offer-led-results.json --report /tmp/dedup-audit.json`
+compare les IDs du bilan au catalogue publiable. Les groupes title_only_groups
+ne sont pas des décisions de fusion. `--merge` applique les décisions prouvées,
+après revalidation ; les refus sont consignés dans skipped. Les champs merged
+contiennent les IDs à utiliser avec `reconcile_offer_duplicates --reverse ID`.
+Ne pas supprimer les paramètres identifiants tels que gh_jid pour augmenter les
+correspondances. Le rapport réel du lot 25 ne contient aucune fusion certaine.
+
+### Résoudre les preuves publiques des groupes ambigus (lot 26)
+
+`uv run python manage.py resolve_duplicate_links --input docs/research/2026-10-01-targeted-dedup-final.json --report /tmp/link-resolution-new.jsonl`
+examine au maximum 200 offres et leurs sources fraîches. Utiliser un nouveau
+chemin de rapport à chaque passage. Les identités ATS déjà connues sont
+distinguées des nouveaux liens issus de pages publiques. Un hôte en échec est
+suspendu pour le reste du passage. Les références seules ne permettent pas de fusion.
+
+Puis exécuter l'audit du lot 25 avec un nouveau rapport et éventuellement
+`--merge`. Les preuves expirent après sept jours et sont invalidées si la source
+change ; relancer explicitement la résolution pour les renouveler. Aucun worker
+supplémentaire requis. Consulter DiscoveryResult/provider=job_link_evidence pour
+le dernier état, les JSONL pour l'historique des passages.
+
+### Admission priorisée par couverture (lot 27)
+
+`uv run python manage.py discover_ats_from_offers --registry --prioritize --limit 100 --report /tmp/prioritized-discovery.json`
+classe les pistes de tous les inventaires par couverture européenne faible.
+Un portail par employeur dans ce passage ; les boards connus et probes existants
+restent exclus de la nouvelle admission. Le rapport conserve pays témoins, score,
+provenance et déficit éventuel. Les pays sans offre témoin ne sont pas couverts
+par cette stratégie. Sans --prioritize, l'ordre historique reste disponible.
+
+Traiter les probe_id du rapport avec run_ats_probe_worker --probe-ids … --once
+--limit 100. Contrôler l'état AtsProbe pour inclure les passages d'autres workers.
+Auditer les identités employeurs et annonces atypiques avant le bilan : un type
+de contrat ATS peut être erroné. Les offres mises en status=hidden restent masquées
+lors des actualisations ; conserver les motifs dans le rapport d'exclusion.
+Compter les nouveaux IDs encore présents dans open_offers(), jamais seulement
+la somme des compteurs enregistrés pendant les imports.
+
+### Vérifier les contrats et réauditer le catalogue (lot 28)
+
+`uv run python manage.py audit_internship_contracts --report /tmp/contracts-preview.json`
+prévisualise les transitions. Ajouter `--apply` avec un nouveau nom de rapport
+pour recalculer les projections modifiées. Chaque passage est borné aux IDs
+présents à son démarrage. Les statuts de cycle de vie (dont hidden), sources et
+preuves brutes sont conservés. Un cas uncertain sort du catalogue publié mais
+reste enregistré ; il peut être requalifié par une actualisation ultérieure.
+
+Revue opérateur en lecture seule :
+`/admin/jobboard/offerenrichment/?classification__exact=uncertain`.
+Filtrer par périmètre européen dans europe_status, rechercher titre/employeur et consulter
+facts.classification (motif + extrait). Aucun bouton ne contourne les règles de
+publication. Les motifs positifs sont aussi affichés dans les preuves des fiches.
+
+Les diagnostics de contrat ne doivent pas confondre un CDI proposé avec une
+perspective de CDI après le stage ou le contrat d'autres membres de l'équipe.
+Corpus de régression : jobboard/tests/fixtures/internship_contract_cases.json.
+Après modification des règles, relancer les collecteurs Python déjà démarrés :
+ils conservent autrement le module importé en mémoire.
+
+### Workday sans facettes pays standard (lot 29)
+
+Le connecteur reconnaît les clés pays personnalisées lorsqu'elles sont explicitement
+étiquetées comme pays. Le filtre des fiches détail reste obligatoire : la facette
+seule ne prouve jamais l'éligibilité européenne d'un stage.
+
+Sans partition exploitable, le diagnostic country_facets_fallback signale un
+parcours global borné à 2000 annonces listées. Le snapshot reste partiel : importer
+les stages vérifiés est autorisé, fermer les annonces absentes ne l'est pas.
+Les limites de temps, octets et requêtes restent actives. fallback_listing_cap
+signale un budget de liste atteint, pas une collecte exhaustive.
+
+Après correction d'une erreur locale country_facets_unavailable, une reprise
+ciblée peut avancer uniquement ces probes sans bail actif. Ne pas avancer une
+erreur upstream_rate_limited ou un arrêt opérateur. Pour traiter les IDs retenus :
+`uv run python manage.py run_ats_probe_worker --probe-ids ID1 ID2 --once --limit 11 --report /tmp/workday-pilot.jsonl`.
+Contrôler ensuite les états persistants, la complétude et les IDs encore publiables.
+Le portail cswg (C&S Wholesale Grocers) ne doit pas être activé comme l'employeur CS.
+
+## Découverte externe indépendante (lot 30)
+
+Rechercher des stages dans les pays peu couverts, puis vérifier le nom de
+l'employeur sur son annonce publique. Préparer un tableau JSON de 1 à 100 objets
+`company`, `country` (ISO Europe), `url`, `evidence_url`, `title`, `excerpt`,
+`reviewed_at` (YYYY-MM-DD, maximum 7 jours). Les deux URL doivent désigner le même
+portail ATS supporté. Le pays de recherche sert au classement, jamais à remplacer
+la localisation réelle des annonces importées. La commande ne vérifie pas
+sémantiquement la preuve : cette revue incombe à l'opérateur.
+
+```sh
+uv run python manage.py discover_external_ats --input leads.json --report preview.json
+uv run python manage.py discover_external_ats --input leads.json --report admitted.json --apply
+uv run python manage.py run_ats_probe_worker --once --limit 100 --probe-ids <IDs du rapport> --report pilot.jsonl
+```
+
+Les chemins de rapports d'admission doivent être nouveaux. Les employeurs et
+portails connus sont exclus ; une probe déjà inscrite conserve son état et son
+backoff. Les résultats positifs sont activés par le worker existant, les autres
+restent en attente ou en erreur avec leurs délais de reprise. Avant le pilote,
+capturer les IDs de `open_offers()` ; après, compter les nouveaux IDs visibles
+rattachés aux seuls boards du lot. Les résultats du worker sont des instantanés :
+consulter les probes persistantes si un autre worker a pris une partie du lot.
+La découverte web est éditoriale ; la collecte des portails activés est récurrente.
+
+## Lieux génériques Lever (lot 31)
+
+Le fallback `explicit_role_country_list_v1` ne s'applique qu'à un pays structuré
+absent et un unique lieu « All … locations ». Il exige une ligne entière
+« This position/role is open across [même lieu]: » et une liste de pays reconnus.
+Les présentations d'entreprise, pays inconnus et textes ambigus restent sans
+inférence. Le payload source contient `location_resolution` avec champ, extrait
+et lieux. Les pays hors Europe sont conservés ; une annonce multi-pays ne compte
+qu'une fois. Le télétravail conserve la politique de résidence actuelle.
+
+Pour une source en attente, comparer le flux public actuel à l'annonce indexée
+avant de modifier le collecteur. Ne pas forcer une annonce absente du flux.
+Après correction démontrée, une reprise ciblée d'une probe en attente, activée et
+sans bail peut être avancée ; ne pas réinitialiser les autres délais ou erreurs.
+
+## Audit des pertes par source (lot 32)
+
+```sh
+uv run python manage.py audit_source_funnel --report audit-source-funnel.json
+```
+
+Lecture seule, chemin neuf obligatoire. Le rapport couvre les boards enabled,
+y compris ceux en pause (champ paused), et conserve l'état du dernier import.
+`normalized_seen` ne mesure pas le volume brut du portail : certains connecteurs
+filtrent avant normalisation. Les buckets sont exclusifs par ligne source et
+suivent la priorité cycle de vie/fraîcheur/offre/contrat/géographie/expiration.
+Les compteurs indépendants internship_confirmed/europe_confirmed ne sont pas
+additionnables. Les sources peuvent pointer vers une même fiche.
+
+Le classement `review_candidates` est une file d'examen, pas une estimation des
+stages perdus. Vérifier le payload puis le flux public actuel avant de relâcher
+une règle. Faire un rapport avant/après et attribuer le gain aux boards modifiés.
+Ne pas remettre à zéro les délais des sources en erreur pour exécuter un audit.
+
+Rules-18 ajoute une confirmation danoise par titre Praktikant/videopraktikant et
+rubrique Praktikperiode:. Lever conserve le pays uniquement pour le lieu principal
+exact ; Greenhouse exige une métadonnée Locations complète avant de découper une
+liste de villes séparées par virgules. Pas de géocodage implicite des villes.
+
+## Signalement d'un stage absent (lot 33)
+
+Vérifier successivement : présence du portail, état paused/last_error/next_run,
+réponse publique actuelle, puis qualification. Une absence peut cumuler plusieurs
+causes (Sentry : portail absent et Hybrid interprété comme remote).
+
+Ashby : workplaceType connu prime sur isRemote ; ne pas élargir globalement le
+périmètre géographique des stages entièrement à distance. Réimporter les portails
+concernés après correction plutôt que modifier les fiches à la main.
+Eightfold : au moins deux secondes entre départs de requêtes dans chaque collecte.
+Une réponse HTTP429 interrompt la collecte ; un résultat partiel ne prouve aucune
+fermeture et ne garantit pas la récupération des fiches suivantes. Consulter les
+diagnostics même quand ImportRun.status vaut succeeded. Ne pas avancer le délai
+next_run pour forcer un réessai. Le débit ajouté ne garantit pas l'absence de 429.

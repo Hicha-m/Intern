@@ -71,6 +71,7 @@ class OfferEnrichment(models.Model):
     semantic_hash = models.CharField(max_length=64, blank=True)
     domain = models.SlugField(max_length=80, blank=True, db_index=True)
     facts = models.JSONField(default=dict)
+    content = models.JSONField(default=dict)
     classification = models.CharField(max_length=24, default="uncertain", db_index=True)
     country_codes = models.JSONField(default=list)
     europe_status = models.CharField(max_length=20, default="unknown", db_index=True)
@@ -89,6 +90,7 @@ class OfferEnrichment(models.Model):
                 "engine_europe_valid",
             ),
             json_type("facts", "object", "engine_facts_object"),
+            json_type("content", "object", "engine_content_object"),
             json_type("country_codes", "array", "engine_countries_array"),
         ]
 

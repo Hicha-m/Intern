@@ -183,3 +183,130 @@ suspendues. Sept faux positifs événementiels Deloitte retirés avec rules-8.
 374 tests backend passent, services locaux sains et collecteurs relancés.
 Rapports initiaux et vérifiés conservés ; aucune fusion automatique ni promesse
 de stages uniques entre plateformes.
+
+## Lot 22 — Audit du rappel et récupération Celonis
+
+Spécification : `docs/EUROPE_COVERAGE_V15_SPEC.md`. Dix sources revérifiées en
+réseau. Activation fondée sur les pays qualifiés, y compris un pays explicite
+dans le libellé du lieu. Le classificateur reconnaît les titres Intern corroborés par
+`As a … Intern` dans la description. Celonis réactivé : dix fiches visibles,
+dont quatre nouvellement qualifiées et six déjà présentes à maintenir fraîches.
+Le bilan initial du lot 21 sous-comptait ses pays GB/ES. Aucun gain IT/IE confirmé.
+54 tests ciblés passent ; rapports avant/après conservés et collecteurs relancés.
+Suite complète réessayée : 408/410 réussis, deux erreurs hors périmètre dans
+WorkflowConcurrencyTests sur `Company.logo_source_url` obligatoire.
+
+## Lot 23 — File persistante de vérification ATS
+
+Spécification : `docs/EUROPE_COVERAGE_V16_SPEC.md`. File AtsProbe avec admission
+bornée, bail de reprise, retry des sources vides à sept jours et backoff erreurs.
+Activation sur toute l'Europe ; bilan visible dans /engine. Pilote de 100 :
+95 sans stage confirmé, 5 erreurs, aucune nouvelle offre. Neuf anciennes sources
+vides inscrites pour revérification, total 109. Worker local actif ; service
+Compose configuré sans rebuild. 21 tests ciblés, build et 2 tests navigateur
+passent. Le prochain travail de couverture devra améliorer la sélection des
+candidats, le pilote séquentiel actuel n'ayant apporté aucun stage supplémentaire.
+
+## Lot 24 — Sources guidées par les stages existants
+
+Spécification : `docs/EUROPE_COVERAGE_V17_SPEC.md`. Liens ATS des offres fraîches,
+puis correspondance exacte des noms avec le registre épinglé, provenance
+conservée et exclusion des sources connues. 50 pistes testées : 20 actives,
+27 sans résultat confirmé, 2 erreurs, 1 conflit d'identité mis à l'écart.
+262 nouvelles fiches visibles après contrôle, doublons entre plateformes possibles.
+Portail groupe Richemont correctement libellé ; artefactjobs ambigu désactivé.
+29 tests ciblés passent, worker relancé. Commandes de découverte et traitement
+ciblé disponibles dans le runbook ; aucune promesse d'exhaustivité.
+
+## Lot 25 — Déduplication ciblée des 262 fiches
+
+Spécification : `docs/EUROPE_COVERAGE_V18_SPEC.md`. Fusion réversible autorisée
+par lien spécifique commun, employeur/titre/lieux compatibles, sources fraîches
+et empreintes revalidées. Les descriptions peuvent différer ; contenu et lien
+employeur privilégiés, actualisations conservées après fusion. Audit réel :
+262 fiches, 26 groupes de titres à approfondir, aucune fusion certaine ; zéro
+fusion exécutée. 35 tests ciblés passent. Ne pas présenter les fiches ajoutées
+au lot 24 comme des stages uniques prouvés.
+
+## Lot 26 — Résolution publique des liens et références
+
+Spécification : `docs/EUROPE_COVERAGE_V19_SPEC.md`. Résolution bornée des groupes
+ambigus, attribution JSON-LD stricte, preuves persistantes avec expiration et
+invalidation lors des changements de source. 61 sources examinées : 31 identités
+ATS déjà connues, 20 bloquées, 10 sans preuve attribuable. Aucun nouveau lien
+employeur confirmé ; réaudit des 262 fiches : zéro fusion, 26 groupes toujours
+ambigus. 42 tests ciblés passent. Rapports conservés, aucune unicité revendiquée.
+
+## Lot 27 — Admission ATS priorisée par couverture européenne
+
+Spécification : `docs/EUROPE_COVERAGE_V20_SPEC.md`. Classement commun à tous les
+connecteurs par couverture du pays témoin, un nouveau portail par employeur et
+budget porté à 100. Pilote complet : 50 actifs, 34 en attente, 16 erreurs.
+520 nouvelles fiches publiables dans 17 pays après 18 exclusions motivées ;
+doublons interplateformes toujours possibles. Apports notamment IT 20, NL 12,
+IE 4 ; FR reste majoritaire (344). 17 tests ciblés passent, rapports avant/après
+et preuves conservés. Restent les contrats ATS mal renseignés et les facettes
+Workday indisponibles, sans assouplissement des critères stage/Europe.
+
+## Lot 28 — Contrats ATS corroborés et revue des incertitudes
+
+Spécification : `docs/EUROPE_COVERAGE_V21_SPEC.md`. rules-17 exige une confirmation
+textuelle du contrat ATS, distingue contrats contradictoires et perspectives
+d'embauche, reconnaît alternants, ambassadeurs étudiants et événements.
+Motifs et extraits conservés ; vue d'administration de revue en lecture seule.
+15 726 fiches réauditées : 26 anciennement publiées passent en attente
+(19 sans corroboration, 5 stage/alternance, 2 contradictions). Les 18 masquages
+du lot 27 restent en place ; les 34 vrais stages du corpus restent confirmés.
+50 tests backend, un test navigateur et build passent. Collecteurs relancés,
+backend sain. Rapports intermédiaire et final conservés, sans suppression de fiches.
+
+## Lot 29 — Workday : facettes personnalisées et secours borné
+
+Spécification : `docs/EUROPE_COVERAGE_V22_SPEC.md`. Paramètres pays reconnus par
+libellé explicite, secours global limité à 2000 annonces et toujours partiel.
+Vérification stage/Europe sur les détails inchangée ; 429 interrompt la collecte
+en préservant Retry-After, y compris après pagination. Onze pistes traitées :
+7 actives, 3 en attente, 1 homonyme écarté (CS / C&S Wholesale Grocers).
+68 nouvelles fiches visibles dans 11 pays, dont GB 40 et FR 13 ; doublons
+interplateformes possibles. 38 tests ciblés passent, rapports conservés.
+
+## Lot 30 — Nouveaux employeurs par recherche publique indépendante
+
+Spécification : `docs/EUROPE_COVERAGE_V23_SPEC.md`. Manifeste de pistes revues,
+prévisualisation puis admission bornée à 100, provenance datée et contrôles
+identité/portail/pays ; réutilisation des probes sans réinitialiser leur backoff.
+Pilote sur FI/GR/CZ/BG/RO : 8 portails testés, 5 actifs, 3 en attente.
+114 nouvelles fiches dans 11 pays, dont CZ 7, GR 5 et RO 1 ; aucun gain FI/BG.
+Recherche web encore éditoriale ; imports récurrents sur les portails activés.
+24 tests ciblés passent, lint/Django/readiness vérifiés. Rapports conservés,
+sans promesse d'exhaustivité ni d'unicité des fiches.
+
+## Lot 31 — Récupération ciblée des trois portails en attente
+
+Spécification : `docs/EUROPE_COVERAGE_V24_SPEC.md`. Diagnostic public : Plum ne
+liste plus le stage indexé, Gen liste deux stages en Malaisie, Civitta masque les
+pays du poste derrière un lieu générique. Fallback Lever limité à une déclaration
+explicite de pays du poste, preuve conservée, pays structuré prioritaire et remote
+préservé. Une nouvelle fiche Civitta, disponible notamment dans 19 pays européens,
+sans copies par pays. Plum/Gen gardent leur reprise prévue. 48 tests passent,
+rapports et fixture conservés ; aucune fusion, workers rechargés, readiness 200.
+
+## Lot 32 — Audit par source et rappel de stages confirmés
+
+Spécification : `docs/EUROPE_COVERAGE_V25_SPEC.md`. Commande d'audit en lecture
+seule : compteurs par source, fraîcheur, exclusions, incertitudes, diagnostics
+d'import et limites de comptage. 1615 boards activés en configuration audités.
+Trois corrections : pays principal Lever, métadonnée de villes Greenhouse,
+corroboration des stages danois (rules-18). Imports réels Winamax/Qube/WPP :
+23 fiches nouvellement visibles (2/4/17), catalogue 8134 → 8157. Trois groupes
+possiblement dupliqués, aucune fusion certaine. 68 tests ciblés et build passent.
+
+## Lot 33 — Stages signalés Sentry / Microsoft
+
+Spécification : `docs/EUROPE_COVERAGE_V26_SPEC.md`. Admission Sentry et correction
+Ashby : workplaceType prioritaire sur isRemote. Quatre fiches rendues visibles :
+Sentry AT, Back Market FR, Enpal DE, Kognity SE. Collecteur Eightfold espacé de
+2 secondes ; Microsoft réactivé après son backoff, une fiche Belgique importée.
+Le détail du stage Microsoft Bucarest (1970393557007677) reste limité par HTTP429 :
+non importé, reprise planifiée. Total attribuable : 5 fiches, pas une couverture
+exhaustive. 24 tests ciblés distincts passent ; lint/diff/readiness vérifiés.

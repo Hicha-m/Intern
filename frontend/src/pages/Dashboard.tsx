@@ -4,16 +4,20 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { ArrowRight01Icon } from '@hugeicons/core-free-icons'
 import { applicationStatus, relativeDate, useDashboard } from '../components/dashboard/data'
 import type { ApplicationRow, Offer } from '../components/dashboard/data'
+import { logoCandidates } from '../lib/companyLogos'
 
-export function CompanyMark({ name, id, logoUrl }: { name: string; id: number; logoUrl?: string | null }) {
-  const [failedUrl, setFailedUrl] = useState<string | null>(null)
-  const showLogo = !!logoUrl && logoUrl.startsWith('/api/v1/companies/') && logoUrl !== failedUrl
-  return <span className={`company-mark company-mark--${id % 4}${showLogo ? ' company-mark--image' : ''}`} aria-hidden="true">{showLogo ? <img src={logoUrl} alt="" loading="lazy" decoding="async" onError={() => setFailedUrl(logoUrl)} /> : name.slice(0, 1).toUpperCase()}</span>
+export function CompanyMark({ name, id, logoUrl, domain }: { name: string; id: number; logoUrl?: string | null; domain?: string | null }) {
+  const [failures, setFailures] = useState<{ identity: string; urls: string[] }>({ identity: '', urls: [] })
+  const candidates = logoCandidates(id, logoUrl, domain)
+  const identity = JSON.stringify([id, ...candidates])
+  const failedUrls = failures.identity === identity ? failures.urls : []
+  const imageUrl = candidates.find(url => !failedUrls.includes(url))
+  return <span className={`company-mark company-mark--${id % 4}${imageUrl ? ' company-mark--image' : ''}`} aria-hidden="true">{imageUrl ? <img key={imageUrl} src={imageUrl} alt="" loading="lazy" decoding="async" referrerPolicy="strict-origin-when-cross-origin" onError={() => setFailures(previous => ({ identity, urls: [...(previous.identity === identity ? previous.urls : []), imageUrl] }))} /> : (name.trim().slice(0, 1).toUpperCase() || '?')}</span>
 }
 export function OfferCard({ offer }: { offer: Offer }) {
   return <article className="offer-card">
     <Link to={`/offers/${offer.id}`} className="offer-card-face" aria-label={`Voir l’offre chez ${offer.company.name} : ${offer.title}`}>
-      <span className="offer-card-company"><CompanyMark name={offer.company.name} id={offer.company.id} logoUrl={offer.company.logo_url} /><span>{offer.company.name}</span></span>
+      <span className="offer-card-company"><CompanyMark name={offer.company.name} id={offer.company.id} logoUrl={offer.company.logo_url} domain={offer.company.domain} /><span>{offer.company.name}</span></span>
       <h3>{offer.title}</h3>
       <span className="offer-card-link">Voir l’offre <HugeiconsIcon icon={ArrowRight01Icon} size={16} aria-hidden="true" /></span>
     </Link>
@@ -55,7 +59,7 @@ export function Dashboard({ applicationsOnly = false }: { applicationsOnly?: boo
         {(loading || !!applications?.results.length) && <table className="dashboard-table"><thead><tr><th scope="col">Poste</th><th scope="col">CV</th><th scope="col">Lettre</th><th scope="col">Statut</th><th scope="col">Envoi</th></tr></thead><tbody>
           {loading ? [0, 1, 2, 3, 4].map(row => <tr key={row} className="dashboard-skeleton" aria-hidden="true">{[0, 1, 2, 3, 4].map(column => <td key={column}><span className="skeleton-line" /></td>)}</tr>)
             : applications?.results.map(app => <tr key={app.id}>
-              <td><Link to={`/applications/${app.id}`} className="application-position"><CompanyMark name={app.offer.company.name} id={app.offer.company.id} logoUrl={app.offer.company.logo_url} /><span><strong>{app.offer.company.name}</strong><span>{app.offer.title}</span></span></Link></td>
+              <td><Link to={`/applications/${app.id}`} className="application-position"><CompanyMark name={app.offer.company.name} id={app.offer.company.id} logoUrl={app.offer.company.logo_url} domain={app.offer.company.domain} /><span><strong>{app.offer.company.name}</strong><span>{app.offer.title}</span></span></Link></td>
               <td><span className={app.resume_ready ? 'document-ready' : 'document-missing'}>{app.resume_ready ? 'Prêt' : 'À ajouter'}</span></td>
               <td><span className={app.cover_letter_ready ? 'document-ready' : 'document-missing'}>{app.cover_letter_ready ? 'Prête' : '—'}</span></td>
               <td><StatusBadge app={app} /></td>

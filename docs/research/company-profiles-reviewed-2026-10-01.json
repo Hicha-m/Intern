@@ -1,0 +1,73 @@
+[
+  {
+    "company_id": 2,
+    "company_name": "Stripe",
+    "facts": [
+      {
+        "key": "industry",
+        "value": "Technologie et infrastructure financière",
+        "source_url": "https://stripe.com/about",
+        "observed_at": "2026-10-01T10:38:43+00:00",
+        "source_kind": "employer"
+      }
+    ],
+    "sections": [
+      {
+        "key": "presentation",
+        "value": "Stripe développe une infrastructure financière programmable pour aider les entreprises à démarrer et à se développer. Ses services couvrent notamment les paiements et les outils financiers associés. L’entreprise présente la croissance économique et la réduction des obstacles à l’entrepreneuriat comme sa mission.",
+        "source_url": "https://stripe.com/about",
+        "observed_at": "2026-10-01T10:38:43+00:00",
+        "source_kind": "employer",
+        "scope": "Présentation générale publiée par Stripe"
+      },
+      {
+        "key": "culture",
+        "value": "Stripe met en avant la rigueur, la curiosité, l’adaptation et la collaboration. L’entreprise insiste sur la qualité du travail, l’attention portée aux utilisateurs et une cadence soutenue dans un environnement qui évolue rapidement.",
+        "source_url": "https://stripe.com/careers/compatibility",
+        "observed_at": "2026-10-01T10:38:43+00:00",
+        "source_kind": "employer",
+        "scope": "Culture déclarée par l’employeur"
+      },
+      {
+        "key": "benefits",
+        "value": "La page jeunes talents décrit un accompagnement à l’arrivée, un responsable chargé du développement, un mentor et un budget annuel consacré aux cours, conférences et autres ressources de formation.",
+        "source_url": "https://stripe.com/careers/emerging-talent",
+        "observed_at": "2026-10-01T10:38:43+00:00",
+        "source_kind": "employer",
+        "scope": "Jeunes talents ; vérifier les conditions de l’offre et du pays"
+      },
+      {
+        "key": "early_careers",
+        "value": "Stripe accueille des stagiaires à différents niveaux d’études, surtout en ingénierie, avec également des opportunités dans d’autres équipes. Un stage peut déboucher sur un emploi selon la performance et les besoins de l’entreprise, sans garantie.",
+        "source_url": "https://stripe.com/careers/emerging-talent",
+        "observed_at": "2026-10-01T10:38:43+00:00",
+        "source_kind": "employer",
+        "scope": "Programme jeunes talents ; disponibilités variables selon les pays"
+      },
+      {
+        "key": "recruitment",
+        "value": "Le calendrier des entretiens de stage suit généralement les calendriers universitaires locaux. Stripe recommande de candidater tôt. Les étapes exactes ne sont pas détaillées sur cette page.",
+        "source_url": "https://stripe.com/careers/emerging-talent",
+        "observed_at": "2026-10-01T10:38:43+00:00",
+        "source_kind": "employer",
+        "scope": "Calendrier général, pas un processus garanti pour chaque stage"
+      },
+      {
+        "key": "technology",
+        "value": "Les équipes développent une infrastructure financière programmable. Stripe indique que ses collaborateurs ont accès à des outils d’IA, y compris des outils internes pour les aider dans leur travail.",
+        "source_url": "https://stripe.com/careers/compatibility",
+        "observed_at": "2026-10-01T10:38:43+00:00",
+        "source_kind": "employer",
+        "scope": "La stack exacte dépend de l’équipe et de l’offre"
+      },
+      {
+        "key": "commitments",
+        "value": "La page carrière présente Frontier, une initiative destinée à soutenir l’achat d’élimination permanente du carbone.",
+        "source_url": "https://stripe.com/careers/compatibility",
+        "observed_at": "2026-10-01T10:38:43+00:00",
+        "source_kind": "employer",
+        "scope": "Initiative présentée par Stripe ; ne constitue pas une évaluation RSE indépendante"
+      }
+    ]
+  }
+]

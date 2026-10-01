@@ -115,3 +115,39 @@ class ActivationTests(TestCase):
         self.assertEqual(register.call_count, 2)
         report = json.loads(self.report.read_text())
         self.assertEqual([r["status"] for r in report["sources"]], ["failed", "failed"])
+
+    def test_country_from_explicit_location_text_keeps_source(self):
+        from django.utils import timezone
+
+        from jobboard.models import Location, Offer, OfferSource
+        from jobboard.services.engine_quality import enrich_offer
+
+        def configure_with_stage(*args, **kwargs):
+            candidate = self.configure()
+            offer = Offer.objects.create(
+                company=candidate.board.company,
+                title="Marketing Internship",
+                description="Internship in marketing.",
+                status="open",
+            )
+            offer.locations.add(
+                Location.objects.create(
+                    name="London, United Kingdom", canonical_key="london-uk-test"
+                )
+            )
+            OfferSource.objects.create(
+                board=candidate.board,
+                offer=offer,
+                external_id="test",
+                content_hash="a" * 64,
+                origin_url="https://job-boards.greenhouse.io/example/jobs/1",
+                last_checked_at=timezone.now(),
+                source_status="active",
+            )
+            enrich_offer(offer)
+            return candidate
+
+        with patch(f"{MODULE}.register_source", side_effect=configure_with_stage):
+            report = self.run_command(execute=True)
+        self.assertEqual(report["sources"][0]["status"], "active")
+        self.assertEqual(len(report["sources"][0]["target_offer_ids"]), 1)

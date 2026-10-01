@@ -9,3 +9,6 @@ staticfiles/
 .coverage
 htmlcov/
 .ruff_cache/
+.DS_Store
+# Local audit exports; keep reviewed inputs and research summaries in docs/research.
+/docs/research/generated/

@@ -4,14 +4,16 @@ import json
 from pathlib import Path
 
 from django.core.management.base import BaseCommand, CommandError
+from django.db.models import Q
 from django.utils import timezone
 
 from jobboard.api.catalogue import open_offers
 from jobboard.integrations.greenhouse_catalogue import CatalogueImportError
 from jobboard.models import BoardSchedule, SourceBoard, SourceCandidate
 from jobboard.services.engine_collection import register_source
+from jobboard.services.engine_quality import EUROPE_COUNTRIES
 
-TARGET_COUNTRIES = ("IT", "NL", "ES", "GB", "IE")
+TARGET_COUNTRIES = tuple(sorted(EUROPE_COUNTRIES))
 
 
 class Command(BaseCommand):
@@ -84,9 +86,12 @@ class Command(BaseCommand):
                         .filter(sources__board_id=candidate.board_id)
                         .distinct()
                     )
-                    target = visible.filter(
-                        locations__country_code__in=options["countries"]
-                    ).distinct()
+                    country_filter = Q(pk__in=[])
+                    for country in options["countries"]:
+                        country_filter |= Q(
+                            enrichment__country_codes__contains=[country]
+                        )
+                    target = visible.filter(country_filter).distinct()
                     visible_ids = set(visible.values_list("pk", flat=True))
                     target_ids = set(target.values_list("pk", flat=True))
                     if not target_ids:

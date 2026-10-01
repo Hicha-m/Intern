@@ -1,5 +1,7 @@
 # API candidat Intern
 
+Les routes publiques `companies/<id>/` et `companies/<id>/offers/`, ainsi que le filtre privé `recommendations/?company=<id>`, sont documentés dans [Pages entreprise](COMPANY_PAGES.md).
+
 Implémentation Django REST framework 3.18. Les routes conservent le contrat v1 ; [décisions et sources](DRF_MIGRATION_SPEC.md). Les corps de commande passent par des serializers stricts et les lectures par des serializers aux champs explicites.
 
 Préfixe `/api/v1/`. JSON objet et cookie de session Django. Toutes les mutations requièrent `X-CSRFToken`, y compris inscription et connexion. Récupérer le token via `GET auth/csrf/` et utiliser le nouveau token retourné après authentification. Pas de CORS ouvert : le frontend est prévu sur la même origine. Réponses privées `Cache-Control: no-store`.
@@ -168,6 +170,28 @@ respectés sans expansion. `work_mode` respecte `include_unknown` comme les
 recherches enregistrées. Le périmètre obligatoire stage + Europe ne peut être
 élargi par ces options. `duration_min`, `duration_max` nécessitent `duration_unit` ;
 les bornes inversées retournent 400.
+
+Depuis V2, le document pondéré indexé réunit titre, entreprise et description.
+Accents et casse sont normalisés des deux côtés ; `C++`/`cpp`, `C#`/`csharp`
+et `.NET`/`dotnet` restent des tokens distincts. Le renommage d'entreprise et les
+imports bulk mettent à jour ce document via les triggers PostgreSQL.
+
+`GET /api/v1/offers/suggestions/?q=pythonn&country_codes=FR` est public et retourne
+`{"suggestions":[{"query":"Python Internship"}]}` (au plus trois titres).
+Les autres filtres du catalogue sont acceptés et la frontière de publication
+reste obligatoire. Les requêtes de moins de trois caractères alphanumériques,
+de plus de 100 caractères, de plus de huit mots, ou contenant des opérateurs
+explicites retournent une liste vide. Le frontend appelle cette route seulement
+après un résultat vide et attend un clic pour changer la recherche.
+
+`recommendations/` ajoute `ranking:{score,version:"preferences-1"}`. Le classement
+SQL précède la pagination : métier +12, lieu +8, compétences +4 chacune (trois
+maximum), contrat connu accepté +2, mode connu accepté +2. Les inconnues ne
+donnent pas de bonus. Ce score ne prouve pas l'éligibilité ; le champ `match`
+conserve son sens. `sort=newest` permet de choisir l'ordre chronologique.
+Les préférences d'un autre utilisateur ne participent jamais à ce score.
+
+Spec, mesures et commande reproductible : [SEARCH_ENGINE_SPEC.md](SEARCH_ENGINE_SPEC.md).
 
 ### Couverture observée (lot 18)
 

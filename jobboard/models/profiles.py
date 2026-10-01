@@ -192,6 +192,11 @@ class WorkAuthorization(models.Model):
 
 
 class SearchPreference(models.Model):
+    job_domains = models.ManyToManyField("JobDomain", blank=True)
+    job_subdomains = models.ManyToManyField("JobSubdomain", blank=True)
+    excluded_job_subdomains = models.ManyToManyField(
+        "JobSubdomain", blank=True, related_name="excluded_preferences",
+    )
     profile = models.OneToOneField(
         CandidateProfile, on_delete=models.CASCADE, related_name="search_preference"
     )

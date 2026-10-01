@@ -6,6 +6,7 @@ from jobboard.integrations.greenhouse_catalogue import CatalogueImportError
 from jobboard.integrations.wttj_catalogue import (
     WttjPage,
     collect,
+    company_logo,
     normalize_record,
     source_record,
 )
@@ -30,6 +31,46 @@ def hit(**changes):
 
 
 class WttjTests(SimpleTestCase):
+    def test_source_record_preserves_organization_logo(self):
+        raw = source_record(
+            hit(
+                organization={
+                    "name": "Example",
+                    "slug": "example",
+                    "logo": {"url": "https://cdn.example.com/brand.png"},
+                }
+            )
+        )
+        self.assertEqual(raw["company_logo"], "https://cdn.example.com/brand.png")
+
+    def test_brand_lookup_requires_both_slug_and_matching_company(self):
+        with patch(
+            "jobboard.integrations.wttj_catalogue.query_index",
+            return_value={
+                "hits": [
+                    hit(
+                        organization={
+                            "name": "Example",
+                            "slug": "example",
+                            "logo": {"url": "https://cdn.example.com/brand.png"},
+                        }
+                    )
+                ]
+            },
+        ) as read:
+            self.assertEqual(
+                company_logo("example", "Example"), "https://cdn.example.com/brand.png"
+            )
+            self.assertEqual(read.call_args.kwargs["company_slug"], "example")
+            with self.assertRaisesMessage(
+                CatalogueImportError, "wttj_logo_company_mismatch"
+            ):
+                company_logo("example", "Different company")
+            with self.assertRaisesMessage(
+                CatalogueImportError, "wttj_logo_company_mismatch"
+            ):
+                company_logo("other", "Example")
+
     def test_normalization_and_strict_scope(self):
         row, facts = normalize_record(source_record(hit()))
         self.assertEqual(facts["classification"], "confirmed")
@@ -67,27 +108,31 @@ class WttjTests(SimpleTestCase):
         self.assertEqual(len(page.records), 1)
 
     def test_saturated_timestamp_and_malformed_page(self):
-        with patch(
-            "jobboard.integrations.wttj_catalogue.query_index",
-            return_value={
-                "nbHits": 1200,
-                "hits": [],
-                "page": 0,
-                "exhaustiveNbHits": True,
-            },
-        ), self.assertRaisesMessage(
-            CatalogueImportError, "wttj_partition_saturated"
+        with (
+            patch(
+                "jobboard.integrations.wttj_catalogue.query_index",
+                return_value={
+                    "nbHits": 1200,
+                    "hits": [],
+                    "page": 0,
+                    "exhaustiveNbHits": True,
+                },
+            ),
+            self.assertRaisesMessage(CatalogueImportError, "wttj_partition_saturated"),
         ):
             collect("FR", "10:10:0")
-        with patch(
-            "jobboard.integrations.wttj_catalogue.query_index",
-            return_value={
-                "nbHits": 10,
-                "hits": [],
-                "page": 0,
-                "exhaustiveNbHits": True,
-            },
-        ), self.assertRaises(CatalogueImportError):
+        with (
+            patch(
+                "jobboard.integrations.wttj_catalogue.query_index",
+                return_value={
+                    "nbHits": 10,
+                    "hits": [],
+                    "page": 0,
+                    "exhaustiveNbHits": True,
+                },
+            ),
+            self.assertRaises(CatalogueImportError),
+        ):
             collect("FR")
 
 

@@ -24,6 +24,7 @@ BOARDS = {
 TERMS = ("intern", "Praktikum", "stage", "tirocinio")
 MAX_PAGES = 20
 MAX_DETAILS = 120
+REQUEST_INTERVAL = 2.0
 
 
 def parse_eightfold_url(url):
@@ -132,11 +133,16 @@ def fetch_eightfold(key):
     host, domain, _, _ = BOARDS[key]
     deadline = time.monotonic() + 300
     used = 0
+    next_request_at = 0.0
 
     def read(endpoint, **params):
-        nonlocal used
+        nonlocal used, next_request_at
+        delay = max(0.0, next_request_at - time.monotonic())
+        if delay:
+            time.sleep(delay)
         if time.monotonic() >= deadline:
             raise CatalogueImportError("eightfold_deadline")
+        next_request_at = time.monotonic() + REQUEST_INTERVAL
         payload = read_json(
             f"https://{host}/api/pcsx/{endpoint}?"
             + urlencode({"domain": domain, **params}),

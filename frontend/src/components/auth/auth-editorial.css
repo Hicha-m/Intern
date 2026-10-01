@@ -203,3 +203,5 @@
   .auth-layout .auth-field-rule,
   .auth-password-icons > svg { transition: none; }
 }
+.auth-logo-credit { margin-block-start: var(--space-6); font-size: var(--font-size-xs); color: var(--auth-muted); }
+.auth-logo-credit a { color: inherit; }

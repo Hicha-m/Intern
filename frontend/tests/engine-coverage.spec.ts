@@ -4,12 +4,14 @@ import { prepareDashboard } from './fixtures/dashboard'
 test('coverage distinguishes publication, pagination and errors', async ({ page }) => {
   await prepareDashboard(page)
   await page.route('**/api/v1/coverage/', route => route.fulfill({ json: {
+    ats_queue: { enrolled: 100, tested: 80, states: { active: 3, waiting: 75, error: 2 }, visible_offers: 12, next_attempt_at: null },
     published_offers: 123, measured_at: new Date().toISOString(), deduplication: { merged: 2, candidate: 3 },
     countries: [{ locations__country_code: 'DE', offers: 100 }, { locations__country_code: 'FR', offers: 40 }],
     providers: [{ provider: 'bundesagentur', offers: 100, queries: { remaining: 2, error: 1 }, boards: { paused: 1 }, errors: [{ code: 'upstream_rate_limited', count: 1 }] }],
   } }))
   await page.goto('/engine')
   await expect(page.getByRole('heading', { name: '123 offres publiées' })).toBeVisible()
+  await expect(page.getByText('80 / 100 entreprises vérifiées · 3 sources actives · 12 fiches visibles.')).toBeVisible()
   await expect(page.getByText('2 avec pages restantes · 1 en erreur')).toBeVisible()
   await expect(page.getByRole('link', { name: 'Allemagne', exact: true })).toHaveAttribute('href', '/stages?country_codes=DE')
   await page.getByText('Voir les erreurs').click()

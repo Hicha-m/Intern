@@ -73,12 +73,18 @@ def merge(decision_id):
         offers[decision.canonical_offer_id],
         offers[decision.duplicate_offer_id],
     )
+    verified = decision.evidence.get("method") == "verified_job_link"
     if (
         canonical.status != "open"
         or duplicate.status != "open"
-        or canonical.company_id != duplicate.company_id
-        or (canonical.title, canonical.description)
-        != (duplicate.title, duplicate.description)
+        or (
+            not verified
+            and (
+                canonical.company_id != duplicate.company_id
+                or (canonical.title, canonical.description)
+                != (duplicate.title, duplicate.description)
+            )
+        )
     ):
         raise ValueError("merge_content_conflict")
     # Submission composite foreign keys bind source and offer. Never rewrite a dossier.
@@ -95,7 +101,22 @@ def merge(decision_id):
         raise ValueError("merge_chain_not_supported")
     sources = list(duplicate.sources.select_for_update())
     canonical_urls = set(canonical.sources.values_list("origin_url", flat=True))
-    if decision.evidence.get("method") == "exact_employer_link_content":
+    if verified:
+        from jobboard.services.targeted_merges import ATS, fingerprint, validate_pair
+
+        list(canonical.sources.select_for_update())
+        if (
+            not validate_pair(canonical, duplicate)
+            or fingerprint(canonical) != decision.evidence.get("canonical_fingerprint")
+            or fingerprint(duplicate) != decision.evidence.get("duplicate_fingerprint")
+        ):
+            raise ValueError("merge_identity_conflict")
+        decision.evidence["preferred_board_ids"] = list(
+            canonical.sources.filter(board__provider__in=ATS).values_list(
+                "board_id", flat=True
+            )
+        )
+    elif decision.evidence.get("method") == "exact_employer_link_content":
         canonical_sources = list(canonical.sources.select_for_update())
         links = set().union(*(source_links(item) for item in canonical_sources))
         requisitions = {
@@ -245,3 +266,12 @@ def propose_link_merges():
                     break
                 index[key].append((offer, source))
     return created
+
+
+def preferred_content_board(offer, board):
+    return OfferMergeDecision.objects.filter(
+        canonical_offer=offer,
+        status="merged",
+        evidence__method="verified_job_link",
+        evidence__preferred_board_ids__contains=[board.pk],
+    ).exists()

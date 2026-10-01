@@ -32,3 +32,4 @@
   .workspace-nav-link { min-height: var(--space-12); }
 }
 @media (prefers-reduced-motion: reduce) { .workspace-nav-link { transition: none; } }
+.workspace-logo-credit { color: var(--dashboard-muted); font-size: var(--font-size-xs); padding: var(--space-2); }

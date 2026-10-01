@@ -4,6 +4,8 @@ API candidat Django 6.1 / Django REST framework 3.18 / PostgreSQL 16. Le schéma
 
 ## Démarrer en local
 
+Les [pages entreprise](docs/COMPANY_PAGES.md) regroupent présentation sourcée, informations employeur, stages publiés et recommandations propres à l’entreprise. Le [comparatif concurrentiel](docs/research/company-pages-2026-10-01.md) décrit les choix et les données encore manquantes.
+
 Python 3.12 minimum, `uv`, Docker.
 
 ```bash

@@ -3,13 +3,26 @@ from django.contrib import admin
 from . import models as m
 
 
+class CompanyProfileInline(admin.StackedInline):
+    model = m.CompanyProfile
+    extra = 0
+
+
 @admin.register(m.Company)
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ("name", "domain")
+    list_display = (
+        "name",
+        "domain",
+        "logo_source_kind",
+        "logo_fetched_at",
+        "logo_last_error",
+    )
     search_fields = ("name", "domain")
+    readonly_fields = ("logo_source_url", "logo_source_kind", "logo_fetched_at")
+    inlines = (CompanyProfileInline,)
 
 
-@admin.register(m.Role, m.Skill)
+@admin.register(m.Role, m.Skill, m.JobDomain, m.JobSubdomain)
 class TaxonomyAdmin(admin.ModelAdmin):
     list_display = ("name", "slug")
     search_fields = ("name", "slug")
@@ -37,12 +50,61 @@ class OfferSkillInline(admin.TabularInline):
 
 @admin.register(m.Offer)
 class OfferAdmin(admin.ModelAdmin):
-    list_display = ("title", "company", "contract_type", "work_mode", "status")
-    list_filter = ("status", "contract_type", "work_mode")
+    list_display = (
+        "title",
+        "company",
+        "contract_type",
+        "work_mode",
+        "status",
+        "job_subdomain",
+        "taxonomy_status",
+    )
+    list_filter = (
+        "status",
+        "contract_type",
+        "work_mode",
+        "taxonomy_status",
+        "job_subdomain__domain",
+    )
     search_fields = ("title", "company__name")
-    autocomplete_fields = ("company", "role")
-    readonly_fields = ("created_at", "updated_at", "search_vector")
+    autocomplete_fields = ("company", "role", "job_subdomain", "secondary_subdomains")
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "search_vector",
+        "search_document",
+        "search_title",
+        "taxonomy_status",
+        "taxonomy_version",
+        "taxonomy_input_hash",
+        "taxonomy_manual",
+        "taxonomy_evidence",
+    )
     inlines = (OfferLocationInline, OfferSkillInline)
+
+    def save_model(self, request, obj, form, change):
+        from jobboard.services.job_taxonomy import VERSION, input_hash
+
+        if (
+            "job_subdomain" in form.changed_data
+            or "secondary_subdomains" in form.changed_data
+        ):
+            obj.taxonomy_manual = True
+            obj.taxonomy_status = (
+                ("broad" if obj.job_subdomain.generalist else "classified")
+                if obj.job_subdomain
+                else "unclassified"
+            )
+            obj.taxonomy_version = VERSION
+            obj.taxonomy_input_hash = input_hash(obj)
+            obj.taxonomy_evidence = {"method": "manual", "source": "admin"}
+        elif (
+            change
+            and obj.taxonomy_manual
+            and obj.taxonomy_input_hash != input_hash(obj)
+        ):
+            obj.taxonomy_status = "needs_review"
+        super().save_model(request, obj, form, change)
 
 
 class OperationalReadOnlyAdmin(admin.ModelAdmin):
@@ -101,3 +163,30 @@ for model in (
     m.DeletionRequest,
 ):
     admin.site.register(model, OperationalReadOnlyAdmin)
+
+
+@admin.register(m.OfferEnrichment)
+class InternshipReviewAdmin(OperationalReadOnlyAdmin):
+    list_display = (
+        "offer",
+        "classification",
+        "review_reason",
+        "europe_status",
+        "extractor_version",
+    )
+    list_filter = ("classification", "europe_status")
+    search_fields = ("offer__title", "offer__company__name")
+    list_select_related = ("offer",)
+
+    @admin.display(description="Motif du classement")
+    def review_reason(self, obj):
+        reason = obj.facts.get("classification", {}).get("reason", "")
+        return {
+            "uncorroborated_ats_contract": "Contrat ATS sans confirmation dans le texte",
+            "contract_conflict": "Contrat contradictoire",
+            "mixed_contract_title": "Stage ou alternance à clarifier",
+            "excluded_role_title": "Autre poste ou événement",
+            "placement_description": "Stage précisé dans la description",
+            "danish_placement_period": "Période de stage précisée en danois",
+            "title_and_contract": "Titre et contrat concordants",
+        }.get(reason, reason or "—")
