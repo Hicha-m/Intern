@@ -1,0 +1,105 @@
+name: intern
+
+x-worker: &worker
+  image: intern-app:local
+  restart: unless-stopped
+  env_file: ../.env.production
+  environment:
+    POSTGRES_HOST: db
+    POSTGRES_PORT: "5432"
+  volumes:
+    - private_media:/app/.private-media
+  depends_on:
+    db:
+      condition: service_healthy
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?required}
+      POSTGRES_USER: ${POSTGRES_USER:?required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?required}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    <<: *worker
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    volumes:
+      - private_media:/app/.private-media
+      - staticfiles:/app/staticfiles
+    networks:
+      default:
+      edge:
+        aliases: [intern-api]
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.frontend
+    image: intern-frontend:local
+    restart: unless-stopped
+    volumes:
+      - staticfiles:/static:ro
+    networks:
+      edge:
+        aliases: [intern-static]
+
+  candidate-worker:
+    <<: *worker
+    command: [".venv/bin/python", "manage.py", "run_worker"]
+
+  catalogue-worker:
+    <<: *worker
+    command: [".venv/bin/python", "manage.py", "run_catalogue_worker", "--imports-only", "--limit", "20", "--poll-interval", "2"]
+
+  maintenance-worker:
+    <<: *worker
+    command: [".venv/bin/python", "manage.py", "run_catalogue_worker", "--maintenance-only", "--limit", "5", "--poll-interval", "60"]
+
+  probe-worker:
+    <<: *worker
+    command: [".venv/bin/python", "manage.py", "run_ats_probe_worker", "--limit", "1", "--poll-interval", "60"]
+
+  jobspy-worker:
+    <<: *worker
+    command: [".venv/bin/python", "manage.py", "run_jobspy_worker", "--limit", "1", "--poll-interval", "30"]
+
+  eures-worker:
+    <<: *worker
+    command: [".venv/bin/python", "manage.py", "run_eures_worker", "--limit", "1", "--poll-interval", "30"]
+
+  wttj-worker:
+    <<: *worker
+    command: [".venv/bin/python", "manage.py", "run_wttj_worker", "--limit", "1", "--poll-interval", "30"]
+
+  jobtech-worker:
+    <<: *worker
+    command: [".venv/bin/python", "manage.py", "run_jobtech_worker", "--limit", "1", "--poll-interval", "30"]
+
+  bundesagentur-worker:
+    <<: *worker
+    command: [".venv/bin/python", "manage.py", "run_bundesagentur_worker", "--limit", "1", "--poll-interval", "30"]
+
+  nav-worker:
+    <<: *worker
+    command: [".venv/bin/python", "manage.py", "run_nav_worker", "--limit", "1", "--poll-interval", "30"]
+
+volumes:
+  pgdata:
+  private_media:
+  staticfiles:
+
+networks:
+  edge:
+    external: true
+    name: events_default
