@@ -52,6 +52,7 @@ def read_json(url, *, deadline=None):
                     if response.status_code == 429
                     else "upstream_http_error"
                 )
+                error.status_code = response.status_code
                 retry = response.headers.get("Retry-After", "")
                 error.retry_after = min(int(retry), 86400) if retry.isdigit() else None
                 raise error
@@ -251,7 +252,9 @@ def fetch_normalized(board):
     if board.provider == "eightfold" and board.instance == "global":
         from .eightfold_catalogue import fetch_eightfold
 
-        return fetch_eightfold(board.board_key)
+        return fetch_eightfold(
+            board.board_key, checkpoint=getattr(board, "collection_checkpoint", None)
+        )
 
     if board.provider == "teamtailor" and board.instance == "global":
         from .teamtailor_catalogue import fetch_teamtailor

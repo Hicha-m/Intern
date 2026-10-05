@@ -310,3 +310,56 @@ Sentry AT, Back Market FR, Enpal DE, Kognity SE. Collecteur Eightfold espacé de
 Le détail du stage Microsoft Bucarest (1970393557007677) reste limité par HTTP429 :
 non importé, reprise planifiée. Total attribuable : 5 fiches, pas une couverture
 exhaustive. 24 tests ciblés distincts passent ; lint/diff/readiness vérifiés.
+
+## Lot 34 — Reprise persistante des collectes Eightfold
+
+Spécification : `docs/EUROPE_COVERAGE_V27_SPEC.md`. Migration 0030 : progression
+par portail, recherches/pages et détails restants, validée et expirant à 24 h.
+Offres et progression atomiques sous bail, Retry-After conservé sur résultat
+partiel ; aucune fermeture par absence. Audit expose progression et échéance.
+Pilote réel : Microsoft Bucarest 1970393557007677 récupéré, fiche 16126 visible
+(RO). Son identité a été adoptée du diagnostic de l'import précédent pour amorcer
+la reprise, sans avancer next_run_at. La recherche suivante reçoit encore 429.
+NVIDIA : 2 fiches relues, reprise conservée après 429 ; Dolby : 3 fiches relues,
+parcours terminé. Aucun nouveau stage pour ces deux employeurs. Gain total : une
+fiche Microsoft. 38 tests passent, schéma cohérent, readiness 200. La reprise
+persistante reste limitée à Eightfold ; pas de promesse d'exhaustivité.
+
+## Lot 35 — Collecte supervisée et files correctement mesurées
+
+Spécification : `docs/EUROPE_COVERAGE_V28_SPEC.md`. Correction du diagnostic :
+les échéances des sources synthétiques ne sont pas des travaux ATS dus. Nouvelle
+commande collection_status, séparation imports/maintenance, superviseur local
+à neuf rôles avec verrou et redémarrage progressif, services Compose séparés et
+restart policies. Aucun backoff fournisseur réduit ; un worker par rôle.
+
+Pilote local : imports ATS prêts 116 → 101 entre 17:10:25 et 17:12:08 Paris.
+EURES 30 → 27, WTTJ 46 → 43, Jobtech 1 → 0, NAV 1 → 0. Les files évoluent
+également avec les nouvelles échéances et les erreurs ; pas de traduction de ces
+chiffres en nouvelles offres. Bundesagentur conserve des erreurs de réponse et
+LinkedIn des limitations. Neuf processus actifs, verrou exclusif vérifié en réel,
+532 tests passent, Compose valide et backend HTTP200. Fenêtre courte : débit
+soutenu sur 24 h non démontré. Superviseur à relancer après redémarrage du PC.
+
+## Lot 36 — Découverte automatique de nouveaux employeurs
+
+Spécification : `docs/EUROPE_COVERAGE_V29_SPEC.md`. Admission automatique depuis
+les liens structurés des flux publics et le registre ats-scrapers épinglé déjà
+importé. Concordance stricte nom/portail, provenance durable, conflits et sources
+connues exclus, pauses/backoffs conservés. Quota partagé de 50 admissions/jour UTC,
+500 pistes/passage, curseur transactionnel. Maintenance supervisée → AtsProbe →
+validation publique → import des stages européens. L'ancienne activation des
+flux exclut désormais les candidats déjà confiés aux sondes.
+
+Pilote automatique : 50 nouveaux portails mis en file ; deux examinés à 17:29:57
+Paris, sans stage européen confirmé, zéro nouvelle offre à cet instant. La file
+continue sans intervention. 63 tests ciblés passent, lint et diff propres. Les
+alias, liens indirects et nouveaux employeurs absents des entrées actuelles
+restent hors de ce mécanisme ; aucune promesse de recherche web exhaustive.
+
+## Lot 37 — Déduplication par contenu
+- Spec : [EUROPE_COVERAGE_V30_SPEC.md](docs/EUROPE_COVERAGE_V30_SPEC.md).
+- Passe maintenance : copies exactes ou quasi identiques, entreprise/titre/lieux
+  compatibles, garde-fous sur références, chiffres et historiques privés.
+- Cas Joko vérifié : offres 37, 16163 et 16303 rattachées à 1, quatre sources
+  conservées, Ads Creative distincte. Résumés/full text rapprochés après revue.

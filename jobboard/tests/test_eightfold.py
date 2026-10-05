@@ -52,10 +52,11 @@ class EightfoldTests(SimpleTestCase):
             patch(
                 "jobboard.integrations.eightfold_catalogue.read_json", side_effect=read
             ),
-            self.assertRaises(CatalogueImportError),
         ):
-            fetch_eightfold("microsoft")
+            rows = fetch_eightfold("microsoft")
         self.assertEqual(starts, [100.0, 102.0])
+        self.assertEqual(rows.errors[0]["code"], "upstream_rate_limited")
+        self.assertEqual(rows.checkpoint["term"], 1)
 
     def test_identity_country_and_full_description(self):
         row = normalize_eightfold(detail(), "nvidia", "123")

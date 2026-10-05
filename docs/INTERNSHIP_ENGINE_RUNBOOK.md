@@ -652,3 +652,74 @@ Une réponse HTTP429 interrompt la collecte ; un résultat partiel ne prouve auc
 fermeture et ne garantit pas la récupération des fiches suivantes. Consulter les
 diagnostics même quand ImportRun.status vaut succeeded. Ne pas avancer le délai
 next_run pour forcer un réessai. Le débit ajouté ne garantit pas l'absence de 429.
+
+## Reprise Eightfold (lot 34)
+
+`BoardSchedule.collection_checkpoint` conserve la recherche/page et les détails
+restants. Il est validé pour le portail, borné et expire après 24 h. À la prochaine
+échéance, les détails restants passent avant la recherche suivante. Les offres
+et la progression sont enregistrées ensemble sous le bail d'import.
+
+`audit_source_funnel` expose le point de reprise et `next_run_at`. Un parcours
+Eightfold reste partiel même terminé : l'absence ne ferme aucune offre. Le point
+vide signifie qu'il n'y a pas de reprise sauvegardée, pas que toute l'entreprise
+est couverte. Un index qui bouge peut décaler la pagination ; les nouveaux
+parcours repartent de zéro après terminaison/expiration. Ne pas avancer le délai
+pour forcer une récupération après 429.
+
+Les exports de validation vont dans `docs/research/generated/`. La progression
+persistante concerne Eightfold dans ce lot, pas tous les connecteurs.
+
+## Supervision locale et files réelles (lot 35)
+
+```sh
+uv run python manage.py collection_status
+uv run python manage.py run_collection_supervisor
+```
+
+Le superviseur démarre catalogue, maintenance, probes et les six collecteurs
+spécialisés. Arrêter les anciens workers lancés manuellement avant de l'utiliser.
+Un verrou empêche deux superviseurs dans le même workspace. Le chemin des logs et
+de status.json est affiché au démarrage ; SIGTERM ou Ctrl-C arrête ses enfants.
+Les sorties sont relancées avec un délai de 5 à 300 secondes. Il faut relancer
+le superviseur après un redémarrage du PC ; aucune tâche système n'est installée.
+
+Les imports et la maintenance sont séparés ; un worker ATS traite les sources
+séquentiellement, avec deux secondes entre imports, sans modifier les backoffs.
+Les collecteurs spécialisés gardent leurs propres baux et budgets. Pour Compose,
+utiliser les services séparés et leurs restart policies, pas le superviseur local.
+
+`collection_status` mesure BoardSchedule seulement pour les ATS directs. Les
+sources synthétiques alimentées par les DiscoveryQuery ne sont pas des tâches
+ATS dues. Les requêtes sont comptées par provider ; `ready` exclut les baux encore
+actifs, `oldest_delay_seconds` mesure la plus ancienne tâche prête. Une baisse du
+retard peut venir d'un succès ou d'un report après erreur : lire aussi ImportRun
+et last_error_code, sans présenter cette baisse comme des offres ajoutées.
+
+## Admission automatique d'employeurs (lot 36)
+
+Le rôle maintenance appelle `run_automatic_discovery`. La commande
+`uv run python manage.py discover_employers` exécute le même passage, sous le
+même quota et sans avancer l'échéance. La requête `auto_employer_discovery` permet
+de désactiver ce mécanisme via enabled=False.
+
+Seules les pistes publiques récentes avec un titre de stage et un lien ATS
+structuré sont examinées. Un préfiltre de domaine évite de parcourir des milliers
+d'annonces sans lien exploitable ; les parseurs d'URL restent l'autorité. Portails
+multiples, noms différents et candidats refusés ne sont pas admis automatiquement.
+Au plus 50 nouveaux portails par jour UTC, par tranches de 500 pistes ; curseur
+et quota sont protégés par transaction. Les anciennes probes conservent leurs
+backoffs et pauses. Les candidats admis sont testés par le worker de sondes déjà
+supervisé. Seules ses vérifications et le filtre de publication peuvent produire
+une offre visible. Le statut queued de la preuve ne signifie pas offre publiée.
+
+La provenance est enregistrée dans DiscoveryResult (requête auto_employer_discovery).
+Les motifs et un échantillon des cas ambigus figurent dans le journal maintenance.
+Les cas sans lien direct et les alias légitimes restent des limites connues.
+
+L'inventaire ats-scrapers déjà importé alimente également la file, uniquement pour
+la révision épinglée et sa provenance GitHub attendue. Ses DiscoveryQuery sont
+archivales (`enabled=False`), sans tâche réseau à réactiver. Les entrées de registre
+ne doivent pas contenir un titre de stage ; la sonde devra en trouver sur le
+portail avant toute activation. Le quota de 50 reste partagé entre les deux voies.
+Ce lot ne met pas automatiquement à jour la révision épinglée du registre.

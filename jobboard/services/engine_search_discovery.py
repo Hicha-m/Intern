@@ -321,6 +321,7 @@ def run_search_discovery(
                 candidates = (
                     SourceCandidate.objects.filter(
                         status="candidate",
+                        probe__isnull=True,
                         discoveryresult__query=query,
                         discoveryresult__status__in=["candidate", "validation_failed"],
                     )

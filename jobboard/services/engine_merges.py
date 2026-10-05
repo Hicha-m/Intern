@@ -74,11 +74,15 @@ def merge(decision_id):
         offers[decision.duplicate_offer_id],
     )
     verified = decision.evidence.get("method") == "verified_job_link"
+    content = decision.evidence.get("method") in {
+        "content_duplicate",
+        "reviewed_content_duplicate",
+    }
     if (
         canonical.status != "open"
         or duplicate.status != "open"
         or (
-            not verified
+            not (verified or content)
             and (
                 canonical.company_id != duplicate.company_id
                 or (canonical.title, canonical.description)
@@ -101,7 +105,27 @@ def merge(decision_id):
         raise ValueError("merge_chain_not_supported")
     sources = list(duplicate.sources.select_for_update())
     canonical_urls = set(canonical.sources.values_list("origin_url", flat=True))
-    if verified:
+    if content:
+        from jobboard.services.content_duplicates import matches, requisitions_conflict
+        from jobboard.services.targeted_merges import ATS, compatible, fingerprint
+
+        list(canonical.sources.select_for_update())
+        if (
+            not compatible(canonical, duplicate)
+            or canonical.company_id != duplicate.company_id
+            or requisitions_conflict(canonical, duplicate)
+            or (
+                decision.evidence["method"] == "content_duplicate"
+                and not matches(canonical, duplicate)
+            )
+            or fingerprint(canonical) != decision.evidence.get("canonical_fingerprint")
+            or fingerprint(duplicate) != decision.evidence.get("duplicate_fingerprint")
+        ):
+            raise ValueError("merge_identity_conflict")
+        decision.evidence["preferred_board_ids"] = sorted(
+            {s.board_id for s in canonical.sources.all() if s.board.provider in ATS}
+        )
+    elif verified:
         from jobboard.services.targeted_merges import ATS, fingerprint, validate_pair
 
         list(canonical.sources.select_for_update())
@@ -272,6 +296,10 @@ def preferred_content_board(offer, board):
     return OfferMergeDecision.objects.filter(
         canonical_offer=offer,
         status="merged",
-        evidence__method="verified_job_link",
+        evidence__method__in=[
+            "verified_job_link",
+            "content_duplicate",
+            "reviewed_content_duplicate",
+        ],
         evidence__preferred_board_ids__contains=[board.pk],
     ).exists()

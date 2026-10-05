@@ -21,6 +21,7 @@ class BoardSchedule(models.Model):
     paused = models.BooleanField(default=False)
     quarantine_hash = models.CharField(max_length=64, blank=True, default="")
     quarantine_since = models.DateTimeField(null=True, blank=True)
+    collection_checkpoint = models.JSONField(default=dict)
 
     class Meta:
         constraints = [  # noqa: RUF012 - Django Meta declarative configuration

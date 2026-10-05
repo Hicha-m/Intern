@@ -66,13 +66,24 @@ def links(offer, fresh=None):
     }
 
 
+def location_keys(offer):
+    # Remove an explicit country suffix only when the structured country agrees.
+    result = set()
+    for location in offer.locations.all():
+        name = normalized(location.name)
+        code = (location.country_code or "").casefold()
+        if code and name.endswith(", " + code):
+            name = name[: -(len(code) + 2)]
+        result.add((name, code))
+    return result
+
+
 def compatible(a, b):
     return (
         normalized(a.company.name) == normalized(b.company.name)
         and normalized(a.title) == normalized(b.title)
         and bool(a.locations.all())
-        and {normalized(l.name) for l in a.locations.all()}
-        == {normalized(l.name) for l in b.locations.all()}
+        and location_keys(a) == location_keys(b)
         and not (a.expires_at and b.expires_at and a.expires_at != b.expires_at)
         and not (
             a.work_mode != "unknown"

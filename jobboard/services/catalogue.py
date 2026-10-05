@@ -71,6 +71,7 @@ def _claim(board_id):
         schedule.lease_token = uuid.uuid4()
         schedule.lease_expires_at = now + timedelta(minutes=15)
         schedule.save(update_fields=["lease_token", "lease_expires_at"])
+        board.collection_checkpoint = schedule.collection_checkpoint
         return board, schedule.lease_token, ImportRun.objects.create(board=board)
 
 
@@ -294,6 +295,13 @@ def import_board(board_id, *, supplied_snapshot=None):
             schedule.next_run_at = now + timedelta(
                 minutes=schedule.interval_minutes, seconds=locked.pk % 61
             )
+            if board.provider == "eightfold" and hasattr(snapshot, "checkpoint"):
+                # Commit progress with the imported rows, behind the same lease fence.
+                schedule.collection_checkpoint = snapshot.checkpoint
+                schedule.next_run_at = max(
+                    schedule.next_run_at,
+                    now + timedelta(seconds=getattr(snapshot, "retry_after", 0)),
+                )
             schedule.lease_token = schedule.lease_expires_at = None
             schedule.save()
             run.status, run.finished_at, run.is_full_snapshot, run.seen_count = (

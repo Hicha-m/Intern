@@ -125,7 +125,7 @@ def normalize_eightfold(job, key, expected_id):
     return row
 
 
-def fetch_eightfold(key):
+def fetch_eightfold(key, *, checkpoint=None):
     from jobboard.services.engine_quality import EUROPE_COUNTRIES, INTERN
 
     if key not in BOARDS:
@@ -161,69 +161,136 @@ def fetch_eightfold(key):
             raise CatalogueImportError("eightfold_invalid_response")
         return payload["data"]
 
-    rows, errors, seen = [], [], set()
+    # A checkpoint contains numeric identities only, never executable URLs.
+    state = _checkpoint(key, checkpoint)
+    rows, errors = [], []
+    seen = set(state["seen"])
+    pending = state["pending"]
     details = 0
-    for term in TERMS:
-        expected_count = None
-        page_seen = set()
-        for page in range(MAX_PAGES):
+
+    def result(exc=None, identity=None):
+        if exc:
+            error = {"code": exc.code}
+            if identity:
+                error["external_id"] = identity
+            errors.append(error)
+        snapshot = CatalogueSnapshot(rows, complete=False, errors=errors)
+        state["seen"] = sorted(seen)
+        snapshot.checkpoint = state if pending or state["term"] < len(TERMS) else {}
+        snapshot.retry_after = max(0, getattr(exc, "retry_after", None) or 0)
+        return snapshot
+
+    while pending or state["term"] < len(TERMS):
+        # Finish the saved page before requesting another search page.
+        while pending:
+            identity = pending[0]
+            try:
+                if details >= MAX_DETAILS:
+                    raise CatalogueImportError("eightfold_detail_budget")
+                details += 1
+                detail = read("position_details", position_id=identity, hl="en")
+                row = normalize_eightfold(detail, key, identity)
+                if row is not None:
+                    rows.append(row)
+            except CatalogueImportError as exc:
+                if (getattr(exc, "status_code", 0) >= 500) or exc.code in (
+                    "upstream_rate_limited",
+                    "upstream_invalid_response",
+                    "eightfold_deadline",
+                    "snapshot_deadline_exceeded",
+                    "eightfold_byte_budget",
+                    "eightfold_detail_budget",
+                ):
+                    return result(exc, identity)
+                errors.append({"external_id": identity, "code": exc.code})
+            pending.pop(0)
+        if state["term"] >= len(TERMS):
+            break
+        term, page = TERMS[state["term"]], state["page"]
+        try:
             data = read("search", query=term, start=page * 10, sort_by="timestamp")
             count, batch = data.get("count"), data.get("positions")
             if (
                 type(count) is not int
                 or count < 0
                 or not isinstance(batch, list)
-                or len(batch) > 10
+                or len(batch) != max(0, min(10, count - page * 10))
             ):
                 raise CatalogueImportError("eightfold_invalid_page")
-            if expected_count is None:
-                expected_count = count
-            if count != expected_count or len(batch) != max(
-                0, min(10, count - page * 10)
+            identities = [
+                str(job.get("id", "")) if isinstance(job, dict) else "" for job in batch
+            ]
+            if any(
+                not re.fullmatch(r"[0-9]{1,30}", identity) for identity in identities
             ):
-                raise CatalogueImportError("eightfold_changed_page")
-            for job in batch:
-                if not isinstance(job, dict) or not re.fullmatch(
-                    r"[0-9]{1,30}", str(job.get("id", ""))
-                ):
-                    raise CatalogueImportError("eightfold_invalid_identity")
-                identity = str(job["id"])
-                if identity in page_seen:
-                    raise CatalogueImportError("eightfold_duplicate_page")
-                page_seen.add(identity)
-                if identity in seen:
-                    continue
-                seen.add(identity)
-                if not isinstance(job.get("name"), str) or not re.search(
-                    INTERN, job["name"], re.IGNORECASE
-                ):
-                    continue
-                try:
-                    places = locations(job)
-                    if (
-                        places
-                        and all(p["country"] for p in places)
-                        and not any(p["country"] in EUROPE_COUNTRIES for p in places)
-                    ):
-                        continue
-                    details += 1
-                    if details > MAX_DETAILS:
-                        raise CatalogueImportError("eightfold_detail_budget")
-                    detail = read("position_details", position_id=identity, hl="en")
-                    row = normalize_eightfold(detail, key, identity)
-                    if row is not None:
-                        rows.append(row)
-                except CatalogueImportError as exc:
-                    errors.append({"external_id": identity, "code": exc.code})
-                    if exc.code in (
-                        "upstream_rate_limited",
-                        "eightfold_deadline",
-                        "eightfold_byte_budget",
-                        "eightfold_detail_budget",
-                    ):
-                        return CatalogueSnapshot(rows, complete=False, errors=errors)
-            if (page + 1) * 10 >= count:
-                break
-        else:
-            errors.append({"code": "eightfold_page_cap", "term": term})
-    return CatalogueSnapshot(rows, complete=False, errors=errors)
+                raise CatalogueImportError("eightfold_invalid_identity")
+            if len(set(identities)) != len(identities):
+                raise CatalogueImportError("eightfold_duplicate_page")
+        except CatalogueImportError as exc:
+            # Even search failures preserve rows collected earlier in this run.
+            return result(exc)
+        for job, identity in zip(batch, identities, strict=True):
+            if identity in seen:
+                continue
+            seen.add(identity)
+            if not isinstance(job.get("name"), str) or not re.search(
+                INTERN, job["name"], re.IGNORECASE
+            ):
+                continue
+            try:
+                places = locations(job)
+            except CatalogueImportError as exc:
+                errors.append({"external_id": identity, "code": exc.code})
+                continue
+            if (
+                places
+                and all(p["country"] for p in places)
+                and not any(p["country"] in EUROPE_COUNTRIES for p in places)
+            ):
+                continue
+            pending.append(identity)
+        state["page"] += 1
+        if state["page"] * 10 >= count or state["page"] >= MAX_PAGES:
+            if state["page"] * 10 < count:
+                errors.append({"code": "eightfold_page_cap", "term": term})
+            state["term"] += 1
+            state["page"] = 0
+    return result()
+
+
+def _checkpoint(key, checkpoint):
+    from copy import deepcopy
+
+    now = time.time()
+    valid = (
+        isinstance(checkpoint, dict)
+        and checkpoint.get("version") == 1
+        and checkpoint.get("key") == key
+        and isinstance(checkpoint.get("started_at"), (int, float))
+        and 0 <= now - checkpoint["started_at"] <= 86400
+        and type(checkpoint.get("term")) is int
+        and 0 <= checkpoint["term"] <= len(TERMS)
+        and type(checkpoint.get("page")) is int
+        and 0 <= checkpoint["page"] < MAX_PAGES
+    )
+    for field, maximum in (("seen", len(TERMS) * MAX_PAGES * 10), ("pending", 10)):
+        values = checkpoint.get(field) if isinstance(checkpoint, dict) else None
+        valid = valid and isinstance(values, list) and len(values) <= maximum
+        if valid:
+            valid = all(
+                isinstance(v, str) and re.fullmatch(r"[0-9]{1,30}", v) for v in values
+            )
+            valid = valid and len(set(values)) == len(values)
+    if valid:
+        valid = set(checkpoint["pending"]) <= set(checkpoint["seen"])
+    if valid:
+        return deepcopy(checkpoint)
+    return {
+        "version": 1,
+        "key": key,
+        "started_at": now,
+        "term": 0,
+        "page": 0,
+        "seen": [],
+        "pending": [],
+    }

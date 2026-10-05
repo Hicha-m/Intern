@@ -30,6 +30,8 @@ def audit_sources():
             "url": board.base_url,
             "paused": schedule.paused if schedule else None,
             "last_error": schedule.last_error_code if schedule else None,
+            "next_run_at": schedule.next_run_at.isoformat() if schedule else None,
+            "collection_checkpoint": schedule.collection_checkpoint if schedule else {},
             "last_success_at": board.last_success_at.isoformat()
             if board.last_success_at
             else None,

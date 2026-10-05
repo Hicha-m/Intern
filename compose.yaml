@@ -54,16 +54,30 @@ services:
   catalogue-worker:
     build: .
     profiles: [app]
-    command: [".venv/bin/python", "manage.py", "run_catalogue_worker"]
+    restart: unless-stopped
+    command: [".venv/bin/python", "manage.py", "run_catalogue_worker", "--imports-only", "--limit", "20", "--poll-interval", "2"]
     environment: *app_environment
     volumes:
       - intern_media:/app/.private-media
     depends_on:
       db:
         condition: service_healthy
+  catalogue-maintenance:
+    build: .
+    profiles: [app]
+    restart: unless-stopped
+    volumes:
+      - intern_media:/app/.private-media
+    command: [".venv/bin/python", "manage.py", "run_catalogue_worker", "--maintenance-only", "--limit", "5", "--poll-interval", "60"]
+    environment: *app_environment
+    depends_on:
+      db:
+        condition: service_healthy
+
   jobspy-worker:
     build: .
     profiles: [app]
+    restart: unless-stopped
     command: [".venv/bin/python", "manage.py", "run_jobspy_worker", "--poll-interval", "30", "--limit", "1"]
     environment: *app_environment
     depends_on:
@@ -73,6 +87,7 @@ services:
   eures-worker:
     build: .
     profiles: [app]
+    restart: unless-stopped
     command: [".venv/bin/python", "manage.py", "run_eures_worker", "--poll-interval", "30", "--limit", "1"]
     environment: *app_environment
     depends_on:
@@ -82,6 +97,7 @@ services:
   wttj-worker:
     build: .
     profiles: [app]
+    restart: unless-stopped
     command: [".venv/bin/python", "manage.py", "run_wttj_worker", "--poll-interval", "30", "--limit", "1"]
     environment: *app_environment
     depends_on:
@@ -91,6 +107,7 @@ services:
   jobtech-worker:
     build: .
     profiles: [app]
+    restart: unless-stopped
     command: [".venv/bin/python", "manage.py", "run_jobtech_worker", "--poll-interval", "30", "--limit", "1"]
     environment: *app_environment
     depends_on:
@@ -100,6 +117,7 @@ services:
   bundesagentur-worker:
     build: .
     profiles: [app]
+    restart: unless-stopped
     command: [".venv/bin/python", "manage.py", "run_bundesagentur_worker", "--poll-interval", "30", "--limit", "1"]
     environment: *app_environment
     depends_on:
@@ -109,6 +127,7 @@ services:
   nav-worker:
     build: .
     profiles: [app]
+    restart: unless-stopped
     command: [".venv/bin/python", "manage.py", "run_nav_worker", "--poll-interval", "10", "--limit", "1"]
     environment:
       <<: *app_environment
