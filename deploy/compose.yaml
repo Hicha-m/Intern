@@ -46,6 +46,8 @@ services:
     build:
       context: ..
       dockerfile: deploy/Dockerfile.frontend
+      args:
+        VITE_LOGO_DEV_PUBLISHABLE_KEY: ${VITE_LOGO_DEV_PUBLISHABLE_KEY:-}
     image: intern-frontend:local
     restart: unless-stopped
     volumes:

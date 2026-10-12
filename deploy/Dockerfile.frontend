@@ -3,7 +3,9 @@ WORKDIR /app
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm ci
 COPY frontend/ ./
-RUN npm run build
+ARG VITE_LOGO_DEV_PUBLISHABLE_KEY=""
+RUN node -e 'const key = process.env.VITE_LOGO_DEV_PUBLISHABLE_KEY || ""; if (key && !key.startsWith("pk_")) throw new Error("Logo.dev requires a publishable pk_ key");' \
+    && npm run build
 
 FROM caddy:2-alpine
 COPY deploy/Caddyfile.frontend /etc/caddy/Caddyfile

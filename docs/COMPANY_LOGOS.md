@@ -57,6 +57,24 @@ Public reads use the same HTTPS/DNS protections as logo extraction, with at most
 five pages and 45 seconds per company. The domain command never downloads logos
 or modifies their cache and retry state. An unresolved identity remains empty.
 
+## Optional Logo.dev fallback
+
+Set `VITE_LOGO_DEV_PUBLISHABLE_KEY` to a publishable `pk_` key in
+`frontend/.env.local` for local Vite, or in the root `.env.production` for
+the VPS deployment. Docker passes this value as a frontend build argument.
+It is embedded in the browser bundle; a secret API key is not accepted.
+
+```sh
+docker compose --env-file .env.production -f deploy/compose.yaml build frontend
+docker compose --env-file .env.production -f deploy/compose.yaml up -d --no-deps frontend
+```
+
+Rebuilding is required after changing the key. With an empty key, the CDN fallback
+and its attribution are disabled. With a publishable key, company images use the
+local logo first, then Logo.dev for a known employer domain, then initials. The
+public login page and the workspace display a link to Logo.dev. If the key has
+allowed-domain restrictions, include the VPS hostname and local development host.
+
 The existing 17 companies were backfilled on 2026-09-30 from their registered employer
 pages or official websites. Fallback pages included Stripe, Nelly, Doctolib, Aircall,
 Human Rights Watch, Maven Securities and Ubisoft. No logo API subscription is needed.
