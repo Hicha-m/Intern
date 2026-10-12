@@ -49,8 +49,12 @@ association fiable : aucun domaine n'est inventé ni sélectionné par popularit
    4 millions de pixels maximum ; PNG normalisé de 256 pixels maximum.
 6. Rejeter également le digest du favicon LinkedIn confirmé. Conserver pour chaque
    succès l'URL finale de l'image, le type de source et la date d'acquisition.
-   Enregistrer un site découvert uniquement après téléchargement réussi depuis
-   ce site ou une organisation structurée explicitement correspondante.
+   Enregistrer l'identité indépendamment du téléchargement du logo : site déjà
+   connu, `company_website` associé au même employeur, organisation structurée
+   explicitement correspondante ou lecture réussie du site employeur. Les
+   métadonnées contradictoires restent indéterminées ; conserver les identités
+   valides existantes. `enrich_company_domains` complète aussi les entreprises
+   dont le logo est déjà en cache, avec un traitement borné et reprenable par ID.
 
 ## Cache et réparation
 

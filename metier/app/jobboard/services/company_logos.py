@@ -320,36 +320,27 @@ def cache_logo(company, image_url, deadline=None, *, source_kind="manual"):
 
 
 def extract_logo(company, *, page_url=None):
-    from jobboard.models import OfferSource
+    from jobboard.services.company_domains import (
+        company_identity_sources,
+        conflicting_homepages,
+        employer_pages,
+        record_known_company_domain,
+        record_page_domain,
+        source_homepages,
+    )
 
     failures = []
     deadline = time.monotonic() + 45
-    source_homepages = []
+    sources = company_identity_sources(company) if not page_url else []
+    homepages = source_homepages(sources)
+    record_known_company_domain(company, homepages)
     # The catalogue already associates these source records with the employer.
     # Preserve provider-authored company logos instead of scraping a global favicon.
     if not page_url:
-        sources = list(
-            OfferSource.objects.filter(
-                offer__company=company,
-                source_status="active",
-                board__provider__in=["wttj", "jobspy"],
-            )
-            .select_related("board")
-            .order_by("-last_seen_at", "pk")[:4]
-        )
         slugs = set()
         for source in sources:
             raw = source.raw_payload
-            if (
-                not isinstance(raw, dict)
-                or not isinstance(raw.get("company"), str)
-                or not same_name(raw["company"], company.name)
-            ):
-                continue
             try:
-                website = raw.get("company_website")
-                if isinstance(website, str) and employer_domain(website):
-                    source_homepages.append(website)
                 logo = raw.get("company_logo")
                 if not logo and source.board.provider == "wttj":
                     slug = raw.get("company_slug")
@@ -368,34 +359,7 @@ def extract_logo(company, *, page_url=None):
             if time.monotonic() >= deadline:
                 break
 
-    pages = ([page_url] if page_url else []) + (
-        [company.website_url] if company.website_url else []
-    )
-    pages += source_homepages
-    pages += list(
-        company.source_boards.order_by("pk").values_list("base_url", flat=True)
-    )
-    if company.domain and not company.website_url:
-        pages.append(f"https://{company.domain}/")
-    pages += list(
-        OfferSource.objects.filter(offer__company=company, source_status="active")
-        .order_by("-last_seen_at", "pk")
-        .values_list("origin_url", flat=True)[:2]
-    )
-
-    def useful_page(page):
-        try:
-            parts = urlsplit(page)
-            # Never read the generic landing page of a job/social platform.
-            return (
-                parts.scheme == "https"
-                and parts.hostname
-                and not (platform_host(parts.hostname) and parts.path in ("", "/"))
-            )
-        except ValueError:
-            return False
-
-    pages = [page for page in dict.fromkeys(pages) if useful_page(page)][:5]
+    pages = employer_pages(company, page_url=page_url, homepages=homepages)
     for page in pages:
         if time.monotonic() >= deadline:
             break
@@ -403,26 +367,20 @@ def extract_logo(company, *, page_url=None):
             final_url, html = fetch_public(page, deadline=deadline)
             parser = LogoParser(final_url, company.name)
             parser.feed(html)
+            if not conflicting_homepages(homepages) or page_url:
+                record_page_domain(company, final_url, parser)
             for homepage in parser.homepages:
-                if homepage not in pages and len(pages) < 5:
+                if (
+                    not conflicting_homepages(parser.structured_homepages)
+                    and homepage not in pages
+                    and len(pages) < 5
+                ):
                     pages.append(homepage)
             for url in parser.urls():
                 try:
-                    key = cache_logo(
+                    return cache_logo(
                         company, url, deadline, source_kind=parser.kinds[url]
                     )
-                    # Only successful first-party reads or matching structured
-                    # organization metadata establish a missing employer identity.
-                    homepage = next(iter(parser.structured_homepages), None)
-                    if not homepage and not platform_host(urlsplit(final_url).hostname):
-                        homepage = "https://" + urlsplit(final_url).hostname + "/"
-                    domain = employer_domain(homepage)
-                    if domain and not company.website_url and not company.domain:
-                        company.website_url, company.domain = homepage, domain
-                        company.save(
-                            update_fields=["website_url", "domain", "updated_at"]
-                        )
-                    return key
                 except CatalogueImportError as exc:
                     failures.append(str(exc))
         except (CatalogueImportError, ValueError) as exc:
