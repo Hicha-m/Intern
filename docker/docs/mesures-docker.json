@@ -1,0 +1,244 @@
+{
+  "finished_utc": "2026-10-12T12:46:20.651167+00:00",
+  "host": {
+    "system": "Linux",
+    "release": "7.0.0-29-generic",
+    "machine": "x86_64",
+    "processor": "",
+    "cpu": "AMD EPYC-Rome Processor",
+    "distribution": "Ubuntu 26.04 LTS",
+    "memory_bytes": 8122318848,
+    "docker_desktop_vm_accounted": "not applicable: native Linux"
+  },
+  "docker_version": "{\"Platform\":{\"Name\":\"Docker Engine - Community\"},\"Version\":\"29.7.2\",\"ApiVersion\":\"1.55\",\"MinAPIVersion\":\"1.40\",\"Os\":\"linux\",\"Arch\":\"amd64\",\"Components\":[{\"Name\":\"Engine\",\"Version\":\"29.7.2\",\"Details\":{\"ApiVersion\":\"1.55\",\"Arch\":\"amd64\",\"BuildTime\":\"Wed Aug  5 18:28:40 2026\",\"Experimental\":\"false\",\"GitCommit\":\"6a43e3d\",\"GoVersion\":\"go1.26.5\",\"KernelVersion\":\"7.0.0-29-generic\",\"MinAPIVersion\":\"1.40\",\"Module\":\"github.com/moby/moby/v2\",\"ModuleVersion\":\"v2.0.0+unknown\",\"Os\":\"linux\"}},{\"Name\":\"containerd\",\"Version\":\"v2.3.3\",\"Details\":{\"GitCommit\":\"aad11006b869517fcd3009450b6f82da282e1a9b\"}},{\"Name\":\"runc\",\"Version\":\"1.4.3\",\"Details\":{\"GitCommit\":\"v1.4.3-0-gbb14dabe\"}},{\"Name\":\"docker-init\",\"Version\":\"0.19.0\",\"Details\":{\"GitCommit\":\"de40ad0\"}}],\"GitCommit\":\"6a43e3d\",\"GoVersion\":\"go1.26.5\",\"KernelVersion\":\"7.0.0-29-generic\",\"BuildTime\":\"2026-08-05T18:28:40.000000000+00:00\"}",
+  "compose_version": "5.5.0",
+  "protocol": {
+    "trials": 3,
+    "idle_s": 30,
+    "requests_per_trial": 10,
+    "url": "http://127.0.0.1:18088/api/v1/offers/",
+    "startup": "From three stopped containers to the first complete HTTP 200 catalogue.",
+    "cache": "Host disk cache retained; no persistent HTTP connection.",
+    "memory": "Raw Docker stats plus native engine RSS; engine shared with other projects.",
+    "disk": "Logical image sizes and allocated bytes of this project volumes, separately."
+  },
+  "images": {
+    "donnees": {
+      "id": "sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4",
+      "bytes": 157461691,
+      "reference": "postgres:16.15-bookworm",
+      "digests": [
+        "postgres@sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4"
+      ]
+    },
+    "metier": {
+      "id": "sha256:440fe44e99c76e9d329cdeede4966c28ded6e0c52d6b9629f504bba2565fbb98",
+      "bytes": 345187869,
+      "reference": "intern-tp-metier:local",
+      "digests": [
+        "intern-tp-metier@sha256:440fe44e99c76e9d329cdeede4966c28ded6e0c52d6b9629f504bba2565fbb98"
+      ]
+    },
+    "proxy": {
+      "id": "sha256:a5ada5030c785b0cd646c8c0efe25dc6ab3364654857fe53cdfed7004ee53ee3",
+      "bytes": 23689265,
+      "reference": "intern-tp-proxy:local",
+      "digests": [
+        "intern-tp-proxy@sha256:a5ada5030c785b0cd646c8c0efe25dc6ab3364654857fe53cdfed7004ee53ee3"
+      ]
+    }
+  },
+  "trials": [
+    {
+      "trial": 1,
+      "startup_s": 18.185721579939127,
+      "latencies_ms": [
+        47.89595492184162,
+        37.13263012468815,
+        39.0459056943655,
+        45.20578496158123,
+        54.22280356287956,
+        50.65682716667652,
+        48.81281778216362,
+        46.0601132363081,
+        46.394526958465576,
+        42.43941232562065
+      ],
+      "latency_median_ms": 46.22732009738684,
+      "container_stats": [
+        {
+          "BlockIO": "8.19kB / 258kB",
+          "CPUPerc": "12.36%",
+          "Container": "0562416ba3fb75265b503bb9a1c18f4191dfbd7d1d5df1507cabd2bafa37935a",
+          "ID": "0562416ba3fb",
+          "MemPerc": "1.43%",
+          "MemUsage": "29.38MiB / 2GiB",
+          "Name": "intern-tp-donnees-1",
+          "NetIO": "24kB / 35.7kB",
+          "PIDs": "8"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "7.57%",
+          "Container": "b0ec001a700272aefa76427f6458057ea8492bddcc1712d6ce9da5518a5d9272",
+          "ID": "b0ec001a7002",
+          "MemPerc": "8.73%",
+          "MemUsage": "178.8MiB / 2GiB",
+          "Name": "intern-tp-metier-1",
+          "NetIO": "44.4kB / 33.6kB",
+          "PIDs": "4"
+        },
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "ef018416f30ade6ae76b48cceadd0e7085253e58b22e6617f57e665fdbf0b9b3",
+          "ID": "ef018416f30a",
+          "MemPerc": "0.45%",
+          "MemUsage": "4.559MiB / 1GiB",
+          "Name": "intern-tp-proxy-1",
+          "NetIO": "12.2kB / 11.8kB",
+          "PIDs": "5"
+        }
+      ],
+      "engine_rss_bytes_shared": 1028743168,
+      "volume_allocated_bytes": {
+        "intern-tp_pgdata": 71028736,
+        "intern-tp_media": 32768,
+        "intern-tp_statiques": 3489792
+      },
+      "persistence_marker_preserved": true
+    },
+    {
+      "trial": 2,
+      "startup_s": 18.226154398173094,
+      "latencies_ms": [
+        36.126778461039066,
+        32.4032474309206,
+        31.44822083413601,
+        30.565820634365082,
+        39.49203062802553,
+        60.472019016742706,
+        33.136967569589615,
+        36.95497754961252,
+        31.775292940437794,
+        32.12129045277834
+      ],
+      "latency_median_ms": 32.77010750025511,
+      "container_stats": [
+        {
+          "BlockIO": "0B / 258kB",
+          "CPUPerc": "0.02%",
+          "Container": "0562416ba3fb75265b503bb9a1c18f4191dfbd7d1d5df1507cabd2bafa37935a",
+          "ID": "0562416ba3fb",
+          "MemPerc": "1.40%",
+          "MemUsage": "28.65MiB / 2GiB",
+          "Name": "intern-tp-donnees-1",
+          "NetIO": "23.7kB / 35.5kB",
+          "PIDs": "8"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "19.57%",
+          "Container": "b0ec001a700272aefa76427f6458057ea8492bddcc1712d6ce9da5518a5d9272",
+          "ID": "b0ec001a7002",
+          "MemPerc": "8.29%",
+          "MemUsage": "169.8MiB / 2GiB",
+          "Name": "intern-tp-metier-1",
+          "NetIO": "44.7kB / 33.9kB",
+          "PIDs": "3"
+        },
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "ef018416f30ade6ae76b48cceadd0e7085253e58b22e6617f57e665fdbf0b9b3",
+          "ID": "ef018416f30a",
+          "MemPerc": "0.44%",
+          "MemUsage": "4.555MiB / 1GiB",
+          "Name": "intern-tp-proxy-1",
+          "NetIO": "12.1kB / 11.8kB",
+          "PIDs": "5"
+        }
+      ],
+      "engine_rss_bytes_shared": 1029201920,
+      "volume_allocated_bytes": {
+        "intern-tp_pgdata": 71028736,
+        "intern-tp_media": 32768,
+        "intern-tp_statiques": 3489792
+      },
+      "persistence_marker_preserved": true
+    },
+    {
+      "trial": 3,
+      "startup_s": 18.752528877928853,
+      "latencies_ms": [
+        64.4445987418294,
+        39.284040220081806,
+        36.19449492543936,
+        34.25085078924894,
+        33.98546576499939,
+        35.1118603721261,
+        34.16899777948856,
+        31.43866267055273,
+        36.778527311980724,
+        38.87736238539219
+      ],
+      "latency_median_ms": 35.65317764878273,
+      "container_stats": [
+        {
+          "BlockIO": "0B / 258kB",
+          "CPUPerc": "11.69%",
+          "Container": "0562416ba3fb75265b503bb9a1c18f4191dfbd7d1d5df1507cabd2bafa37935a",
+          "ID": "0562416ba3fb",
+          "MemPerc": "1.40%",
+          "MemUsage": "28.71MiB / 2GiB",
+          "Name": "intern-tp-donnees-1",
+          "NetIO": "24kB / 35.7kB",
+          "PIDs": "8"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "29.36%",
+          "Container": "b0ec001a700272aefa76427f6458057ea8492bddcc1712d6ce9da5518a5d9272",
+          "ID": "b0ec001a7002",
+          "MemPerc": "8.26%",
+          "MemUsage": "169.1MiB / 2GiB",
+          "Name": "intern-tp-metier-1",
+          "NetIO": "44.7kB / 33.9kB",
+          "PIDs": "3"
+        },
+        {
+          "BlockIO": "0B / 4.1kB",
+          "CPUPerc": "0.00%",
+          "Container": "ef018416f30ade6ae76b48cceadd0e7085253e58b22e6617f57e665fdbf0b9b3",
+          "ID": "ef018416f30a",
+          "MemPerc": "0.44%",
+          "MemUsage": "4.516MiB / 1GiB",
+          "Name": "intern-tp-proxy-1",
+          "NetIO": "12.1kB / 11.8kB",
+          "PIDs": "5"
+        }
+      ],
+      "engine_rss_bytes_shared": 1032204288,
+      "volume_allocated_bytes": {
+        "intern-tp_pgdata": 71028736,
+        "intern-tp_media": 32768,
+        "intern-tp_statiques": 3489792
+      },
+      "persistence_marker_preserved": true
+    }
+  ],
+  "medians": {
+    "startup_s": 18.226154398173094,
+    "latency_ms": 35.65317764878273
+  },
+  "inputs_sha256": {
+    "donnees/schema.sql": "806b1ba2d921b2dd1a32d4f6bc5bb75cda6b1ec9c94410cd6471f0a1349243a1",
+    "donnees/data.sql": "dbfaa7d9f8d906fec4590188f14cce72727775bd26fe64404d3cb5d40bd361fa"
+  },
+  "limitations": [
+    "Comparer uniquement sur le m\u00eame h\u00f4te que les VM.",
+    "Le moteur natif est partag\u00e9 : sa RSS enti\u00e8re ne mesure pas un co\u00fbt attribuable au TP.",
+    "Les tailles logiques des images comptent potentiellement des couches partag\u00e9es.",
+    "Pas une campagne JMeter ; aucun d\u00e9bit ni saturation mesur\u00e9."
+  ]
+}

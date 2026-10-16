@@ -33,7 +33,7 @@ services:
     <<: *worker
     build:
       context: ..
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     volumes:
       - private_media:/app/.private-media
       - staticfiles:/app/staticfiles
@@ -58,43 +58,43 @@ services:
 
   candidate-worker:
     <<: *worker
-    command: [".venv/bin/python", "manage.py", "run_worker"]
+    command: [".venv/bin/python", "app/manage.py", "run_worker"]
 
   catalogue-worker:
     <<: *worker
-    command: [".venv/bin/python", "manage.py", "run_catalogue_worker", "--imports-only", "--limit", "20", "--poll-interval", "2"]
+    command: [".venv/bin/python", "app/manage.py", "run_catalogue_worker", "--imports-only", "--limit", "20", "--poll-interval", "2"]
 
   maintenance-worker:
     <<: *worker
-    command: [".venv/bin/python", "manage.py", "run_catalogue_worker", "--maintenance-only", "--limit", "5", "--poll-interval", "60"]
+    command: [".venv/bin/python", "app/manage.py", "run_catalogue_worker", "--maintenance-only", "--limit", "5", "--poll-interval", "60"]
 
   probe-worker:
     <<: *worker
-    command: [".venv/bin/python", "manage.py", "run_ats_probe_worker", "--limit", "1", "--poll-interval", "60"]
+    command: [".venv/bin/python", "app/manage.py", "run_ats_probe_worker", "--limit", "1", "--poll-interval", "60"]
 
   jobspy-worker:
     <<: *worker
-    command: [".venv/bin/python", "manage.py", "run_jobspy_worker", "--limit", "1", "--poll-interval", "30"]
+    command: [".venv/bin/python", "app/manage.py", "run_jobspy_worker", "--limit", "1", "--poll-interval", "30"]
 
   eures-worker:
     <<: *worker
-    command: [".venv/bin/python", "manage.py", "run_eures_worker", "--limit", "1", "--poll-interval", "30"]
+    command: [".venv/bin/python", "app/manage.py", "run_eures_worker", "--limit", "1", "--poll-interval", "30"]
 
   wttj-worker:
     <<: *worker
-    command: [".venv/bin/python", "manage.py", "run_wttj_worker", "--limit", "1", "--poll-interval", "30"]
+    command: [".venv/bin/python", "app/manage.py", "run_wttj_worker", "--limit", "1", "--poll-interval", "30"]
 
   jobtech-worker:
     <<: *worker
-    command: [".venv/bin/python", "manage.py", "run_jobtech_worker", "--limit", "1", "--poll-interval", "30"]
+    command: [".venv/bin/python", "app/manage.py", "run_jobtech_worker", "--limit", "1", "--poll-interval", "30"]
 
   bundesagentur-worker:
     <<: *worker
-    command: [".venv/bin/python", "manage.py", "run_bundesagentur_worker", "--limit", "1", "--poll-interval", "30"]
+    command: [".venv/bin/python", "app/manage.py", "run_bundesagentur_worker", "--limit", "1", "--poll-interval", "30"]
 
   nav-worker:
     <<: *worker
-    command: [".venv/bin/python", "manage.py", "run_nav_worker", "--limit", "1", "--poll-interval", "30"]
+    command: [".venv/bin/python", "app/manage.py", "run_nav_worker", "--limit", "1", "--poll-interval", "30"]
 
 volumes:
   pgdata:

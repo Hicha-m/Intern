@@ -1,0 +1,97 @@
+{
+  "timestamp_utc": "2026-10-12T12:50:46.128451+00:00",
+  "host": {
+    "system": "Linux",
+    "release": "7.0.0-29-generic",
+    "machine": "x86_64"
+  },
+  "matrix": [
+    {
+      "from": "proxy",
+      "to": "metier",
+      "allowed": true,
+      "connected": true,
+      "returncode": 0
+    },
+    {
+      "from": "proxy",
+      "to": "donnees",
+      "allowed": false,
+      "connected": false,
+      "returncode": 1
+    },
+    {
+      "from": "metier",
+      "to": "proxy",
+      "allowed": true,
+      "connected": true,
+      "returncode": 0
+    },
+    {
+      "from": "metier",
+      "to": "donnees",
+      "allowed": true,
+      "connected": true,
+      "returncode": 0
+    },
+    {
+      "from": "donnees",
+      "to": "proxy",
+      "allowed": false,
+      "connected": false,
+      "returncode": 1
+    },
+    {
+      "from": "donnees",
+      "to": "metier",
+      "allowed": true,
+      "connected": true,
+      "returncode": 0
+    },
+    {
+      "from": "host",
+      "to": "metier",
+      "allowed": false,
+      "connected": false
+    },
+    {
+      "from": "host",
+      "to": "donnees",
+      "allowed": false,
+      "connected": false
+    },
+    {
+      "from": "host",
+      "to": "proxy",
+      "allowed": true,
+      "connected": true,
+      "protocol": "HTTP",
+      "status": 200
+    }
+  ],
+  "checks": [
+    "PASS \u2014 exactement trois services sains, deux r\u00e9seaux, seul proxy publi\u00e9",
+    "PASS \u2014 huit connexions TCP positives/n\u00e9gatives, services d\u00e9marr\u00e9s",
+    "PASS \u2014 34 v\u00e9rifications SQL, \u00e9critures de contr\u00f4le annul\u00e9es",
+    "PASS \u2014 r\u00f4le SQL sans privil\u00e8ges administrateur, migrations et ressources seed disponibles",
+    "PASS \u2014 proxy, catalogue, session, CSRF, consultation prot\u00e9g\u00e9e, fichiers CV et statiques"
+  ],
+  "images": {
+    "donnees": {
+      "id": "sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4",
+      "reference": "postgres:16.15-bookworm"
+    },
+    "metier": {
+      "id": "sha256:440fe44e99c76e9d329cdeede4966c28ded6e0c52d6b9629f504bba2565fbb98",
+      "reference": "intern-tp-metier:local"
+    },
+    "proxy": {
+      "id": "sha256:a5ada5030c785b0cd646c8c0efe25dc6ab3364654857fe53cdfed7004ee53ee3",
+      "reference": "intern-tp-proxy:local"
+    }
+  },
+  "inputs_sha256": {
+    "donnees/schema.sql": "806b1ba2d921b2dd1a32d4f6bc5bb75cda6b1ec9c94410cd6471f0a1349243a1",
+    "donnees/data.sql": "dbfaa7d9f8d906fec4590188f14cce72727775bd26fe64404d3cb5d40bd361fa"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "timestamp_utc": "2026-10-12T12:43:27.759647+00:00",
+  "volume": "intern-tp_pgdata",
+  "old_container": "60cd012d67ae505a8b98765eab6a5799975d775bef23feb5d6147ba2b1739445",
+  "new_container": "0562416ba3fb75265b503bb9a1c18f4191dfbd7d1d5df1507cabd2bafa37935a",
+  "marker_preserved": true,
+  "sql_checks": 34,
+  "volume_deleted": false
+}

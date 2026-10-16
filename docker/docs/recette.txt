@@ -1,0 +1,8 @@
+PASS — chaîne proxy/API/PostgreSQL et CSRF
+PASS — connexion candidat, données réelles et session après rechargement
+PASS — catalogue SQL et CV privé
+PASS — connexion recruteur, offres et candidatures
+PASS — administration et statiques
+PASS — client mobile, origine unique et absence d’erreur JavaScript
+Navigateur : 155.0.8059.39
+Origine : http://127.0.0.1:18088

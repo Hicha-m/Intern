@@ -1,0 +1,4 @@
+NAME                  IMAGE                     COMMAND                  SERVICE   CREATED         STATUS                        PORTS
+intern-tp-donnees-1   postgres:16.15-bookworm   "docker-entrypoint.s…"   donnees   4 minutes ago   Up About a minute (healthy)   5432/tcp
+intern-tp-metier-1    intern-tp-metier:local    "sh /app/docker/entr…"   metier    4 minutes ago   Up About a minute (healthy)   8000/tcp
+intern-tp-proxy-1     intern-tp-proxy:local     "/docker-entrypoint.…"   proxy     4 minutes ago   Up About a minute (healthy)   127.0.0.1:18088->80/tcp

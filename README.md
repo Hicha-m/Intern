@@ -1,182 +1,193 @@
-# Intern — Django et frontend
+# Intern
 
-Le [suivi des livrables](LIVRABLES.md) indique les documents disponibles,
-leur emplacement et leur état de vérification.
+**Trouver un stage en Europe et suivre ses candidatures au même endroit.**
 
-Intern sépare PostgreSQL 16, une API Django/DRF et un client React. Le schéma,
-les règles d'accès et les contrats sont décrits dans
-[la spécification backend](docs/BACKEND_SPEC.md). Le [client web](frontend/README.md)
-couvre les parcours candidat et recruteur ; l'administration utilise Django
-Admin. Les [pages entreprise](docs/COMPANY_PAGES.md) présentent les stages et
-leurs sources.
+Intern est une application web avec un espace candidat pour rechercher des stages,
+centraliser son profil et son CV, puis suivre ses démarches. Un espace recruteur
+permet de publier des offres et de gérer les candidatures reçues. Le projet sert
+également de support à un travail de virtualisation : déploiement en machines
+virtuelles, conteneurisation des trois couches et mesures comparatives.
 
-L’[espace recruteur](docs/RECRUITER_WORKSPACE.md) ajoute le choix du rôle avant inscription, la vérification entreprise, les offres et le suivi des candidatures. Les routes `/api/v1/recruiter/` partagent l’authentification et les conventions v1 du candidat.
+![Tableau de bord recruteur Intern](frontend/captures/espace-recruteur.png)
 
-## Installer et démarrer en local
+*Capture avec données fictives et réponses API contrôlées. Les autres écrans sont
+présentés dans [les captures du frontend](frontend/captures/README.md).*
 
-Prérequis : Python 3.12 ou plus récent, `uv`, Node.js 20.19+ ou 22.12+,
-`npm`, Docker Engine avec Compose, et des ports libres **5433**, **8000** et
-**5173**. Les commandes suivantes se lancent depuis la racine du dépôt.
-Elles utilisent la configuration de développement ; ne pas réutiliser ses
-identifiants en production.
+## Fonctionnalités et état du projet
 
-1. Installer les dépendances Python et JavaScript :
+Le projet est en développement. Les parcours disponibles couvrent :
 
-   ```sh
-   uv sync --project metier --frozen
-   npm --prefix frontend ci
-   ```
+- **Candidat** : inscription, connexion, profil, CV privé, préférences, recherche
+  de stages et suivi des candidatures et entretiens.
+- **Recruteur** : vérification de l’entreprise, création et gestion d’offres,
+  candidatures reçues et suivi en colonnes.
+- **Catalogue** : collecte de sources externes, pages entreprise et publication
+  des stages confirmés en Europe, ouverts et récemment vérifiés.
+- **Administration** : activation des comptes, vérification des recruteurs et
+  gestion des sources via Django Admin.
 
-2. Démarrer PostgreSQL, attendre sa disponibilité et appliquer les migrations :
+La préparation et l’envoi automatisé sont partiels : le backend prévoit une
+validation individuelle avant envoi, mais le connecteur partenaire Greenhouse
+reste désactivé par défaut et exige une clé autorisée. L’interface ne propose pas
+encore ce parcours automatisé complet. La rédaction IA, l’extraction automatique
+du CV, les scores IA et la synchronisation des intégrations ATS recruteur restent
+à implémenter. Voir le [guide technique](docs/GUIDE_TECHNIQUE.md) et les
+[limites de l’espace recruteur](docs/RECRUITER_WORKSPACE.md).
 
-   ```sh
-   docker compose up -d db
-   docker compose exec db pg_isready -U intern_user -d intern
-   uv run --project metier metier/app/manage.py migrate --noinput
-   uv run --project metier metier/app/manage.py check
-   ```
+## Démarrage local
 
-   Compose conserve sa base dans un volume. Sur une installation neuve, la
-   base est vide. La commande `seed_dev` peut alors ajouter un jeu **fictif**
-   pour la démonstration :
+### Prérequis
 
-   ```sh
-   uv run --project metier metier/app/manage.py seed_dev
-   ```
+- Python **3.12+** et [uv](https://docs.astral.sh/uv/).
+- Node.js **20.19+ ou 22.12+** et npm.
+- Docker Engine avec le plugin Compose, pour PostgreSQL **16**.
+- Ports disponibles : **5433** (base), **8000** (API), **5173** (client).
 
-   Elle refuse une base qui contient déjà des comptes ou entreprises. Les
-   identifiants de démonstration sont dans [le guide des données](donnees/README.md).
-   Ne pas lancer la recette en supprimant un volume qui contient d'autres
-   données ; [la procédure de recette](tests/README.md) utilise une base isolée.
+Toutes les commandes suivantes s’exécutent depuis le dossier `Intern/`.
+Elles utilisent les paramètres de développement ; les identifiants par défaut
+ne conviennent pas à la production.
 
-3. Dans un terminal, démarrer l'API avec l'origine Vite autorisée pour le CSRF :
+### 1. Installer et préparer la base
 
-   ```sh
-   CSRF_TRUSTED_ORIGINS=http://127.0.0.1:5173 \
-     uv run --project metier metier/app/manage.py runserver 127.0.0.1:8000
-   ```
-
-   Vérifier `http://127.0.0.1:8000/health/ready/`. Le PostgreSQL local est
-   publié sur **127.0.0.1:5433** ; l'API écoute sur **127.0.0.1:8000**.
-
-4. Dans un second terminal, démarrer le client :
-
-   ```sh
-   npm --prefix frontend run dev
-   ```
-
-   Ouvrir `http://127.0.0.1:5173/login`. Vite relaie `/api/v1` vers Django.
-   Utiliser `127.0.0.1` dans les deux URL pour les cookies et le CSRF.
-
-5. Pour les tâches asynchrones, lancer dans un troisième terminal :
-
-   ```sh
-   uv run --project metier metier/app/manage.py run_worker
-   ```
-
-Pour une connexion PostgreSQL personnalisée, copier
-`metier/.env.example` vers `metier/.env`, adapter ses variables et passer
-`--env-file metier/.env` aux commandes `uv run`. Régler les mêmes valeurs
-dans l'environnement de Compose. Django ne charge pas `.env`
-automatiquement. Si le port **8000** est occupé, démarrer Django sur un autre
-port et définir `API_PROXY_TARGET=http://127.0.0.1:<port>` pour Vite ; le
-préfixe côté navigateur se règle avec `VITE_API_ROOT`.
-
-Le [cahier de recette](tests/cahier_de_tests.pdf), sa
-[source lisible](tests/cahier_de_tests.html) et les commandes de
-[reproduction](tests/README.md) documentent l'intégration. Le
-[comparatif des pages entreprise](docs/research/company-pages-2026-10-01.md)
-décrit les choix de présentation.
-
-`--once` consomme au maximum un envoi et termine. Lancer également
-`purge_accounts` pour traiter les demandes de suppression ;
-`cleanup_backend` nettoie les sessions expirées, compteurs et réponses
-d'import expirées. Ces commandes sont prévues pour une exécution planifiée
-par l'exploitant.
-
-## Architecture HTTP
-
-La [spec de migration DRF](docs/DRF_MIGRATION_SPEC.md) décrit le contrat préservé et les recommandations officielles. Les vues utilisent `api_view`, les serializers de commande et de lecture ont des champs explicites, et les services gardent les transactions et règles métier. Authentification par session avec CSRF, y compris pour les requêtes anonymes. Pagination et erreurs conservent le format v1.
-
-## Parcours API
-
-Les routes privées du candidat demandent une session. L'inscription, la
-connexion, le reset de mot de passe et la lecture du catalogue public n'en
-demandent pas. Lire [le contrat API](docs/API.md) pour les corps et erreurs.
-
-1. `GET /api/v1/auth/csrf/` : conserver le cookie et le `csrf_token`.
-2. `POST /api/v1/auth/register/` : compte et profil minimal inactifs, en attente de validation par un superviseur.
-3. Après activation, `POST /api/v1/auth/login/` crée la session et retourne un nouveau jeton CSRF.
-4. Compléter `/profile/`, ses expériences/formations et `/preferences/`.
-5. Envoyer un PDF à `/documents/`, puis sélectionner le CV avec `/profile/resume/`.
-6. Consulter `/offers/` ; créer `/applications/` avec l'offre et sa source.
-7. `/applications/<id>/prepare/` prépare une révision factuelle. `/revisions/` crée une correction sans modifier l'historique.
-8. `/approve/` reçoit l'ID de révision, son hash affiché et une clé UUID d'idempotence. Le worker soumet seulement si l'adaptateur est explicitement disponible.
-9. Consulter `/runs/` et `/events/`, puis gérer tâches, entretiens et statuts.
-
-Les réponses `missing_fields` servent au frontend à demander les informations manquantes. Un timeout après soumission donne `uncertain` : aucune relance automatique. L'action `/resolve/` nécessite une vérification humaine et une référence/explication, après expiration du worker en vol.
-
-## Sources et connecteur
-
-Créer une `Company` et un `SourceBoard` depuis le shell Django ou l'admin catalogue ; le board doit avoir `provider=greenhouse`, `instance=global`, `board_key=<token public>`, `company`, `enabled=True`, `base_url` et `submission_mode=unsupported` par défaut.
-
-```bash
-uv run --project metier metier/app/manage.py import_offers --board-id 1
+```sh
+uv sync --project metier --frozen
+npm --prefix frontend ci
+docker compose up -d --wait db
+uv run --project metier metier/app/manage.py migrate --noinput
+uv run --project metier metier/app/manage.py check
 ```
 
-Le connecteur lit le catalogue public sur un hôte fixe. Réimporter conserve les IDs ; un import incomplet ne ferme aucune offre. Le catalogue ne devine pas les contrats, pays, salaires ou modes de travail absents des données structurées.
+Sur une installation neuve, la base est vide. Pour découvrir les deux espaces
+avec un jeu entièrement fictif :
 
-**Envoi partenaire Greenhouse uniquement**, réservé aux boards pour lesquels l'opérateur possède une clé autorisée. L'activer exige `submission_mode=partner_api` et `GREENHOUSE_API_KEYS='{"board-token":"secret"}'` dans l'environnement. Ne pas stocker ces clés dans un board ni dans Git. Aucun ATS n'a encore été choisi pour le lancement ; ce connecteur reste dormant par défaut.
-
-Cette première intégration prend en charge identité, questions texte, choix simples/multiples et PDF CV/lettre. Les formulaires de localisation, conformité, démographie, fichiers personnalisés et types inconnus sont bloqués explicitement avant l'envoi. Leur prise en charge nécessite l'extension et la validation du connecteur. La préparation actuelle reprend les faits confirmés du profil ; elle ne génère pas encore de rédaction IA ni d'extraction automatique de CV.
-
-## Fichiers et suppression
-
-Développement : fichiers privés dans `.private-media/`, jamais servis comme des fichiers statiques. Production R2 : définir `PRIVATE_STORAGE_BACKEND=r2`, `R2_ENDPOINT_URL`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET` ; bucket privé. Les téléchargements passent par le contrôle de propriétaire. PDF uniquement, 10 Mio, structure analysée, contenu actif refusé, empreinte vérifiée. Prévoir également une limite de corps de **12 Mio au reverse proxy** ; le plafond Django de mémoire ne remplace pas cette limite.
-
-`POST /account/delete/` désactive le compte immédiatement. `purge_accounts` efface les blobs avant les métadonnées ; une panne conserve les clés permettant une reprise. La purge attend toute soumission incertaine ou upload encore `pending`. Après arrêt confirmé des processus d'upload, l'opérateur peut récupérer des IDs exacts vieux de 24 h avec `purge_accounts --recover-pending <ids> --confirm-upload-workers-stopped`. L'âge seul n'autorise pas la suppression. Une soumission incertaine nécessite d'abord une vérification opérateur du résultat distant.
-
-## Docker applicatif
-
-```bash
-docker compose --profile app build
-docker compose --profile app run --rm web .venv/bin/python app/manage.py migrate
-docker compose --profile app up -d web worker
+```sh
+uv run --project metier metier/app/manage.py seed_dev
 ```
 
-Le profil `app` ajoute web/worker et leurs volumes sans changer le port local de PostgreSQL. Le lancement n'applique pas automatiquement de migrations. Image exécutée avec un utilisateur non root. `/health/live/` vérifie le processus, `/health/ready/` vérifie PostgreSQL.
+Cette commande refuse une base contenant déjà des comptes ou des entreprises.
+Elle ne collecte aucune offre externe et n’envoie aucune candidature.
 
-## Production
+### 2. Démarrer l’API
 
-Fournir `DJANGO_DEBUG=false`, une `DJANGO_SECRET_KEY` aléatoire d'au moins 50 caractères, `DJANGO_ALLOWED_HOSTS`, `POSTGRES_PASSWORD` propre à l'environnement, `PUBLIC_BASE_URL=https://...`, R2 et un backend email. `MAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend` active `SMTP_HOST/PORT/USERNAME/PASSWORD/TLS` (TLS par défaut). La console email est destinée au développement.
+Dans un premier terminal :
 
-```bash
-uv run --project metier --env-file metier/.env metier/app/manage.py check --deploy
-uv run --project metier --env-file metier/.env metier/app/manage.py collectstatic --noinput
+```sh
+CSRF_TRUSTED_ORIGINS=http://127.0.0.1:5173 \
+  uv run --project metier metier/app/manage.py runserver 127.0.0.1:8000
 ```
 
-HTTPS, cookies secure et HSTS sont activés quand DEBUG est désactivé. Si le TLS est terminé par un proxy, `TRUST_HTTPS_PROXY=true` exige que ce proxy **écrase** `X-Forwarded-Proto`. Ne pas faire confiance aux en-têtes envoyés directement par un client. Servir `staticfiles/` depuis le proxy pour l'admin, jamais `.private-media/`. Effectuer une sauvegarde PostgreSQL et vérifier la restauration avant une mise en production.
+### 3. Démarrer le client
 
-## Vérifier
+Dans un deuxième terminal :
 
-```bash
+```sh
+npm --prefix frontend run dev
+```
+
+Ouvrir [l’application](http://127.0.0.1:5173/login). Utiliser `127.0.0.1`
+pour le client et l’API afin de conserver une configuration cohérente des cookies
+et du CSRF. Vite transmet les requêtes `/api/v1` à Django.
+
+Avec le jeu fictif, utiliser les comptes suivants et le mot de passe commun
+`Intern-Demo-2026!` :
+
+| Accès | Identifiant | Adresse |
+| --- | --- | --- |
+| Candidat | `alice@example.test` | [Connexion](http://127.0.0.1:5173/login) |
+| Recruteur vérifié | `recruteur_a@example.test` | [Connexion](http://127.0.0.1:5173/login) |
+| Administration | `admin` | [Django Admin](http://127.0.0.1:8000/admin/) |
+
+Un compte créé via l’inscription reste inactif jusqu’à son activation par un
+administrateur. Les autres profils fictifs sont décrits dans le
+[guide des données](donnees/README.md).
+
+### Configuration et arrêt
+
+Pour une connexion PostgreSQL personnalisée, copier `metier/.env.example` vers
+`metier/.env`, adapter les variables et ajouter `--env-file metier/.env` aux
+commandes `uv run`. Django ne charge pas ce fichier automatiquement. Donner
+les mêmes valeurs `POSTGRES_DB`, `POSTGRES_USER` et `POSTGRES_PASSWORD` à Compose,
+qui lit le fichier `.env` à la racine. Les identifiants doivent correspondre à ceux
+du volume PostgreSQL déjà initialisé.
+
+Arrêter les serveurs avec `Ctrl+C`, puis PostgreSQL avec `docker compose stop db`.
+Les données restent dans le volume.
+
+En cas de difficulté :
+
+- **Port 8000 occupé** : démarrer Django sur un autre port et lancer Vite avec
+  `API_PROXY_TARGET=http://127.0.0.1:<port> npm --prefix frontend run dev`.
+- **Erreur CSRF** : vérifier l’origine autorisée au lancement de Django et
+  utiliser `127.0.0.1:5173` dans le navigateur.
+- **Catalogue vide** : sur une base neuve, charger le jeu fictif ci-dessus ; pour
+  les sources externes, consulter le [guide du catalogue](docs/INTERNSHIP_ENGINE_RUNBOOK.md).
+
+## Architecture
+
+| Couche | Technologies | Dossier |
+| --- | --- | --- |
+| Présentation | React, TypeScript, Vite, React Router | [`frontend/`](frontend/README.md) |
+| Métier et API | Python, Django, Django REST Framework | [`metier/`](metier/README.md) |
+| Données | PostgreSQL 16, migrations Django | [`donnees/`](donnees/README.md) |
+
+Le client appelle l’API, qui applique les règles métier et les droits d’accès avant
+de lire ou modifier PostgreSQL. L’authentification utilise des sessions et une
+protection CSRF. Les CV restent privés, stockés localement en développement ou
+dans un bucket R2 privé selon la configuration.
+
+La collecte du catalogue et l’envoi des candidatures utilisent des processus
+distincts. Ils ne sont pas nécessaires pour parcourir le jeu fictif. Leur
+configuration est détaillée dans le [guide technique](docs/GUIDE_TECHNIQUE.md)
+et le [guide d’exploitation du catalogue](docs/INTERNSHIP_ENGINE_RUNBOOK.md).
+
+## Vérification
+
+Depuis la racine, avec PostgreSQL démarré :
+
+```sh
 uv run --project metier metier/app/manage.py check
 uv run --project metier metier/app/manage.py makemigrations --check --dry-run
-uv run --project metier metier/app/manage.py test jobboard --noinput
+TEST_DATABASE_NAME=test_intern \
+  uv run --project metier metier/app/manage.py test jobboard --noinput
 uv run --project metier ruff check metier/app/jobboard metier/app/config --select E4,E7,E9,F,I
+npm --prefix frontend run build
+npm --prefix frontend run lint
+npm --prefix frontend run test:e2e
 ```
 
-Les tests utilisent une base PostgreSQL dédiée, jamais SQLite. `TEST_DATABASE_NAME` permet un nom isolé. Les tests transactionnels utilisent de vraies connexions concurrentes pour les approbations et les claims du worker. Les appels R2/ATS sont contrôlés dans les tests : ils ne prouvent pas une intégration distante activée et n'envoient aucune candidature réelle.
+Les tests Django créent une base de test PostgreSQL dédiée ; le compte doit avoir
+le droit de la créer. Les tests Playwright demandent Chrome et utilisent des
+réponses API contrôlées. Pour vérifier le parcours complet avec Django et
+PostgreSQL réels, suivre la [recette d’intégration isolée](tests/README.md).
+Les tests ne soumettent aucune candidature à un ATS externe.
 
-## Moteur de stages en Europe
+## Virtualisation et déploiement
 
-Le catalogue public, les recommandations et les suggestions du tableau de bord publient uniquement les **stages confirmés en Europe**, ouverts et récemment vérifiés. Ce périmètre est imposé par le serveur : les paramètres client ne peuvent pas faire apparaître des emplois ordinaires ou des annonces hors Europe. Les données techniques importées d'un board complet ne sont pas toutes publiées.
+Le dépôt contient plusieurs configurations, chacune avec un usage précis :
 
-Voir la [spec et son bilan de livraison](docs/INTERNSHIP_ENGINE_SPEC.md), le [guide d'exploitation](docs/INTERNSHIP_ENGINE_RUNBOOK.md) et le [contrat API](docs/API.md). Le worker du catalogue est séparé du worker d'envoi de candidatures.
+| Configuration | Usage | Instructions |
+| --- | --- | --- |
+| `compose.yaml` | Développement : PostgreSQL, services applicatifs optionnels via le profil `app` | [Guide technique](docs/GUIDE_TECHNIQUE.md#docker-applicatif) |
+| `docker/compose.yaml` | Travail de conteneurisation : base, métier et proxy Nginx servant le client | [Procédure Docker](docker/PROCEDURE.md) |
+| `deploiement/` | Déploiement des trois couches sur machines virtuelles | [Guide VM](deploiement/DEPLOIEMENT.md) |
+| `deploy/compose.yaml` | Configuration de déploiement de l’application | [Précautions de production](docs/GUIDE_TECHNIQUE.md#production) |
 
-```bash
-uv run --project metier metier/app/manage.py run_catalogue_worker --once
-uv run --project metier metier/app/manage.py re_enrich_catalogue --all
-```
+Le [suivi des livrables](LIVRABLES.md) réunit les étapes du travail, les preuves
+disponibles et leurs limites. Les mesures se trouvent dans [`mesure/`](mesure/PROCEDURE.md).
 
-Le premier traite une passe de tâches arrivées à échéance ; le second recalcule les preuves et l'éligibilité depuis les données déjà importées, sans réseau ni suppression d'historique. Pour des collectes périodiques, superviser `run_catalogue_worker` sans `--once`, ou utiliser le service Compose `catalogue-worker` après construction de l'image et application des migrations.
+## Documentation et contribution
+
+| Besoin | Document |
+| --- | --- |
+| Comprendre les parcours attendus | [Analyse fonctionnelle](analyse/cas_d_usage.md) |
+| Consommer l’API | [Routes, requêtes et erreurs](docs/API.md) |
+| Comprendre le backend et les traitements | [Guide technique](docs/GUIDE_TECHNIQUE.md) |
+| Comprendre le modèle de données | [Schéma de la base](docs/DATABASE_SCHEMA.md) |
+| Exploiter la collecte de stages | [Guide du catalogue](docs/INTERNSHIP_ENGINE_RUNBOOK.md) |
+| Travailler sur l’espace recruteur | [Parcours et règles d’accès](docs/RECRUITER_WORKSPACE.md) |
+| Reproduire les contrôles d’intégration | [Recette et cahier de tests](tests/README.md) |
+
+Pour proposer une modification, consulter la documentation de la couche concernée,
+décrire le problème et les vérifications effectuées dans la pull request.
+Pour signaler un bug, fournir les étapes de reproduction, le résultat attendu et
+le résultat observé, sans joindre de secrets ni de données personnelles.
