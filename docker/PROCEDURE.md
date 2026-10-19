@@ -117,7 +117,10 @@ Git, uv et leurs caches restent hors de cette image.
 
 Le fichier [d'exclusion](.dockerignore) est la source unique ; le lien
 `../.dockerignore` le rend actif à la racine du contexte de construction. Il exclut les
-environnements virtuels, secrets, historique Git et artefacts temporaires.
+environnements virtuels, secrets, historique Git et artefacts temporaires,
+ainsi que `mesure/` et `.execution/`. Ces exclusions réduisent le contexte de
+construction ; les copies ciblées des Dockerfiles les gardaient déjà hors des
+images finales.
 Le lien `docker/Dockerfile` pointe vers `metier.Dockerfile` pour conserver une
 seule définition utilisable par les configurations existantes.
 

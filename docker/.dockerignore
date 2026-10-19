@@ -34,3 +34,7 @@ analyse
 maquette
 tests
 docs
+
+# Mesures et moteurs locaux inutiles pour construire les images.
+mesure
+.execution
