@@ -21,4 +21,5 @@ htmlcov/
 # Local measurement campaigns; reviewed summaries live in mesure/preuves/.
 /mesure/resultats/
 /mesure/resultats/capacite
-/mesure/resultats/worker
+/mesure/resultats/worker# Local scratch renders (PDF page captures for visual review).
+/tmp/

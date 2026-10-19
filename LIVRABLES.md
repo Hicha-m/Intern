@@ -7,6 +7,11 @@ Les procédures et preuves détaillées sont accessibles séparément.
 
 Les commandes de chaque étape sont réunies dans [EXECUTION.md](EXECUTION.md).
 
+Le [compte rendu global (PDF, 15 pages)](output/pdf/compte_rendu_global_intern.pdf)
+regroupe la conception, le développement, les déploiements VM et Docker et les
+mesures JMeter. Il conserve une section comparative de deux pages et signale
+les vérifications encore ouvertes. Version du 16 octobre 2026.
+
 Les consignes ci-dessous sont reformulées et adaptées à Intern. Les résultats
 rapportés proviennent des vérifications archivées ; ils ne constituent pas une
 approbation pédagogique ni un contrôle en direct des services.
