@@ -18,7 +18,7 @@ d’exécution sur chacun de ces systèmes.
 | Étapes | Outils |
 | --- | --- |
 | 1–2 | Python 3.12+, pip/venv, navigateur et lecteur PDF |
-| 3–4 | Python 3.12+, uv, client PostgreSQL 16 à jour, Docker Engine et Compose v2 |
+| 3–4 | Python 3.12.15 exactement (`metier/.python-version`), uv, client PostgreSQL 16 à jour, Docker Engine et Compose v2 |
 | 5–6 | Outils précédents, Node 22.12+ et npm, navigateur Playwright |
 | 7–10 | Hôte Linux x86_64, VirtualBox et modules noyau, OpenSSH, curl, ripgrep |
 | 11–14 | Docker Engine et Compose v2 ; outils PDF pour les rapports |
