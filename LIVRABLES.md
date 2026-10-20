@@ -7,6 +7,9 @@ Les procédures et preuves détaillées sont accessibles séparément.
 
 Les commandes de chaque étape sont réunies dans [EXECUTION.md](EXECUTION.md).
 
+Le [compte rendu final (PDF, 7 pages)](rapport/intern-report.pdf) est le
+document à lire en premier.
+
 Le [compte rendu global (PDF, 15 pages)](output/pdf/compte_rendu_global_intern.pdf)
 regroupe la conception, le développement, les déploiements VM et Docker et les
 mesures JMeter. Il conserve une section comparative de deux pages et signale
