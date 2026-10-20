@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 import shutil
+import signal
 import socket
 import subprocess
 import sys
@@ -112,9 +113,56 @@ def postgres_environment(env):
                 PGDATABASE=env['POSTGRES_DB'])
 
 
+def process_group(pid):
+    """Read live group members on Linux/macOS, excluding exited zombies."""
+    output = subprocess.check_output(
+        ['ps', '-ax', '-o', 'pid=,pgid=,stat=,args='], text=True)
+    members = []
+    for line in output.splitlines():
+        fields = line.split(None, 3)
+        if len(fields) == 4 and int(fields[1]) == pid and not fields[2].startswith('Z'):
+            members.append((int(fields[0]), fields[3]))
+    return members
+
+
+def stop(name):
+    pidfile = RUNTIME / f'{name}.pid'
+    if not pidfile.exists():
+        print(f'{name} : aucun PID enregistré.')
+        return
+    try:
+        pid = int(pidfile.read_text().strip())
+        if pid <= 1:
+            raise ValueError
+    except ValueError:
+        raise SystemExit(f'{pidfile.name} invalide ; aucun signal envoyé.')
+    members = process_group(pid)
+    if members:
+        if name.startswith('metier'):
+            expected = any(str(PYTHON) in args and 'manage.py runserver ' in args
+                           for _, args in members)
+        else:
+            expected = any(str(ROOT / 'frontend') in args and 'vite' in args
+                           for _, args in members)
+        if not expected:
+            raise SystemExit(f'{name} : groupe de processus inattendu ; aucun signal envoyé.')
+        try:
+            os.killpg(pid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+        deadline = time.monotonic() + 15
+        while process_group(pid):
+            if time.monotonic() >= deadline:
+                raise SystemExit(f'{name} : arrêt incomplet après 15 s ; lire .execution/{name}.log.')
+            time.sleep(0.1)
+    pidfile.unlink(missing_ok=True)
+    print(f'{name} arrêté.')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('layer', choices=['donnees', 'metier', 'presentation', 'sql'])
+    parser.add_argument('layer', choices=['donnees', 'metier', 'presentation', 'sql', 'arreter'])
+    parser.add_argument('--garder-db', action='store_true', help='Avec arreter, garder PostgreSQL actif.')
     parser.add_argument('--database', help='Dedicated database name; created only if absent.')
     parser.add_argument('--api-port', type=int, default=8000)
     parser.add_argument('--frontend-port', type=int, default=5173)
@@ -127,6 +175,15 @@ def main():
     os.chdir(ROOT)
     RUNTIME.mkdir(exist_ok=True)
     env = local_environment(frontend_url, api_url)
+    if args.layer == 'arreter':
+        stop('presentation' if args.frontend_port == 5173 else f'presentation-{args.frontend_port}')
+        stop('metier' if args.api_port == 8000 else f'metier-{args.api_port}')
+        if not args.garder_db:
+            if env['POSTGRES_HOST'] not in ['127.0.0.1', 'localhost'] or env['POSTGRES_PORT'] != '5433':
+                raise SystemExit('PostgreSQL personnalisé : arrêter ce serveur avec son outil habituel, '
+                                 'ou utiliser --garder-db.')
+            run(env.get('DOCKER_BIN', 'docker'), 'compose', 'stop', 'db', env=env)
+        return
     tools = ['psql'] if args.layer == 'sql' else ['uv', 'psql']
     if args.layer == 'presentation':
         tools += ['node', 'npm']

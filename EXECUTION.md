@@ -56,6 +56,15 @@ est conservée. Il lance Django seulement si son API ne répond pas, puis Vite
 seulement si son client et son proxy API ne répondent pas. Les processus restent
 en arrière-plan, avec journaux et PID dans `.execution/` (ignoré par Git).
 
+Pour tout arrêter en conservant les données :
+
+```bash
+python3 outils/demarrer_local.py arreter
+```
+
+Ajouter `--garder-db` pour garder PostgreSQL actif. Les options sont détaillées
+dans la section « Diagnostic et arrêt volontaire des services locaux ».
+
 Les valeurs par défaut sont locales et fictives : PostgreSQL `127.0.0.1:5433`,
 utilisateur `intern_user`, mot de passe `1234`, base dédiée `intern_execution`.
 Pour une installation existante différente, créer `.execution/local.env` avant
@@ -238,6 +247,41 @@ connectés et conserve les captures d’inscription, sans créer de nouveaux com
 Le script inscrit des comptes fictifs de capture en attente ; il ne publie
 aucune offre et n’envoie aucune candidature externe. Les captures précédentes
 avec API contrôlée restent identifiées séparément.
+
+### Arrêter les services lancés avec `demarrer_local.py`
+
+Ces serveurs tournent en arrière-plan. Depuis la racine du projet, une seule
+commande arrête la présentation, le métier et PostgreSQL :
+
+```bash
+python3 outils/demarrer_local.py arreter
+```
+
+Les bases et les volumes sont conservés. Le lanceur charge la même configuration
+Docker qu’au démarrage, vérifie les processus enregistrés et arrête aussi Vite,
+lancé par `npm`. Aucun `uv sync` ni préparation de base n’est exécuté à l’arrêt.
+Un PID invalide ou un groupe de processus inattendu provoque un diagnostic sans
+lui envoyer de signal. Les services déjà arrêtés sont acceptés.
+
+Pour arrêter uniquement le frontend et le backend en gardant PostgreSQL actif :
+
+```bash
+python3 outils/demarrer_local.py arreter --garder-db
+```
+
+Avec des ports personnalisés, reprendre les mêmes options qu’au démarrage :
+
+```bash
+python3 outils/demarrer_local.py arreter --api-port 8001 --frontend-port 5174 --garder-db
+```
+
+Un serveur PostgreSQL personnalisé (hôte ou port différent du service Compose
+local `127.0.0.1:5433`) s’arrête avec son outil habituel ; utiliser `--garder-db`
+pour arrêter seulement les serveurs applicatifs dans ce cas.
+La commande `donnees --database intern_donnees_execution` prépare et vérifie la
+base puis se termine ; elle ne laisse pas de serveur Python à arrêter.
+Pour redémarrer, relancer les commandes `demarrer_local.py` utilisées au départ.
+
 
 ## Étape 6 — Intégration et tests
 
@@ -767,7 +811,7 @@ tail -n 50 .execution/presentation.log
 
 Les PID enregistrés permettent d’identifier les processus, mais leur présence
 ne prouve pas que le service est prêt : les lanceurs vérifient le SQL et le HTTP.
-Avant un arrêt volontaire, vérifier le processus indiqué avec `ps -p PID -o args=`.
+
 Ne pas supprimer un volume pour corriger un service indisponible.
 
 ## Vérification de ce guide

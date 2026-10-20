@@ -67,6 +67,59 @@ class LauncherTests(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, 'local.env:1'):
             launcher.local_environment('http://localhost:5173', 'http://localhost:8000')
 
+    def test_stop_terminates_whole_frontend_group_and_cleans_pid(self):
+        pidfile = self.runtime / 'presentation.pid'
+        pidfile.write_text('12345')
+        members = [(12345, 'npm run dev'),
+                   (12346, f'node {launcher.ROOT}/frontend/node_modules/.bin/vite')]
+        with patch.object(launcher, 'process_group', side_effect=[members, []]), \
+                patch.object(launcher.os, 'killpg') as kill:
+            launcher.stop('presentation')
+        kill.assert_called_once_with(12345, launcher.signal.SIGTERM)
+        self.assertFalse(pidfile.exists())
+
+    def test_stop_refuses_reused_or_invalid_pid(self):
+        pidfile = self.runtime / 'metier.pid'
+        for value in ['0', '-1', 'invalid', '12345']:
+            with self.subTest(value=value):
+                pidfile.write_text(value)
+                with patch.object(launcher, 'process_group', return_value=[(12345, 'unrelated')]), \
+                        patch.object(launcher.os, 'killpg') as kill:
+                    with self.assertRaises(SystemExit):
+                        launcher.stop('metier')
+                kill.assert_not_called()
+                self.assertTrue(pidfile.exists())
+
+    def test_stop_already_exited_service_is_repeatable(self):
+        pidfile = self.runtime / 'metier.pid'
+        pidfile.write_text('12345')
+        with patch.object(launcher, 'process_group', return_value=[]), \
+                patch.object(launcher.os, 'killpg') as kill:
+            launcher.stop('metier')
+            launcher.stop('metier')
+        kill.assert_not_called()
+        self.assertFalse(pidfile.exists())
+
+    def test_stop_loads_engine_without_sync_or_database_preparation(self):
+        (self.runtime / 'moteur.env').write_text('DOCKER_BIN=/custom/docker\n')
+        with patch('sys.argv', ['demarrer_local.py', 'arreter']), \
+                patch.object(launcher, 'stop') as stop, \
+                patch.object(launcher, 'run') as run:
+            launcher.main()
+        self.assertEqual([call.args for call in stop.call_args_list], [('presentation',), ('metier',)])
+        run.assert_called_once()
+        self.assertEqual(run.call_args.args, ('/custom/docker', 'compose', 'stop', 'db'))
+
+    def test_stop_can_keep_database_and_select_custom_ports(self):
+        with patch('sys.argv', ['demarrer_local.py', 'arreter', '--garder-db',
+                                '--api-port', '8001', '--frontend-port', '5174']), \
+                patch.object(launcher, 'stop') as stop, \
+                patch.object(launcher, 'run') as run:
+            launcher.main()
+        self.assertEqual([call.args for call in stop.call_args_list],
+                         [('presentation-5174',), ('metier-8001',)])
+        run.assert_not_called()
+
     def test_local_launcher_finds_pinned_python_and_keeps_explicit_overrides(self):
         with patch.dict(os.environ, {}, clear=True):
             env = launcher.local_environment('http://localhost:5173', 'http://localhost:8000')
