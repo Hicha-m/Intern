@@ -1,5 +1,8 @@
 # Intern
 
+> **Correction :** tout ce que demandent les consignes du module est réuni dans
+> [LIVRABLES.md](LIVRABLES.md), étape par étape, avec les liens vers chaque livrable.
+
 **Trouver un stage en Europe et suivre ses candidatures au même endroit.**
 
 Intern est une application web avec un espace candidat pour rechercher des stages,
