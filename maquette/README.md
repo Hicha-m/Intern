@@ -18,3 +18,10 @@ d'erreur ou d'absence de données.
 
 Le rôle est déterminé par le compte utilisé. Le sélecteur de rôle sert
 uniquement pendant l'inscription.
+
+## Comparaison avec l’application
+
+La comparaison avec le prototype Figma a été réalisée (T25). L’équipe en a
+confirmé l’achèvement le 21 octobre 2026 ; voir le
+[suivi de la comparaison](../tests/figma-comparison.md) et le
+[cahier de recette](../tests/cahier_de_tests.pdf).

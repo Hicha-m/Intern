@@ -27,7 +27,7 @@
 </head>
 <body>
   <h1>Intern — cahier de recette</h1>
-  <p class="meta">Étape 6 · Relevé du 11 octobre 2026 · Données exclusivement fictives</p>
+  <p class="meta">Étape 6 · Relevé du 11 octobre 2026 · T25 mis à jour le 21 octobre 2026 · Données exclusivement fictives</p>
   <p>Une base PostgreSQL 16 éphémère a été créée, migrée et peuplée avec 8 comptes,
     3 entreprises, 4 offres et 2 candidatures. T01 à T15 ont été exécutés dans
     Chrome contre le client Vite et l'API Django réels. T16 à T22 sont des contrôles
@@ -64,11 +64,11 @@
       <tr><td>T22</td><td>Contrainte SQL · R4</td><td>Test Django/PostgreSQL : insérer deux dossiers candidat/offre identiques.</td><td>Unicité imposée par PostgreSQL.</td><td><code>IntegrityError</code> ; insertion annulée.</td><td class="pass">PASS</td></tr>
       <tr><td>T23</td><td>États et interfaces du client · UC01–UC08</td><td>Suite Playwright avec réponses API contrôlées.</td><td>Parcours, erreurs, chargements et vues mobiles stables.</td><td>104 tests réussis ; 3 scénarios optionnels de logos externes ignorés.</td><td class="pass">PASS</td></tr>
       <tr><td>T24</td><td>Installation sur VM vierge</td><td>Rejouer le README sans dépendance préinstallée.</td><td>Installation et recette reproductibles.</td><td>Non exécuté dans cet environnement ; procédure rédigée et testée localement.</td><td class="pending">À vérifier</td></tr>
-      <tr><td>T25</td><td>Conformité visuelle au prototype</td><td>Comparer les écrans live au prototype interactif.</td><td>Validation visuelle des parcours.</td><td>Revue interactive externe non réalisée ici.</td><td class="pending">À vérifier</td></tr>
+      <tr><td>T25</td><td>Comparaison au prototype Figma</td><td>Comparer les écrans de l’application au prototype interactif.</td><td>Comparaison visuelle des écrans et parcours.</td><td>Comparaison réalisée ; achèvement confirmé par l’équipe le 21/10/2026.</td><td class="pass">Réalisé</td></tr>
     </tbody>
   </table>
   <h2>Portée et lecture des statuts</h2>
-  <p>Les statuts PASS reposent sur des réponses réellement observées. Les tests
+  <p>T25 est une revue manuelle confirmée par l’équipe le 21 octobre 2026 ; son suivi figure dans <code>tests/figma-comparison.md</code>. Les statuts PASS reposent sur des réponses réellement observées. Les tests
     Django utilisent une base PostgreSQL créée et détruite par Django ; ils ne
     remplacent pas tous un parcours visuel. Les trois tests optionnels ignorés
     concernent un fournisseur de logos externe. Aucun envoi ATS, e-mail réel,

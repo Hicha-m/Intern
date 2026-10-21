@@ -102,8 +102,9 @@ docker stop intern-recette-postgres
 ```
 
 Le répertoire temporaire des CV fictifs peut ensuite être supprimé. Une
-installation sur une machine virtuelle vierge et la revue du prototype
-nécessitent encore un contrôle distinct avant le rendu final.
+installation complète sur une machine virtuelle vierge reste à vérifier (T24).
+La comparaison avec le prototype Figma est réalisée (T25), comme confirmé par
+l'équipe le 21 octobre 2026 ; voir le [suivi de la comparaison](figma-comparison.md).
 
 ## Régénérer le PDF
 

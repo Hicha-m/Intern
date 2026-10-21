@@ -69,4 +69,6 @@ deux comptes fictifs en attente ; ne pas l’utiliser sur une base personnelle.
 Les quatre fichiers historiques à la racine de ce dossier (connexion.png,
 inscription-attente.png, profil-candidat.png, espace-recruteur.png) proviennent
 de tests avec API contrôlée. Ils ne font pas partie de la série réelle ci-dessus.
-La conformité au prototype Figma reste à comparer écran par écran.
+La comparaison de l'application avec le prototype Figma est réalisée (T25),
+comme confirmé par l'équipe le 21 octobre 2026 ; voir le
+[suivi de la comparaison](../../tests/figma-comparison.md).

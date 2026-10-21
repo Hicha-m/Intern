@@ -7,7 +7,7 @@ Les procédures et preuves détaillées sont accessibles séparément.
 
 Les commandes de chaque étape sont réunies dans [EXECUTION.md](EXECUTION.md).
 
-Le [compte rendu final (PDF, 7 pages)](rapport/intern-report.pdf) est le
+Le [compte rendu final (PDF, 8 pages)](rapport/intern-report.pdf) est le
 document à lire en premier.
 
 Les consignes ci-dessous sont reformulées et adaptées à Intern. Les résultats
@@ -50,8 +50,10 @@ plausibles. L'approbation du prototype constitue le jalon avant développement.
 · [capture de l'écran zéro](maquette/ecran_zero.jpg).**
 
 **Réponse.** Les parcours candidat, recruteur et administrateur sont répertoriés.
-Les liens et la capture sont disponibles ; l'accès lecture, la navigation
-interactive et l'approbation du prototype restent à confirmer.
+Les liens et la capture sont disponibles. La comparaison de l'application avec
+le prototype a été réalisée (T25), comme confirmé par l'équipe le 21 octobre
+2026 ; voir le [suivi de la comparaison](tests/figma-comparison.md).
+L'approbation pédagogique du jalon reste à consigner séparément.
 
 Détail : [parcours et liens](maquette/README.md) · [relevé des écrans et interactions](maquette/figma_manifest.json).
 
@@ -106,7 +108,8 @@ erreurs et listes vides avec une URL d'API configurable.
 `VITE_API_ROOT`. Le build et le lint passent ; **104 tests navigateur réussis,
 3 scénarios de logos externes ignorés** sont consignés. Les tests utilisent des réponses API contrôlées ; la nouvelle série de captures
 présente chaque écran principal sur React, Django et PostgreSQL réels.
-La conformité visuelle au Figma reste à vérifier.
+La comparaison de l'application avec le prototype Figma est réalisée (T25) ;
+voir le [suivi de la comparaison](tests/figma-comparison.md).
 
 Détail : [validation et limites](frontend/VALIDATION.md) · [lancement](frontend/README.md).
 
@@ -371,19 +374,25 @@ Détail : [source du rapport](mesure/docs/rapport-charge.md)
 · [reproduction](mesure/ETAPE18.md).
 
 Mesures complémentaires de capacité et de workers :
+[synthèse chiffrée et perspectives](mesure/docs/capacity-summary.md) ·
 [dossier léger de preuves et archive des données brutes](mesure/preuves/README.md).
-Les rapports conservent les limites de répétabilité ; ils ne valident pas
-automatiquement une capacité maximale.
+La campagne de 48 essais explore jusqu'à 160 utilisateurs en VM et demande
+jusqu'à 320 sous Docker ; les plateaux incomplets à 200 (série 1), 240 et 320
+ne valident pas ces charges. En VM, le p95 dépasse 1 s à 160 ; sous Docker,
+4 workers améliorent le débit de 19,4 à 20,4 % à 200 dans une campagne distincte.
+Aucune capacité maximale reproductible n'est retenue. Les prochains tests
+doivent séparer injecteur et serveur sur deux machines physiques. Le répartiteur
+de charge devant plusieurs instances reste une perspective à tester.
 
 ## Points ouverts pour le rendu
 
 | Étape | Point à compléter ou limite à présenter |
 | --- | --- |
-| 2, 5, 6 | Confirmer l'accès lecture, parcourir le Figma, vérifier la conformité visuelle et consigner l'approbation du jalon. |
+| 2 | Consigner l'approbation pédagogique du jalon prototype ; la comparaison Figma (T25) est réalisée. |
 | 6 | Vérifier l'installation locale du README sur une VM vierge. |
 | 7 | Modèle issu d’une OVA officielle ; la consigne demandait la machine du TP 1. |
 | 10 | Joindre séparément les trois OVA et `SHA256SUMS` ; le démarrage après réimportation reste non testé. |
 | 13 | La capture des services est issue de Podman ; les preuves Docker Engine sont distinctes. |
 | 14 | Temps humain initial non chronométré ; comparaison de configurations dont plusieurs paramètres diffèrent. |
 | 17 | Campagnes complètes, mais interruption/reprise : continuité de séance et effet de l'ordre imparfaitement contrôlés. |
-| 18 | Saturation et goulot non déterminés ; prolonger la charge après réétalonnage. Variation du p95 VM de 34,09 % au palier 20, à examiner pour la répétabilité. |
+| 18 | Les essais complémentaires montrent un plafonnement, mais aucune capacité maximale reproductible ni cause unique du goulot n'est validée. Refaire la mesure avec injecteur et serveur sur deux machines physiques distinctes ; conserver les écarts de répétabilité, dont 34,09 % au palier 20 historique. |

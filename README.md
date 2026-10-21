@@ -3,6 +3,7 @@
 > **Correction :** tout ce que demandent les consignes du module est réuni dans
 > [LIVRABLES.md](LIVRABLES.md), étape par étape, avec les liens vers chaque livrable.
 > Le compte rendu final est dans [rapport/intern-report.pdf](rapport/intern-report.pdf).
+> Les [sources du rapport](rapport/README.md) et la [synthèse des mesures complémentaires](mesure/docs/capacity-summary.md) sont également disponibles.
 
 **Trouver un stage en Europe et suivre ses candidatures au même endroit.**
 

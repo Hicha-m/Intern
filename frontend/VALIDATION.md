@@ -47,8 +47,9 @@ La compilation, l'analyse statique et les tests Playwright vérifient le rendu
 et les appels REST avec réponses contrôlées. Les captures sont liées dans
 [leur index](captures/README.md). Une recette distincte contre Vite, Django
 et PostgreSQL réels est documentée dans le
-[cahier de tests](../tests/cahier_de_tests.pdf). Le prototype externe reste à
-comparer visuellement dans son interface.
+[cahier de tests](../tests/cahier_de_tests.pdf). La comparaison avec le prototype
+Figma est réalisée (T25) ; son achèvement a été confirmé par l'équipe le
+21 octobre 2026 dans le [suivi de la comparaison](../tests/figma-comparison.md).
 
 ## Résultats et limites
 
@@ -69,9 +70,9 @@ administration sur React/Vite, Django et PostgreSQL réels, sans interception
 des réponses API. Le script `scripts/capturer_ecrans.mjs` et le manifeste
 `captures/ecrans/manifest.json` permettent de reproduire et de retrouver chaque
 écran. Les quatre captures historiques avec API contrôlée restent identifiées
-séparément dans l’index. Les captures utilisent uniquement des identités fictives. La revue du
-prototype et l'installation sur une machine vierge restent à vérifier avant
-présentation au jury.
+séparément dans l’index. Les captures utilisent uniquement des identités fictives.
+La comparaison avec le prototype est réalisée (T25). L'installation complète
+sur une machine vierge reste à vérifier avant présentation au jury (T24).
 
 
 ## Contrôle des captures réelles

@@ -12,8 +12,13 @@ Pendant la préparation du snapshot, seuls PostgreSQL et l’API Docker démarre
 Le conteneur proxy est créé à l’arrêt pour copier les fichiers : il ne réserve
 pas le port 8081 encore utilisé par la VM. Le proxy Docker démarre seulement
 pour les essais Docker, après l’arrêt des VM.
-La recherche peut durer plusieurs heures. Elle n’a pas été exécutée lors de
-l’ajout de ce code : aucune nouvelle capacité n’est encore démontrée.
+La recherche peut durer plusieurs heures. Les campagnes exécutées les 18 et
+19 octobre sont conservées dans le [dossier de preuves](preuves/README.md).
+La [synthèse des résultats](docs/capacity-summary.md) décrit les 48 essais, les
+comparaisons de workers et leurs limites : aucune capacité maximale
+reproductible n’est validée. Les prochains tests doivent séparer injecteur et
+serveur sur deux machines physiques distinctes pour éviter leur concurrence
+pour les ressources du même hôte.
 
 ```bash
 bash outils/executer_etape.sh 17 capacite
