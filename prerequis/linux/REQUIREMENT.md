@@ -40,6 +40,26 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
+## Python applicatif : 3.12.15 exactement
+
+Les paquets `python3` ci-dessus servent aux outils système. L’application exige
+**Python 3.12.15**, épinglé dans [metier/.python-version](../../metier/.python-version).
+Installer cette version avec uv avant les vérifications communes : le catalogue
+intégré à uv 0.11.29 ne la propose pas, d’où l’utilisation du catalogue officiel
+épinglé déjà employé par les scripts du projet.
+
+Depuis le dossier `Intern` :
+
+```bash
+uv python install 3.12.15 --no-bin \
+  --python-downloads-json-url https://raw.githubusercontent.com/astral-sh/uv/0.13.1/crates/uv-python-managed/download-metadata.json
+uv sync --project metier --frozen --python 3.12.15
+metier/.venv/bin/python --version
+```
+
+
+## Node
+
 Pour Node, utiliser une version compatible déjà installée, ou installer cette
 archive Linux selon l’architecture. Le bloc ne remplace pas un Node compatible :
 

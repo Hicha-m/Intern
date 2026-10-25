@@ -35,6 +35,8 @@ virtuelles, conteneurisation des trois couches et mesures comparatives.
 *Capture avec données fictives et réponses API contrôlées. Les autres écrans sont
 présentés dans [les captures du frontend](frontend/captures/README.md).*
 
+[Ouvrir le fichier Figma](https://www.figma.com/design/2zB64zoXsnJQ24R1yysJ72/Intern?node-id=223-301&t=Pgc5H2wNNSiyyS3W-1) · [Tester le prototype](https://www.figma.com/proto/2zB64zoXsnJQ24R1yysJ72/Intern?node-id=223-302&p=f&viewport=191%2C-32%2C0.02&t=u6i49kJLKHdhAkM4-8&scaling=scale-down-width&content-scaling=fixed&page-id=223%3A301&starting-point-node-id=223%3A302&hide-ui=1)
+
 ## Fonctionnalités et état du projet
 
 Le projet est en développement. Les parcours disponibles couvrent :

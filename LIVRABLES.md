@@ -46,7 +46,7 @@ Détail : [source de l'analyse](analyse/cas_d_usage.md) · [génération du PDF]
 zéro : parcours des trois acteurs, écrans terminaux, états dégradés et données
 plausibles. L'approbation du prototype constitue le jalon avant développement.
 
-**À présenter : [prototype interactif, écran zéro](https://www.figma.com/proto/2zB64zoXsnJQ24R1yysJ72/Intern?node-id=142-38134&scaling=contain&content-scaling=responsive&starting-point-node-id=142%3A38134)
+**À présenter : [prototype interactif, écran zéro](https://www.figma.com/proto/2zB64zoXsnJQ24R1yysJ72/Intern?node-id=223-302&p=f&viewport=191%2C-32%2C0.02&t=u6i49kJLKHdhAkM4-8&scaling=scale-down-width&content-scaling=fixed&page-id=223%3A301&starting-point-node-id=223%3A302&hide-ui=1)
 · [capture de l'écran zéro](maquette/ecran_zero.jpg).**
 
 **Réponse.** Les parcours candidat, recruteur et administrateur sont répertoriés.
