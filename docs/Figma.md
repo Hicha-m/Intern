@@ -15,6 +15,27 @@ les interactions ; le frontend React porte leur fonctionnement avec l’API.
 
 ![Écran zéro du prototype Figma](../maquette/ecran_zero.jpg)
 
+## Sources d’inspiration : Simplify et Tsenta
+
+Nous nous sommes inspirés de **Simplify** et de **Tsenta**, deux plateformes
+qui répondent à des besoins proches de ceux d’Intern : trouver des offres,
+présenter son profil et suivre ses candidatures. Les analyses de leurs pages
+publiques, réalisées le 30 septembre 2026, ont alimenté notre réflexion sur
+les parcours et l’organisation des informations.
+
+- **Simplify** : le catalogue explorable, le profil candidat partagé, les fiches
+  d’offres structurées et le suivi des candidatures ont servi de références
+  fonctionnelles. Voir l’[analyse de Simplify](research/2026-09-30-simplify.md).
+- **Tsenta** : l’enchaînement découverte → préparation → candidature → suivi,
+  ainsi que la présentation des critères de stage, ont nourri la réflexion sur
+  le parcours candidat. Voir l’[analyse de Tsenta](research/2026-09-30-tsenta.md).
+
+Nous avons adapté ces références au périmètre d’Intern : recherche de stages
+en Europe, parcours candidat, recruteur et administrateur, et règles métier
+du backend Django. Les fonctions d’autocandidature étudiées chez ces services
+restent des pistes d’évolution ; elles ne sont pas présentées comme des
+fonctionnalités livrées dans Intern.
+
 ## Outils utilisés et méthode de travail
 
 Nous avons utilisé **Codex** comme assistant de développement pour le frontend et le backend d’Intern.
