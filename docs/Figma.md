@@ -15,6 +15,14 @@ les interactions ; le frontend React porte leur fonctionnement avec l’API.
 
 ![Écran zéro du prototype Figma](../maquette/ecran_zero.jpg)
 
+## Outils utilisés et méthode de travail
+
+Nous avons utilisé **Codex** comme assistant de développement pour le frontend et le backend d’Intern.
+
+Pour le **frontend React**, nous nous sommes appuyés sur **better-ui** pour le travail d’interface, sur les **bonnes pratiques d’Emil Kowalski** pour les interactions et les animations, et sur **React Doctor** pour la revue du code React. Les évolutions documentées concernent notamment la simplification de l’authentification, la présentation des offres, l’organisation du profil candidat et l’alignement de l’inscription sur les règles du backend.
+
+Pour le **backend Django**, nous avons également utilisé Codex avec les **skills Superpowers** afin d’accompagner le développement de la couche métier. Les choix d’architecture, les fonctionnalités réalisées et leurs vérifications sont décrits dans la documentation backend et le cahier de tests.
+
 ## Étapes d’ingénierie documentées
 
 Ce tableau relie les décisions à leurs traces ; il ne reconstitue pas une
@@ -48,7 +56,8 @@ Les règles d’accès restent appliquées par Django.
 Le recours à l’IA pour Figma a été évoqué lors du bilan avec l’enseignant.
 **Aucun texte original de prompt Figma n’a été retrouvé dans les fichiers de
 conception consultés ni dans les commits d’ajout du prototype.** Le prompt initial,
-les relances, les réponses et les versions du modèle ne sont donc pas reproduits.
+les relances, les réponses et les versions du modèle ne sont donc pas reproduits
+comme des traces originales.
 Les étapes et corrections ci-dessus ne sont pas présentées comme des prompts.
 
 Une trace exacte existe pour la génération du visuel d’authentification avec
@@ -70,10 +79,85 @@ palette et éléments à exclure. Le contrôle humain documenté porte ensuite s
 l’intégration, les contrastes et les petits écrans ; l’historique complet des
 essais de génération n’est pas disponible.
 
-Pour compléter l’historique Figma, joindre les conversations originales ou leurs
-exports avec, pour chaque itération : outil et date connus, prompt exact,
-résultat, problème constaté, décision et capture associée. L’absence d’une trace
-reste indiquée ; aucun dialogue n’est reconstruit.
+## Exemples de prompts reconstitués
+
+L’historique original des échanges n’étant plus accessible, les prompts ci-dessous
+ont été rédigés a posteriori pour illustrer notre démarche. Ils ne constituent
+pas une transcription des conversations initiales. Les problèmes et corrections
+correspondent aux évolutions documentées du projet.
+
+### 1. Simplifier les écrans d’authentification
+
+**Prompt reconstitué :**
+
+> Conçois les écrans de connexion et d’inscription d’Intern, une plateforme de recherche de stages. Utilise une identité visuelle orange et crème, une typographie expressive et un visuel architectural. Présente clairement le formulaire et les actions principales. Prévois les états vide, saisie en cours, chargement et erreur, ainsi qu’une adaptation sur mobile.
+
+**Problème constaté :**
+
+Les textes d’accompagnement répétés, les labels séparés et les champs
+rectangulaires donnaient trop de poids visuel au formulaire.
+
+**Correction retenue :**
+
+Conserver les titres et les actions essentielles, supprimer les textes redondants
+et intégrer des labels persistants aux champs. Utiliser un soulignement pour
+matérialiser les champs, avec des états de focus et d’erreur explicites.
+Préserver la navigation au clavier.
+
+### 2. Aligner l’inscription sur le fonctionnement du backend
+
+**Prompt reconstitué :**
+
+> Conçois un parcours d’inscription progressif pour Intern : choix du rôle candidat ou recruteur, adresse e-mail, nom complet et mot de passe. Permets de revenir à l’étape précédente sans perdre les informations. Prévois les erreurs de validation, l’attente pendant l’envoi et un écran de confirmation après la réponse du serveur.
+
+**Problème constaté :**
+
+Le parcours devait tenir compte d’une règle métier essentielle : l’API crée un
+compte en attente d’activation. Une confirmation laissant penser que l’utilisateur
+peut immédiatement accéder à son espace serait incorrecte.
+
+**Correction retenue :**
+
+Afficher explicitement l’attente de validation du superviseur après l’inscription.
+Ne pas ouvrir automatiquement de session et expliquer le refus de connexion tant
+que le compte reste inactif.
+
+### 3. Améliorer la lecture d’une offre et l’accès à la candidature
+
+**Prompt reconstitué :**
+
+> Crée une fiche de stage pour Intern comprenant le titre, l’entreprise, la localisation, la description, les missions, les compétences et le lien pour postuler. Organise ces informations pour permettre au candidat de comprendre rapidement l’offre. Prévois une version ordinateur et une version mobile, ainsi que les cas où certaines informations sont absentes.
+
+**Problème constaté :**
+
+Le bandeau et l’espace au-dessus du contenu éloignaient l’action de candidature.
+Les descriptions importées pouvaient également apparaître comme de longs blocs
+de texte peu structurés.
+
+**Correction retenue :**
+
+Supprimer le bandeau redondant et donner à l’offre son propre titre principal.
+Placer le panneau de candidature dès le début sur ordinateur et avant la
+description sur mobile. Structurer les paragraphes et les listes sans inventer
+les informations manquantes.
+
+### 4. Faire évoluer le profil au-delà du dépôt de CV
+
+**Prompt reconstitué :**
+
+> Conçois la page de profil candidat d’Intern. Le candidat doit pouvoir consulter son CV courant, le remplacer et retrouver les informations utiles à ses candidatures. Présente clairement les données renseignées et celles qui restent à compléter. Prévois les états d’enregistrement, de réussite et d’erreur.
+
+**Problème constaté :**
+
+Un écran centré uniquement sur le téléchargement du CV ne permettait pas de gérer
+l’ensemble des informations du candidat.
+
+**Correction retenue :**
+
+Organiser le profil en sections : identité, présentation, expériences, formations,
+compétences et préférences. Donner à chaque section son propre brouillon et des
+actions explicites pour enregistrer ou annuler. Conserver les saisies en cas
+d’erreur et ne pas déduire automatiquement des informations du CV.
 
 ## Reprise et vérification par une autre équipe
 
