@@ -6,6 +6,7 @@ d'erreur ou d'absence de données.
 
 ## Livrables
 
+- [Figma.md : étapes d’ingénierie, corrections, prompts conservés et reprise](../docs/Figma.md) ;
 - `figma_link.txt` : liens vers le fichier et les trois parcours ;
 - `ecran_zero.jpg` : capture de l'écran zéro ;
 - `figma_manifest.json` : identifiants des points de départ et contrôle du prototype.

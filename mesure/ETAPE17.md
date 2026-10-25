@@ -7,7 +7,7 @@ métriques serveur pour chaque palier. Deux séries sont prévues, avec inversio
 de l'ordre : VM puis Docker, ensuite Docker puis VM.
 
 **Campagne courante : 16 paliers, 22 206 échantillons, zéro erreur et aucun
-incident**, vérifiés dans [resultats/campagne/verification.json](resultats/campagne/verification.json).
+incident**, vérifiés dans le [bilan archivé de cette campagne](preuves/campagne/verification.json).
 
 Les preuves historiques présentées ci-dessous restent les entrées de l’étape 18.
 
@@ -28,14 +28,14 @@ HTTP 200 sur le contrôle de disponibilité et aucune VM active.
 
 | Livrable | Contenu |
 | --- | --- |
-| [Série 1 VM](resultats/etape17/serie-1/vm), [série 1 Docker](resultats/etape17/serie-1/docker) | Quatre paliers par déploiement, dans l'ordre VM puis Docker |
-| [Série 2 Docker](resultats/etape17/serie-2/docker), [série 2 VM](resultats/etape17/serie-2/vm) | Quatre paliers par déploiement, dans l'ordre inverse |
-| [Relevé des paliers](resultats/etape17/releve-paliers.csv) | Seize lignes : échantillons, erreurs, débit et centiles |
-| [Relevé serveur](resultats/etape17/releve-serveurs.csv) | Quarante-huit lignes : CPU, RSS, I/O et connexions par service et palier |
-| [Vérification](resultats/etape17/verification.json) | Comptage, empreintes et incident enregistré |
-| [Empreintes](resultats/etape17/SHA256SUMS) | Intégrité des fichiers bruts, configurations et relevés |
-| [Restauration](resultats/etape17/restauration.json) | État des services et réponse HTTP effectivement vérifiés |
-| [Manifeste](resultats/etape17/manifest.json), [journal](resultats/etape17/journal.jsonl) | Ordre, versions, ressources, restaurations SQL, repos et reprise |
+| [Série 1 VM](preuves/etape17/serie-1/vm), [série 1 Docker](preuves/etape17/serie-1/docker) | Quatre paliers par déploiement, dans l'ordre VM puis Docker |
+| [Série 2 Docker](preuves/etape17/serie-2/docker), [série 2 VM](preuves/etape17/serie-2/vm) | Quatre paliers par déploiement, dans l'ordre inverse |
+| [Relevé des paliers](preuves/etape17/releve-paliers.csv) | Seize lignes : échantillons, erreurs, débit et centiles |
+| [Relevé serveur](preuves/etape17/releve-serveurs.csv) | Quarante-huit lignes : CPU, RSS, I/O et connexions par service et palier |
+| [Vérification](preuves/etape17/verification.json) | Comptage, empreintes et incident enregistré |
+| [Empreintes](preuves/etape17/SHA256SUMS) | Intégrité des fichiers bruts, configurations et relevés |
+| [Restauration](preuves/etape17/restauration.json) | État des services et réponse HTTP effectivement vérifiés |
+| [Manifeste](preuves/etape17/manifest.json), [journal](preuves/etape17/journal.jsonl) | Ordre, versions, ressources, restaurations SQL, repos et reprise |
 
 Le [vérificateur](scripts/verifier17.py) recalcule les statistiques depuis les
 CSV bruts avec la fonction d'analyse utilisée pendant les exécutions, compare
@@ -198,7 +198,7 @@ Les anciens fichiers privés sont dans `../.execution-campagnes/archives/`.
 Les essais interrompus et diagnostics sont rangés dans `resultats/archives/`.
 Le dossier `resultats/etape17` conserve les preuves historiques utilisées par
 l’analyse de l’étape 18. Les CSV bruts, journaux et empreintes sont conservés.
-Le [classement des résultats](resultats/README.md) précise le rôle des dossiers.
+Le [classement des résultats](preuves/README.md) précise le rôle des dossiers.
 
 Pour demander un arrêt propre : `bash outils/executer_etape.sh 17 arreter`.
 Pour archiver une campagne inactive et préparer la suivante :

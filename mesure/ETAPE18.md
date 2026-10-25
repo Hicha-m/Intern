@@ -16,8 +16,8 @@ le tableau de synthèse et les quatre questions d'analyse dans leur ordre.
 | Débit selon les utilisateurs | [PNG](docs/courbes/debit.png), [SVG](docs/courbes/debit.svg) |
 | Latence au 95e centile | [PNG](docs/courbes/latence-p95.png), [SVG](docs/courbes/latence-p95.svg) |
 | Taux d'erreur | [PNG](docs/courbes/erreurs.png), [SVG](docs/courbes/erreurs.svg) |
-| Calculs des écarts et empreintes d'entrée | [JSON](resultats/etape18/analyse.json), [CSV](resultats/etape18/comparaison.csv) |
-| Empreintes des douze artefacts d'analyse | [SHA256SUMS](resultats/etape18/SHA256SUMS) |
+| Calculs des écarts et empreintes d'entrée | [JSON](preuves/etape18/analyse.json), [CSV](preuves/etape18/comparaison.csv) |
+| Empreintes des douze artefacts d'analyse | [SHA256SUMS](preuves/etape18/SHA256SUMS) |
 | Analyse et export reproductibles | [Analyse](scripts/analyser18.py), [export PDF](scripts/generer_rapport18.py) |
 
 ## Résultat et limites

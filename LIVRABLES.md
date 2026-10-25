@@ -7,7 +7,7 @@ Les procédures et preuves détaillées sont accessibles séparément.
 
 Les commandes de chaque étape sont réunies dans [EXECUTION.md](EXECUTION.md).
 
-Le [compte rendu final (PDF, 8 pages)](rapport/intern-report.pdf) est le
+Le [compte rendu final (PDF)](rapport/intern-report.pdf) est le
 document à lire en premier.
 
 Les consignes ci-dessous sont reformulées et adaptées à Intern. Les résultats
@@ -55,7 +55,7 @@ le prototype a été réalisée (T25), comme confirmé par l'équipe le 21 octob
 2026 ; voir le [suivi de la comparaison](tests/figma-comparison.md).
 L'approbation pédagogique du jalon reste à consigner séparément.
 
-Détail : [parcours et liens](maquette/README.md) · [relevé des écrans et interactions](maquette/figma_manifest.json).
+Détail : [démarche Figma, ingénierie front et prompts conservés](docs/Figma.md) · [parcours et liens](maquette/README.md) · [relevé des écrans et interactions](maquette/figma_manifest.json).
 
 <a id="etape-3"></a>
 ### Étape 3 — Couche données
@@ -125,8 +125,8 @@ erreurs et les accès par modification d'identifiant sur une base réinitialisé
 
 **Réponse.** **15 parcours navigateur/API réels** sur PostgreSQL isolé et
 **560 tests métier réussis** sont consignés. Le tableau distingue les tests
-réussis des contrôles restants : installation locale sur une VM vierge et
-comparaison interactive au prototype. Le déploiement VM des étapes 7–10
+réussis du contrôle restant : installation locale sur une VM vierge (T24).
+La comparaison au prototype est réalisée (T25). Le déploiement VM des étapes 7–10
 possède ses propres preuves.
 
 Détail : [tableau consultable](tests/cahier_de_tests.html) · [reproduction de la recette](tests/README.md).
@@ -288,6 +288,9 @@ Détail : [rapport et limites](docker/docs/etape14.md) · [matrice brute](docker
 
 ## Mesures — injection de charge JMeter
 
+Les [preuves historiques et leur provenance](mesure/preuves/historique.md)
+précisent les fichiers publiés et ceux consultables dans l’historique Git.
+
 <a id="etape-15"></a>
 ### Étape 15 — Plan de test
 
@@ -296,8 +299,8 @@ utilisateur et une itération, en réussite puis en échec. Gérer cookies, jeto
 nécessaires et assertions sur le code et le contenu des réponses.
 
 **À présenter : [plan.jmx](mesure/plan.jmx) · [comptes.csv](mesure/comptes.csv)
-· [réussite JMeter](mesure/resultats/etape15/reussite.png)
-· [échec JMeter](mesure/resultats/etape15/echec.png).**
+· [réussite JMeter](mesure/preuves/etape15/reussite.png)
+· [échec JMeter](mesure/preuves/etape15/echec.png).**
 
 **Réponse.** Parcours candidat : préparation CSRF, connexion puis consultation
 des candidatures personnelles. Les vingt comptes sont fictifs. Les essais
@@ -320,25 +323,25 @@ Paliers **1, 5, 10, 20** ; montée **30 s**, stabilisation **15 s**, plateau
 écarts de débit **0,09 %** et de p95 **4,65 %**.
 
 Détail : [protocole commun](mesure/protocole.json)
-· [mesures et empreintes](mesure/resultats/etape16/etalonnage.json).
+· [mesures et empreintes](mesure/preuves/etape16/etalonnage.json).
 La préparation de la base commune, encore attendue à cette étape, est documentée à l'étape 17.
 
 <a id="etape-17"></a>
 ### Étape 17 — Campagnes
 
 Campagne courante : **16 paliers, 22 206 échantillons, zéro erreur, aucun incident**
-([vérification](mesure/resultats/campagne/verification.json)). Les preuves ci-dessous
+([vérification](mesure/preuves/campagne/verification.json)). Les preuves ci-dessous
 restent celles utilisées par le rapport de l’étape 18.
 
 **Consigne.** Conserver les résultats bruts et les métriques serveur par palier.
 N'activer qu'un déploiement, restaurer les mêmes données, mesurer en CLI et
 inverser l'ordre VM/Docker dans une seconde série.
 
-**À présenter : résultats bruts [série 1 VM](mesure/resultats/etape17/serie-1/vm/),
-[série 1 Docker](mesure/resultats/etape17/serie-1/docker/),
-[série 2 Docker](mesure/resultats/etape17/serie-2/docker/),
-[série 2 VM](mesure/resultats/etape17/serie-2/vm/)
-· [métriques serveur par palier](mesure/resultats/etape17/releve-serveurs.csv).**
+**À présenter : résultats bruts [série 1 VM](mesure/preuves/etape17/serie-1/vm/),
+[série 1 Docker](mesure/preuves/etape17/serie-1/docker/),
+[série 2 Docker](mesure/preuves/etape17/serie-2/docker/),
+[série 2 VM](mesure/preuves/etape17/serie-2/vm/)
+· [métriques serveur par palier](mesure/preuves/etape17/releve-serveurs.csv).**
 
 **Réponse.** **16 paliers, 22 199 échantillons, zéro erreur** ; 48 lignes de
 synthèse serveur, avec au moins 22 observations stables par service et palier.
@@ -346,8 +349,8 @@ L'export SQL commun est restauré avant chaque campagne dédiée. Une panne Dock
 et sa reprise interrompent la continuité de la séance et limitent l'interprétation
 de l'effet de l'ordre ; elles sont conservées dans le journal.
 
-Détail : [rapport et incident](mesure/ETAPE17.md) · [synthèse des paliers](mesure/resultats/etape17/releve-paliers.csv)
-· [vérification des résultats](mesure/resultats/etape17/verification.json).
+Détail : [rapport et incident](mesure/ETAPE17.md) · [synthèse des paliers](mesure/preuves/etape17/releve-paliers.csv)
+· [vérification des résultats](mesure/preuves/etape17/verification.json).
 
 <a id="etape-18"></a>
 ### Étape 18 — Analyse
@@ -370,11 +373,12 @@ varie de **34,09 %** entre les deux séries au palier 20, au-delà du repère de
 répétabilité de 10 % ; le rapport conserve et discute cet écart.
 
 Détail : [source du rapport](mesure/docs/rapport-charge.md)
-· [calculs vérifiables](mesure/resultats/etape18/analyse.json)
+· [calculs vérifiables](mesure/preuves/etape18/analyse.json)
 · [reproduction](mesure/ETAPE18.md).
 
 Mesures complémentaires de capacité et de workers :
 [synthèse chiffrée et perspectives](mesure/docs/capacity-summary.md) ·
+[courbe p95 de montée en charge](mesure/docs/courbes/capacity-p95.png) ·
 [dossier léger de preuves et archive des données brutes](mesure/preuves/README.md).
 La campagne de 48 essais explore jusqu'à 160 utilisateurs en VM et demande
 jusqu'à 320 sous Docker ; les plateaux incomplets à 200 (série 1), 240 et 320

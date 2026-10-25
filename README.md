@@ -1,9 +1,26 @@
 # Intern
 
-> **Correction :** tout ce que demandent les consignes du module est réuni dans
-> [LIVRABLES.md](LIVRABLES.md), étape par étape, avec les liens vers chaque livrable.
+> **Rendu du module :** [LIVRABLES.md](LIVRABLES.md) réunit les livrables et les
+> points restant à vérifier, étape par étape.
 > Le compte rendu final est dans [rapport/intern-report.pdf](rapport/intern-report.pdf).
-> Les [sources du rapport](rapport/README.md) et la [synthèse des mesures complémentaires](mesure/docs/capacity-summary.md) sont également disponibles.
+> La [démarche Figma et front](docs/Figma.md) présente les étapes, les améliorations et les prompts effectivement conservés.
+> Les [sources du rapport](rapport/README.md) et la [synthèse des mesures complémentaires](mesure/docs/capacity-summary.md), avec la courbe de montée en charge, sont également disponibles.
+
+## Consulter et reproduire le rendu
+
+| Objectif | Point d’entrée |
+| --- | --- |
+| Lire le bilan et les résultats | [Rapport PDF](rapport/intern-report.pdf) : conception, ingénierie front, VM, Docker et charge |
+| Comprendre la conception et l’usage de l’IA | [Figma.md](docs/Figma.md) : prototype cliquable, étapes, corrections, prompt d’image archivé et absence des prompts Figma originaux |
+| Lire la montée en charge | [Courbe p95](mesure/docs/courbes/capacity-p95.png) et [protocole, sources et limites](mesure/docs/capacity-summary.md) |
+| Tester le parcours candidat en local | [Installation et comptes fictifs](#démarrage-local), puis [recette avec API et base réelles](tests/README.md) |
+| Retrouver les preuves par consigne | [Livrables](LIVRABLES.md) et [commandes de reproduction](EXECUTION.md) |
+
+La courbe distingue les deux répétitions et exclut les plateaux incomplets.
+Elle montre une dégradation sous charge ; aucune capacité maximale reproductible
+n’est validée. L’installation complète sur VM vierge reste à vérifier (T24).
+
+## Présentation
 
 **Trouver un stage en Europe et suivre ses candidatures au même endroit.**
 
@@ -188,6 +205,7 @@ les livrables et les documents techniques par thème.
 | Besoin | Document |
 | --- | --- |
 | Comprendre les parcours attendus | [Analyse fonctionnelle](analyse/cas_d_usage.md) |
+| Reprendre le prototype et l’ingénierie front | [Démarche Figma, traces des prompts et validation](docs/Figma.md) |
 | Consommer l’API | [Routes, requêtes et erreurs](docs/backend/API.md) |
 | Comprendre le backend et les traitements | [Guide technique](docs/exploitation/GUIDE_TECHNIQUE.md) |
 | Comprendre le modèle de données | [Schéma de la base](docs/database/DATABASE_SCHEMA.md) |

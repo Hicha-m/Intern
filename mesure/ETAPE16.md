@@ -69,13 +69,13 @@ L'injecteur ne sature pas pendant les contrôles applicatifs.
 
 ## Preuves et limites
 
-[Résultats et empreintes](resultats/etape16/etalonnage.json),
-[contrôle 1](resultats/etape16/controle-1/brut.csv),
-[contrôle 2](resultats/etape16/controle-2/brut.csv),
-[statique à un utilisateur](resultats/etape16/statique-1/brut.csv),
-[statique à vingt utilisateurs](resultats/etape16/statique-20/brut.csv).
+[Résultats et empreintes](preuves/etape16/etalonnage.json),
+[contrôle 1](https://github.com/OmarBenje/Intern/blob/68cd51e333f0a2eb649078e85b54844cf32053a6/mesure/resultats/etape16/controle-1/brut.csv),
+[contrôle 2](https://github.com/OmarBenje/Intern/blob/68cd51e333f0a2eb649078e85b54844cf32053a6/mesure/resultats/etape16/controle-2/brut.csv),
+[statique à un utilisateur](https://github.com/OmarBenje/Intern/blob/68cd51e333f0a2eb649078e85b54844cf32053a6/mesure/resultats/etape16/statique-1/brut.csv),
+[statique à vingt utilisateurs](https://github.com/OmarBenje/Intern/blob/68cd51e333f0a2eb649078e85b54844cf32053a6/mesure/resultats/etape16/statique-20/brut.csv).
 Configurations, plans générés et relevés CPU/RSS accompagnent les résultats.
-Le [précontrôle](resultats/etape16/precontrole/brut.csv) reste séparé des deux
+Le [précontrôle](https://github.com/OmarBenje/Intern/blob/68cd51e333f0a2eb649078e85b54844cf32053a6/mesure/resultats/etape16/precontrole/brut.csv) reste séparé des deux
 contrôles définitifs au protocole figé.
 Reproduction : [procédure](PROCEDURE.md#étalonnage-en-ligne-de-commande).
 
@@ -85,6 +85,6 @@ existantes diffèrent (11 comptes VM, 8 Docker) : préparer une base VM dédiée
 avec les mêmes scripts et vingt comptes avant la comparaison. Ces contrôles
 étalonnent une seule base Docker ; leur résultat dépend du chemin rootless et
 de l'état de l'hôte. Le déploiement de référence est remis en marche, données
-conservées. Détails : [prérequis vérifiés](resultats/etape16/prerequis.json).
+conservées. Détails : [prérequis vérifiés](https://github.com/OmarBenje/Intern/blob/68cd51e333f0a2eb649078e85b54844cf32053a6/mesure/resultats/etape16/prerequis.json).
 
 Référence : [bonnes pratiques JMeter](https://jmeter.apache.org/usermanual/best-practices.html).

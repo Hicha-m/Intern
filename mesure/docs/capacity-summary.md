@@ -2,6 +2,38 @@
 
 Mise à jour du 21 octobre 2026. Cette synthèse complète les essais historiques
 de 1 à 20 utilisateurs ; elle ne modifie aucun résultat ni rapport archivé.
+La courbe et sa procédure de reproduction ont été ajoutées le 25 octobre 2026.
+
+## Courbe de montée en charge
+
+![Temps de réponse p95 selon les utilisateurs simultanés, VM et Docker, deux séries](courbes/capacity-p95.png)
+
+L’axe X indique les utilisateurs simultanés maintenus ; l’axe Y, le p95 des
+consultations pendant les 120 secondes de plateau. Chaque point provient d’un
+fichier `serie-{1,2}/{vm,docker}/{utilisateurs}/synthese.json` de la campagne
+`capacite-20261018-195024-455892`. Les 45 plateaux complets sont tracés ; les
+trois plateaux incomplets Docker série 1 à 200, 240 et 320 sont exclus.
+Le point à 200 sous Docker correspond seulement à la série 2. Les paliers sont
+ceux mesurés, les segments guident la lecture et les p95 ne sont pas moyennés.
+
+Le seuil de 1 000 ms vient du protocole. Les critères d’erreur et de répétabilité
+restent nécessaires : cette courbe seule ne valide pas une capacité maximale.
+Les campagnes historiques à 1–20 utilisateurs et les essais de workers ne sont
+pas mélangés à cette série.
+
+Depuis la racine du dépôt, avec `uv` :
+
+```sh
+uv run --no-project --with matplotlib==3.10.7 python mesure/scripts/generate_capacity_chart.py
+```
+
+Le [script](../scripts/generate_capacity_chart.py) lit les synthèses archivées
+sans les modifier et génère le [PNG](courbes/capacity-p95.png), le
+[PDF vectoriel](courbes/capacity-p95.pdf) intégré au rapport et le
+[CSV de contrôle](courbes/capacity-p95.csv). Le CSV inclut les 48 essais, leur
+statut de plateau, les utilisateurs effectifs, les erreurs sur l’essai entier,
+le chemin source et son empreinte SHA-256. Il permet de retrouver aussi les
+essais exclus de la courbe.
 
 ## Campagne de capacité des 18 et 19 octobre
 

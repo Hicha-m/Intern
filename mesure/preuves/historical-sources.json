@@ -1,0 +1,91 @@
+{
+  "source_commit": "68cd51e333f0a2eb649078e85b54844cf32053a6",
+  "restored_on": "2026-10-25",
+  "note": "Byte-identical copies from Git history; no measurement rerun. Step 17 already exists under mesure/preuves/etape17.",
+  "files": [
+    {
+      "path": "mesure/preuves/campagne/verification.json",
+      "source_path": "mesure/resultats/campagne/verification.json",
+      "git_blob": "2659173d0d2ae8e6573e0f63163351126150174d",
+      "sha256": "df53f1d33aa2c936e284e4f90aa17a764c2354de26a92fbdc552c6b73b573d8d",
+      "bytes": 20220
+    },
+    {
+      "path": "mesure/preuves/etape15/deux-utilisateurs.csv",
+      "source_path": "mesure/resultats/etape15/deux-utilisateurs.csv",
+      "git_blob": "521c7d7c1f10462db48f6024fb874f805075c483",
+      "sha256": "e0e64f34a82278c02986147d8badd883bda41b26b60ff188e1811965ecee5778",
+      "bytes": 1250
+    },
+    {
+      "path": "mesure/preuves/etape15/echec.csv",
+      "source_path": "mesure/resultats/etape15/echec.csv",
+      "git_blob": "c8bb5c2fca993a6ce1f0287e4b60b520fa85e8e7",
+      "sha256": "6daabc7cd3afb42618f63d1c8d1409e9da62774d8cb0d52e99e4721c1500eec0",
+      "bytes": 504
+    },
+    {
+      "path": "mesure/preuves/etape15/echec.png",
+      "source_path": "mesure/resultats/etape15/echec.png",
+      "git_blob": "679170d058df9a606db6c174eea55b10bf57d2f4",
+      "sha256": "5b858a9aec8a7c2e8f11aa9b2e8b5b964192de41b8804b81a47abe1d5a87390a",
+      "bytes": 66518
+    },
+    {
+      "path": "mesure/preuves/etape15/gui-echec.csv",
+      "source_path": "mesure/resultats/etape15/gui-echec.csv",
+      "git_blob": "5a81caa3e4c532b70e8dcd14fec506ab3cfc128a",
+      "sha256": "b042225425d12aeeccc578831e4c94e8f71220b9e93dec44b485a82385dd5c07",
+      "bytes": 502
+    },
+    {
+      "path": "mesure/preuves/etape15/gui-reussite.csv",
+      "source_path": "mesure/resultats/etape15/gui-reussite.csv",
+      "git_blob": "043399841b0c288a345729941c361f41df1f4af5",
+      "sha256": "27e7368e1133e6b9749182b6e72e27083a5ef677aa37ebfa7f869c9e57b4ecbf",
+      "bytes": 560
+    },
+    {
+      "path": "mesure/preuves/etape15/reussite.csv",
+      "source_path": "mesure/resultats/etape15/reussite.csv",
+      "git_blob": "29b7c96658b8558f7c6c9e33c3e03dbe16a70d95",
+      "sha256": "6012d5b1ced31f697c07ddf3773daf44d859ed6b96355cccab5672db72efd028",
+      "bytes": 560
+    },
+    {
+      "path": "mesure/preuves/etape15/reussite.png",
+      "source_path": "mesure/resultats/etape15/reussite.png",
+      "git_blob": "fa517b7f5bb6151d814015023028d5ae0eb7fd82",
+      "sha256": "96e331bdd7663b2b83c71c15d55bb257aa392fdc288c534c29d5247feebed5f9",
+      "bytes": 67111
+    },
+    {
+      "path": "mesure/preuves/etape16/etalonnage.json",
+      "source_path": "mesure/resultats/etape16/etalonnage.json",
+      "git_blob": "34e01e8e79de08b0a73b754979209aafb8916d8a",
+      "sha256": "4de0d576f9b95c951dc3d31430815b56c48298cf99b4e7535c45e499051b626d",
+      "bytes": 1369
+    },
+    {
+      "path": "mesure/preuves/etape18/SHA256SUMS",
+      "source_path": "mesure/resultats/etape18/SHA256SUMS",
+      "git_blob": "f47afbd7ed3374844d02f3bc31f2b42ab7b6ec0c",
+      "sha256": "846b6ec55f5ad7ec615128a7f3185a016e7b107d523eae18d5af2668ff28b5a5",
+      "bytes": 1110
+    },
+    {
+      "path": "mesure/preuves/etape18/analyse.json",
+      "source_path": "mesure/resultats/etape18/analyse.json",
+      "git_blob": "c3c8b28352765fae3042f57474ddfa5db00dc735",
+      "sha256": "f5a7c37116dc9c4c95ec98baf12f04c2c686c972b2f63a07148f94e8f60065dd",
+      "bytes": 2784
+    },
+    {
+      "path": "mesure/preuves/etape18/comparaison.csv",
+      "source_path": "mesure/resultats/etape18/comparaison.csv",
+      "git_blob": "87e0698fd9a13ca0c569c789bd2dba7617cfd7a9",
+      "sha256": "f7fa60429852802d4bd59ff259e671d47b828fb90cbc1abeeb1919bf83746a09",
+      "bytes": 661
+    }
+  ]
+}

@@ -14,13 +14,13 @@ avec un plan capable de signaler un échec d'authentification ou de contenu.
 | [Peuplement](scripts/preparer_comptes.py) | Création transactionnelle des comptes et de leurs dossiers sur base dédiée |
 | [Procédure](PROCEDURE.md) | Préparation, paramètres et reproduction des deux contrôles |
 | [Composition de test](compose.test.yaml) | Overlay du déploiement existant pour une base et un proxy isolés |
-| [Réussite graphique](resultats/etape15/reussite.png) | Un utilisateur, une itération, trois appels réussis |
-| [Échec graphique](resultats/etape15/echec.png) | Mauvais mot de passe, connexion refusée et consultation absente |
-| [Résultats CLI réussis](resultats/etape15/reussite.csv) | Échantillons bruts de réussite |
-| [Résultats CLI négatifs](resultats/etape15/echec.csv) | HTTP 401 et message de l'assertion déclenchée |
-| [Réussite GUI brute](resultats/etape15/gui-reussite.csv) | Trois appels réussis dans l'interface graphique |
-| [Échec GUI brut](resultats/etape15/gui-echec.csv) | Refus d'authentification observé dans l'interface graphique |
-| [Deux candidats](resultats/etape15/deux-utilisateurs.csv) | Une connexion et deux consultations par candidat |
+| [Réussite graphique](preuves/etape15/reussite.png) | Un utilisateur, une itération, trois appels réussis |
+| [Échec graphique](preuves/etape15/echec.png) | Mauvais mot de passe, connexion refusée et consultation absente |
+| [Résultats CLI réussis](preuves/etape15/reussite.csv) | Échantillons bruts de réussite |
+| [Résultats CLI négatifs](preuves/etape15/echec.csv) | HTTP 401 et message de l'assertion déclenchée |
+| [Réussite GUI brute](preuves/etape15/gui-reussite.csv) | Trois appels réussis dans l'interface graphique |
+| [Échec GUI brut](preuves/etape15/gui-echec.csv) | Refus d'authentification observé dans l'interface graphique |
+| [Deux candidats](preuves/etape15/deux-utilisateurs.csv) | Une connexion et deux consultations par candidat |
 | [Vérificateur](tests/verifier_etape15.py) | Contrôle des résultats bruts, indépendamment du code de sortie JMeter |
 
 ## Prérequis examinés

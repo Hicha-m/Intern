@@ -5,6 +5,8 @@ Pour présenter le travail, commencer par les [livrables](../LIVRABLES.md). Pour
 ## Cahiers des charges et livrables
 
 - [Consignes : DEV, VM, Docker et mesures](consignes/README.md)
+- [Figma : prototype, ingénierie front et prompts conservés](Figma.md)
+- [Rapport final](../rapport/intern-report.pdf) et [courbe de montée en charge](../mesure/docs/capacity-summary.md#courbe-de-montée-en-charge)
 - [Comparaison VM / Docker : tableaux et analyse](comparaison.md)
 - [Compte rendu de comparaison au format PDF](compte_rendu_comparaison.pdf)
 

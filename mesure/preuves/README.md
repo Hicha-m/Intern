@@ -6,6 +6,10 @@ campagnes locales ignorées par Git et dans une archive séparée à remettre av
 le rendu. Les fichiers privés `.execution/` et `../.execution-campagnes/` ne
 font partie ni de ce dossier ni de l’archive de résultats.
 
+Les [preuves historiques des étapes 15 à 18](historique.md) sont également
+disponibles : étape 17 déjà publiée, captures et synthèses récupérées à
+l’identique dans l’historique Git. Leur provenance est explicitée séparément.
+
 ## Campagnes retenues
 
 | Campagne réelle | Rapport | Portée |
@@ -58,8 +62,9 @@ les scripts et prérequis documentés dans [WORKERS.md](../WORKERS.md).
 
 - Code, tests, plans JMeter, protocoles, procédures et analyse des incidents.
 - Ce dossier de preuves, rapports et synthèses de quelques mégaoctets.
-- Les preuves historiques des étapes 15–18 déjà suivies, conservées ici sans
-  suppression : le nouvel ignore ne retire pas de fichiers de l’historique.
+- Les preuves historiques des étapes 15–18 référencées dans
+  [leur inventaire](historique.md) ; les copies restaurées gardent leur contenu
+  et leurs empreintes d’origine.
 
 Les dossiers locaux `mesure/resultats/capacite-*` et `mesure/resultats/worker-*`
 sont ignorés. Ne pas utiliser `git add -f` pour les ajouter.
