@@ -1,90 +1,86 @@
-# Figma : conception, usage de l’IA et ingénierie front
+# Figma : conception et ingénierie front d’Intern
 
-Omar Benjelloun et Hicham Mohammed · Intern · Polytech Marseille 2026-2027.
-État documentaire au 25 octobre 2026.
+Omar Benjelloun et Hicham Mohammed · Polytech Marseille 2026-2027 · Mis à jour le 25 octobre 2026.
+
+Ce document présente le prototype d’Intern, nos sources d’inspiration et notre travail avec l’IA. Il relie les choix d’interface aux corrections et aux preuves conservées dans le dépôt, pour permettre à une autre équipe de reprendre le projet.
+
+**Sommaire**
+
+1. [Prototype et périmètre](#prototype-et-périmètre)
+2. [Sources d’inspiration](#sources-dinspiration)
+3. [Outils et méthode de travail](#outils-et-méthode-de-travail)
+4. [Travail d’ingénierie front](#travail-dingénierie-front)
+5. [Prompts et corrections](#prompts-et-corrections)
+6. [Reprendre et vérifier le projet](#reprendre-et-vérifier-le-projet)
 
 ## Prototype et périmètre
 
-Le prototype décrit les parcours candidat, recruteur et administrateur, leurs
-états d’erreur et leurs écrans vides. Il sert de référence pour les parcours et
-les interactions ; le frontend React porte leur fonctionnement avec l’API.
+Le prototype décrit les parcours **candidat, recruteur et administrateur**, avec leurs états d’erreur et leurs écrans vides. Il définit les interactions ; le frontend React les fait fonctionner avec l’API du backend.
 
-- [Fichier Figma modifiable](https://www.figma.com/design/2zB64zoXsnJQ24R1yysJ72/Intern?node-id=223-301&t=Pgc5H2wNNSiyyS3W-1).
-- [Prototype cliquable, écran zéro](https://www.figma.com/proto/2zB64zoXsnJQ24R1yysJ72/Intern?node-id=223-302&p=f&viewport=191%2C-32%2C0.02&t=u6i49kJLKHdhAkM4-8&scaling=scale-down-width&content-scaling=fixed&page-id=223%3A301&starting-point-node-id=223%3A302&hide-ui=1).
-- [Parcours et points de départ](../maquette/README.md) et [manifeste](../maquette/figma_manifest.json) : 27 écrans et 41 interactions recensés, dont 10 écrans accessibles côté candidat, 13 côté recruteur et 4 côté administrateur. Ces nombres proviennent du relevé historique conservé dans le dépôt (écran zéro `142:38134`). Le lien courant pointe vers `223:302` ; ce relevé ne constitue pas un nouvel inventaire de cette version du prototype.
+Pour explorer le prototype :
+
+- [Ouvrir le prototype cliquable](https://www.figma.com/proto/2zB64zoXsnJQ24R1yysJ72/Intern?node-id=223-302&p=f&viewport=191%2C-32%2C0.02&t=u6i49kJLKHdhAkM4-8&scaling=scale-down-width&content-scaling=fixed&page-id=223%3A301&starting-point-node-id=223%3A302&hide-ui=1)
+- [Ouvrir le fichier Figma modifiable](https://www.figma.com/design/2zB64zoXsnJQ24R1yysJ72/Intern?node-id=223-301&t=Pgc5H2wNNSiyyS3W-1)
+- [Consulter les parcours et points de départ](../maquette/README.md)
+
+Le [manifeste historique](../maquette/figma_manifest.json) recense **27 écrans et 41 interactions** : 10 écrans candidat, 13 recruteur et 4 administrateur. Ce relevé correspond à l’ancien écran zéro `142:38134`. Le prototype courant commence à `223:302` ; ces chiffres décrivent la version historique.
+
+<details>
+<summary>Voir l’aperçu du prototype</summary>
 
 ![Écran zéro du prototype Figma](../maquette/ecran_zero.jpg)
 
-## Sources d’inspiration : Simplify et Tsenta
+</details>
 
-Nous nous sommes inspirés de **Simplify** et de **Tsenta**, deux plateformes
-qui répondent à des besoins proches de ceux d’Intern : trouver des offres,
-présenter son profil et suivre ses candidatures. Les analyses de leurs pages
-publiques, réalisées le 30 septembre 2026, ont alimenté notre réflexion sur
-les parcours et l’organisation des informations.
+## Sources d’inspiration
 
-- **Simplify** : le catalogue explorable, le profil candidat partagé, les fiches
-  d’offres structurées et le suivi des candidatures ont servi de références
-  fonctionnelles. Voir l’[analyse de Simplify](research/2026-09-30-simplify.md).
-- **Tsenta** : l’enchaînement découverte → préparation → candidature → suivi,
-  ainsi que la présentation des critères de stage, ont nourri la réflexion sur
-  le parcours candidat. Voir l’[analyse de Tsenta](research/2026-09-30-tsenta.md).
+Nous nous sommes inspirés de **Simplify** et de **Tsenta** pour la recherche d’offres, le profil candidat et le suivi des candidatures. Nos analyses de leurs pages publiques datent du 30 septembre 2026 :
 
-Nous avons adapté ces références au périmètre d’Intern : recherche de stages
-en Europe, parcours candidat, recruteur et administrateur, et règles métier
-du backend Django. Les fonctions d’autocandidature étudiées chez ces services
-restent des pistes d’évolution ; elles ne sont pas présentées comme des
-fonctionnalités livrées dans Intern.
+- **[Simplify](research/2026-09-30-simplify.md)** : catalogue explorable, profil candidat partagé, fiches d’offres structurées et suivi des candidatures.
+- **[Tsenta](research/2026-09-30-tsenta.md)** : parcours découverte → préparation → candidature → suivi, et présentation des critères de stage.
 
-## Outils utilisés et méthode de travail
+Nous avons adapté ces références à la recherche de stages en Europe, aux trois rôles d’Intern et aux règles du backend Django. L’autocandidature étudiée chez ces services reste une piste d’évolution pour Intern.
 
-Nous avons utilisé **Codex** comme assistant de développement pour le frontend et le backend d’Intern.
+## Outils et méthode de travail
 
-Pour le **frontend React**, nous nous sommes appuyés sur **better-ui** pour le travail d’interface, sur les **bonnes pratiques d’Emil Kowalski** pour les interactions et les animations, et sur **React Doctor** pour la revue du code React. Les évolutions documentées concernent notamment la simplification de l’authentification, la présentation des offres, l’organisation du profil candidat et l’alignement de l’inscription sur les règles du backend.
+Nous avons utilisé **Codex** comme assistant de développement pour le frontend React et le backend Django, avec les outils et skills suivants :
 
-Pour le **backend Django**, nous avons également utilisé Codex avec les **skills Superpowers** afin d’accompagner le développement de la couche métier. Les choix d’architecture, les fonctionnalités réalisées et leurs vérifications sont décrits dans la documentation backend et le cahier de tests.
+| Outil ou skill | Usage dans Intern |
+| --- | --- |
+| Codex | Assistance au développement frontend et backend |
+| better-ui | Travail sur l’interface React |
+| Bonnes pratiques d’Emil Kowalski | Interactions et animations |
+| React Doctor | Revue du code React |
+| Superpowers | Accompagnement du développement de la couche métier Django |
 
-## Étapes d’ingénierie documentées
+Les décisions documentées concernent la simplification de l’authentification, la présentation des offres, l’organisation du profil et l’inscription. Les exemples ci-dessous précisent les problèmes rencontrés et les corrections retenues.
 
-Ce tableau relie les décisions à leurs traces ; il ne reconstitue pas une
-chronologie de conversations avec l’IA.
+Les choix d’architecture backend, les fonctionnalités et leurs vérifications sont décrits dans la documentation backend et le cahier de tests.
 
-| Étape | Travail et effet recherché | Trace pour reprendre le travail |
-| --- | --- | --- |
-| Définir les usages | Décrire les trois acteurs, les droits et les parcours nominaux, vides ou en erreur. | [Analyse fonctionnelle](../analyse/cas_d_usage.md) |
-| Relier les écrans | Donner un point d’entrée à chaque acteur et rendre les parcours navigables. | [Manifeste du prototype](../maquette/figma_manifest.json) |
-| Organiser l’interface | Centraliser couleurs, espaces et contrôles ; réutiliser les mêmes composants pour éviter des écrans incohérents. | [Règles de design](../frontend/DESIGN.md), [tokens](../frontend/src/tokens.css), [thèmes](../frontend/src/theme.css) |
-| Raccorder les données | Gérer la session, les formulaires, le CSRF et les retours de l’API ; distinguer chargement, erreur et résultat vide. | [Client HTTP](../frontend/src/lib/api.ts), [session](../frontend/src/auth/Session.tsx), [validation frontend](../frontend/VALIDATION.md) |
-| Corriger et vérifier | Comparer le rendu au prototype, adapter les petits écrans et contrôler les parcours. | [Comparaison Figma T25](../tests/figma-comparison.md), [captures réelles](../frontend/captures/README.md), [recette](../tests/README.md) |
+## Travail d’ingénierie front
 
-## Améliorations successives observables
+Le travail porte sur les parcours, les composants et leur fonctionnement avec les données réelles. Les étapes suivantes renvoient aux traces conservées, sans reconstituer une chronologie des échanges avec l’IA :
 
-| Problème documenté | Modification et intérêt | Preuve |
-| --- | --- | --- |
-| Formulaire d’authentification visuellement chargé | Réduire les textes répétés et intégrer les labels aux champs tout en les gardant visibles ; conserver les retours d’erreur et le focus clavier. | [Revue de l’authentification](design/auth-editorial.md) |
-| Action de candidature éloignée du contenu utile | Placer le panneau d’action dès le début sur ordinateur et avant la description sur mobile ; structurer la description en paragraphes et listes. | [Revue de la fiche offre](design/offer-detail-ui-review.md) |
-| Profil limité au CV | Organiser les informations par section avec brouillons indépendants, annulation et conservation des saisies en cas d’erreur. | [Évolution du profil](design/profile.md) |
-| Inscription présentée comme une connexion immédiate | Afficher l’attente d’activation demandée par l’API ; expliquer le refus de connexion avant activation. | [Validation frontend](../frontend/VALIDATION.md), [écran livré](../frontend/captures/ecrans/10-inscription-candidate-attente.png) |
+1. **Définir les usages.** Décrire les rôles, les droits et les parcours, y compris les cas vides ou en erreur. Source : [analyse fonctionnelle](../analyse/cas_d_usage.md).
+2. **Relier les écrans.** Donner un point d’entrée à chaque rôle et rendre les parcours navigables. Source : [manifeste du prototype](../maquette/figma_manifest.json).
+3. **Réutiliser les composants.** Centraliser les couleurs, les espacements et les contrôles pour garder une interface cohérente. Sources : [règles de design](../frontend/DESIGN.md), [tokens](../frontend/src/tokens.css) et [thèmes](../frontend/src/theme.css).
+4. **Raccorder le backend.** Gérer la session, les formulaires et la protection contre les requêtes intersites frauduleuses (CSRF). Distinguer chargement, erreur et résultat vide. Sources : [client HTTP](../frontend/src/lib/api.ts), [session](../frontend/src/auth/Session.tsx) et [validation frontend](../frontend/VALIDATION.md).
+5. **Vérifier les parcours.** Comparer le rendu au prototype, contrôler les petits écrans et exécuter la recette. Sources : [comparaison Figma T25](../tests/figma-comparison.md), [captures](../frontend/captures/README.md) et [cahier de tests](../tests/README.md).
 
-Ces choix rendent l’interface exploitable avec des données et des erreurs réelles.
-Par exemple, [AuthField](../frontend/src/components/auth/AuthControls.tsx) relie
-le label, l’aide et l’erreur au champ ; [Register](../frontend/src/pages/Register.tsx)
-conserve les saisies au retour et bloque les soumissions pendant la requête.
-Les règles d’accès restent appliquées par Django.
+Deux exemples montrent ce travail dans le code :
 
-## Prompts : traces conservées et limites
+- [AuthField](../frontend/src/components/auth/AuthControls.tsx) relie chaque champ à son label, à son aide et à son erreur.
+- [Register](../frontend/src/pages/Register.tsx) conserve les saisies au retour et bloque les soumissions pendant une requête.
 
-Le recours à l’IA pour Figma a été évoqué lors du bilan avec l’enseignant.
-**Aucun texte original de prompt Figma n’a été retrouvé dans les fichiers de
-conception consultés ni dans les commits d’ajout du prototype.** Le prompt initial,
-les relances, les réponses et les versions du modèle ne sont donc pas reproduits
-comme des traces originales.
-Les étapes et corrections ci-dessus ne sont pas présentées comme des prompts.
+Django applique les règles d’accès.
 
-Une trace exacte existe pour la génération du visuel d’authentification avec
-`imagegen`, datée du 30 septembre 2026 dans la [revue source](design/auth-editorial.md#artwork-provenance).
-Elle concerne une image décorative, **pas la création du prototype Figma**.
-Le texte original et son résultat sont conservés ci-dessous.
+## Prompts et corrections
+
+Cette section distingue une **trace originale conservée** et quatre **exemples reconstitués**. Le recours à l’IA pour Figma a été évoqué lors du bilan avec l’enseignant.
+
+### Trace originale : le visuel d’authentification
+
+Le prompt `imagegen` du 30 septembre 2026 figure dans la [revue source](design/auth-editorial.md#artwork-provenance). Il concerne une image décorative, **pas la création du prototype Figma**.
 
 <details>
 <summary>Prompt original de génération du visuel (imagegen)</summary>
@@ -93,106 +89,105 @@ Le texte original et son résultat sont conservés ci-dessous.
 
 </details>
 
-[Voir le visuel livré](../frontend/public/images/intern-first-step.webp).
+Le [visuel livré](../frontend/public/images/intern-first-step.webp) résulte d’un cadrage portant sur l’usage, le format, la composition, la palette et les éléments à exclure. Le contrôle humain documenté porte sur l’intégration, les contrastes et les petits écrans. L’historique complet des essais de génération n’est pas disponible.
 
-Cette trace documente un cadrage précis : usage de l’image, format, composition,
-palette et éléments à exclure. Le contrôle humain documenté porte ensuite sur
-l’intégration, les contrastes et les petits écrans ; l’historique complet des
-essais de génération n’est pas disponible.
+### Exemples reconstitués
 
-## Exemples de prompts reconstitués
+L’historique des échanges n’étant plus accessible, les prompts suivants ont été rédigés a posteriori pour illustrer notre démarche. **Ce ne sont pas des transcriptions des conversations initiales.** Les problèmes et corrections correspondent aux évolutions documentées du projet.
 
-L’historique original des échanges n’étant plus accessible, les prompts ci-dessous
-ont été rédigés a posteriori pour illustrer notre démarche. Ils ne constituent
-pas une transcription des conversations initiales. Les problèmes et corrections
-correspondent aux évolutions documentées du projet.
+Chaque exemple suit le même format : **prompt → problème constaté → correction retenue → preuve**.
 
-### 1. Simplifier les écrans d’authentification
+#### 1. Simplifier l’authentification
 
 **Prompt reconstitué :**
 
 > Conçois les écrans de connexion et d’inscription d’Intern, une plateforme de recherche de stages. Utilise une identité visuelle orange et crème, une typographie expressive et un visuel architectural. Présente clairement le formulaire et les actions principales. Prévois les états vide, saisie en cours, chargement et erreur, ainsi qu’une adaptation sur mobile.
 
-**Problème constaté :**
-
-Les textes d’accompagnement répétés, les labels séparés et les champs
-rectangulaires donnaient trop de poids visuel au formulaire.
+**Problème constaté :** les textes répétés, les labels séparés et les champs rectangulaires donnaient trop de poids visuel au formulaire.
 
 **Correction retenue :**
 
-Conserver les titres et les actions essentielles, supprimer les textes redondants
-et intégrer des labels persistants aux champs. Utiliser un soulignement pour
-matérialiser les champs, avec des états de focus et d’erreur explicites.
-Préserver la navigation au clavier.
+- Garder les titres et les actions essentielles ; supprimer les textes redondants.
+- Intégrer des labels persistants aux champs et matérialiser ceux-ci par un soulignement.
+- Conserver les états de focus et d’erreur, ainsi que la navigation au clavier.
 
-### 2. Aligner l’inscription sur le fonctionnement du backend
+**Preuve :** [revue de l’authentification](design/auth-editorial.md).
+
+#### 2. Aligner l’inscription sur le backend
 
 **Prompt reconstitué :**
 
 > Conçois un parcours d’inscription progressif pour Intern : choix du rôle candidat ou recruteur, adresse e-mail, nom complet et mot de passe. Permets de revenir à l’étape précédente sans perdre les informations. Prévois les erreurs de validation, l’attente pendant l’envoi et un écran de confirmation après la réponse du serveur.
 
-**Problème constaté :**
-
-Le parcours devait tenir compte d’une règle métier essentielle : l’API crée un
-compte en attente d’activation. Une confirmation laissant penser que l’utilisateur
-peut immédiatement accéder à son espace serait incorrecte.
+**Problème constaté :** le backend crée un compte en attente d’activation. Une confirmation annonçant un accès immédiat serait incorrecte.
 
 **Correction retenue :**
 
-Afficher explicitement l’attente de validation du superviseur après l’inscription.
-Ne pas ouvrir automatiquement de session et expliquer le refus de connexion tant
-que le compte reste inactif.
+- Afficher l’attente de validation du superviseur après l’inscription.
+- Ne pas ouvrir de session automatiquement.
+- Expliquer le refus de connexion tant que le compte reste inactif.
 
-### 3. Améliorer la lecture d’une offre et l’accès à la candidature
+**Preuves :** [validation frontend](../frontend/VALIDATION.md) et [écran d’attente d’activation](../frontend/captures/ecrans/10-inscription-candidate-attente.png).
+
+#### 3. Faciliter la lecture d’une offre et la candidature
 
 **Prompt reconstitué :**
 
 > Crée une fiche de stage pour Intern comprenant le titre, l’entreprise, la localisation, la description, les missions, les compétences et le lien pour postuler. Organise ces informations pour permettre au candidat de comprendre rapidement l’offre. Prévois une version ordinateur et une version mobile, ainsi que les cas où certaines informations sont absentes.
 
-**Problème constaté :**
-
-Le bandeau et l’espace au-dessus du contenu éloignaient l’action de candidature.
-Les descriptions importées pouvaient également apparaître comme de longs blocs
-de texte peu structurés.
+**Problème constaté :** le bandeau et l’espace supérieur éloignaient l’action de candidature. Les descriptions importées formaient parfois de longs blocs peu structurés.
 
 **Correction retenue :**
 
-Supprimer le bandeau redondant et donner à l’offre son propre titre principal.
-Placer le panneau de candidature dès le début sur ordinateur et avant la
-description sur mobile. Structurer les paragraphes et les listes sans inventer
-les informations manquantes.
+- Supprimer le bandeau redondant et donner à l’offre son propre titre principal.
+- Placer le panneau de candidature dès le début sur ordinateur et avant la description sur mobile.
+- Structurer les paragraphes et les listes, sans inventer les informations manquantes.
 
-### 4. Faire évoluer le profil au-delà du dépôt de CV
+**Preuve :** [revue de la fiche offre](design/offer-detail-ui-review.md).
+
+#### 4. Enrichir le profil candidat
 
 **Prompt reconstitué :**
 
 > Conçois la page de profil candidat d’Intern. Le candidat doit pouvoir consulter son CV courant, le remplacer et retrouver les informations utiles à ses candidatures. Présente clairement les données renseignées et celles qui restent à compléter. Prévois les états d’enregistrement, de réussite et d’erreur.
 
-**Problème constaté :**
-
-Un écran centré uniquement sur le téléchargement du CV ne permettait pas de gérer
-l’ensemble des informations du candidat.
+**Problème constaté :** un écran centré sur le téléchargement du CV ne permettait pas de gérer toutes les informations du candidat.
 
 **Correction retenue :**
 
-Organiser le profil en sections : identité, présentation, expériences, formations,
-compétences et préférences. Donner à chaque section son propre brouillon et des
-actions explicites pour enregistrer ou annuler. Conserver les saisies en cas
-d’erreur et ne pas déduire automatiquement des informations du CV.
+- Séparer identité, présentation, expériences, formations, compétences et préférences.
+- Donner à chaque section un brouillon et des actions pour enregistrer ou annuler.
+- Conserver les saisies en cas d’erreur, sans déduire automatiquement des informations du CV.
 
-## Reprise et vérification par une autre équipe
+**Preuve :** [évolution du profil](design/profile.md).
 
-1. Lire l’analyse et parcourir les trois rôles dans Figma ; conserver les identifiants des écrans du manifeste.
-2. Suivre le [démarrage local](../README.md#démarrage-local) avec les comptes fictifs, puis retrouver l’écran dans `frontend/src/pages/` et ses composants dans `frontend/src/components/`.
-3. Réutiliser les tokens et le client HTTP existants. Mettre à jour le parcours, ses états dégradés et les tests concernés lors d’une évolution.
-4. Exécuter `npm --prefix frontend run build`, `npm --prefix frontend run lint` et `npm --prefix frontend run test:e2e` ; compléter par la [recette avec API et base réelles](../tests/README.md).
-5. Comparer le rendu aux [captures livrées](../frontend/captures/README.md) et archiver les nouvelles décisions et les prompts réellement utilisés.
+## Reprendre et vérifier le projet
 
-Les résultats déjà consignés distinguent 104 tests navigateur réussis avec API
-contrôlée, 3 scénarios optionnels ignorés et une recette réelle séparée. Les
-contrôles ciblés couvrent notamment petits écrans, zoom, contraste, focus et
-réduction des animations ; ils ne constituent pas un audit complet d’accessibilité.
-Ces résultats sont historiques, pas une nouvelle exécution lors de la rédaction.
-T25 est déclaré réalisé par l’équipe le 21 octobre ; l’installation sur VM vierge
-(T24) reste à vérifier. Les contraintes et résultats détaillés sont dans la
-[validation frontend](../frontend/VALIDATION.md).
+Une autre équipe peut reprendre le travail en suivant ces étapes :
+
+1. Lire l’analyse fonctionnelle et parcourir les trois rôles dans Figma. Conserver les identifiants d’écrans du manifeste, en tenant compte de sa version historique.
+2. Suivre le [démarrage local](../README.md#démarrage-local) avec les comptes fictifs. Retrouver ensuite les écrans dans `frontend/src/pages/` et les composants dans `frontend/src/components/`.
+3. Réutiliser les tokens et le client HTTP. Pour chaque évolution, mettre à jour le parcours, ses états dégradés et les tests concernés.
+4. Exécuter les contrôles frontend ci-dessous, puis compléter avec la [recette sur API et base réelles](../tests/README.md).
+5. Comparer le rendu aux [captures livrées](../frontend/captures/README.md). Archiver les nouvelles décisions et les prompts réellement utilisés.
+
+Depuis la racine du dépôt, lancer la compilation, l’analyse du code et les tests navigateur :
+
+```sh
+npm --prefix frontend run build
+npm --prefix frontend run lint
+npm --prefix frontend run test:e2e
+```
+
+### Résultats consignés et points à vérifier
+
+Les résultats suivants sont **historiques** ; ils ne proviennent pas d’une nouvelle exécution lors de la rédaction :
+
+| Contrôle | État consigné |
+| --- | --- |
+| Tests navigateur avec API contrôlée | 104 réussis, 3 scénarios optionnels ignorés |
+| Recette avec API et base réelles | Consignée séparément dans le cahier de tests |
+| Comparaison Figma, T25 | Déclarée réalisée par l’équipe le 21 octobre |
+| Installation sur VM vierge, T24 | À vérifier |
+
+Les contrôles ciblés couvrent les petits écrans, le zoom, les contrastes, le focus et la réduction des animations. Ils ne constituent pas un audit complet d’accessibilité. Les contraintes et résultats détaillés figurent dans la [validation frontend](../frontend/VALIDATION.md).
