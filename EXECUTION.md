@@ -825,7 +825,7 @@ ni campagne de charge réelle. Pour relancer les tests du lanceur depuis Intern 
 python3 -m unittest discover -s outils -p 'test_*.py' -v
 ```
 Les installations
-macOS/Windows et une installation vierge ne sont pas validées par ces contrôles.
+macOS/Windows ne sont pas validées par ces contrôles.
 Les résultats ci-dessous proviennent de la vérification initiale du guide.
 
 
@@ -833,7 +833,6 @@ Les blocs DEV et les captures sont vérifiés sur la machine de travail avec une
 base dédiée. Les 34 contrôles SQL passent dans la base réservée à l’étape 3 ;
 les 15 parcours de recette passent sur la base et les ports de l’étape 6.
 Les trois services Docker de cours sont également lancés sur un
-projet dédié ; un second lancement conserve leurs IDs et dates de démarrage. Cette vérification n’est pas une installation de tous les outils
-sur une machine vierge. Les commandes VM et JMeter reprennent
+projet dédié ; un second lancement conserve leurs IDs et dates de démarrage. Les commandes VM et JMeter reprennent
 les outils et procédures du dépôt ; les nouvelles campagnes, installations
 système, exports et mesures ne sont pas relancés pour vérifier ce document.

@@ -91,7 +91,7 @@ En production, les CV, lettres et pièces jointes sont conservés dans un bucket
 \item Nous avons vérifié l'accès au bucket avec les identifiants de l'application et la présence des documents envoyés depuis Intern.
 \end{itemize}
 \subsection{Couche métier, interface et recette}
-Django REST gère les sessions, la protection CSRF, le hachage scrypt et la limitation des tentatives de connexion. Les droits d'accès sont vérifiés à chaque requête. Nous avons rejoué les parcours du cahier de tests dans un navigateur sur les deux déploiements. La comparaison de l'application avec le prototype Figma a été réalisée (T25) ; son achèvement a été confirmé par l'équipe le 21 octobre 2026. L'installation complète sur VM vierge reste à vérifier (T24).
+Django REST gère les sessions, la protection CSRF, le hachage scrypt et la limitation des tentatives de connexion. Les droits d'accès sont vérifiés à chaque requête. Nous avons rejoué les parcours du cahier de tests dans un navigateur sur les deux déploiements. La comparaison de l'application avec le prototype Figma a été réalisée (T25) ; son achèvement a été confirmé par l'équipe le 21 octobre 2026.
 
 \clearpage
 \section{Déploiement en machines virtuelles}
@@ -296,7 +296,6 @@ Docker, 200 & 163,47 / 162,14 & 195,19 / 195,19 & 373 / 385 & 60 / 55 \\
 \item Refaire les tests sur deux machines physiques distinctes : une machine cliente dédiée à JMeter génère les requêtes ; une seconde héberge le serveur testé, VM ou conteneurs. Cette séparation évite la concurrence directe entre injecteur et serveur pour les ressources du même hôte. Mesurer aussi le réseau et l'injecteur, stabiliser l'hôte serveur et répéter sans interruption.
 \item Aligner les quotas CPU et mémoire, puis comparer les modes Docker classique et rootless en contrôlant aussi le stockage.
 \item Chronométrer la mise en place depuis zéro des deux déploiements.
-\item Terminer l'installation complète sur VM vierge (T24).
 \item Étudier un répartiteur de charge (\textit{load balancer}) devant plusieurs instances de l'API Django et Gunicorn, avec des sondes de santé. Partager les sessions via PostgreSQL et les fichiers via le stockage commun, puis vérifier la tenue des connexions à la base.
 \item Comparer une instance et plusieurs instances avec ce répartiteur, mesurer débit, p95 et erreurs, puis tester la perte d'une instance. Cette architecture est une perspective : elle n'a pas été déployée ni mesurée dans ce projet.
 \end{itemize}

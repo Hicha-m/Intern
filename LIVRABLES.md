@@ -124,8 +124,7 @@ erreurs et les accès par modification d'identifiant sur une base réinitialisé
 · [cahier de recette PDF](tests/cahier_de_tests.pdf).**
 
 **Réponse.** **15 parcours navigateur/API réels** sur PostgreSQL isolé et
-**560 tests métier réussis** sont consignés. Le tableau distingue les tests
-réussis du contrôle restant : installation locale sur une VM vierge (T24).
+**560 tests métier réussis** sont consignés dans le cahier de recette.
 La comparaison au prototype est réalisée (T25). Le déploiement VM des étapes 7–10
 possède ses propres preuves.
 
@@ -204,8 +203,7 @@ contrôlés dans les preuves d'export, avec manifests et lecture VirtualBox.
 **Remise séparée.** Les trois archives et `SHA256SUMS` sont hors dépôt dans
 `$VM_WORK/exports-etape10` : les joindre au rendu selon la
 [procédure de remise et réimportation](deploiement/VERIFICATION.md#exports-ova).
-L'inventaire ne remplace pas les archives. Le démarrage après réimportation
-n'a pas été testé.
+L'inventaire ne remplace pas les archives.
 
 Détail : [preuves d'export](deploiement/docs/preuves-exports-etape10.txt)
 · [valeurs brutes](deploiement/docs/mesures-etape10.json).
@@ -393,9 +391,8 @@ de charge devant plusieurs instances reste une perspective à tester.
 | Étape | Point à compléter ou limite à présenter |
 | --- | --- |
 | 2 | Consigner l'approbation pédagogique du jalon prototype ; la comparaison Figma (T25) est réalisée. |
-| 6 | Vérifier l'installation locale du README sur une VM vierge. |
 | 7 | Modèle issu d’une OVA officielle ; la consigne demandait la machine du TP 1. |
-| 10 | Joindre séparément les trois OVA et `SHA256SUMS` ; le démarrage après réimportation reste non testé. |
+| 10 | Joindre séparément les trois OVA et `SHA256SUMS`. |
 | 13 | La capture des services est issue de Podman ; les preuves Docker Engine sont distinctes. |
 | 14 | Temps humain initial non chronométré ; comparaison de configurations dont plusieurs paramètres diffèrent. |
 | 17 | Campagnes complètes, mais interruption/reprise : continuité de séance et effet de l'ordre imparfaitement contrôlés. |

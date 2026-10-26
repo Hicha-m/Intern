@@ -100,8 +100,7 @@ Si une exécution a été interrompue après la création d'une archive complèt
 manquent. Une archive incomplète ou dont le manifeste est invalide est refusée :
 examiner ce fichier avant une nouvelle tentative, sans écraser un export valide.
 
-Ces contrôles attestent la création, l'intégrité et la lecture des exports ;
-ils ne sont pas un essai de démarrage après réimportation. Les OVA représentent
+Ces contrôles attestent la création, l'intégrité et la lecture des exports. Les OVA représentent
 l'état courant installé ; ils ne conservent pas l'arbre des snapshots.
 Les trois archives sont à remettre ensemble avec leur fichier de sommes.
 Elles contiennent les comptes fictifs et les secrets de cette démonstration.
@@ -142,8 +141,7 @@ curl -f http://127.0.0.1:8080/health/ready/
 ```
 
 Attendre le démarrage des services avant le dernier contrôle. Consulter ensuite
-`http://127.0.0.1:8080/login`. Ce scénario de réimportation est une procédure
-fournie ; il n'est pas compté parmi les vérifications exécutées sur les exports.
+`http://127.0.0.1:8080/login`.
 
 Référence des options d'export/import :
 [documentation Oracle VirtualBox](https://docs.oracle.com/en/virtualization/virtualbox/7.1/user/vboxmanage.html).

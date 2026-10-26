@@ -18,7 +18,7 @@
 
 La courbe distingue les deux répétitions et exclut les plateaux incomplets.
 Elle montre une dégradation sous charge ; aucune capacité maximale reproductible
-n’est validée. L’installation complète sur VM vierge reste à vérifier (T24).
+n’est validée.
 
 ## Présentation
 

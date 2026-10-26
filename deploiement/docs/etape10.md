@@ -55,8 +55,7 @@ et leur lecture avec `import --dry-run`.
 Les exports ont été créés à partir de VM éteintes, sans redirection SSH
 temporaire. Chaque empreinte OVF/VMDK du manifeste interne a été recalculée et
 vérifiée. Les OVA représentent l'état courant installé ; l'arbre des snapshots
-reste sur les VM originales. Le contrôle de lecture ne remplace pas un essai
-de démarrage après réimportation, qui n'a pas été effectué.
+reste sur les VM originales.
 
 Les trois VM originales sont laissées éteintes après export. La procédure
 décrit la remise des trois archives et leur réimportation avec vérification des

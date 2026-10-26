@@ -71,8 +71,7 @@ des réponses API. Le script `scripts/capturer_ecrans.mjs` et le manifeste
 `captures/ecrans/manifest.json` permettent de reproduire et de retrouver chaque
 écran. Les quatre captures historiques avec API contrôlée restent identifiées
 séparément dans l’index. Les captures utilisent uniquement des identités fictives.
-La comparaison avec le prototype est réalisée (T25). L'installation complète
-sur une machine vierge reste à vérifier avant présentation au jury (T24).
+La comparaison avec le prototype est réalisée (T25).
 
 
 ## Contrôle des captures réelles

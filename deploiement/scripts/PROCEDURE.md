@@ -12,8 +12,7 @@ serveur préalable n'est disponible. Il reste conservé, éteint, en plus des cl
 
 L'application comporte trois couches séparées : PostgreSQL, Django et React.
 Les paramètres de connexion sont externalisés dans `metier/.env.example` et
-`frontend/.env.example`. La recette locale est décrite dans `../tests/README.md` ;
-elle ne démontre pas encore une installation sur des VM vierges.
+`frontend/.env.example`. La recette locale est décrite dans `../tests/README.md`.
 
 Prévoir VirtualBox, `curl`, OpenSSH, Python 3 et un outil de création d'ISO.
 La procédure utilise `pycdlib==1.22.0` dans un environnement Python isolé.

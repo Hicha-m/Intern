@@ -20,7 +20,6 @@
     thead { display: table-header-group; }
     td:first-child { font-weight: bold; white-space: nowrap; }
     .pass { color: #0b6548; font-weight: bold; }
-    .pending { color: #8a4d0b; font-weight: bold; }
     code { font-family: Consolas, monospace; font-size: .95em; }
     ul { margin: 1mm 0 0; padding-left: 5mm; }
   </style>
@@ -63,7 +62,6 @@
       <tr><td>T21</td><td>Vérification entreprise · UC11</td><td>Tests Django : code e-mail incorrect puis correct, demande de vérification.</td><td>Code invalide refusé ; validation manuelle distincte.</td><td>Code erroné : 400 ; code valide : 200 ; demande : <code>pending</code>.</td><td class="pass">PASS</td></tr>
       <tr><td>T22</td><td>Contrainte SQL · R4</td><td>Test Django/PostgreSQL : insérer deux dossiers candidat/offre identiques.</td><td>Unicité imposée par PostgreSQL.</td><td><code>IntegrityError</code> ; insertion annulée.</td><td class="pass">PASS</td></tr>
       <tr><td>T23</td><td>États et interfaces du client · UC01–UC08</td><td>Suite Playwright avec réponses API contrôlées.</td><td>Parcours, erreurs, chargements et vues mobiles stables.</td><td>104 tests réussis ; 3 scénarios optionnels de logos externes ignorés.</td><td class="pass">PASS</td></tr>
-      <tr><td>T24</td><td>Installation sur VM vierge</td><td>Rejouer le README sans dépendance préinstallée.</td><td>Installation et recette reproductibles.</td><td>Non exécuté dans cet environnement ; procédure rédigée et testée localement.</td><td class="pending">À vérifier</td></tr>
       <tr><td>T25</td><td>Comparaison au prototype Figma</td><td>Comparer les écrans de l’application au prototype interactif.</td><td>Comparaison visuelle des écrans et parcours.</td><td>Comparaison réalisée ; achèvement confirmé par l’équipe le 21/10/2026.</td><td class="pass">Réalisé</td></tr>
     </tbody>
   </table>

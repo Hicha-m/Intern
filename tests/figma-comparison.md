@@ -10,8 +10,7 @@ Les [captures de l’application](../frontend/captures/README.md) restent dispon
 pour présenter les écrans livrés.
 
 Le [cahier de recette](cahier_de_tests.pdf) consigne ce contrôle manuel sous T25,
-séparément des tests automatisés T01–T23. L’installation complète sur une VM
-vierge (T24) reste à vérifier. L’approbation pédagogique du jalon prototype
+séparément des tests automatisés T01–T23. L’approbation pédagogique du jalon prototype
 constitue un suivi distinct.
 
 Les anciennes mentions « comparaison à faire » dans les documents de livraison

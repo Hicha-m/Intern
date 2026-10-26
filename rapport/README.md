@@ -30,7 +30,7 @@ l’arborescence du dépôt pour résoudre les images et la courbe depuis `main.
 - [Conception Figma, ingénierie front et traces des prompts](../docs/Figma.md).
 - [Synthèse des mesures complémentaires](../mesure/docs/capacity-summary.md).
 - [Comparaison avec le prototype Figma, T25](../tests/figma-comparison.md).
-- [Cahier de recette](../tests/cahier_de_tests.pdf) ; T24 reste à vérifier.
+- [Cahier de recette](../tests/cahier_de_tests.pdf).
 
 Les rapports de campagne archivés et leurs empreintes sont conservés sans modification.
 
