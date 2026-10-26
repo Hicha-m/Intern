@@ -92,7 +92,7 @@ En production, les CV, lettres et pièces jointes sont conservés dans un bucket
 \item Nous avons vérifié l'accès au bucket avec les identifiants de l'application et la présence des documents envoyés depuis Intern.
 \end{itemize}
 \subsection{Couche métier, interface et recette}
-Django REST gère les sessions, la protection CSRF, le hachage scrypt et la limitation des tentatives de connexion. Les droits d'accès sont vérifiés à chaque requête. Nous avons rejoué les parcours du cahier de tests dans un navigateur sur les deux déploiements. La comparaison de l'application avec le prototype Figma a été réalisée (T25) ; son achèvement a été confirmé par l'équipe le 21 octobre 2026.
+Django REST gère les sessions, la protection CSRF, le hachage scrypt et la limitation des tentatives de connexion. Les droits d'accès sont vérifiés à chaque requête. Nous avons rejoué les parcours du cahier de tests dans un navigateur sur les deux déploiements. La comparaison de l'application avec le prototype Figma a été réalisée (T25) ; son achèvement a été confirmé par l'équipe.
 
 \clearpage
 \section{Déploiement en machines virtuelles}
@@ -234,7 +234,7 @@ Ces essais utilisent une base fictive et un parcours de consultation. Ils ne cou
 
 \clearpage
 \subsection{Mesures complémentaires de capacité}
-La campagne des 18 et 19 octobre conserve 48 essais : montée de 30 s, stabilisation de 15 s, plateau de 120 s et pause de 1 s. La charge demandée atteint 160 utilisateurs côté VM et 320 côté Docker, avec affinement des paliers. Les seuils de service sont un p95 au plus égal à 1\,000 ms et au plus 1 \% d'erreurs ; la répétabilité impose un écart maximal de 10 \% entre les séries.
+La campagne de capacité conserve 48 essais : montée de 30 s, stabilisation de 15 s, plateau de 120 s et pause de 1 s. La charge demandée atteint 160 utilisateurs côté VM et 320 côté Docker, avec affinement des paliers. Les seuils de service sont un p95 au plus égal à 1\,000 ms et au plus 1 \% d'erreurs ; la répétabilité impose un écart maximal de 10 \% entre les séries.
 
 \begin{center}\begin{minipage}{\linewidth}\small
 \captionof{table}{Principaux paliers de capacité ; valeurs des séries 1 / 2.}\label{tab:capacity}
@@ -268,7 +268,7 @@ La figure~\ref{fig:capacity} utilise les paliers réellement mesurés de cette c
 La figure, le CSV de ses sources et le script de régénération sont liés dans la \href{https://github.com/OmarBenje/Intern/blob/master/mesure/docs/capacity-summary.md}{synthèse des mesures complémentaires}. Les essais à faible charge historiques et ceux comparant les workers constituent des campagnes distinctes.
 
 \subsection{Effet du nombre de workers Gunicorn}
-Deux campagnes du 19 octobre comparent 2 et 4 workers, dans l'ordre 2/4 puis 4/2, avec les mêmes données restaurées et les mêmes ressources pour chaque déploiement. Elles couvrent 80, 100 et 130 utilisateurs en VM, puis 150, 180 et 200 sous Docker. Le tableau~\ref{tab:workers} présente le dernier palier de chaque campagne.
+Deux campagnes comparent 2 et 4 workers, dans l'ordre 2/4 puis 4/2, avec les mêmes données restaurées et les mêmes ressources pour chaque déploiement. Elles couvrent 80, 100 et 130 utilisateurs en VM, puis 150, 180 et 200 sous Docker. Le tableau~\ref{tab:workers} présente le dernier palier de chaque campagne.
 
 \begin{center}\begin{minipage}{\linewidth}\small
 \captionof{table}{Comparaison des workers ; valeurs des séries 1 / 2, zéro erreur.}\label{tab:workers}

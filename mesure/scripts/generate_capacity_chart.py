@@ -102,7 +102,7 @@ def main():
     ax.legend(loc="upper left", bbox_to_anchor=(0, .79), frameon=False, fontsize=9)
     fig.suptitle("Montée en charge - consultation des candidatures", x=.10, ha="left",
                  fontsize=13, fontweight="bold", y=.98)
-    fig.text(.10, .92, "Campagne des 18 et 19 octobre 2026 · p95 des consultations sur 120 s",
+    fig.text(.10, .92, "Campagne de capacité · p95 des consultations sur 120 s",
              fontsize=9, color="#53616a")
     excluded = [row for row in rows if not row["plateau_valid"]]
     exclusions = ", ".join(f"{row['deployment'].capitalize()} S{row['series']} à {row['requested_users']}"
