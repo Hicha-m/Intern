@@ -1,6 +1,6 @@
 # Figma : conception et ingénierie front d’Intern
 
-Omar Benjelloun et Hicham Mohammed · Polytech Marseille 2026-2027 · Mis à jour le 25 octobre 2026.
+Omar Benjelloun et Hicham Mohammed · Polytech Marseille 2026-2027 · Mis à jour le 26 octobre 2026.
 
 Ce document présente le prototype d’Intern, nos sources d’inspiration et notre travail avec l’IA. Il relie les choix d’interface aux corrections et aux preuves conservées dans le dépôt, pour permettre à une autre équipe de reprendre le projet.
 
@@ -93,17 +93,21 @@ Le [visuel livré](../frontend/public/images/intern-first-step.webp) résulte d�
 
 ### Exemples reconstitués
 
-L’historique des échanges n’étant plus accessible, les prompts suivants ont été rédigés a posteriori pour illustrer notre démarche. **Ce ne sont pas des transcriptions des conversations initiales.** Les problèmes et corrections correspondent aux évolutions documentées du projet.
+L’historique des échanges n’étant plus accessible, les demandes initiales et les relances ci-dessous ont été reconstituées à partir des évolutions documentées du projet. Elles illustrent la façon de donner du contexte à l’IA, puis de lui demander une correction précise ; **ce ne sont pas des transcriptions des conversations initiales**.
 
-Chaque exemple suit le même format : **prompt → problème constaté → correction retenue → preuve**.
+Chaque exemple suit le même format : **demande initiale → problème constaté → relance → correction retenue → preuve**.
 
 #### 1. Simplifier l’authentification
 
-**Prompt reconstitué :**
+**Demande initiale :**
 
-> Conçois les écrans de connexion et d’inscription d’Intern, une plateforme de recherche de stages. Utilise une identité visuelle orange et crème, une typographie expressive et un visuel architectural. Présente clairement le formulaire et les actions principales. Prévois les états vide, saisie en cours, chargement et erreur, ainsi qu’une adaptation sur mobile.
+> Refais les pages de connexion et d’inscription d’Intern. C’est une plateforme pour trouver un stage : je veux une identité orange et crème, un grand titre et le visuel d’escalier à côté du formulaire sur ordinateur. Garde les champs et le fonctionnement existants. Adapte la mise en page au mobile et prévois l’affichage des erreurs et de l’attente pendant la connexion.
 
 **Problème constaté :** les textes répétés, les labels séparés et les champs rectangulaires donnaient trop de poids visuel au formulaire.
+
+**Relance :**
+
+> Il y a trop de texte autour du formulaire et les champs prennent trop de place visuellement. Enlève les petites phrases qui répètent les titres. Remplace les rectangles par une ligne sous chaque champ et intègre le label au champ. Il doit rester visible quand on écrit. Vérifie aussi qu’on voit bien le focus au clavier et les erreurs.
 
 **Correction retenue :**
 
@@ -115,11 +119,15 @@ Chaque exemple suit le même format : **prompt → problème constaté → corre
 
 #### 2. Aligner l’inscription sur le backend
 
-**Prompt reconstitué :**
+**Demande initiale :**
 
-> Conçois un parcours d’inscription progressif pour Intern : choix du rôle candidat ou recruteur, adresse e-mail, nom complet et mot de passe. Permets de revenir à l’étape précédente sans perdre les informations. Prévois les erreurs de validation, l’attente pendant l’envoi et un écran de confirmation après la réponse du serveur.
+> Fais l’inscription en plusieurs étapes : d’abord candidat ou recruteur, puis l’adresse e-mail, le nom complet et le mot de passe. Quand on revient en arrière, il faut retrouver ce qu’on a saisi. Branche le formulaire sur l’API Django existante, affiche les erreurs près des champs concernés et empêche de renvoyer le formulaire tant que la première requête n’est pas terminée.
 
 **Problème constaté :** le backend crée un compte en attente d’activation. Une confirmation annonçant un accès immédiat serait incorrecte.
+
+**Relance :**
+
+> Attention, créer un compte ne donne pas encore accès à l’application : le superviseur doit l’activer. Après la réponse du serveur, affiche un écran qui explique cette attente et ne connecte pas automatiquement l’utilisateur. S’il essaie de se connecter avant l’activation, il faut lui dire que son compte est en attente, sans lui faire croire que son mot de passe est incorrect.
 
 **Correction retenue :**
 
@@ -131,11 +139,15 @@ Chaque exemple suit le même format : **prompt → problème constaté → corre
 
 #### 3. Faciliter la lecture d’une offre et la candidature
 
-**Prompt reconstitué :**
+**Demande initiale :**
 
-> Crée une fiche de stage pour Intern comprenant le titre, l’entreprise, la localisation, la description, les missions, les compétences et le lien pour postuler. Organise ces informations pour permettre au candidat de comprendre rapidement l’offre. Prévois une version ordinateur et une version mobile, ainsi que les cas où certaines informations sont absentes.
+> Améliore la page de détail d’un stage. On doit repérer rapidement le poste, l’entreprise, le lieu et comment postuler, puis lire la description. Réutilise les données de l’API et les composants du site. Les descriptions importées peuvent être longues ou incomplètes : garde le contenu disponible et prévois un affichage propre quand il manque une information ou un lien de candidature.
 
 **Problème constaté :** le bandeau et l’espace supérieur éloignaient l’action de candidature. Les descriptions importées formaient parfois de longs blocs peu structurés.
+
+**Relance :**
+
+> Le haut de la page prend trop de place et on doit descendre pour trouver comment postuler. Retire le bandeau générique et commence directement par le titre du stage. Mets le bloc de candidature à droite dès le début sur ordinateur, et avant la description sur mobile. Rends les paragraphes et les listes plus lisibles sans réécrire l’annonce ni ajouter d’informations absentes de la source.
 
 **Correction retenue :**
 
@@ -147,11 +159,15 @@ Chaque exemple suit le même format : **prompt → problème constaté → corre
 
 #### 4. Enrichir le profil candidat
 
-**Prompt reconstitué :**
+**Demande initiale :**
 
-> Conçois la page de profil candidat d’Intern. Le candidat doit pouvoir consulter son CV courant, le remplacer et retrouver les informations utiles à ses candidatures. Présente clairement les données renseignées et celles qui restent à compléter. Prévois les états d’enregistrement, de réussite et d’erreur.
+> Fais une page de profil candidat cohérente avec le reste d’Intern. Il faut retrouver son CV actuel, pouvoir le remplacer et voir les informations déjà renseignées. Utilise les données du compte connecté et les API existantes. Indique clairement ce qui reste à compléter et affiche un retour quand un enregistrement réussit ou échoue.
 
 **Problème constaté :** un écran centré sur le téléchargement du CV ne permettait pas de gérer toutes les informations du candidat.
+
+**Relance :**
+
+> Là, la page sert surtout à remplacer le CV. Ajoute des sections pour l’identité, la présentation, les expériences, les formations, les compétences et les préférences de stage. Je veux pouvoir modifier et enregistrer chaque section séparément, ou annuler ses changements. Si l’enregistrement échoue, garde la saisie. Remplacer le CV ne doit pas écraser les informations que le candidat a renseignées lui-même.
 
 **Correction retenue :**
 
@@ -179,15 +195,4 @@ npm --prefix frontend run lint
 npm --prefix frontend run test:e2e
 ```
 
-### Résultats consignés et points à vérifier
-
-Les résultats suivants sont **historiques** ; ils ne proviennent pas d’une nouvelle exécution lors de la rédaction :
-
-| Contrôle | État consigné |
-| --- | --- |
-| Tests navigateur avec API contrôlée | 104 réussis, 3 scénarios optionnels ignorés |
-| Recette avec API et base réelles | Consignée séparément dans le cahier de tests |
-| Comparaison Figma, T25 | Déclarée réalisée par l’équipe le 21 octobre |
-| Installation sur VM vierge, T24 | À vérifier |
-
-Les contrôles ciblés couvrent les petits écrans, le zoom, les contrastes, le focus et la réduction des animations. Ils ne constituent pas un audit complet d’accessibilité. Les contraintes et résultats détaillés figurent dans la [validation frontend](../frontend/VALIDATION.md).
+Les interfaces ont été vérifiées sur ordinateur et mobile, et comparées au prototype Figma. Le détail des vérifications figure dans le [cahier de tests](../tests/README.md).
