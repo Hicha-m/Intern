@@ -21,7 +21,8 @@
 \begin{center}
 {\LARGE\bfseries Intern}\par
 \vspace{3pt}Compte rendu du projet de virtualisation -- Polytech\par
-Omar Benjelloun -- Hicham Mohammed
+Omar Benjelloun -- Hicham Mohammed\par
+{\small Dépôt et livrables : \url{https://github.com/OmarBenje/Intern}}
 \end{center}
 \vspace{3pt}
 \subsection*{Résumé}
@@ -59,7 +60,7 @@ La figure~\ref{fig:1} résume les échanges entre les composants du tableau~\ref
 \subsection{Analyse et prototype}
 Avant de coder, nous avons défini les parcours des candidats, recruteurs et administrateurs, les règles d'accès et les principaux cas d'erreur. Le prototype interactif Figma nous a servi de repère pour construire l'interface.
 
-Le document \href{../docs/Figma.md}{\nolinkurl{docs/Figma.md}} relie le prototype, les étapes de conception, les corrections et les preuves. Aucun prompt Figma original n'a été retrouvé dans les traces du dépôt consultées : nous signalons ce manque sans reconstituer de dialogue. Un prompt exact de génération du visuel d'authentification est conservé séparément ; il ne documente pas la création du prototype.
+Le document \href{https://github.com/OmarBenje/Intern/blob/master/docs/Figma.md}{\nolinkurl{docs/Figma.md}} relie le prototype, les étapes de conception, les corrections et les preuves. Les prompts Figma originaux ne sont plus disponibles. Quatre exemples reconstitués, explicitement signalés, illustrent les demandes et les corrections. Le prompt original de génération du visuel d'authentification est conservé séparément ; il concerne l'image décorative.
 
 \subsection{Architecture de la base de données}
 Nous avons regroupé le catalogue d'offres et les données privées dans une seule base PostgreSQL. Elle assure aussi la recherche textuelle grâce aux index GIN et garde une file de messages transactionnelle (outbox) pour les traitements en arrière-plan. Nous n'avons pas ajouté de base NoSQL ni de moteur vectoriel.
@@ -78,7 +79,7 @@ L'inscription illustre ce passage du prototype au produit : le formulaire conser
 
 Les revues conservées retracent des améliorations concrètes : simplification de l'authentification, rapprochement de l'action de candidature et organisation du profil en sections avec brouillons indépendants. Les tests ciblés couvrent notamment les petits écrans, le zoom du texte, le contraste, le focus et la réduction des animations. Ils ne constituent pas un audit complet d'accessibilité.
 
-La validation frontend consigne 104 tests navigateur réussis avec API contrôlée et 3 scénarios optionnels ignorés ; une recette séparée vérifie les parcours avec Django et PostgreSQL réels. Ces résultats sont ceux des vérifications archivées. Pour reprendre le travail, une équipe dispose du prototype, des sources React, des captures et des commandes de vérification dans le \href{../docs/Figma.md}{document Figma} et la \href{../frontend/VALIDATION.md}{validation du frontend}.
+La validation frontend consigne 104 tests navigateur réussis avec API contrôlée et 3 scénarios optionnels ignorés ; une recette séparée vérifie les parcours avec Django et PostgreSQL réels. Ces résultats sont ceux des vérifications archivées. Pour reprendre le travail, une équipe dispose du prototype, des sources React, des captures et des commandes de vérification dans le \href{https://github.com/OmarBenje/Intern/blob/master/docs/Figma.md}{document Figma} et la \href{https://github.com/OmarBenje/Intern/blob/master/frontend/VALIDATION.md}{validation du frontend}.
 
 \subsection{Stockage des CV sur Cloudflare R2}
 En production, les CV, lettres et pièces jointes sont conservés dans un bucket Cloudflare R2 privé, sous juridiction européenne. Django y accède avec boto3, via l'API compatible S3. PostgreSQL garde uniquement les références, métadonnées et empreintes SHA-256 des fichiers.
@@ -264,7 +265,7 @@ Nous observons donc un plafonnement du débit et une hausse de latence, mais auc
 \end{minipage}\end{center}
 La figure~\ref{fig:capacity} utilise les paliers réellement mesurés de cette campagne, sans ajouter de valeurs intermédiaires ni moyenner les p95. En VM, les deux séries dépassent le seuil de 1\,000 ms à 160 utilisateurs. Le point Docker à 200 n'existe qu'en série 2 ; les plateaux incomplets de la série 1 à 200, 240 et 320 sont exclus. La tenue d'un plateau ne suffit pas à établir une capacité maximale reproductible, notamment lorsque l'injecteur et le serveur partagent le même hôte.
 
-La figure, le CSV de ses sources et le script de régénération sont liés dans la \href{../mesure/docs/capacity-summary.md}{synthèse des mesures complémentaires}. Les essais à faible charge historiques et ceux comparant les workers constituent des campagnes distinctes.
+La figure, le CSV de ses sources et le script de régénération sont liés dans la \href{https://github.com/OmarBenje/Intern/blob/master/mesure/docs/capacity-summary.md}{synthèse des mesures complémentaires}. Les essais à faible charge historiques et ceux comparant les workers constituent des campagnes distinctes.
 
 \subsection{Effet du nombre de workers Gunicorn}
 Deux campagnes du 19 octobre comparent 2 et 4 workers, dans l'ordre 2/4 puis 4/2, avec les mêmes données restaurées et les mêmes ressources pour chaque déploiement. Elles couvrent 80, 100 et 130 utilisateurs en VM, puis 150, 180 et 200 sous Docker. Le tableau~\ref{tab:workers} présente le dernier palier de chaque campagne.
@@ -304,6 +305,6 @@ Docker, 200 & 163,47 / 162,14 & 195,19 / 195,19 & 373 / 385 & 60 / 55 \\
 \item W. Felter, A. Ferreira, R. Rajamony, J. Rubio, An Updated Performance Comparison of Virtual Machines and Linux Containers, IBM Research, 2014.
 \item Documentation Docker : \url{https://docs.docker.com/engine/security/rootless/}.
 \item Documentation Cloudflare R2 : \url{https://developers.cloudflare.com/r2/examples/aws/boto3/}.
-\item Preuves brutes du projet : deploiement/docs/, docker/docs/, mesure/resultats/, mesure/preuves/ (dépôt GitHub Intern).
+\item Preuves brutes du projet : deploiement/docs/, docker/docs/, mesure/preuves/ (dépôt GitHub Intern).
 \end{itemize}
 \end{document}
