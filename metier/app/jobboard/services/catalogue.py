@@ -281,6 +281,8 @@ def import_board(board_id, *, supplied_snapshot=None):
                     raw_hash=job["hash"],
                     defaults={"semantic_hash": semantic_hash, "payload": job["raw"]},
                 )
+                from jobboard.services.skill_requirements import extract_revision_skills
+                extract_revision_skills(revision)
                 if locked.provider == "jobspy":
                     from jobboard.services.salary_normalization import sync_salary
                     sync_salary(source, revision)

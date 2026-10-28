@@ -153,12 +153,13 @@ def publish(job):
             "raw_payload": payload,
         },
     )
-    m.SourceRevision.objects.get_or_create(
+    revision, _ = m.SourceRevision.objects.get_or_create(
         source=source, raw_hash=content_hash,
         defaults={"semantic_hash": content_hash, "payload": payload},
     )
     from jobboard.services.engine_quality import enrich_offer
-
+    from jobboard.services.skill_requirements import extract_revision_skills
+    extract_revision_skills(revision)
     enrich_offer(offer)
     job.published_at = job.published_at or now
 

@@ -98,7 +98,7 @@ concurrence et crash contrôlés ; essai live limité avec rapport distinct.
 Résultat : corpus dédupliqué, enrichi et auditable pour les statistiques.
 
 - [ ] E4.1 — Normaliser métiers, spécialisations, synonymes de compétences, contrats, langues, télétravail et zones géographiques ; versionner la taxonomie.
-- [ ] E4.2 — Extraire compétences obligatoires/souhaitées, diplôme, certifications, années d’expérience et séniorité avec extraits justificatifs.
+- [ ] E4.2 — Extraire compétences obligatoires/souhaitées, diplôme, certifications, années d’expérience et séniorité avec extraits justificatifs. [E4.2a : baseline des preuves de compétences vérifiée](docs/research/2026-10-28-e4-skill-evidence.md), 646 tests PostgreSQL ; corpus indépendant et cibles de qualité encore ouverts.
 - [ ] E4.3 — Normaliser les rémunérations sans mélanger devises, périodes, brut/net et fixe/variable ; garder les informations inconnues.
 - [ ] E4.4 — Améliorer le rapprochement d’annonces multi-sources, l’historique, les republications et le cycle actif/expiré ; conserver les fusions explicables.
 - [ ] E4.5 — Rejouer l’enrichissement de façon idempotente, appliquer la rétention et publier les métriques de qualité et de couverture par source.
@@ -198,13 +198,12 @@ quarantaine, épuisement du pool et transmission effective à JobSpy ; tests liv
 
 ## Prochaine story
 
-**E4.2a : extraire les compétences exigées ou souhaitées avec preuves.**
-Réutiliser la taxonomie existante et ses synonymes, puis conserver pour chaque
-mention sa révision source, son extrait littéral et la version d’extraction.
-Distinguer obligatoire, souhaité et non qualifié ; préserver les absences et
-négations. Commencer par les compétences et technologies, puis compléter diplôme,
-certifications, langues et expérience dans les stories suivantes. Vérifier les
-règles sur un corpus annoté distinct avant de revendiquer les cibles du PRD.
-E4.1 et les autres contrôles E2 restent suivis ; ils ne justifient pas de reprendre
-les proxys avant les exigences et le panel E5. Travail récent local : aucune
-publication GitHub, fusion sur master ou mise en production annoncée.
+**E4.2b : extraire les années d’expérience avec preuves pour le premier emploi.**
+Conserver bornes, caractère obligatoire/souhaité, révision et extrait ; distinguer
+sans expérience, expérience inconnue et absence d’information. Préserver les
+contradictions et ne jamais déduire « zéro an » du seul mot junior ou d’un stage.
+Contrat, séniorité et années restent indépendants. Réutiliser ces preuves dans le
+futur panel E5, puis compléter diplôme, certifications et langues. Le vocabulaire
+et le corpus annoté E4.1/E0.4 restent à étendre avant de revendiquer les cibles du
+PRD. Les autres audits E2 restent suivis, les proxys toujours reportés. Travail
+récent local : publication GitHub, fusion sur master et déploiement en attente.
