@@ -1,6 +1,7 @@
 """Mutualized catalogue reconciliation with fenced leases and confirmed absence."""
 
 import hashlib
+import re
 import uuid
 from datetime import timedelta
 
@@ -23,6 +24,10 @@ from jobboard.models import (
     SourceObservation,
     SourceRevision,
 )
+
+
+def _diagnostic_code(value):
+    return value if isinstance(value, str) and re.fullmatch(r"[a-z][a-z0-9_]{0,79}", value) else "invalid_diagnostic"
 
 
 def _claim(board_id):
@@ -123,9 +128,14 @@ def import_board(board_id, *, supplied_snapshot=None):
                 else fetch_normalized(board)
             )
         )
-        complete = getattr(snapshot, "complete", True)
+        raw_diagnostics = getattr(snapshot, "errors", [])
+        # Error-bearing and ambiguous empty snapshots never prove absence.
+        complete = getattr(snapshot, "complete", True) is True and not raw_diagnostics
         scope = getattr(snapshot, "scope", None)
-        diagnostics = getattr(snapshot, "errors", [])
+        diagnostics = [
+            {"code": _diagnostic_code(item.get("code") if isinstance(item, dict) else None)}
+            for item in raw_diagnostics[:500]
+        ]
         with transaction.atomic():
             locked = SourceBoard.objects.select_for_update().get(pk=board.pk)
             schedule = BoardSchedule.objects.select_for_update().get(board=locked)
@@ -327,6 +337,10 @@ def import_board(board_id, *, supplied_snapshot=None):
                 complete,
                 len(snapshot),
             )
+            run.outcome = (
+                "partial" if not complete or quarantine
+                else "success" if snapshot else "empty_confirmed"
+            )
             run.diagnostics = diagnostics
             run.error_code = schedule.last_error_code or None
             run.save(
@@ -334,6 +348,7 @@ def import_board(board_id, *, supplied_snapshot=None):
                     "status",
                     "finished_at",
                     "is_full_snapshot",
+                    "outcome",
                     "diagnostics",
                     "seen_count",
                     "error_code",
@@ -341,9 +356,9 @@ def import_board(board_id, *, supplied_snapshot=None):
             )
         return run
     except Exception as exc:
-        error = exc.code if isinstance(exc, CatalogueImportError) else "import_failed"
+        error = _diagnostic_code(exc.code) if isinstance(exc, CatalogueImportError) else "import_failed"
         ImportRun.objects.filter(pk=run.pk).update(
-            status="failed", finished_at=timezone.now(), error_code=error
+            status="failed", outcome="failed", finished_at=timezone.now(), error_code=error
         )
         with transaction.atomic():
             schedule = BoardSchedule.objects.select_for_update().get(board=board)

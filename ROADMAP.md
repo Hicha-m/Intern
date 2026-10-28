@@ -83,7 +83,7 @@ Résultat : collecte reproductible et diagnostic précis des incidents.
 
 - [ ] E2.1 — Comparer JobSpy amont, sa version épinglée, ses issues/forks et les dépôts candidats : licence, maintenance, fonctionnalités, qualité, contraintes et coût.
 - [ ] E2.2 — Benchmarker les candidats sur des requêtes identiques ; retenir les composants utiles dans un ADR, épingler leurs versions et documenter les éventuels patchs.
-- [ ] E2.3 — Uniformiser les états succès, vide confirmé, partiel et échec ; conserver curseur, provenance et diagnostics expurgés.
+- [ ] E2.3 — Uniformiser les états succès, vide confirmé, partiel et échec ; conserver curseur, provenance et diagnostics expurgés. [E2.3a vérifiée : imports et réconciliation](docs/research/2026-10-28-e2-collection-outcomes.md) : 611 tests Django réussis, migration protégée ; E2.3b doit encore couvrir les requêtes vides sans import.
 - [ ] E2.4 — Vérifier/compléter idempotence, réservation de tâches, reprise après crash, budgets de requêtes et temporisation par source.
 - [ ] E2.5 — Remonter les rémunérations et champs disponibles de JobSpy jusqu’au modèle ; exposer le tableau de santé des sources à l’administrateur.
 
@@ -198,10 +198,11 @@ quarantaine, épuisement du pool et transmission effective à JobSpy ; tests liv
 
 ## Prochaine story
 
-**E2.3 : fiabiliser les résultats de collecte pour les données sourcées.**
-Auditer les états succès, vide confirmé, partiel et échec des adaptateurs existants,
-puis uniformiser leur transport et leurs diagnostics. Vérifier qu’une erreur ou
-un vide incertain ne clôture aucune offre, avec curseurs conservés et tests de
-régression. E2.1/E2.2 restent conditionnées à un blocage mesuré ; les proxys sont
-toujours reportés. Les branches E1 récentes attendent l’autorisation de publication
-GitHub ; les validations locales ne valent ni fusion sur master ni déploiement.
+**E2.3b : tracer les tentatives des requêtes de découverte.**
+E2.3a a fiabilisé les imports et la réconciliation (611 tests Django réussis).
+Enregistrer maintenant aussi les tentatives vides ou échouées sans import
+entreprise, leurs volumes et curseurs avant/après ; distinguer vide confirmé,
+vide incertain, pagination encore ouverte et erreur. Préserver les baux et la
+transaction de progression. Les comparaisons E2.1/E2.2 restent conditionnées à un
+blocage mesuré ; les proxys sont toujours reportés. Les validations locales ne
+valent ni publication GitHub, ni fusion sur master, ni déploiement.

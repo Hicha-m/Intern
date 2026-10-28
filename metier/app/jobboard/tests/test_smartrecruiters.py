@@ -163,7 +163,7 @@ class SmartRecruitersImportTests(TestCase):
             run = import_board(board.pk)
         self.assertFalse(run.is_full_snapshot)
         self.assertEqual(
-            run.diagnostics, [{"external_id": "123", "code": "upstream_rate_limited"}]
+            run.diagnostics, [{"code": "upstream_rate_limited"}]
         )
         source.refresh_from_db()
         self.assertEqual(source.last_checked_at, checked)

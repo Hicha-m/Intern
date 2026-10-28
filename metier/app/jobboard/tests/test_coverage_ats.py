@@ -138,7 +138,7 @@ class PartialSnapshotTests(TestCase):
         self.assertFalse(run.is_full_snapshot)
         self.assertEqual(run.error_code, "partial_snapshot")
         self.assertEqual(
-            run.diagnostics, [{"external_id": "2", "code": "snapshot_changed"}]
+            run.diagnostics, [{"code": "snapshot_changed"}]
         )
         self.assertEqual(
             OfferSource.objects.get(external_id="2").last_checked_at, before
