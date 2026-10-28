@@ -1,6 +1,6 @@
 # Roadmap — Plateforme d’emploi informatique et analyse du marché
 
-Version 1 · 27 octobre 2026.
+Version 2 · 28 octobre 2026.
 
 Références : [PRD](PRD.md), puis [architecture](ARCHITECTURE.md).
 Workflow : [AGENTS.md](AGENTS.md). Cette roadmap décrit le travail futur ; les
@@ -22,22 +22,30 @@ technique du produit futur.
 
 ## Ordre et dépendances
 
+Les identifiants d’epic restent stables ; l’ordre ci-dessous indique la priorité
+réelle de livraison. Les proxys sont un plus pour accélérer ou améliorer la
+collecte si le gain est mesuré, sans prérequis pour les fonctionnalités produit.
+
 | Epic | Objectif | Dépendances | État |
 | --- | --- | --- | --- |
-| E0 | Cadrage, audit et mesures de départ | Aucune | En cours : documents rédigés, audit de recette à faire |
-| E1 | Catalogue de tous les emplois informatiques | E0 | À faire |
-| E2 | Collecte et intégration des dépôts GitHub | E1 | À faire |
-| E3 | Pool de proxys et rotation JobSpy/LinkedIn | E2 | À faire |
-| E4 | Données normalisées et exigences sourcées | E2 ; E3 avant campagne LinkedIn avec proxys | À faire |
-| E5 | Panel statistique et analyse du premier emploi | E4 | À faire |
-| E6 | RAG d’analyse du marché | E5 | À faire |
-| E7 | Comparaison des compétences du candidat | E6 | À faire |
-| E8 | Mise en production et suivi | E5 pour le MVP ; E6/E7 pour leurs activations | À faire |
+| E0 | Cadrage, audit et mesures nécessaires à la prochaine story | Aucune | En cours : documents rédigés, audit de recette à faire |
+| E1 | Catalogue de tous les emplois informatiques | Audit E0 ciblé sur le catalogue | À faire, priorité produit 1 |
+| E2 | Fiabilité minimale de la collecte et transport des champs utiles | E1 | À faire, socle du panel |
+| E4 | Données normalisées et exigences sourcées | Collecte et champs utiles E2 ; aucune dépendance à E3 | À faire, priorité produit 2 |
+| E5 | Panel statistique et analyse du premier emploi | E4 | À faire, priorité produit 3 |
+| E8 | Recette et mise en production de chaque livraison | E5 pour le MVP ; critères de la fonction activée ensuite | À faire à chaque livraison |
+| E6 | RAG d’analyse du marché | E5 | À faire, priorité produit 4 |
+| E7 | Comparaison des compétences du candidat | E5 ; E6 non requis pour une comparaison SQL | À faire, priorité produit 5 |
+| E3 | Pool de proxys et rotation JobSpy/LinkedIn optionnels | E2 ; après les fonctionnalités produit prioritaires | Reporté, optimisation secondaire |
 
-**MVP** : E0 à E5, puis recette et mise en production E8. E3 reste nécessaire
-pour valider l’objectif proxy/LinkedIn ; une panne de LinkedIn n’empêche pas
-de tester E4/E5 sur les autres sources, en affichant la couverture réelle.
-Le RAG et la comparaison sont livrés ensuite, chacun avec sa propre recette E8.
+**MVP** : audit E0 utile au périmètre, E1, socle nécessaire E2, E4 et E5,
+puis recette et mise en production E8. Les comparaisons de dépôts et extensions
+de sources E2.1/E2.2 sont menées seulement si elles répondent à un blocage mesuré ;
+elles ne retardent pas les fonctionnalités réalisables avec les adaptateurs existants.
+E3 est exclu du MVP et ne bloque ni E4/E5, ni E6/E7, ni leur recette E8.
+Une source indisponible réduit la couverture affichée ; les sources disponibles
+permettent de livrer. Le RAG puis la comparaison sont livrés avec leur propre
+recette E8 ; la comparaison peut avancer sans attendre le RAG.
 
 ## E0 — Fixer le produit, l’architecture et la référence de qualité
 
@@ -46,8 +54,8 @@ Résultat : une base de décision mesurée pour les prochaines itérations.
 - [x] E0.1 — Rédiger les instructions essentielles, le PRD et l’architecture à partir du dépôt.
 - [x] E0.2 — Décomposer le travail en epics et stories avec critères de fin.
 - [ ] E0.3 — Inventorier sources actives, règles stage, tâches, schéma, données et tests ; mesurer les erreurs et volumes actuels sans relancer toute la collecte.
-- [ ] E0.4 — Constituer les jeux annotés extraction, doublons et questions RAG du PRD ; conserver provenance, date et séparation calibration/évaluation.
-- [ ] E0.5 — Confirmer pays/langues du pilote, sources, rétentions et plafonds de coût ; traduire les points ouverts en décisions documentées.
+- [ ] E0.4 — Constituer progressivement, avant la recette de chaque fonctionnalité concernée, les jeux annotés extraction, doublons et questions RAG du PRD ; conserver provenance, date et séparation calibration/évaluation.
+- [ ] E0.5 — Confirmer pays/langues du pilote, sources, rétentions et plafonds de coût des fonctions à activer ; traduire les points ouverts en décisions documentées.
 
 Acceptation : inventaire lié à ses fichiers, bilan de tests existants, mesures de
 départ et décisions consignées. Les cibles non mesurées restent indiquées comme telles.
@@ -84,24 +92,6 @@ le dernier curseur validé ; aucune clôture d’offre après erreur/vide incert
 benchmark avant/après conservé et versions retenues justifiées.
 Tests : contrats de connecteurs sur fixtures, timeout, 429, parsing cassé, pagination,
 concurrence et crash contrôlés ; essai live limité avec rapport distinct.
-
-## E3 — Récupérer, tester et faire tourner les proxys
-
-Résultat : gestion automatique du cycle de vie des proxys utilisée par JobSpy,
-notamment pour LinkedIn, sans considérer la rotation comme une garantie de succès.
-
-- [ ] E3.1 — Choisir les fournisseurs/listes configurables, y compris candidats GitHub évalués ; importer périodiquement, dédupliquer et protéger les secrets.
-- [ ] E3.2 — Tester protocole, disponibilité, HTTPS, latence et validité par destination ; expirer les anciens contrôles et refuser les adresses réseau internes issues des listes externes.
-- [ ] E3.3 — Implémenter score de santé, sélection, rotation, affinité de session, quarantaine et revalidation avec limites de concurrence.
-- [ ] E3.4 — Brancher le pool sur les adaptateurs JobSpy réellement utilisés ; vérifier le support au commit épinglé avant de décider mise à jour ou fork.
-- [ ] E3.5 — Ajouter supervision : capacité saine, rendement par source, causes d’échec, 429, coût et alertes ; différer les tâches sans proxy disponible.
-
-Acceptation : un proxy défaillant est écarté puis revalidé ; un proxy sain pour une
-destination ne l’est pas implicitement pour toutes ; reprise et rotation bornées ;
-aucun secret dans les logs ; campagne LinkedIn comparée à la référence E0 avec
-dates, taux de succès et limites. Une campagne bloquée reste un résultat documenté.
-Tests : serveur proxy local, endpoints invalides/expirés, TLS invalide, 429,
-quarantaine, épuisement du pool et transmission effective à JobSpy ; tests live séparés.
 
 ## E4 — Structurer les données et les conditions d’entrée
 
@@ -157,6 +147,7 @@ et E2E avec consultation des citations.
 ## E7 — Comparer les compétences aux exigences du marché
 
 Résultat : identifier les exigences à travailler pour une spécialisation choisie.
+La comparaison repose sur les faits et agrégats E4/E5 et fonctionne sans RAG.
 
 - [ ] E7.1 — Permettre la sélection volontaire de compétences déclarées et d’un segment de marché.
 - [ ] E7.2 — Présenter compétences communes, exigences absentes du profil et priorités fondées sur leur fréquence ; distinguer obligatoire et souhaitée.
@@ -177,14 +168,37 @@ puis à chaque activation E6/E7.
 - [ ] E8.2 — Répéter migration, sauvegarde/restauration et retour applicatif sur environnement isolé ; configurer secrets et activation progressive.
 - [ ] E8.3 — Exécuter régression candidat/recruteur/admin et nouvelles fonctions, recette navigateur/API/base réelle, contrôles de performance et confidentialité.
 - [ ] E8.4 — Déployer la cible Compose, vérifier la santé et l’observabilité, publier la version et ses limites ; garder la procédure VM distincte.
-- [ ] E8.5 — Revoir périodiquement qualité, couverture, santé proxy, coûts et retours utilisateurs ; alimenter le backlog de corrections mesurées.
+- [ ] E8.5 — Revoir périodiquement qualité, couverture, santé proxy si activé, coûts et retours utilisateurs ; alimenter le backlog de corrections mesurées.
 
 Acceptation : contrôles requis réussis, preuves et limites liées, procédure de
 retour vérifiée, données privées protégées ; métriques réelles visibles après
 déploiement. Une CI préparée ne signifie pas une CI distante exécutée.
 
+## E3 — Récupérer, tester et faire tourner les proxys (optionnel, en dernier)
+
+Priorité : après les fonctionnalités produit E1/E4/E5/E6/E7. Activer cet epic
+uniquement pour un gain mesuré de vitesse ou de disponibilité ; aucune autre
+fonctionnalité ne dépend de son achèvement.
+
+Résultat : gestion automatique du cycle de vie des proxys utilisée par JobSpy,
+notamment pour LinkedIn, sans considérer la rotation comme une garantie de succès.
+
+- [ ] E3.1 — Choisir les fournisseurs/listes configurables, y compris candidats GitHub évalués ; importer périodiquement, dédupliquer et protéger les secrets.
+- [ ] E3.2 — Tester protocole, disponibilité, HTTPS, latence et validité par destination ; expirer les anciens contrôles et refuser les adresses réseau internes issues des listes externes.
+- [ ] E3.3 — Implémenter score de santé, sélection, rotation, affinité de session, quarantaine et revalidation avec limites de concurrence.
+- [ ] E3.4 — Brancher le pool sur les adaptateurs JobSpy réellement utilisés ; vérifier le support au commit épinglé avant de décider mise à jour ou fork.
+- [ ] E3.5 — Ajouter supervision : capacité saine, rendement par source, causes d’échec, 429, coût et alertes ; différer les tâches sans proxy disponible.
+
+Acceptation : un proxy défaillant est écarté puis revalidé ; un proxy sain pour une
+destination ne l’est pas implicitement pour toutes ; reprise et rotation bornées ;
+aucun secret dans les logs ; campagne LinkedIn comparée à la référence E0 avec
+dates, taux de succès et limites. Une campagne bloquée reste un résultat documenté.
+Tests : serveur proxy local, endpoints invalides/expirés, TLS invalide, 429,
+quarantaine, épuisement du pool et transmission effective à JobSpy ; tests live séparés.
+
 ## Prochaine story
 
 **E0.3 : audit et mesures de départ.** Produire un inventaire synthétique des
-filtres stage, sources, points de passage des rémunérations/proxys et tests
-existants. Cette preuve permet d’estimer E1 et E2 sans engager une refonte.
+filtres stage, contrats, sources, points de passage des rémunérations et tests
+existants, centré sur les prérequis d’E1. Enchaîner sur E1.1 ; l’audit du pool
+proxy et l’évaluation RAG attendent leurs epics respectifs.

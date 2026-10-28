@@ -1,6 +1,6 @@
 # Architecture — Catalogue informatique et intelligence du marché
 
-Version 1 · 27 octobre 2026 · Cible de développement issue du [PRD](PRD.md).
+Version 2 · 28 octobre 2026 · Cible de développement issue du [PRD](PRD.md).
 Ordre de réalisation : [ROADMAP.md](ROADMAP.md). Les éléments marqués « cible »
 ne sont pas annoncés comme déjà implémentés.
 
@@ -48,7 +48,7 @@ exactes des dépendances restent celles des lockfiles ; tout ajout sera épingl�
 flowchart TD
     S[Sources ATS et job boards] --> C[Workers de collecte et adaptateurs]
     P[Fournisseurs et listes de proxys configurés] --> H[Validation et santé par destination]
-    H --> C
+    H -. Option après les fonctionnalités produit .-> C
     C --> R[Snapshots et provenance]
     R --> N[Normalisation et dédoublonnage]
     N --> X[Extraction versionnée avec preuves]
@@ -69,9 +69,10 @@ Les données des profils et CV ne participent pas à ce flux public.
 ## 4. Modules et contrats
 
 Étendre les dossiers existants `integrations/`, `services/`, `models/` et
-`management/commands/`. Introduire des services `proxy_pool`, `market_extraction`,
-`market_analytics` et `market_rag` avec responsabilités explicites ; leurs noms
-définitifs seront fixés dans les stories, sans déplacer tout le backend.
+`management/commands/`. Introduire des services `market_extraction`,
+`market_analytics` et `market_rag`, puis `proxy_pool` en optimisation optionnelle.
+Leurs responsabilités sont explicites ; leurs noms définitifs seront fixés dans
+les stories, sans déplacer tout le backend.
 
 - **Adaptateur de collecte** : entrée = requête, source, contrat, curseur et
   configuration réseau ; sortie = annonces brutes, pagination, état
@@ -115,6 +116,11 @@ republication ; les périodes sans observation restent signalées.
 
 ## 6. Proxys et JobSpy
 
+Le pool est une optimisation secondaire, planifiée après les fonctionnalités
+produit E1/E4/E5/E6/E7. La collecte utilise les modes réseau explicitement
+configurés et les sources disponibles ; le catalogue, le panel, le RAG et la
+comparaison fonctionnent sans pool. Mesurer le gain avant de l’activer.
+
 La [documentation officielle JobSpy](https://github.com/speedyapply/JobSpy)
 consultée le 27 octobre 2026 expose déjà `proxies` et une rotation. Cela ne valide
 pas la compatibilité du commit épinglé ni celle de ses classes internes utilisées
@@ -131,7 +137,9 @@ Rotation pondérée par santé et destination, expiration des validations, affin
 de session si nécessaire et quotas par source. Distinguer panne réseau, erreur de
 parsing, résultat vide et limitation. Respecter `Retry-After`, plafonner les
 reprises, mettre en quarantaine et suspendre une source après échecs répétés.
-Sans proxy sain, différer la tâche ; aucun repli direct implicite. Les listes
+Pour une source configurée pour utiliser un proxy, différer la tâche sans proxy
+sain ; aucun repli direct implicite. Les sources configurées en accès direct
+continuent de fonctionner sans pool. Les listes
 publiques restent désactivées par défaut jusqu’à évaluation ; aucune requête
 authentifiée ni donnée candidat ne traverse ces proxys. Refuser les endpoints
 privés, loopback et link-local des listes externes, y compris après résolution DNS.

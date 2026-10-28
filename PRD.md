@@ -1,6 +1,6 @@
 # PRD — Emploi informatique et analyse du marché
 
-Version 1 · 27 octobre 2026 · Cadrage initial, fonctionnalités futures à implémenter.
+Version 2 · 28 octobre 2026 · Cadrage initial, fonctionnalités futures à implémenter.
 
 Ordre de référence : **PRD → [architecture](ARCHITECTURE.md) → [roadmap](ROADMAP.md)**.
 Ces documents définissent l’évolution du produit ; les guides existants décrivent son fonctionnement actuel.
@@ -25,7 +25,7 @@ prétend pas représenter tout le marché ni garantir l’obtention d’un emplo
 | --- | --- | --- |
 | Candidat étudiant, junior ou confirmé | Chercher des opportunités et comprendre une spécialisation | Offres filtrées, panel du marché et exigences sourcées |
 | Recruteur | Publier et suivre ses candidatures | Parcours actuels compatibles avec les nouveaux contrats |
-| Administrateur | Superviser collecte, proxys et qualité | État des sources, incidents, fraîcheur et couverture |
+| Administrateur | Superviser collecte et qualité, puis les proxys optionnels | État des sources, incidents, fraîcheur et couverture |
 
 Parcours prioritaire : choisir métier/spécialisation, zone, période, contrat et
 niveau ; lire le panel ; consulter les annonces justificatives ; poser une
@@ -34,12 +34,15 @@ volontairement ; enregistrer des offres et suivre ses candidatures.
 
 ## 3. Périmètre et livraison progressive
 
-- **Socle** : étendre le catalogue informatique, fiabiliser collecte et proxys,
+- **Socle** : étendre le catalogue informatique, fiabiliser la collecte existante,
   normaliser et dédupliquer les annonces.
 - **MVP analytique** : filtres, statistiques descriptives et conditions d’entrée
   pour une spécialisation, avec provenance et données manquantes visibles.
 - **Après le MVP** : questions en langage naturel via RAG et comparaison explicable
   avec les compétences du candidat.
+- **Optimisation secondaire** : ajouter les proxys après les fonctionnalités
+  produit prioritaires, uniquement si des mesures montrent un gain de vitesse
+  ou de disponibilité. Leur absence ne bloque aucune livraison fonctionnelle.
 
 Hypothèse de démarrage : France, annonces françaises et anglaises ; conserver les
 sources européennes existantes et mesurer leur couverture avant élargissement.
@@ -57,7 +60,7 @@ absents et classement opaque des candidats.
 | F01 | Emploi informatique global | Stage, alternance, CDI, CDD, mission et contrat inconnu sont distingués ; séniorité et contrat restent indépendants ; les anciens parcours stage fonctionnent |
 | F02 | Collecte fiable | Chaque exécution indique source, requête, durée, statut, volumes et erreur ; un échec ou résultat vide incertain ne clôture aucune offre |
 | F03 | Réutilisation GitHub | Chaque composant retenu possède une fiche : licence, maintenance, version/commit, compatibilité, limites et résultat de benchmark ; aucun fork sans besoin démontré |
-| F04 | Gestion des proxys | Import automatique depuis fournisseurs/listes configurés, validation périodique, expiration, score par destination, rotation et quarantaine ; absence de proxy sain visible |
+| F04 | Gestion optionnelle des proxys, après les fonctionnalités produit | Import automatique depuis fournisseurs/listes configurés, validation périodique, expiration, score par destination, rotation et quarantaine ; absence de proxy sain visible |
 | F05 | Données explicables | Chaque fait extrait conserve annonce, extrait justificatif, date, version d’extraction et confiance ; un champ absent reste inconnu |
 | F06 | Panel statistique | Filtres combinables par mots-clés, métier, spécialisation, zone, dates, contrat, séniorité et télétravail ; URL partageable des filtres sans données privées |
 | F07 | Indicateurs | Volumes uniques, évolutions, compétences, technologies, diplômes, certifications, langues, expérience, salaires publiés et taux de renseignement |
@@ -110,7 +113,8 @@ il ne transforme pas une mesure manquante en validation.
 
 Le socle technique est fixé dans l’architecture. Le budget proxy/LLM, les sources
 du pilote et le fournisseur/modèle LLM restent à sélectionner par comparaison
-mesurée avant leur activation. Ne pas engager de coût récurrent sans budget défini.
+mesurée avant leur activation. Le budget proxy peut rester indéfini tant que
+cette optimisation est désactivée. Ne pas engager de coût récurrent sans budget défini.
 
 Les tâches réseau restent bornées en concurrence, durée et tentatives. Les proxys
 proviennent de sources configurées ; ils ne garantissent ni disponibilité de
