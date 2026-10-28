@@ -7,7 +7,6 @@ from django.db.models import Q
 
 from jobboard.models import Skill, SkillEvidence, SkillExtraction
 
-from .engine_quality import plain_text
 from .offer_content import section_kind
 
 VERSION = "skills-1"
@@ -92,78 +91,51 @@ def description_fields(payload, prefix=""):
 
 
 def extract_mentions(text, initial_section="other"):
-    section = initial_section
-    hidden = [
-        (match.start(), match.end())
-        for match in re.finditer(
-            r"<(script|style|template|noscript)\b[^>]*>.*?</\1\s*>", text, re.I | re.S
-        )
-    ]
-    searchable = list(text)
-    for start, end in hidden:
-        searchable[start:end] = [
-            "\n" if character == "\n" else " " for character in text[start:end]
-        ]
-    searchable = "".join(searchable)
-    for segment in re.finditer(
-        r".+?(?:\n|</(?:p|li|h[1-6]|div)>|<br\s*/?>|$)", searchable, re.I | re.S
-    ):
-        raw = segment.group()
-        decoded = plain_text(raw).strip()
-        heading = section_kind(decoded)
-        if heading != "other" and len(decoded) < 120:
-            section = heading
-            continue
-        # Sentence boundaries preserve dots inside names such as Node.js.
-        for sentence in re.finditer(r".+?(?:[.!?](?=\s|$)|$)", raw, re.S):
-            excerpt = sentence.group()
-            visible = plain_text(excerpt)
-            # Avoid interpreting tags, attributes, scripts or styles as skills.
-            if re.search(r"<(?:script|style)\b", excerpt, re.I):
-                continue
-            if section in {"about_company", "benefits", "recruitment"}:
-                continue
-            matches = [
-                match
-                for match in PATTERN.finditer(visible)
-                if not (
-                    match.group().casefold() == "react"
-                    and re.match(r"\s+(?:to|quickly)\b", visible[match.end() :], re.I)
-                )
-            ]
-            if not matches:
-                continue
-            negated = bool(NEGATED.search(visible))
-            preferred = bool(PREFERRED.search(visible))
-            required = bool(REQUIRED.search(visible))
-            conflicting_negation = negated and bool(
-                REQUIRED.search(NEGATED.sub("", visible))
+    from .requirement_text import source_sentences
+
+    for part in source_sentences(text, initial_section):
+        visible, section = part["visible"], part["section"]
+        matches = [
+            match
+            for match in PATTERN.finditer(visible)
+            if not (
+                match.group().casefold() == "react"
+                and re.match(r"\s+(?:to|quickly)\b", visible[match.end() :], re.I)
             )
-            if conflicting_negation or (
-                len(matches) > 1 and preferred and (required or negated)
-            ):
-                qualification, reason = "unspecified", "mixed_cues"
-            elif negated:
-                qualification, reason = "negated", "explicit_negation"
-            elif preferred or section == "preferred":
-                qualification, reason = "preferred", "preference_cue"
-            elif required or section == "requirements":
-                qualification, reason = "required", "requirement_cue"
-            else:
-                qualification, reason = "unspecified", "mention_only"
-            start = segment.start() + sentence.start()
-            # Excerpt is an exact slice of the retained field, including HTML.
-            for match in matches:
-                yield dict(
-                    skill_slug=ALIASES[match.group().casefold()],
-                    qualification=qualification,
-                    start=start,
-                    end=start + len(excerpt),
-                    excerpt=text[start : start + len(excerpt)],
-                    matched_text=match.group(),
-                    alternative=bool(re.search(r"\b(?:or|ou)\b", visible, re.I)),
-                    reason=reason,
-                )
+        ]
+        if not matches:
+            continue
+        negated = bool(NEGATED.search(visible))
+        preferred = bool(PREFERRED.search(visible))
+        required = bool(REQUIRED.search(visible))
+        conflicting_negation = negated and bool(
+            REQUIRED.search(NEGATED.sub("", visible))
+        )
+        if conflicting_negation or (
+            len(matches) > 1 and preferred and (required or negated)
+        ):
+            qualification, reason = "unspecified", "mixed_cues"
+        elif negated:
+            qualification, reason = "negated", "explicit_negation"
+        elif preferred or section == "preferred":
+            qualification, reason = "preferred", "preference_cue"
+        elif required or section == "requirements":
+            qualification, reason = "required", "requirement_cue"
+        else:
+            qualification, reason = "unspecified", "mention_only"
+        start = part["start"]
+        # Excerpt is an exact slice of the retained field, including HTML.
+        for match in matches:
+            yield dict(
+                skill_slug=ALIASES[match.group().casefold()],
+                qualification=qualification,
+                start=start,
+                end=part["end"],
+                excerpt=part["excerpt"],
+                matched_text=match.group(),
+                alternative=bool(re.search(r"\b(?:or|ou)\b", visible, re.I)),
+                reason=reason,
+            )
 
 
 @transaction.atomic

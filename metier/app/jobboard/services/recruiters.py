@@ -160,6 +160,8 @@ def publish(job):
     from jobboard.services.engine_quality import enrich_offer
     from jobboard.services.skill_requirements import extract_revision_skills
     extract_revision_skills(revision)
+    from jobboard.services.experience_requirements import extract_revision_experience
+    extract_revision_experience(revision)
     enrich_offer(offer)
     job.published_at = job.published_at or now
 
