@@ -1,15 +1,16 @@
 # E1.3 — Contrats et séniorité dans les parcours
 
 Date : 28 octobre 2026. Branche : `feat/e1-employment-flows`, depuis master à jour
-avec les commits E1.2 nécessaires conservés. Backend vérifié ; recette interface
-et bilan final de la story en cours.
+avec les commits E1.2 nécessaires conservés. Critères vérifiés localement ;
+aucun déploiement de production.
 
 ## Critères et réalisation
 
 - Le recruteur peut choisir stage, alternance, CDI, CDD, mission indépendante et
   inconnu, ainsi que les deux catégories génériques historiques. La séniorité est
-  une dimension indépendante. Les deux valeurs sont inconnues par défaut et ne
-  sont pas déduites du titre ou du CV.
+  une dimension indépendante. Les deux valeurs sont inconnues par défaut ; à la
+  publication du formulaire, les champs manquants ne sont pas remplis à partir
+  du titre ou du CV.
 - La publication, les modifications et les duplications transportent ces champs
   jusqu’à Offer. Les droits de publication et de lecture restent limités au compte
   propriétaire et à sa vérification.
@@ -54,7 +55,19 @@ la duplication, les révisions et la migration aller/retour.
 - Lint et build frontend réussis ; avertissements existants Fast Refresh et bundle
   supérieur à 500 kB conservés. Ruff, contrôle Django, absence de migration
   manquante et `git diff --check` réussis.
-- Bilan Playwright et recettes réelles : à compléter avant clôture de la story.
+- **37 scénarios Playwright distincts vérifiés avec API simulée**, en plusieurs
+  passages : 9 profils dans la première passe, 19 détails/recruteur après
+  contrôle des libellés accessibles et de la session de test, puis 9 filtres
+  après ajout de l’explication sur les valeurs exactes. Ces reprises ne sont
+  pas additionnées comme des scénarios distincts.
+- [Recette des parcours](../../tests/recette_parcours_emploi.mjs) : **18 contrôles
+  réussis avec Chrome/API/PostgreSQL réels** : création/publication des huit
+  contrats depuis le formulaire, puis filtres/cartes/fiches candidat, avec
+  contrôle mobile du libellé générique et refus d’accès entre rôles/comptes.
+- [Recette historique](../../tests/recette_navigateur.mjs) : **15 contrôles réels
+  réussis** sur une seconde base fictive neuve, `intern_e13_baseline_20261028`,
+  avec Django sur 8002 et Vite sur 5175. Les créations de la nouvelle recette
+  restent conservées dans `intern_market_test`.
 
 ## Recette réelle des parcours
 

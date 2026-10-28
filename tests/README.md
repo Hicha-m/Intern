@@ -124,3 +124,10 @@ vérifie les listes, filtres et détails avec l’API réelle, puis ouvre un CDI
 le catalogue dans Chrome. La [fixture dédiée](fixtures/catalogue_emploi.py)
 refuse une autre base et n’effectue aucune collecte externe. Ces données sont
 fictives ; cette recette ne mesure pas la couverture des sources réelles.
+
+La [recette E1.3](../docs/research/2026-10-28-e1-employment-flows.md#recette-réelle-des-parcours)
+complète le parcours recruteur puis candidat avec les huit contrats, la séniorité
+indépendante, les badges et les droits entre comptes. Son script
+[recette_parcours_emploi.mjs](recette_parcours_emploi.mjs) crée des offres fictives
+supplémentaires. Exécuter la recette historique stricte sur une autre base neuve
+pour conserver son jeu initial d’une offre par recruteur.

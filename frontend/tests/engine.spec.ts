@@ -266,3 +266,28 @@ test('new filters survive reload, reset pagination and validate duration bounds'
   await page.setViewportSize({ width: 320, height: 740 })
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
 })
+
+test('contract and seniority filters persist independently through reload and chip removal', async ({ page }) => {
+  await prepareEngine(page)
+  const catalog: URL[] = []
+  await page.route('**/api/v1/offers/?*', route => {
+    catalog.push(new URL(route.request().url()))
+    return route.fulfill({ json: { results: [], count: 0, page: 1, page_size: 36 } })
+  })
+  await page.goto('/stages?q=backend&page=3')
+  await page.getByRole('button', { name: 'Filtres avancés' }).click()
+  await page.getByRole('combobox', { name: 'Type de contrat', exact: true }).fill('CDI')
+  await page.getByRole('option', { name: 'CDI', exact: true }).click()
+  await page.getByRole('combobox', { name: 'Séniorité', exact: true }).fill('Senior')
+  await page.getByRole('option', { name: 'Senior', exact: true }).click()
+  await page.getByRole('button', { name: 'Appliquer les filtres' }).click()
+  await expect.poll(() => catalog.at(-1)?.searchParams.get('contract_type')).toBe('permanent')
+  expect(catalog.at(-1)?.searchParams.get('seniority')).toBe('senior')
+  expect(catalog.at(-1)?.searchParams.get('page')).toBe('1')
+  await page.reload()
+  await expect(page.getByRole('button', { name: 'Retirer Contrat : CDI', exact: true })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Retirer Séniorité : Senior', exact: true })).toBeVisible()
+  await page.getByRole('button', { name: 'Retirer Contrat : CDI', exact: true }).click()
+  await expect.poll(() => catalog.at(-1)?.searchParams.has('contract_type')).toBe(false)
+  expect(catalog.at(-1)?.searchParams.get('seniority')).toBe('senior')
+})

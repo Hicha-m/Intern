@@ -1,3 +1,4 @@
+import { preferenceContractChoices } from '../lib/employment'
 import { toast } from 'sonner'
 import { useEffect, useId, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
@@ -47,7 +48,7 @@ const preferences: Field[] = [
   { key: 'excluded_subdomains', label: 'Métiers à exclure', type: 'taxonomy-exclusions' },
   { key: 'role_ids', label: 'Métiers recherchés', catalogue: 'roles' },
   { key: 'location_ids', label: 'Lieux recherchés', catalogue: 'locations' },
-  { key: 'contracts', label: 'Contrats acceptés', type: 'multi', choices: [['internship', 'Stage'], ['apprenticeship', 'Alternance'], ['employment', 'Emploi salarié'], ['contractor', 'Freelance / prestation'], ['temporary', 'Intérim']] },
+  { key: 'contracts', label: 'Contrats acceptés', type: 'multi', choices: preferenceContractChoices },
   { key: 'work_modes', label: 'Modes de travail acceptés', type: 'multi', choices: [['onsite', 'Sur site'], ['hybrid', 'Hybride'], ['remote', 'À distance']] },
   { key: 'willing_to_relocate', label: 'Prêt à déménager', type: 'boolean', nullable: true, choices: yesNo },
   { key: 'minimum_salary', label: 'Rémunération minimum', type: 'number', nullable: true, hint: 'Facultatif. Sans montant, aucun seuil n’est appliqué.' },
