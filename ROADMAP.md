@@ -98,7 +98,7 @@ concurrence et crash contrôlés ; essai live limité avec rapport distinct.
 Résultat : corpus dédupliqué, enrichi et auditable pour les statistiques.
 
 - [ ] E4.1 — Normaliser métiers, spécialisations, synonymes de compétences, contrats, langues, télétravail et zones géographiques ; versionner la taxonomie.
-- [ ] E4.2 — Extraire compétences obligatoires/souhaitées, diplôme, certifications, années d’expérience et séniorité avec extraits justificatifs. [E4.2a : baseline des preuves de compétences vérifiée](docs/research/2026-10-28-e4-skill-evidence.md), 646 tests PostgreSQL ; corpus indépendant et cibles de qualité encore ouverts.
+- [ ] E4.2 — Extraire compétences obligatoires/souhaitées, diplôme, certifications, années d’expérience et séniorité avec extraits justificatifs. [E4.2a : baseline des preuves de compétences vérifiée](docs/research/2026-10-28-e4-skill-evidence.md), 646 tests PostgreSQL ; [E4.2b : preuves d’expérience vérifiées](docs/research/2026-10-28-e4-experience-evidence.md), 78 tests ciblés PostgreSQL. Corpus indépendant et cibles de qualité encore ouverts.
 - [ ] E4.3 — Normaliser les rémunérations sans mélanger devises, périodes, brut/net et fixe/variable ; garder les informations inconnues.
 - [ ] E4.4 — Améliorer le rapprochement d’annonces multi-sources, l’historique, les republications et le cycle actif/expiré ; conserver les fusions explicables.
 - [ ] E4.5 — Rejouer l’enrichissement de façon idempotente, appliquer la rétention et publier les métriques de qualité et de couverture par source.
@@ -198,12 +198,12 @@ quarantaine, épuisement du pool et transmission effective à JobSpy ; tests liv
 
 ## Prochaine story
 
-**E4.2b : extraire les années d’expérience avec preuves pour le premier emploi.**
-Conserver bornes, caractère obligatoire/souhaité, révision et extrait ; distinguer
-sans expérience, expérience inconnue et absence d’information. Préserver les
-contradictions et ne jamais déduire « zéro an » du seul mot junior ou d’un stage.
-Contrat, séniorité et années restent indépendants. Réutiliser ces preuves dans le
-futur panel E5, puis compléter diplôme, certifications et langues. Le vocabulaire
-et le corpus annoté E4.1/E0.4 restent à étendre avant de revendiquer les cibles du
-PRD. Les autres audits E2 restent suivis, les proxys toujours reportés. Travail
-récent local : publication GitHub, fusion sur master et déploiement en attente.
+**E4.2c : extraire les diplômes et certifications avec preuves.**
+Conserver qualification obligatoire/souhaitée, révision et extrait ; différencier
+certification nommée, technologie et niveau de diplôme. Préserver négations,
+alternatives et informations absentes. Réutiliser l’extraction des langues déjà
+présente avant de créer une représentation parallèle. Préparer ensuite les API
+SQL de synthèse E5 et la consultation des preuves, avec couverture et inconnus
+visibles. E4.1/E0.4 restent nécessaires pour le corpus et les cibles du PRD ; les
+proxys sont toujours reportés. Travail récent local : publication GitHub, fusion
+sur master et déploiement en attente.
