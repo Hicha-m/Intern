@@ -1,5 +1,13 @@
 # Intern
 
+## Évolution du produit
+
+Le projet évolue vers une plateforme d’emploi informatique et d’analyse du marché.
+Le cadrage des prochaines fonctionnalités se lit dans cet ordre :
+[PRD](PRD.md), [architecture cible](ARCHITECTURE.md), puis [roadmap par epics](ROADMAP.md).
+Les règles de contribution sont dans [AGENTS.md](AGENTS.md).
+Ces documents décrivent la cible ; l’état actuel et son démarrage sont présentés ci-dessous.
+
 > **Rendu du module :** [LIVRABLES.md](LIVRABLES.md) réunit les livrables et les
 > points restant à vérifier, étape par étape.
 > Le compte rendu final est dans [rapport/intern-report.pdf](rapport/intern-report.pdf).

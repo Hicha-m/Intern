@@ -2,6 +2,16 @@
 
 Pour présenter le travail, commencer par les [livrables](../LIVRABLES.md). Pour lancer le projet, suivre le [guide d’exécution](../EXECUTION.md) ou le [README du projet](../README.md).
 
+## Évolution vers l’emploi informatique et l’analyse du marché
+
+- [PRD : objectifs, périmètre et critères d’acceptation](../PRD.md)
+- [Architecture cible : technologies, données, proxys et RAG](../ARCHITECTURE.md)
+- [Roadmap : epics, stories, dépendances et validation](../ROADMAP.md)
+- [Instructions essentielles pour les agents](../AGENTS.md)
+
+Ce cadrage définit les prochaines livraisons. Les documents thématiques ci-dessous
+conservent leur contexte ; leur existence ne prouve pas la réalisation de la cible.
+
 ## Cahiers des charges et livrables
 
 - [Consignes : DEV, VM, Docker et mesures](consignes/README.md)
