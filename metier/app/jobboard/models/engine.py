@@ -43,6 +43,7 @@ class SourceRevision(models.Model):
 
     class Meta:
         constraints = [  # noqa: RUF012 - Django Meta declarative configuration
+            models.UniqueConstraint(fields=["id", "source"], name="revision_source_identity"),
             models.UniqueConstraint(
                 fields=["source", "raw_hash"], name="engine_revision_unique"
             ),

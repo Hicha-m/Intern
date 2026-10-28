@@ -276,11 +276,14 @@ def import_board(board_id, *, supplied_snapshot=None):
                         )
                     }
                 )
-                SourceRevision.objects.get_or_create(
+                revision, _ = SourceRevision.objects.get_or_create(
                     source=source,
                     raw_hash=job["hash"],
                     defaults={"semantic_hash": semantic_hash, "payload": job["raw"]},
                 )
+                if locked.provider == "jobspy":
+                    from jobboard.services.salary_normalization import sync_salary
+                    sync_salary(source, revision)
                 SourceObservation.objects.update_or_create(
                     source=source, defaults={"missing_since": None, "missing_count": 0}
                 )

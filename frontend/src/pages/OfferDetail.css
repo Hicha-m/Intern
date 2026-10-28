@@ -96,3 +96,5 @@
   .offer-reading-tabs button { flex: 1; }
   .offer-description-panel { padding: 0; }
 }
+
+.offer-detail-company > span { min-width: 0; overflow-wrap: anywhere; }

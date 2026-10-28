@@ -85,7 +85,7 @@ Résultat : collecte reproductible et diagnostic précis des incidents.
 - [ ] E2.2 — Benchmarker les candidats sur des requêtes identiques ; retenir les composants utiles dans un ADR, épingler leurs versions et documenter les éventuels patchs.
 - [ ] E2.3 — Uniformiser les états succès, vide confirmé, partiel et échec ; conserver curseur, provenance et diagnostics expurgés. [E2.3a vérifiée : imports et réconciliation](docs/research/2026-10-28-e2-collection-outcomes.md) : 611 tests Django réussis, migration protégée ; [E2.3b vérifiée sur six runners](docs/research/2026-10-28-e2-discovery-attempts.md) : 77 tests PostgreSQL, tentatives vides/échouées et migration ; audit des autres runners ATS encore ouvert.
 - [ ] E2.4 — Vérifier/compléter idempotence, réservation de tâches, reprise après crash, budgets de requêtes et temporisation par source. [E2.4a vérifiée sur les six collecteurs](docs/research/2026-10-28-e2-discovery-recovery.md) : 98 tests PostgreSQL, reprise des tentatives abandonnées et contrôle du bail après ingestion ; audit exhaustif des autres workers encore ouvert.
-- [ ] E2.5 — Remonter les rémunérations et champs disponibles de JobSpy jusqu’au modèle ; exposer le tableau de santé des sources à l’administrateur. [E2.5a vérifiée : transport versionné des salaires](docs/research/2026-10-28-e2-salary-transport.md), 39 tests PostgreSQL ; normalisation publiée/estimée et supervision encore ouvertes.
+- [ ] E2.5 — Remonter les rémunérations et champs disponibles de JobSpy jusqu’au modèle ; exposer le tableau de santé des sources à l’administrateur. [E2.5a vérifiée : transport versionné des salaires](docs/research/2026-10-28-e2-salary-transport.md), 39 tests PostgreSQL ; [E2.5b vérifiée : normalisation sourcée](docs/research/2026-10-28-e2-salary-normalization.md), 635 tests Django, 11 scénarios Playwright et 3 contrôles réels ; supervision et extension aux autres sources encore ouvertes.
 
 Acceptation : deux exécutions identiques ne créent pas de doublons ; reprise depuis
 le dernier curseur validé ; aucune clôture d’offre après erreur/vide incertain ;
@@ -198,12 +198,13 @@ quarantaine, épuisement du pool et transmission effective à JobSpy ; tests liv
 
 ## Prochaine story
 
-**E2.5b : normaliser les rémunérations avec preuve et statut d’origine.**
-Les valeurs et données salariales source sont désormais conservées dans les
-révisions. Distinguer salaire publié, estimation et inconnu avant de créer des
-fourchettes normalisées ; conserver devise, période, brut/net et données absentes.
-Vérifier les corrections et suppressions de salaire, la provenance par révision
-et les comparaisons entre populations homogènes. Aucun calcul annuel implicite.
-Préparer ainsi E4.3 et les statistiques E5. La supervision et les audits encore
-ouverts restent suivis dans E2 ; les proxys sont reportés. Les validations locales
-ne valent ni publication GitHub, ni fusion sur master, ni déploiement.
+**E4.2a : extraire les compétences exigées ou souhaitées avec preuves.**
+Réutiliser la taxonomie existante et ses synonymes, puis conserver pour chaque
+mention sa révision source, son extrait littéral et la version d’extraction.
+Distinguer obligatoire, souhaité et non qualifié ; préserver les absences et
+négations. Commencer par les compétences et technologies, puis compléter diplôme,
+certifications, langues et expérience dans les stories suivantes. Vérifier les
+règles sur un corpus annoté distinct avant de revendiquer les cibles du PRD.
+E4.1 et les autres contrôles E2 restent suivis ; ils ne justifient pas de reprendre
+les proxys avant les exigences et le panel E5. Travail récent local : aucune
+publication GitHub, fusion sur master ou mise en production annoncée.

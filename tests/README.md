@@ -150,3 +150,8 @@ Le [script navigateur](recette_transition_emploi.mjs) vérifie les huit contrats
 les preuves, les anciennes URL, le filtre stage et le dossier candidat existant.
 Chaque préparation ajoute un lot fictif distinct, sans modifier les offres
 précédentes. La fixture refuse toute base autre que `intern_market_test`.
+
+La [recette salariale E2.5b](../docs/research/2026-10-28-e2-salary-normalization.md#reproduire-la-recette)
+utilise la [fixture dédiée](fixtures/salary_normalization.py), puis
+[recette_salaire.mjs](recette_salaire.mjs) pour vérifier les montants horaires dans
+Chrome avec API et PostgreSQL réels, sans collecte externe ni annualisation.

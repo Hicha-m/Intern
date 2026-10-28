@@ -181,3 +181,15 @@ test('known contract and seniority appear without calling generic employment a p
     await page.unroute('**/api/v1/offers/2/')
   }
 })
+
+test('published hourly salary and a long employer name stay readable on mobile', async ({ page }) => {
+  await prepareDashboard(page)
+  await page.route('**/api/v1/offers/2/', route => route.fulfill({ json: {
+    ...offer, company: { id: 1, name: `Entreprise ${'Q'.repeat(90)}` },
+    compensation_bands: [{ minimum: '20.50', maximum: '30.75', currency: 'EUR', period: 'hour', gross_net: 'unknown' }],
+  } }))
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/offers/2')
+  await expect(page.locator('.offer-key-facts')).toContainText(/20,5.*30,75.*heure/)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true)
+})
