@@ -162,6 +162,10 @@ def publish(job):
     extract_revision_skills(revision)
     from jobboard.services.experience_requirements import extract_revision_experience
     extract_revision_experience(revision)
+    from jobboard.services.qualification_requirements import (
+        extract_revision_qualifications,
+    )
+    extract_revision_qualifications(revision)
     enrich_offer(offer)
     job.published_at = job.published_at or now
 

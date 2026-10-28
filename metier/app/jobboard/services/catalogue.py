@@ -287,6 +287,10 @@ def import_board(board_id, *, supplied_snapshot=None):
                     extract_revision_experience,
                 )
                 extract_revision_experience(revision)
+                from jobboard.services.qualification_requirements import (
+                    extract_revision_qualifications,
+                )
+                extract_revision_qualifications(revision)
                 if locked.provider == "jobspy":
                     from jobboard.services.salary_normalization import sync_salary
                     sync_salary(source, revision)

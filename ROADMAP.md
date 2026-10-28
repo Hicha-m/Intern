@@ -20,6 +20,26 @@ story concernée. Une case cochée signifie critères vérifiés et preuves lié
 pas seulement code écrit. La réception de ces documents ne vaut pas recette
 technique du produit futur.
 
+## Revue des stories publiées
+
+Les branches ci-dessous sont publiées dans `Hicha-m/Intern`, avec une PR brouillon
+par story et des liens vers les preuves de tests. Chaque PR cible la précédente
+pour présenter un diff limité à sa story. Aucun de ces changements n’est fusionné
+sur master ou déployé ; aucune réussite de CI distante n’est annoncée.
+
+| Story | PR |
+| --- | --- |
+| E1.3 — Contrats et séniorité | [#4](https://github.com/Hicha-m/Intern/pull/4) |
+| E1.4 — Navigation et reprise historique | [#5](https://github.com/Hicha-m/Intern/pull/5) |
+| E2.3a — Résultats d’import | [#6](https://github.com/Hicha-m/Intern/pull/6) |
+| E2.3b — Tentatives de découverte | [#7](https://github.com/Hicha-m/Intern/pull/7) |
+| E2.4a — Reprise des tentatives | [#8](https://github.com/Hicha-m/Intern/pull/8) |
+| E2.5a — Transport des rémunérations | [#9](https://github.com/Hicha-m/Intern/pull/9) |
+| E2.5b — Normalisation salariale | [#10](https://github.com/Hicha-m/Intern/pull/10) |
+| E4.2a — Preuves des compétences | [#11](https://github.com/Hicha-m/Intern/pull/11) |
+| E4.2b — Preuves de l’expérience | [#12](https://github.com/Hicha-m/Intern/pull/12) |
+| E4.2c — Diplômes, certifications et langues | [#13](https://github.com/Hicha-m/Intern/pull/13) |
+
 ## Ordre et dépendances
 
 Les identifiants d’epic restent stables ; l’ordre ci-dessous indique la priorité
@@ -29,9 +49,9 @@ collecte si le gain est mesuré, sans prérequis pour les fonctionnalités produ
 | Epic | Objectif | Dépendances | État |
 | --- | --- | --- | --- |
 | E0 | Cadrage, audit et mesures nécessaires à la prochaine story | Aucune | En cours : documents rédigés, audit de recette à faire |
-| E1 | Catalogue de tous les emplois informatiques | Audit E0 ciblé sur le catalogue | Critères vérifiés localement ; revue/fusion et déploiement en attente |
-| E2 | Fiabilité minimale de la collecte et transport des champs utiles | E1 | À faire, socle du panel |
-| E4 | Données normalisées et exigences sourcées | Collecte et champs utiles E2 ; aucune dépendance à E3 | À faire, priorité produit 2 |
+| E1 | Catalogue de tous les emplois informatiques | Audit E0 ciblé sur le catalogue | Critères vérifiés ; PR liées, fusion et déploiement en attente |
+| E2 | Fiabilité minimale de la collecte et transport des champs utiles | E1 | En cours : imports, reprise et salaires partiellement vérifiés |
+| E4 | Données normalisées et exigences sourcées | Collecte et champs utiles E2 ; aucune dépendance à E3 | En cours : baseline des exigences sourcées ; évaluation ouverte |
 | E5 | Panel statistique et analyse du premier emploi | E4 | À faire, priorité produit 3 |
 | E8 | Recette et mise en production de chaque livraison | E5 pour le MVP ; critères de la fonction activée ensuite | À faire à chaque livraison |
 | E6 | RAG d’analyse du marché | E5 | À faire, priorité produit 4 |
@@ -98,7 +118,7 @@ concurrence et crash contrôlés ; essai live limité avec rapport distinct.
 Résultat : corpus dédupliqué, enrichi et auditable pour les statistiques.
 
 - [ ] E4.1 — Normaliser métiers, spécialisations, synonymes de compétences, contrats, langues, télétravail et zones géographiques ; versionner la taxonomie.
-- [ ] E4.2 — Extraire compétences obligatoires/souhaitées, diplôme, certifications, années d’expérience et séniorité avec extraits justificatifs. [E4.2a : baseline des preuves de compétences vérifiée](docs/research/2026-10-28-e4-skill-evidence.md), 646 tests PostgreSQL ; [E4.2b : preuves d’expérience vérifiées](docs/research/2026-10-28-e4-experience-evidence.md), 78 tests ciblés PostgreSQL. Corpus indépendant et cibles de qualité encore ouverts.
+- [ ] E4.2 — Extraire compétences obligatoires/souhaitées, diplôme, certifications, années d’expérience et séniorité avec extraits justificatifs. [E4.2a : baseline des preuves de compétences vérifiée](docs/research/2026-10-28-e4-skill-evidence.md), 646 tests PostgreSQL ; [E4.2b : preuves d’expérience vérifiées](docs/research/2026-10-28-e4-experience-evidence.md), 78 tests ciblés PostgreSQL. [E4.2c : diplômes/certifications/langues sourcés](docs/research/2026-10-28-e4-qualification-evidence.md), 664 tests Django réussis. Corpus indépendant et cibles de qualité encore ouverts.
 - [ ] E4.3 — Normaliser les rémunérations sans mélanger devises, périodes, brut/net et fixe/variable ; garder les informations inconnues.
 - [ ] E4.4 — Améliorer le rapprochement d’annonces multi-sources, l’historique, les republications et le cycle actif/expiré ; conserver les fusions explicables.
 - [ ] E4.5 — Rejouer l’enrichissement de façon idempotente, appliquer la rétention et publier les métriques de qualité et de couverture par source.
@@ -198,12 +218,13 @@ quarantaine, épuisement du pool et transmission effective à JobSpy ; tests liv
 
 ## Prochaine story
 
-**E4.2c : extraire les diplômes et certifications avec preuves.**
-Conserver qualification obligatoire/souhaitée, révision et extrait ; différencier
-certification nommée, technologie et niveau de diplôme. Préserver négations,
-alternatives et informations absentes. Réutiliser l’extraction des langues déjà
-présente avant de créer une représentation parallèle. Préparer ensuite les API
-SQL de synthèse E5 et la consultation des preuves, avec couverture et inconnus
-visibles. E4.1/E0.4 restent nécessaires pour le corpus et les cibles du PRD ; les
-proxys sont toujours reportés. Travail récent local : publication GitHub, fusion
-sur master et déploiement en attente.
+**E5.1a : API SQL de synthèse du corpus et consultation des preuves.**
+Réutiliser le périmètre public et les filtres catalogue pour les volumes uniques,
+compétences et conditions d’entrée. Présenter dates, effectifs, dénominateurs,
+absence d’information et couverture des extractions ; conserver alternatives et
+contradictions. Les preuves doivent renvoyer à leur annonce et révision, sans
+exposer les données privées du candidat. Les seuils salariaux du PRD s’appliquent
+aux seules populations comparables, jamais aux estimations ou valeurs manquantes.
+Les jeux annotés et cibles de qualité E0.4/E4 restent ouverts ; le panel devra
+signaler cette limite. Les reprises historiques E4.5 restent à préparer avant
+une recette sur corpus réel. Les proxys restent reportés.
