@@ -167,7 +167,7 @@ def search(client, portal, page, deadline):
             "sortBySelectionParam": "3",
             "ascendingSortingOrder": "false",
         },
-        "fieldData": {"fields": {"KEYWORD": "intern", "LOCATION": ""}, "valid": True},
+        "fieldData": {"fields": {"KEYWORD": "", "LOCATION": ""}, "valid": True},
         "filterSelectionParam": {"searchFilterSelections": []},
         "advancedSearchFiltersSelectionParam": {"searchFilterSelections": []},
         "pageNo": page,

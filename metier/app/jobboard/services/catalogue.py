@@ -75,8 +75,15 @@ def _claim(board_id):
         return board, schedule.lease_token, ImportRun.objects.create(board=board)
 
 
-def _reconcile_absence(board, schedule, seen, now):
+def _reconcile_absence(board, schedule, seen, now, *, scope=None):
     missing = board.sources.exclude(pk__in=seen).exclude(source_status="closed")
+    if scope:
+        from .employment_scope import IT_DOMAINS
+
+        missing = missing.filter(
+            offer__taxonomy_status__in=["classified", "broad"],
+            offer__job_subdomain__domain__slug__in=IT_DOMAINS,
+        )
     affected = []
     for source in missing:
         observation, _ = SourceObservation.objects.get_or_create(source=source)
@@ -117,6 +124,7 @@ def import_board(board_id, *, supplied_snapshot=None):
             )
         )
         complete = getattr(snapshot, "complete", True)
+        scope = getattr(snapshot, "scope", None)
         diagnostics = getattr(snapshot, "errors", [])
         with transaction.atomic():
             locked = SourceBoard.objects.select_for_update().get(pk=board.pk)
@@ -280,10 +288,19 @@ def import_board(board_id, *, supplied_snapshot=None):
                         offer=offer, content_version=previous_version
                     ).update(content_version=previous_version + 1, event_at=now)
                 seen.append(source.pk)
+            scope_changed = bool(scope and locked.adapter_version != scope)
             if complete and not quarantine:
-                _reconcile_absence(locked, schedule, seen, now)
+                if scope_changed:
+                    # Counts from the previous search scope are not absence proof.
+                    SourceObservation.objects.filter(source__board=locked).update(
+                        missing_count=0, missing_since=None,
+                    )
+                else:
+                    _reconcile_absence(locked, schedule, seen, now, scope=scope)
+                if scope:
+                    locked.adapter_version = scope
             locked.last_success_at = now
-            locked.save(update_fields=["last_success_at"])
+            locked.save(update_fields=["last_success_at", "adapter_version"])
             schedule.failure_count = 0
             schedule.last_error_code = (
                 "partial_snapshot"

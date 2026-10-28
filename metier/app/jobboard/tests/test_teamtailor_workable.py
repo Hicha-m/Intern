@@ -10,14 +10,14 @@ from jobboard.services.catalogue import import_board
 from jobboard.services.engine_collection import parse_source_url
 
 RSS = """<rss xmlns:tt="https://teamtailor.com/locations"><channel><item>
-<title>Marketing internship</title><link>https://acme.teamtailor.com/jobs/123-intern</link>
+<title>Backend Developer internship</title><link>https://acme.teamtailor.com/jobs/123-intern</link>
 <description>Six month internship in our marketing team working on research and campaigns.</description>
 <tt:locations><tt:location><tt:city>Paris</tt:city><tt:country>France</tt:country></tt:location>
 <tt:location><tt:city>Boston</tt:city><tt:country>United States</tt:country></tt:location></tt:locations>
 <remoteStatus>fully</remoteStatus></item></channel></rss>"""
 JOB = {
     "shortcode": "ABC123",
-    "title": "Marketing internship",
+    "title": "Backend Developer internship",
     "type": "internship",
     "country": "France",
     "city": "Paris",
@@ -116,12 +116,15 @@ class PublicATSTests(SimpleTestCase):
             "acme",
             read,
         )
-        self.assertEqual(len(rows), 0)
-        read.assert_not_called()
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["contract_type"], "unknown")
+        self.assertEqual(read.call_count, 1)
+        read.reset_mock()
         with self.assertRaises(CatalogueImportError):
             normalize_workable(
                 {"jobs": [dict(JOB, shortcode="../../other")]}, "acme", read
             )
+        read.assert_not_called()
 
     def test_source_urls_and_spoofed_hosts(self):
         for url, provider in [

@@ -114,3 +114,13 @@ node tests/generer_cahier.mjs
 Le script lit `cahier_de_tests.html` et écrit `cahier_de_tests.pdf` sans accès
 réseau. Toute correction du tableau doit être faite dans sa source HTML avant
 de régénérer le PDF.
+
+## Catalogue informatique pour tous les contrats
+
+La [recette E1.2](../docs/research/2026-10-28-e1-it-catalogue.md#reproduire-la-recette-des-contrats)
+prépare six types de contrat et une annonce hors IT dans une base éphémère
+`intern_market_test`. Le script [recette_catalogue_emploi.mjs](recette_catalogue_emploi.mjs)
+vérifie les listes, filtres et détails avec l’API réelle, puis ouvre un CDI depuis
+le catalogue dans Chrome. La [fixture dédiée](fixtures/catalogue_emploi.py)
+refuse une autre base et n’effectue aucune collecte externe. Ces données sont
+fictives ; cette recette ne mesure pas la couverture des sources réelles.

@@ -12,13 +12,23 @@ from django.db.models import Exists, OuterRef, Q
 
 SEED_PATH = Path(__file__).resolve().parent.parent / "data" / "job-taxonomy-v1.json"
 SEED = json.loads(SEED_PATH.read_text())
-VERSION = SEED["version"] + "-rules3"
+VERSION = SEED["version"] + "-rules4"
 DOMAIN_SLUGS = {d["slug"] for d in SEED["domains"]}
 SUBDOMAINS = {
     s["slug"]: {**s, "domain": d["slug"]}
     for d in SEED["domains"]
     for s in d["subdomains"]
 }
+# Versioned occupation phrases, not technology mentions in a skills list.
+RULE_ALIASES = {
+    "pentesting": ("pentester", "pentesteur", "penetration tester"),
+    "frontend": ("interfaces React",),
+    "systems-networks": ("administration systèmes",),
+    "software-generalist": ("développement Python", "développement web", "Python developer"),
+}
+for slug, aliases in RULE_ALIASES.items():
+    SUBDOMAINS[slug]["aliases"] = [*SUBDOMAINS[slug]["aliases"], *aliases]
+
 CLASSIFIED = ("classified", "broad")
 
 
@@ -226,8 +236,9 @@ def seed_taxonomy():
                 defaults={
                     "domain": domain,
                     **{
-                        k: sub[k] for k in ("name", "aliases", "position", "generalist")
+                        k: sub[k] for k in ("name", "position", "generalist")
                     },
+                    "aliases": SUBDOMAINS[sub["slug"]]["aliases"],
                 },
             )
 

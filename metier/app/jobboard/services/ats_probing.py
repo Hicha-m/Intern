@@ -71,9 +71,9 @@ def qualifies(row):
         contract_type=row.get("contract_type", "unknown"),
         work_mode=row.get("work_mode", "unknown"),
     )
-    return (
-        facts["classification"] == "confirmed" and facts["europe_status"] == "in_scope"
-    )
+    from .employment_scope import eligible_facts
+
+    return eligible_facts(facts)
 
 
 def run_one(probe_ids=None):

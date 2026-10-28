@@ -58,7 +58,7 @@ def main():
             search_term=options["term"],
             location=options["location"],
             country=Country.from_string(options["country_name"]),
-            job_type=JobType.INTERNSHIP,
+            job_type=JobType.INTERNSHIP if options.get("contract_type") == "internship" else None,
             results_wanted=options["limit"],
             offset=options["offset"],
             hours_old=None,

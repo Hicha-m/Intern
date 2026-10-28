@@ -22,7 +22,7 @@ def record(**changes):
             "id": "12345",
             "url": "https://arbetsformedlingen.se/platsbanken/annonser/12345",
             "company": "Example JobTech",
-            "title": "Marketing internship",
+            "title": "Backend Developer internship",
             "description": "An internship working on marketing and research with our Stockholm team.",
             "locations": [
                 {"country": "Sverige", "country_code": "199", "city": "Stockholm"}
@@ -48,7 +48,7 @@ class JobtechNormalizationTests(SimpleTestCase):
     def test_swedish_proof_and_non_internships(self):
         row, _ = normalize_record(
             record(
-                title="Praktik inom marknadsföring",
+                title="Praktik inom software engineering",
                 description="Under praktikperioden arbetar du tillsammans med vårt team i Stockholm.",
             )
         )

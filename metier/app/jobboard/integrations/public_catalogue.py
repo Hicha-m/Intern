@@ -18,10 +18,11 @@ from .greenhouse_catalogue import MAX_RESPONSE_BYTES, CatalogueImportError, _Tex
 class CatalogueSnapshot(list):
     """Valid rows plus explicit completeness; errors never imply absent postings."""
 
-    def __init__(self, rows=(), *, complete=True, errors=()):
+    def __init__(self, rows=(), *, complete=True, errors=(), scope=None):
         super().__init__(rows)
         self.complete = complete
         self.errors = list(errors)[:500]
+        self.scope = scope
 
 
 def digest(value):
@@ -83,6 +84,8 @@ def _url(value):
 
 
 def _posting(job, identity, title, description, url, apply_url, locations):
+    from jobboard.services.employment_contracts import posting_contract
+
     if not isinstance(identity, str) or not identity or len(identity) > 300:
         raise CatalogueImportError("invalid_job")
     if (
@@ -100,6 +103,7 @@ def _posting(job, identity, title, description, url, apply_url, locations):
         "external_id": identity,
         "title": title.strip(),
         "description": description,
+        "contract_type": posting_contract(job, title, description),
         "url": _url(url),
         "apply_url": _url(apply_url),
         "location": locations[0] if locations else None,
@@ -316,22 +320,16 @@ def fetch_normalized(board):
     raise CatalogueImportError("board_not_configured")
 
 
-# Scope v2 expands v1 with text-confirmed internships despite generic ATS
-# employment labels. No existing in-scope contract is removed by this expansion.
-# Full snapshots still cover only confirmed European non-remote internships.
-SMARTRECRUITERS_SCOPE = "europe-confirmed-internships-onsite-hybrid-v2"
+# Scope changes reset absence observations before any closure can be inferred.
+SMARTRECRUITERS_SCOPE = "europe-it-all-contracts-onsite-hybrid-v3"
 SMARTRECRUITERS_MAX_DETAILS = 1000
 SMARTRECRUITERS_MAX_BYTES = 80 * 1024 * 1024
 SMARTRECRUITERS_DEADLINE_SECONDS = 600
 
 
 def _smart_in_scope(job):
-    from jobboard.services.engine_quality import (
-        APPRENTICESHIP_TITLE,
-        EUROPE_COUNTRIES,
-        INTERN,
-        NEGATIVE_TITLE,
-    )
+    from jobboard.services.employment_scope import occupation_scope
+    from jobboard.services.engine_quality import EUROPE_COUNTRIES
 
     if not isinstance(job, dict):
         raise CatalogueImportError("invalid_job")
@@ -343,18 +341,10 @@ def _smart_in_scope(job):
     if not isinstance(country, str):
         raise CatalogueImportError("invalid_location")
     return (
-        (
-            contract.get("id") == "intern"
-            or (
-                isinstance(job.get("name"), str)
-                and re.search(INTERN, job["name"], re.IGNORECASE)
-                and not re.search(NEGATIVE_TITLE, job["name"], re.IGNORECASE)
-                and not re.search(APPRENTICESHIP_TITLE, job["name"], re.IGNORECASE)
-            )
-        )
-        and country.upper() in EUROPE_COUNTRIES
+        country.upper() in EUROPE_COUNTRIES
         and location.get("remote") is False
         and job.get("visibility", "PUBLIC") == "PUBLIC"
+        and occupation_scope(job.get("name") or "")["scope"] != "out_of_scope"
     )
 
 
@@ -392,21 +382,10 @@ def normalize_smartrecruiters(job):
         job.get("applyUrl"),
         [label],
     )
-    from jobboard.services.engine_quality import extract_facts
+    from jobboard.services.employment_scope import occupation_scope
 
-    contract = (
-        "internship"
-        if (job.get("typeOfEmployment") or {}).get("id") == "intern"
-        else "unknown"
-    )
-    if (
-        extract_facts(row["title"], description, contract_type=contract)[
-            "classification"
-        ]
-        != "confirmed"
-    ):
+    if occupation_scope(row["title"], description)["scope"] != "in_scope":
         return None
-    row["contract_type"] = contract
     row["work_mode"] = "hybrid" if location.get("hybrid") is True else "onsite"
     row["location_details"] = [{"name": label, "country": location["country"].upper()}]
     row["published_at"] = job.get("releasedDate")
@@ -494,4 +473,4 @@ def fetch_smartrecruiters(key):
                 "upstream_rate_limited",
             ):
                 break
-    return CatalogueSnapshot(rows, complete=not errors, errors=errors)
+    return CatalogueSnapshot(rows, complete=not errors, errors=errors, scope=SMARTRECRUITERS_SCOPE)

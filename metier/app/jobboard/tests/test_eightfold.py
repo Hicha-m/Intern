@@ -68,7 +68,6 @@ class EightfoldTests(SimpleTestCase):
             {"standardizedLocations": ["Shanghai, China, CN"]},
             {"standardizedLocations": ["Paris"]},
             {"workLocationOption": "remote"},
-            {"name": "Working Student Software Engineering"},
         ]:
             self.assertIsNone(normalize_eightfold(detail(**changes), "nvidia", "123"))
 

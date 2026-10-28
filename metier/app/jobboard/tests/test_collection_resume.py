@@ -28,6 +28,9 @@ def limited():
 
 class ResumeTests(SimpleTestCase):
     def setUp(self):
+        terms = patch("jobboard.integrations.eightfold_catalogue.TERMS", ("intern", "Praktikum", "stage", "tirocinio"))
+        terms.start()
+        self.addCleanup(terms.stop)
         patcher = patch("jobboard.integrations.eightfold_catalogue.REQUEST_INTERVAL", 0)
         patcher.start()
         self.addCleanup(patcher.stop)
@@ -79,7 +82,7 @@ class ResumeTests(SimpleTestCase):
         self.assertEqual(rows.retry_after, 18000)
 
     def test_resume_search_at_saved_page(self):
-        jobs = [detail(id=i, name="Senior engineer") for i in range(10)]
+        jobs = [detail(id=i, name="Marketing Manager") for i in range(10)]
         with patch(
             "jobboard.integrations.eightfold_catalogue.read_json",
             side_effect=[
@@ -134,6 +137,7 @@ class ResumeTests(SimpleTestCase):
                 self.assertEqual(clean["pending"], [])
 
 
+@patch("jobboard.integrations.eightfold_catalogue.TERMS", ("intern", "Praktikum", "stage", "tirocinio"))
 class ResumeImportTests(TestCase):
     def setUp(self):
         self.board = SourceBoard.objects.create(

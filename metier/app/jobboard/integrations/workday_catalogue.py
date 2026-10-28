@@ -16,7 +16,7 @@ from .greenhouse_catalogue import MAX_RESPONSE_BYTES, CatalogueImportError, _Tex
 
 HOST = re.compile(r"([a-z0-9-]+)\.wd[1-9][0-9]?\.myworkdayjobs\.com")
 TOKEN = re.compile(r"[A-Za-z0-9_-]{1,100}")
-WORKDAY_SCOPE = "europe-title-internships-v1"
+WORKDAY_SCOPE = "europe-it-all-contracts-v2"
 MAX_SECONDS = 600
 MAX_REQUESTS = 1800
 MAX_BYTES = 80 * 1024 * 1024
@@ -205,26 +205,14 @@ def _country_partitions(facets):
 
 
 def _candidate(title):
-    from jobboard.services.engine_quality import (
-        APPRENTICESHIP_TITLE,
-        INTERN,
-        NEGATIVE_TITLE,
-        NON_INTERNSHIP_TITLE,
-    )
+    from jobboard.services.employment_scope import occupation_scope
 
-    return isinstance(title, str) and bool(
-        re.search(INTERN + r"|\bplacement\b", title, re.IGNORECASE)
-        and not re.search(
-            APPRENTICESHIP_TITLE + "|" + NEGATIVE_TITLE + "|" + NON_INTERNSHIP_TITLE,
-            title,
-            re.IGNORECASE,
-        )
-    )
+    return isinstance(title, str) and bool(title.strip()) and occupation_scope(title)["scope"] != "out_of_scope"
 
 
 def normalize_workday(payload, *, host, site, path):
     from jobboard.integrations.public_catalogue import _posting
-    from jobboard.services.engine_quality import extract_facts
+    from jobboard.services.employment_scope import occupation_scope
 
     info = payload.get("jobPostingInfo") if isinstance(payload, dict) else None
     if not isinstance(info, dict):
@@ -238,7 +226,7 @@ def normalize_workday(payload, *, host, site, path):
     parser = _Text()
     parser.feed(description)
     text = "\n".join(parser.parts)
-    if extract_facts(title, text)["classification"] != "confirmed":
+    if occupation_scope(title, text)["scope"] != "in_scope":
         return None
     location = info.get("location")
     requisition_location = info.get("jobRequisitionLocation") or {}
@@ -285,7 +273,6 @@ def normalize_workday(payload, *, host, site, path):
     row["published_at"] = info.get(
         "startDate"
     )  # Workday startDate is publication date.
-    row["contract_type"] = "unknown"  # Full time is hours, never a contract type.
     return row
 
 
@@ -439,4 +426,4 @@ def fetch_workday_snapshot(key):
                     raise
                 if exc.code == "snapshot_budget_exceeded":
                     break
-    return CatalogueSnapshot(rows, complete=not errors, errors=errors)
+    return CatalogueSnapshot(rows, complete=not errors, errors=errors, scope=WORKDAY_SCOPE)

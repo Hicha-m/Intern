@@ -94,6 +94,9 @@ class CatalogueSearchTests(TestCase):
         hidden = self.offer("Python")
         hidden.enrichment.classification = "not_internship"
         hidden.enrichment.save()
+        hidden.job_subdomain = None
+        hidden.taxonomy_status = "needs_review"
+        hidden.save(update_fields=["job_subdomain", "taxonomy_status"])
         self.assertEqual(self.results(q="Python", unknown_policy="include"), [])
         for params in (
             {"sort": "random"},

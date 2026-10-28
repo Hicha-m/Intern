@@ -30,19 +30,19 @@ from jobboard.services.catalogue import import_board
 
 
 def seed_queries(countries, sites):
+    from jobboard.services.employment_scope import ROLE_QUERIES
+
     for country in countries:
         if country not in COUNTRIES or any(site not in SITES for site in sites):
             raise ValueError("invalid_jobspy_query")
-        _, language, term = COUNTRIES[country]
+        _, language, _ = COUNTRIES[country]
         for site in sites:
-            DiscoveryQuery.objects.get_or_create(
-                provider="jobspy_" + site,
-                country=country,
-                language=language,
-                domain="all",
-                term=term,
-                defaults={"auto_activate": True},
-            )
+            for term in ROLE_QUERIES:
+                DiscoveryQuery.objects.get_or_create(
+                    provider="jobspy_" + site, country=country,
+                    language=language, domain="all", term=term,
+                    defaults={"auto_activate": True},
+                )
 
 
 def ingest(query, records):
@@ -96,7 +96,7 @@ def ingest(query, records):
                 if row
                 else "out_of_scope"
                 if facts["europe_status"] == "out_of_scope"
-                or facts["classification"] == "not_internship"
+                or facts["facts"].get("job_scope", {}).get("value") == "out_of_scope"
                 else "uncertain"
             )
             error = ""

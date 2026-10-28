@@ -36,7 +36,7 @@ class ATSNormalizationTests(SimpleTestCase):
             "acme",
             "de",
         )
-        self.assertNotIn("contract_type", student[0])
+        self.assertEqual(student[0]["contract_type"], "internship")
 
     def test_recruitee_multicountry_and_remote(self):
         job = {

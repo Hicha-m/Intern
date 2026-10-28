@@ -394,14 +394,10 @@ def coverage(request):
     return Response(
         {
             **coverage_metrics(open_offers()),
-            "scope": "confirmed_europe_internships",
+            "scope": "europe_it_jobs",
             "countries": countries,
             "domains": list(
                 open_offers()
-                .filter(
-                    enrichment__classification="confirmed",
-                    enrichment__europe_status="in_scope",
-                )
                 .order_by()
                 .values("enrichment__domain")
                 .annotate(offers=Count("id"))

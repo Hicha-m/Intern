@@ -17,7 +17,7 @@ MAX_OFFSET = 200
 TIMEOUT = 180
 
 
-def collect(site, country, term, offset=0, limit=PAGE_SIZE):
+def collect(site, country, term, offset=0, limit=PAGE_SIZE, *, contract_type=None):
     if (
         site not in SITES
         or country not in COUNTRIES
@@ -25,6 +25,7 @@ def collect(site, country, term, offset=0, limit=PAGE_SIZE):
         or not 1 <= limit <= PAGE_SIZE
         or not isinstance(term, str)
         or len(term) > 120
+        or contract_type not in (None, "internship")
     ):
         raise CatalogueImportError("invalid_jobspy_query")
     name = COUNTRIES[country][0]
@@ -35,6 +36,7 @@ def collect(site, country, term, offset=0, limit=PAGE_SIZE):
         "country_name": "UK" if country == "GB" else name,
         "offset": offset,
         "limit": limit,
+        "contract_type": contract_type,
     }
     try:
         result = subprocess.run(
@@ -110,6 +112,7 @@ def canonical_url(url, site):
 
 
 def normalize_record(raw, site):
+    from jobboard.services.employment_scope import eligible_facts
     from jobboard.services.engine_quality import extract_facts, structured_country_code
 
     raw = {**raw, "site": site}
@@ -141,9 +144,9 @@ def normalize_record(raw, site):
         }
         codes.discard(None)
         code = next(iter(codes)) if len(codes) == 1 else None
-    contract = (
-        "internship" if "internship" in (raw.get("job_types") or []) else "unknown"
-    )
+    from jobboard.services.employment_contracts import posting_contract
+
+    contract = posting_contract(raw, title or "", description)
     mode = "remote" if raw.get("remote") is True else "unknown"
     facts = extract_facts(
         title or "",
@@ -152,7 +155,7 @@ def normalize_record(raw, site):
         locations=[{"name": label, "country_code": code}],
         work_mode=mode,
     )
-    if facts["classification"] != "confirmed" or facts["europe_status"] != "in_scope":
+    if not eligible_facts(facts):
         return None, facts
     # The visible public job URL is a usable application entry point; a board URL
     # or externally hidden direct-apply link is not required.

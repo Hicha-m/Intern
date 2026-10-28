@@ -15,12 +15,13 @@ import httpx
 from django.utils import timezone
 from django.utils.dateparse import parse_date, parse_datetime
 
+from jobboard.services.employment_scope import eligible_facts, occupation_scope
+
 from .greenhouse_catalogue import CatalogueImportError
 from .personio_catalogue import html_text
 from .public_catalogue import _posting, _url
 
 BASE = "https://pam-stilling-feed.nav.no"
-CANDIDATE = r"\b(?:internship|intern|praktikant|praksisplass|student placement)\b"
 
 
 @dataclass
@@ -184,7 +185,7 @@ def collect(since, cursor="", known_ids=()):
         if not isinstance(title, str):
             raise CatalogueImportError("nav_invalid_event")
         if ad_id not in fetched and (
-            ad_id in known_ids or re.search(CANDIDATE, title, re.IGNORECASE)
+            ad_id in known_ids or occupation_scope(title)["scope"] != "out_of_scope"
         ):
             if len(fetched) >= 20:
                 break
@@ -269,14 +270,14 @@ def normalize_record(raw, _site=None):
         else "unknown"
     )
     facts = extract_facts(title, description, locations=locations, work_mode=mode)
-    if facts["classification"] != "confirmed" or facts["europe_status"] != "in_scope":
+    if not eligible_facts(facts):
         return None, facts
     apply = _url(raw["application_url"]) if raw.get("application_url") else url
     row = _posting(
         raw, raw["id"], title, description, url, apply, [x["name"] for x in locations]
     )
     row.update(
-        contract_type="unknown",
+        contract_type=row["contract_type"],
         work_mode=mode,
         expires_at=expiry,
         location_details=[

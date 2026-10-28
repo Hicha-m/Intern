@@ -74,7 +74,7 @@ class ActivationTests(TestCase):
         with patch(f"{MODULE}.register_source", side_effect=self.configure):
             report = self.run_command(execute=True)
         self.assertTrue(BoardSchedule.objects.get().paused)
-        self.assertEqual(report["sources"][0]["status"], "paused_no_target_internships")
+        self.assertEqual(report["sources"][0]["status"], "paused_no_target_it_jobs")
 
     def test_target_keeps_schedule_and_attributes_only_board_ids(self):
         with (
@@ -126,7 +126,7 @@ class ActivationTests(TestCase):
             candidate = self.configure()
             offer = Offer.objects.create(
                 company=candidate.board.company,
-                title="Marketing Internship",
+                title="Backend Internship",
                 description="Internship in marketing.",
                 status="open",
             )

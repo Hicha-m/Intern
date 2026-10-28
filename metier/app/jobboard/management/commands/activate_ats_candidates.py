@@ -102,7 +102,7 @@ class Command(BaseCommand):
                         board_id=candidate.board_id,
                         status="active"
                         if target_ids
-                        else "paused_no_target_internships",
+                        else "paused_no_target_it_jobs",
                         visible_offer_ids=sorted(visible_ids),
                         target_offer_ids=sorted(target_ids),
                         new_visible_offer_ids=sorted(visible_ids - before),

@@ -13,7 +13,7 @@ from django.db import transaction
 from django.db.models import Q
 from django.utils import timezone
 
-EXTRACTOR_VERSION = "rules-18"
+EXTRACTOR_VERSION = "rules-19-it-scope"
 EUROPE_SCOPE_VERSION = "europe-2026-09-30-v1"
 EUROPE_COUNTRIES = frozenset(
     [
@@ -138,17 +138,15 @@ def recruiter_offers_visible(queryset):
 
 
 def published_offers(queryset):
-    """Publication policy: confirmed European internships only.
+    """Publication policy: European IT opportunities of every contract type.
 
     Offer.status remains the source lifecycle; uncertain/out-of-scope rows are
     retained for audit and future extraction, never falsely marked closed.
     Freshness and expiry are applied by the catalogue API on top of this policy.
     """
-    return recruiter_offers_visible(queryset).filter(
-        status="open",
-        enrichment__classification="confirmed",
-        enrichment__europe_status="in_scope",
-    )
+    from .employment_scope import catalogue_scope
+
+    return catalogue_scope(recruiter_offers_visible(queryset)).filter(status="open")
 
 
 def structured_country_code(value):
@@ -202,6 +200,21 @@ def extract_facts(
             "required": required,
             "source_revision_id": None,
         }
+
+    from .employment_scope import occupation_scope
+
+    occupation = occupation_scope(title, description)
+    candidates = occupation["candidates"]
+    evidence = next(
+        (item for item in candidates if item["slug"] == occupation["primary"]),
+        None,
+    )
+    fact(
+        "job_scope", occupation["scope"],
+        evidence["evidence_text"] if evidence else "",
+        path=evidence["field"] if evidence else None,
+    )
+    facts["job_scope"]["taxonomy_version"] = occupation["taxonomy_version"]
 
     from .internship_contract import metadata_review
 

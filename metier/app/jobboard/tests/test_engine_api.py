@@ -197,6 +197,7 @@ class EngineAPITests(TestCase):
             last_checked_at=now,
             content_hash="a" * 64,
         )
+        publishable(self.offer)
         self.assertEqual(run_alerts(), 0)
         enrichment.content_version = 2
         enrichment.event_at = timezone.now()
@@ -397,6 +398,14 @@ class EngineAPITests(TestCase):
                 europe_status=scope,
                 country_codes=["US"] if scope == "out_of_scope" else ["FR"],
             )
+            if classification == "not_internship":
+                offer.job_subdomain = m.JobSubdomain.objects.get(slug="marketing-generalist")
+                offer.taxonomy_status = "broad"
+                offer.save(update_fields=["job_subdomain", "taxonomy_status"])
+            elif classification == "uncertain":
+                offer.job_subdomain = None
+                offer.taxonomy_status = "needs_review"
+                offer.save(update_fields=["job_subdomain", "taxonomy_status"])
             excluded.append(offer)
         no_evidence = m.Offer.objects.create(company=self.company, title="No evidence")
         excluded.append(no_evidence)

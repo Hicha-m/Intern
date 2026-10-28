@@ -14,7 +14,7 @@ from jobboard.services.engine_collection import register_source
 def posting(identity="123", country="fr", contract="intern", remote=False):
     return {
         "id": identity,
-        "name": "Stage marketing",
+        "name": "Stage Backend",
         "location": {"country": country, "city": "Paris", "remote": remote},
         "typeOfEmployment": {"id": contract},
         "visibility": "PUBLIC",
@@ -72,16 +72,12 @@ class SmartRecruitersTests(SimpleTestCase):
             "https://api.smartrecruiters.com/v1/companies/Acme/postings/123",
         )
 
-    def test_title_stage_requires_confirmation_without_coercing_contract(self):
-        genuine = posting(contract="permanent")
-        genuine["jobAd"]["sections"]["jobDescription"]["text"] = (
-            "Nous recherchons un stagiaire en marketing."
-        )
-        manager = dict(posting("2", contract="permanent"), name="Stage Manager")
-        ambiguous = dict(posting("3", contract="permanent"), name="Stage marketing")
-        ambiguous["jobAd"]["sections"]["jobDescription"]["text"] = (
-            "Join the marketing team."
-        )
+    def test_permanent_it_role_does_not_require_internship_confirmation(self):
+        genuine = dict(posting(contract="permanent"), name="Senior Backend Engineer")
+        genuine["jobAd"]["sections"]["jobDescription"]["text"] = "Build backend services."
+        manager = dict(posting("2", contract="permanent"), name="Marketing Manager")
+        ambiguous = dict(posting("3", contract="permanent"), name="Opportunity")
+        ambiguous["jobAd"]["sections"]["jobDescription"]["text"] = "Join the team."
         with patch(
             "jobboard.integrations.public_catalogue.read_json",
             side_effect=[listing(genuine, manager, ambiguous), genuine, ambiguous],
@@ -89,7 +85,7 @@ class SmartRecruitersTests(SimpleTestCase):
             rows = fetch_normalized(self.board)
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["external_id"], "123")
-        self.assertEqual(rows[0]["contract_type"], "unknown")
+        self.assertEqual(rows[0]["contract_type"], "permanent")
         self.assertEqual(read.call_count, 3)
 
     def test_pagination_uses_actual_offset_and_validates_total(self):

@@ -18,7 +18,7 @@ def hit(**changes):
     return dict(
         {
             "reference": "ABC",
-            "name": "Marketing internship",
+            "name": "Backend Developer internship",
             "organization": {"name": "Example", "slug": "example"},
             "slug": "marketing-internship",
             "contract_type": "internship",
@@ -77,7 +77,6 @@ class WttjTests(SimpleTestCase):
         self.assertEqual(row["location_details"][0]["country"], "FR")
         self.assertIn("Résumé publié", row["description"])
         for changes in [
-            {"contract_type": "apprenticeship"},
             {"offices": [{"city": "Boston", "country_code": "US"}]},
             {"offices": [{"city": "Paris"}]},
             {"remote": "full"},

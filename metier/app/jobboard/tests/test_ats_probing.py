@@ -17,7 +17,7 @@ def payload(location="Paris, France"):
         "jobs": [
             {
                 "id": 1,
-                "title": "Marketing Internship",
+                "title": "Backend Internship",
                 "content": "A six month internship.",
                 "absolute_url": "https://job-boards.greenhouse.io/probetest/jobs/1",
                 "location": {"name": location},
@@ -115,7 +115,7 @@ class ProbeTests(TestCase):
 
     def test_structured_country_and_non_stage_gate(self):
         row = {
-            "title": "Marketing Internship",
+            "title": "Backend Internship",
             "description": "Internship.",
             "location_details": [{"name": "Milan", "country": "Italy"}],
         }

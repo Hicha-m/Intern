@@ -53,7 +53,6 @@ class JobSpyNormalizationTests(SimpleTestCase):
             record(country="", location="Paris"),
             record(country="US", location="Paris, TX, US"),
             record(remote=True),
-            record(title="Software Engineering Apprenticeship"),
             record(title="Working Student"),
         ]:
             self.assertIsNone(normalize_record(raw, "linkedin")[0])
@@ -116,12 +115,12 @@ class JobSpyNormalizationTests(SimpleTestCase):
 class JobSpyCollectionTests(TestCase):
     def setUp(self):
         seed_queries(["FR"], ["linkedin"])
-        self.query = DiscoveryQuery.objects.get(provider="jobspy_linkedin")
+        self.query = DiscoveryQuery.objects.get(provider="jobspy_linkedin", term="software engineer")
 
     def test_ingestion_is_idempotent_across_queries_and_keeps_unknown(self):
         ingest(self.query, [record(), record()])
         seed_queries(["GB"], ["linkedin"])
-        ingest(DiscoveryQuery.objects.get(country="GB"), [record()])
+        ingest(DiscoveryQuery.objects.get(country="GB", term="software engineer"), [record()])
         self.assertEqual(Offer.objects.count(), 1)
         self.assertEqual(OfferSource.objects.count(), 1)
         self.assertEqual(Offer.objects.get().company.name, "Example Employer")

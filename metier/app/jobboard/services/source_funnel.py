@@ -6,6 +6,7 @@ from django.utils import timezone
 
 from jobboard.api.catalogue import open_offers
 from jobboard.models import BoardSchedule, ImportRun, OfferSource, SourceBoard
+from jobboard.services.employment_scope import IT_DOMAINS
 from jobboard.services.engine_filters import fresh_sources
 
 
@@ -46,6 +47,7 @@ def audit_sources():
             else None,
             "buckets": Counter(),
             "internship_confirmed": 0,
+            "it_confirmed": 0,
             "europe_confirmed": 0,
         }
     for source in (
@@ -60,6 +62,7 @@ def audit_sources():
             "offer__expires_at",
             "offer__enrichment__classification",
             "offer__enrichment__europe_status",
+            "offer__taxonomy_status", "offer__job_subdomain__domain__slug",
         )
         .iterator()
     ):
@@ -68,6 +71,8 @@ def audit_sources():
             source["offer__enrichment__classification"],
             source["offer__enrichment__europe_status"],
         )
+        in_it = source["offer__taxonomy_status"] in ("classified", "broad") and source["offer__job_subdomain__domain__slug"] in IT_DOMAINS
+        row["it_confirmed"] += in_it
         row["internship_confirmed"] += cls == "confirmed"
         row["europe_confirmed"] += geo == "in_scope"
         if source["source_status"] != "active":
@@ -76,10 +81,10 @@ def audit_sources():
             bucket = "source_not_fresh"
         elif source["offer__status"] != "open":
             bucket = "offer_not_open"
-        elif cls == "not_internship":
-            bucket = "not_internship"
-        elif cls != "confirmed":
-            bucket = "internship_uncertain"
+        elif source["offer__taxonomy_status"] in ("classified", "broad") and not in_it:
+            bucket = "outside_it"
+        elif not in_it:
+            bucket = "occupation_uncertain"
         elif geo == "out_of_scope":
             bucket = "outside_europe"
         elif geo != "in_scope":
@@ -92,7 +97,7 @@ def audit_sources():
             bucket = "other_publication_rule"
         row["buckets"][bucket] += 1
         if (
-            bucket in {"internship_uncertain", "geography_uncertain"}
+            bucket in {"occupation_uncertain", "geography_uncertain"}
             and len(samples[source["board_id"]]) < 10
         ):
             samples[source["board_id"]].append(
@@ -107,7 +112,7 @@ def audit_sources():
     for pk, row in boards.items():
         row["imported_source_rows"] = sum(row["buckets"].values())
         row["review_candidates"] = sum(
-            row["buckets"][k] for k in ("internship_uncertain", "geography_uncertain")
+            row["buckets"][k] for k in ("occupation_uncertain", "geography_uncertain")
         )
         row["samples"] = samples[pk]
         totals.update(row["buckets"])
@@ -115,7 +120,7 @@ def audit_sources():
         "measured_at": now.isoformat(),
         "visible_offer_ids": sorted(visible),
         "totals": dict(totals),
-        "counting_note": "Buckets partition persisted source rows on enabled boards. Sources overlap by offer; last normalized snapshot is not raw upstream count. Uncertainty is not proof of a missed internship.",
+        "counting_note": "Buckets partition persisted source rows on enabled boards. Sources overlap by offer; last normalized snapshot is not raw upstream count. Uncertainty is not proof of a missed IT job.",
         "boards": sorted(
             boards.values(),
             key=lambda row: (-row["review_candidates"], row["board_id"]),

@@ -29,7 +29,7 @@ class RecallGapTests(SimpleTestCase):
                 row = normalize_ashby({"jobs": [dict(job, workplaceType=workplace)]})[0]
                 self.assertEqual(row["work_mode"], mode)
                 self.assertEqual(qualifies(row), eligible)
-        self.assertFalse(
+        self.assertTrue(
             qualifies(
                 normalize_ashby(
                     {
@@ -49,7 +49,7 @@ class RecallGapTests(SimpleTestCase):
     def test_lever_country_belongs_only_to_primary_location(self):
         job = {
             "id": "stage",
-            "text": "Internship",
+            "text": "Backend Internship",
             "descriptionPlain": "Internship for six months",
             "hostedUrl": "https://jobs.lever.co/acme/stage",
             "country": "FR",
@@ -74,7 +74,7 @@ class RecallGapTests(SimpleTestCase):
                 "jobs": [
                     {
                         "id": 1,
-                        "title": "Internship",
+                        "title": "Backend Internship",
                         "content": "Internship",
                         "absolute_url": "https://example.com/job/1",
                         "location": {"name": location},
