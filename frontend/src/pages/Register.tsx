@@ -114,7 +114,7 @@ export function Register() {
         <form ref={form} className="auth-form" onSubmit={submit} aria-label="Inscription" aria-busy={pending}>
           <fieldset disabled={pending || session.loading}>
             {step === -1 && <div className="auth-role-options" role="radiogroup" aria-label="Votre rôle">
-              <label className="auth-role-option"><input type="radio" name="role" value="candidate" checked={role === 'candidate'} onChange={() => setRole('candidate')} /><span><strong>Je suis candidat</strong><small>Trouver un stage et préparer la suite.</small></span></label>
+              <label className="auth-role-option"><input type="radio" name="role" value="candidate" checked={role === 'candidate'} onChange={() => setRole('candidate')} /><span><strong>Je suis candidat</strong><small>Trouver un emploi informatique et préparer la suite.</small></span></label>
               <label className="auth-role-option"><input type="radio" name="role" value="recruiter" checked={role === 'recruiter'} onChange={() => setRole('recruiter')} /><span><strong>Je suis recruteur</strong><small>Publier des offres et rencontrer vos talents.</small></span></label>
             </div>}
             {step === 0 && role === 'recruiter' && <p className="auth-kicker">Espace recruteur · Utilisez votre e-mail professionnel.</p>}

@@ -82,7 +82,7 @@ try {
   })
   await check('T06', 'catalogue et offre fictive visibles', async () => {
     await alicePage.goto('/stages')
-    await alicePage.getByRole('heading', { name: 'Stages en Europe' }).waitFor()
+    await alicePage.getByRole('heading', { name: 'Emplois informatiques en Europe' }).waitFor()
     const response = await alice.request.get(api('/offers/'))
     assert.equal(response.status(), 200)
     assert.ok((await response.json()).count >= 2)

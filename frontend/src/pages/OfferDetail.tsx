@@ -49,7 +49,7 @@ export function OfferDetail() {
         </aside>
         <div className="offer-detail-body">
           <section className="offer-description-panel" aria-labelledby="offer-description-title">
-            <div className="offer-description-heading"><h2 id="offer-description-title">À propos du stage</h2><a href="#offer-source-title">Sources et détails<span aria-hidden="true"> ↓</span></a></div>
+            <div className="offer-description-heading"><h2 id="offer-description-title">À propos du poste</h2><a href="#offer-source-title">Sources et détails<span aria-hidden="true"> ↓</span></a></div>
             {description || offer.content?.blocks.length ? <OfferDescription key={offer.id} content={offer.content} text={description ?? ''} /> : <p className="dashboard-muted">La description n’est pas disponible. Consultez l’offre sur le site de recrutement pour en savoir plus.</p>}
           </section>
           <section className="offer-source-panel" aria-labelledby="offer-source-title"><h2 id="offer-source-title">Sources et informations sur l’offre</h2><>{(offer.published_at || offer.facts?.publication_date) && <p className="offer-published">Publication : {offer.published_at ? dateLabel(offer.published_at) : temporalLabel(offer.facts?.publication_date?.value)}</p>}<OfferEvidence offer={offer} /></></section>

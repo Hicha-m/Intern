@@ -45,6 +45,23 @@ révisions retenues lorsqu’elles corroborent littéralement le fait extrait.
   reprise par lots, erreur avec curseur, borne stable et préservation des données.
 - 32 scénarios Playwright réussis avec API contrôlée : catalogue, fiches offre et
   entreprise, navigation, signalement `wrong_contract`, clavier et mobile.
-- Recette complète et contrôles finaux en cours.
+- 11 scénarios supplémentaires pagination/suggestions/taxonomie et 9 scénarios
+  couverture/inscription réussis : 52 scénarios Playwright distincts au total.
+- Régression complète : 605 tests Django réussis sur PostgreSQL isolé en
+  221,731 secondes. Les 22 tests ciblés ci-dessus sont inclus dans ce total.
+- Recette réelle : 6 contrôles de transition historique, 18 contrôles des parcours
+  recruteur/candidat pour les huit contrats et 15 contrôles historiques sur une
+  base fictive séparée, tous réussis. Aucun mock API dans ces trois scripts.
+- Ruff, lint frontend, build, contrôles des tokens, `manage.py check`, absence de
+  migration imprévue, syntaxe des scripts et `git diff --check` réussis.
+  Les trois avertissements Fast Refresh existants et celui du bundle > 500 kB
+  subsistent ; aucune performance de production n’est déduite de ces contrôles.
+
+Les données de recette sont fictives. Les premiers essais ont révélé des attentes
+obsolètes de titre et de sélecteur dans les scripts ; elles ont été adaptées aux
+libellés actuels puis les parcours ont été rejoués. Deux lancements Django se sont
+chevauchés sur une base de test ; la validation finale a été exécutée séparément.
+La rétention/extraction des exigences et l’analyse du marché restent en E2/E4/E5.
+La CI distante, la fusion des branches et le déploiement ne sont pas exécutés.
 
 Aucune reprise de production ni collecte externe exécutée.

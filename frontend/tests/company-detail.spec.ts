@@ -30,12 +30,12 @@ async function prepare(page: Page) {
   })
 }
 
-test('company page presents sources, all internships and responsive layout', async ({ page }, info) => {
+test('company page presents sources, all jobs and responsive layout', async ({ page }, info) => {
   await prepare(page)
   await page.setViewportSize({ width: 1440, height: 1000 })
   await page.goto('/companies/1')
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Stripe')
-  await expect(page.getByText('14 stages en Europe sur Intern')).toBeVisible()
+  await expect(page.getByText('14 offres en Europe sur Intern')).toBeVisible()
   await expect(page.locator('.company-key-info').getByText('Paris · France')).toBeVisible()
   await expect(page.locator('.catalogue-card')).toHaveCount(12)
   await expect(page.getByRole('link', { name: 'Site de l’entreprise' })).toHaveAttribute('rel', 'noopener noreferrer')
@@ -64,7 +64,7 @@ test('company feed pagination, search and recommendations keep company scope', a
   await page.getByRole('button', { name: 'Pour vous', exact: true }).click()
   await expect(page.locator('.company-match-reasons')).toHaveText('Poste recherché · Compétences en commun')
   await expect(page.getByRole('button', { name: 'Pour vous', exact: true })).toHaveAttribute('aria-pressed', 'true')
-  await page.getByRole('button', { name: 'Tous les stages', exact: true }).click()
+  await page.getByRole('button', { name: 'Toutes les offres', exact: true }).click()
   await expect(page.locator('.catalogue-card')).toHaveCount(1)
 })
 
@@ -103,5 +103,23 @@ test('company request errors can be retried and empty feeds remain useful', asyn
   await expect(page.getByRole('alert')).toBeVisible()
   unavailable = false
   await page.getByRole('button', { name: 'Réessayer' }).click()
-  await expect(page.getByRole('heading', { name: 'Aucun stage publié pour le moment' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Aucune offre publiée pour le moment' })).toBeVisible()
+})
+
+test('company cards distinguish permanent, legacy and unknown contracts without inferring seniority', async ({ page }) => {
+  await prepare(page)
+  await page.route('**/api/v1/companies/1/offers/?*', route => route.fulfill({ json: {
+    results: [
+      { ...offers[0], title: 'Senior Backend Engineer', contract_type: 'employment', seniority: 'unknown' },
+      { ...offers[1], title: 'Backend Engineer', contract_type: 'permanent', seniority: 'senior' },
+      { ...offers[2], title: 'Junior Backend Engineer', contract_type: 'unknown', seniority: 'unknown' },
+    ], count: 3, page: 1, page_size: 12,
+  } }))
+  await page.goto('/companies/1')
+  await expect(page.locator('.company-offer-type')).toHaveText([
+    'Emploi salarié (durée non précisée)', 'CDI · Senior', 'Contrat non précisé',
+  ])
+  await expect(page.getByRole('heading', { name: 'Les offres chez Stripe' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Toutes les offres', exact: true })).toBeVisible()
+  await expect(page.locator('.company-offer-action').first()).toHaveText('Découvrir l’offre')
 })

@@ -11,6 +11,8 @@ test('coverage distinguishes publication, pagination and errors', async ({ page 
   } }))
   await page.goto('/engine')
   await expect(page.getByRole('heading', { name: '123 offres publiées' })).toBeVisible()
+  await expect(page.getByText('Emplois informatiques en Europe, non expirés', { exact: false })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Offres par pays' })).toBeVisible()
   await expect(page.getByText('80 / 100 entreprises vérifiées · 3 sources actives · 12 fiches visibles.')).toBeVisible()
   await expect(page.getByText('2 avec pages restantes · 1 en erreur')).toBeVisible()
   await expect(page.getByRole('link', { name: 'Allemagne', exact: true })).toHaveAttribute('href', '/stages?country_codes=DE')

@@ -63,9 +63,9 @@ export function Offers() {
       <span className="offers-profile-icon"><HugeiconsIcon icon={UserCircleIcon} size={24} strokeWidth={1.5} aria-hidden="true" /></span>
       <div><h2 id="offers-profile-title">Votre prochaine étape commence par vous.</h2><p>Gardez votre profil et votre CV à jour pour préparer vos candidatures plus facilement.</p></div><Link to="/profil" className="dashboard-button">Voir mon profil <HugeiconsIcon icon={ArrowRight01Icon} size={16} strokeWidth={1.5} aria-hidden="true" /></Link>
     </section>
-    <div className="offers-heading"><h1>Stages en Europe</h1></div>
+    <div className="offers-heading"><h1>Emplois informatiques en Europe</h1></div>
     <div className="offers-results-heading"><h3 id="offers-results" ref={resultsHeading} tabIndex={-1}>{query ? `Résultats pour « ${query} »` : 'Les offres à découvrir'}{!loading && !error && <span className="offers-count">{data?.count ?? 0}</span>}</h3></div>
-    {error ? <div className="dashboard-error" role="alert">{error}<button className="dashboard-button" onClick={reload}>Réessayer</button></div> : loading ? <p role="status" className="dashboard-muted">Chargement des offres…</p> : data?.results.length ? <div className="dashboard-offers">{data.results.map(offer => <CatalogueCard key={offer.id} offer={offer} />)}</div> : <DashboardEmpty offers title="Aucune offre trouvée" detail="Essayez un autre mot-clé ou élargissez vos filtres pour découvrir plus de stages." />}
+    {error ? <div className="dashboard-error" role="alert">{error}<button className="dashboard-button" onClick={reload}>Réessayer</button></div> : loading ? <p role="status" className="dashboard-muted">Chargement des offres…</p> : data?.results.length ? <div className="dashboard-offers">{data.results.map(offer => <CatalogueCard key={offer.id} offer={offer} />)}</div> : <DashboardEmpty offers title="Aucune offre trouvée" detail="Essayez un autre mot-clé ou élargissez vos filtres pour découvrir plus d’offres." />}
     {!loading && !error && data?.count === 0 && query.trim() && <SearchSuggestions filters={filters} params={params} />}
     {data && !error && <Pagination page={data.page} pageSize={data.page_size} count={data.count} params={params} onNavigate={() => { paginationNavigation.current = true }} />}
   </main>
