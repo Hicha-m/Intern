@@ -25,8 +25,9 @@ actives et des volumes de production reste à faire sur l’environnement concer
 Migration E1.1 additive : préserver identifiants, liens, contrats historiques et
 valeurs inconnues ; ne pas remplir l’expérience à partir de la séniorité.
 Vérifier montée de version et retour sur une base PostgreSQL isolée ; le retour
-sur l’ancien schéma exige d’abord de ramener les nouveaux contrats à `unknown`,
-sans les transformer en stages ou en CDI supposés.
+sur l’ancien schéma exige une sauvegarde et une réconciliation explicite des
+nouveaux contrats, préférences et bornes d’expérience ; aucune suppression
+automatique ni conversion en stage ou CDI supposé.
 
 ## Restrictions à lever en E1.2
 

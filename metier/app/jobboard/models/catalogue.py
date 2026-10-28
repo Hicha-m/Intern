@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVector, SearchVectorField
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import F, Q
 from django.utils import timezone
@@ -129,6 +130,15 @@ class Offer(models.Model):
         ],
         default="unknown",
     )
+    # Null means absent evidence; zero is an explicit no-experience requirement.
+    experience_years_min = models.DecimalField(
+        max_digits=5, decimal_places=2, null=True, blank=True,
+        validators=[MinValueValidator(0)],
+    )
+    experience_years_max = models.DecimalField(
+        max_digits=5, decimal_places=2, null=True, blank=True,
+        validators=[MinValueValidator(0)],
+    )
     remote_scope = models.TextField(null=True, blank=True)
     language_code = models.CharField(max_length=16, null=True, blank=True)
     status = models.CharField(
@@ -159,6 +169,22 @@ class Offer(models.Model):
                 name="offer_taxonomy_assignment_valid",
             ),
             allowed("contract_type", ContractType.values, "offer_contract_valid"),
+            models.CheckConstraint(
+                condition=Q(experience_years_min__isnull=True)
+                | Q(experience_years_min__gte=0),
+                name="offer_experience_min_nonnegative",
+            ),
+            models.CheckConstraint(
+                condition=Q(experience_years_max__isnull=True)
+                | Q(experience_years_max__gte=0),
+                name="offer_experience_max_nonnegative",
+            ),
+            models.CheckConstraint(
+                condition=Q(experience_years_min__isnull=True)
+                | Q(experience_years_max__isnull=True)
+                | Q(experience_years_max__gte=F("experience_years_min")),
+                name="offer_experience_bounds_ordered",
+            ),
             allowed("work_mode", WorkMode.values, "offer_work_mode_valid"),
             allowed("status", OfferStatus.values, "offer_status_valid"),
             allowed(

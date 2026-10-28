@@ -29,7 +29,7 @@ collecte si le gain est mesuré, sans prérequis pour les fonctionnalités produ
 | Epic | Objectif | Dépendances | État |
 | --- | --- | --- | --- |
 | E0 | Cadrage, audit et mesures nécessaires à la prochaine story | Aucune | En cours : documents rédigés, audit de recette à faire |
-| E1 | Catalogue de tous les emplois informatiques | Audit E0 ciblé sur le catalogue | À faire, priorité produit 1 |
+| E1 | Catalogue de tous les emplois informatiques | Audit E0 ciblé sur le catalogue | En cours : E1.1 vérifiée, E1.2 suivante |
 | E2 | Fiabilité minimale de la collecte et transport des champs utiles | E1 | À faire, socle du panel |
 | E4 | Données normalisées et exigences sourcées | Collecte et champs utiles E2 ; aucune dépendance à E3 | À faire, priorité produit 2 |
 | E5 | Panel statistique et analyse du premier emploi | E4 | À faire, priorité produit 3 |
@@ -66,7 +66,7 @@ isolée ; noter séparément échecs, mocks et contrôles non exécutés.
 
 Résultat : rechercher des opportunités informatiques à tous les niveaux.
 
-- [ ] E1.1 — Auditer et étendre les choix de contrats, séniorité, expérience, métiers et spécialisations ; migration additive des champs manquants.
+- [x] E1.1 — Auditer et étendre les choix de contrats, séniorité, expérience, métiers et spécialisations ; migration additive des champs manquants. [Critères et preuve](docs/research/2026-10-28-e1-employment-schema.md) : 68 tests PostgreSQL réussis, dont migration aller/retour et protection des données.
 - [ ] E1.2 — Retirer le filtre stage obligatoire du runner, des requêtes, des règles de qualité, de publication et de recherche ; conserver un filtre stage explicite.
 - [ ] E1.3 — Adapter formulaires recruteur, API et filtres candidat à stage, alternance, CDI, CDD et mission, avec contrat inconnu explicite.
 - [ ] E1.4 — Adapter libellés et navigation ; reprendre les données historiques sans inventer contrat ou séniorité.
@@ -198,7 +198,8 @@ quarantaine, épuisement du pool et transmission effective à JobSpy ; tests liv
 
 ## Prochaine story
 
-**E0.3 : audit et mesures de départ.** Produire un inventaire synthétique des
-filtres stage, contrats, sources, points de passage des rémunérations et tests
-existants, centré sur les prérequis d’E1. Enchaîner sur E1.1 ; l’audit du pool
-proxy et l’évaluation RAG attendent leurs epics respectifs.
+**E1.2 : ouvrir la collecte et la publication aux emplois informatiques.** Retirer
+les filtres stage obligatoires tout en conservant leur sélection explicite,
+borner le périmètre informatique avec la taxonomie et préserver les contrôles de
+fraîcheur, cycle de vie et droits recruteur. Partir de l’[audit ciblé E0.3](docs/research/2026-10-28-catalogue-audit.md) ;
+les mesures de production manquantes restent à compléter sans relancer toute la collecte.
