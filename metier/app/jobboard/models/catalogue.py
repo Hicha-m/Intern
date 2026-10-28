@@ -316,6 +316,11 @@ class ImportRun(models.Model):
         choices=[(v, v.title()) for v in ("running", "succeeded", "failed")],
         default="running",
     )
+    outcome = models.CharField(
+        max_length=20, default="unknown", db_default="unknown",
+        choices=[(v, v.replace("_", " ").title()) for v in
+                 ("unknown", "success", "empty_confirmed", "partial", "failed")],
+    )
     started_at = models.DateTimeField(default=timezone.now)
     finished_at = models.DateTimeField(null=True, blank=True)
     diagnostics = models.JSONField(default=list, blank=True)
@@ -327,6 +332,10 @@ class ImportRun(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=["id", "board"], name="import_run_board_identity"
+            ),
+            allowed(
+                "outcome", ("unknown", "success", "empty_confirmed", "partial", "failed"),
+                "import_run_outcome_valid",
             ),
             allowed(
                 "status", ("running", "succeeded", "failed"), "import_run_status_valid"

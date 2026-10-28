@@ -83,7 +83,7 @@ Résultat : collecte reproductible et diagnostic précis des incidents.
 
 - [ ] E2.1 — Comparer JobSpy amont, sa version épinglée, ses issues/forks et les dépôts candidats : licence, maintenance, fonctionnalités, qualité, contraintes et coût.
 - [ ] E2.2 — Benchmarker les candidats sur des requêtes identiques ; retenir les composants utiles dans un ADR, épingler leurs versions et documenter les éventuels patchs.
-- [ ] E2.3 — Uniformiser les états succès, vide confirmé, partiel et échec ; conserver curseur, provenance et diagnostics expurgés.
+- [ ] E2.3 — Uniformiser les états succès, vide confirmé, partiel et échec ; conserver curseur, provenance et diagnostics expurgés. [E2.3a en cours : imports et réconciliation](docs/research/2026-10-28-e2-collection-outcomes.md) ; E2.3b doit encore couvrir les requêtes vides sans import.
 - [ ] E2.4 — Vérifier/compléter idempotence, réservation de tâches, reprise après crash, budgets de requêtes et temporisation par source.
 - [ ] E2.5 — Remonter les rémunérations et champs disponibles de JobSpy jusqu’au modèle ; exposer le tableau de santé des sources à l’administrateur.
 
