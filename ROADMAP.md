@@ -83,7 +83,7 @@ Résultat : collecte reproductible et diagnostic précis des incidents.
 
 - [ ] E2.1 — Comparer JobSpy amont, sa version épinglée, ses issues/forks et les dépôts candidats : licence, maintenance, fonctionnalités, qualité, contraintes et coût.
 - [ ] E2.2 — Benchmarker les candidats sur des requêtes identiques ; retenir les composants utiles dans un ADR, épingler leurs versions et documenter les éventuels patchs.
-- [ ] E2.3 — Uniformiser les états succès, vide confirmé, partiel et échec ; conserver curseur, provenance et diagnostics expurgés. [E2.3a vérifiée : imports et réconciliation](docs/research/2026-10-28-e2-collection-outcomes.md) : 611 tests Django réussis, migration protégée ; E2.3b doit encore couvrir les requêtes vides sans import.
+- [ ] E2.3 — Uniformiser les états succès, vide confirmé, partiel et échec ; conserver curseur, provenance et diagnostics expurgés. [E2.3a vérifiée : imports et réconciliation](docs/research/2026-10-28-e2-collection-outcomes.md) : 611 tests Django réussis, migration protégée ; [E2.3b vérifiée sur six runners](docs/research/2026-10-28-e2-discovery-attempts.md) : 77 tests PostgreSQL, tentatives vides/échouées et migration ; audit des autres runners ATS encore ouvert.
 - [ ] E2.4 — Vérifier/compléter idempotence, réservation de tâches, reprise après crash, budgets de requêtes et temporisation par source.
 - [ ] E2.5 — Remonter les rémunérations et champs disponibles de JobSpy jusqu’au modèle ; exposer le tableau de santé des sources à l’administrateur.
 
@@ -198,11 +198,10 @@ quarantaine, épuisement du pool et transmission effective à JobSpy ; tests liv
 
 ## Prochaine story
 
-**E2.3b : tracer les tentatives des requêtes de découverte.**
-E2.3a a fiabilisé les imports et la réconciliation (611 tests Django réussis).
-Enregistrer maintenant aussi les tentatives vides ou échouées sans import
-entreprise, leurs volumes et curseurs avant/après ; distinguer vide confirmé,
-vide incertain, pagination encore ouverte et erreur. Préserver les baux et la
-transaction de progression. Les comparaisons E2.1/E2.2 restent conditionnées à un
-blocage mesuré ; les proxys sont toujours reportés. Les validations locales ne
-valent ni publication GitHub, ni fusion sur master, ni déploiement.
+**E2.4 : récupérer les tentatives interrompues et vérifier les baux.**
+Les imports et les tentatives des six collecteurs sont tracés et testés. Vérifier
+la récupération après arrêt brutal, l’absence de double progression et les
+budgets de reprise, puis passer au transport des rémunérations E2.5 pour préparer
+les exigences sourcées E4 et le panel E5. L’audit F02 des runners ATS hors de ces
+six collecteurs reste ouvert. Les proxys restent reportés ; aucune validation
+locale ne vaut publication GitHub, fusion sur master ou déploiement.

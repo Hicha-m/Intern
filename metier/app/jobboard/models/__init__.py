@@ -28,6 +28,7 @@ from .engine import (
     AlertEvent,
     BoardSchedule,
     CompanyPreference,
+    DiscoveryAttempt,
     DiscoveryQuery,
     DiscoveryResult,
     ExternalOpportunity,
@@ -117,7 +118,7 @@ __all__ += ["OfferMergeDecision"]
 
 __all__ += ["SourceDiscoverySeed"]
 
-__all__ += ["DiscoveryQuery", "DiscoveryResult"]
+__all__ += ["DiscoveryAttempt", "DiscoveryQuery", "DiscoveryResult"]
 
 from .ats_probe import AtsProbe  # noqa: E402
 
