@@ -6,7 +6,7 @@ from django.db import models
 from django.db.models import F, Q
 from django.utils import timezone
 
-from .choices import ContractType, OfferStatus, SalaryPeriod, WorkMode
+from .choices import ContractType, OfferStatus, SalaryPeriod, Seniority, WorkMode
 from .constraints import allowed, json_type
 
 
@@ -70,6 +70,7 @@ class Location(models.Model):
 
 class Offer(models.Model):
     ContractType = ContractType
+    Seniority = Seniority
     WorkMode = WorkMode
     Status = OfferStatus
 
@@ -124,11 +125,8 @@ class Offer(models.Model):
     )
     seniority = models.CharField(
         max_length=16,
-        choices=[
-            (v, v.title())
-            for v in ("entry", "mid", "senior", "lead", "executive", "unknown")
-        ],
-        default="unknown",
+        choices=Seniority,
+        default=Seniority.UNKNOWN,
     )
     # Null means absent evidence; zero is an explicit no-experience requirement.
     experience_years_min = models.DecimalField(

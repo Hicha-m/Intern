@@ -153,6 +153,8 @@ class Command(BaseCommand):
                 m.RecruiterJob.objects.create(
                     owner=recruiters[number - 1],
                     offer=offer,
+                    contract_type=offer.contract_type,
+                    seniority=offer.seniority,
                     title=title,
                     description=offer.description,
                     location="Paris",
