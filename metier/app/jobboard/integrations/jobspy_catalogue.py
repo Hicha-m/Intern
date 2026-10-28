@@ -164,5 +164,6 @@ def normalize_record(raw, site):
         location_details=[{"name": label, "country": code}],
         contract_type=contract,
         work_mode=mode,
+        compensation_input=raw.get("compensation"),
     )
     return row, facts

@@ -29,7 +29,8 @@ class OccupationScopeTests(SimpleTestCase):
             (', "contract_type": "internship"', JobType.INTERNSHIP),
         ):
             adapter = SimpleNamespace(
-                scrape=Mock(return_value=SimpleNamespace(jobs=[]))
+                scrape=Mock(return_value=SimpleNamespace(jobs=[])),
+                _process_job=Mock(),
             )
             options = (
                 '{"site":"linkedin","term":"backend","location":"France","country_name":"France","limit":1,"offset":0'
