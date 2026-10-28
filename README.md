@@ -30,9 +30,9 @@ n’est validée.
 
 ## Présentation
 
-**Trouver un stage en Europe et suivre ses candidatures au même endroit.**
+**Trouver un emploi informatique en Europe et suivre ses candidatures au même endroit.**
 
-Intern est une application web avec un espace candidat pour rechercher des stages,
+Intern est une application web avec un espace candidat pour rechercher des emplois informatiques,
 centraliser son profil et son CV, puis suivre ses démarches. Un espace recruteur
 permet de publier des offres et de gérer les candidatures reçues. Le projet sert
 également de support à un travail de virtualisation : déploiement en machines
@@ -50,11 +50,13 @@ présentés dans [les captures du frontend](frontend/captures/README.md).*
 Le projet est en développement. Les parcours disponibles couvrent :
 
 - **Candidat** : inscription, connexion, profil, CV privé, préférences, recherche
-  de stages et suivi des candidatures et entretiens.
+  d’emplois informatiques et suivi des candidatures et entretiens.
 - **Recruteur** : vérification de l’entreprise, création et gestion d’offres,
   candidatures reçues et suivi en colonnes.
 - **Catalogue** : collecte de sources externes, pages entreprise et publication
-  des stages confirmés en Europe, ouverts et récemment vérifiés.
+  des emplois informatiques en Europe, ouverts et récemment vérifiés.
+  Stage, alternance, CDI, CDD, mission et valeurs inconnues sont distingués ;
+  contrat et séniorité se filtrent séparément.
 - **Administration** : activation des comptes, vérification des recruteurs et
   gestion des sources via Django Admin.
 

@@ -65,7 +65,7 @@ test('a stale suggestion response cannot replace a newer successful search', asy
   })
   await page.goto('/stages?q=pythonn')
   await expect.poll(() => started).toBe(true)
-  const input = page.getByRole('searchbox', { name: 'Rechercher un stage' })
+  const input = page.getByRole('searchbox', { name: 'Rechercher un emploi' })
   await input.fill('Rust')
   await input.press('Enter')
   await expect(page.getByRole('heading', { name: 'Rust Internship', exact: true })).toBeVisible()

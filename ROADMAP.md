@@ -29,7 +29,7 @@ collecte si le gain est mesuré, sans prérequis pour les fonctionnalités produ
 | Epic | Objectif | Dépendances | État |
 | --- | --- | --- | --- |
 | E0 | Cadrage, audit et mesures nécessaires à la prochaine story | Aucune | En cours : documents rédigés, audit de recette à faire |
-| E1 | Catalogue de tous les emplois informatiques | Audit E0 ciblé sur le catalogue | En cours : E1.1 à E1.3 vérifiées, E1.4 suivante |
+| E1 | Catalogue de tous les emplois informatiques | Audit E0 ciblé sur le catalogue | Critères vérifiés localement ; revue/fusion et déploiement en attente |
 | E2 | Fiabilité minimale de la collecte et transport des champs utiles | E1 | À faire, socle du panel |
 | E4 | Données normalisées et exigences sourcées | Collecte et champs utiles E2 ; aucune dépendance à E3 | À faire, priorité produit 2 |
 | E5 | Panel statistique et analyse du premier emploi | E4 | À faire, priorité produit 3 |
@@ -69,7 +69,7 @@ Résultat : rechercher des opportunités informatiques à tous les niveaux.
 - [x] E1.1 — Auditer et étendre les choix de contrats, séniorité, expérience, métiers et spécialisations ; migration additive des champs manquants. [Critères et preuve](docs/research/2026-10-28-e1-employment-schema.md) : 68 tests PostgreSQL réussis, dont migration aller/retour et protection des données.
 - [x] E1.2 — Retirer le filtre stage obligatoire du runner, des requêtes, des règles de qualité, de publication et de recherche ; conserver un filtre stage explicite. [Réalisation et recette](docs/research/2026-10-28-e1-it-catalogue.md) : 592 tests Django réussis, 36 tests Playwright et 8 contrôles du filtre, 15 contrôles de recette existante et 8 contrôles des contrats avec navigateur/API/PostgreSQL réels.
 - [x] E1.3 — Adapter formulaires recruteur, API et filtres candidat à stage, alternance, CDI, CDD et mission, avec contrat inconnu explicite et filtres contrat/séniorité indépendants. [Preuves et migration](docs/research/2026-10-28-e1-employment-flows.md) : 601 tests Django, 37 scénarios Playwright distincts et 18 + 15 contrôles réels sur bases fictives séparées.
-- [ ] E1.4 — Adapter libellés et navigation ; reprendre les données historiques sans inventer contrat ou séniorité.
+- [x] E1.4 — Adapter libellés et navigation ; reprendre les données historiques sans inventer contrat ou séniorité. [Preuves de transition](docs/research/2026-10-28-e1-catalogue-transition.md) : 605 tests Django, 52 scénarios Playwright distincts et 6 + 18 + 15 contrôles réels réussis.
 
 Acceptation : fixtures de chaque contrat visibles via API et interface ; emploi
 informatique confirmé conservé, annonce hors périmètre classée à part ; anciens
@@ -198,8 +198,10 @@ quarantaine, épuisement du pool et transmission effective à JobSpy ; tests liv
 
 ## Prochaine story
 
-**E1.4 : finaliser les libellés, la navigation et la reprise historique.** Présenter
-le catalogue comme des emplois informatiques en conservant les anciennes URL.
-Reprendre les projections historiques par lots, sans deviner contrat ou séniorité,
-et vérifier idempotence, provenance et conservation des liens/dossiers existants.
-Terminer la recette E1 avant le socle de données fiables E2/E4.
+**E2.3 : fiabiliser les résultats de collecte pour les données sourcées.**
+Auditer les états succès, vide confirmé, partiel et échec des adaptateurs existants,
+puis uniformiser leur transport et leurs diagnostics. Vérifier qu’une erreur ou
+un vide incertain ne clôture aucune offre, avec curseurs conservés et tests de
+régression. E2.1/E2.2 restent conditionnées à un blocage mesuré ; les proxys sont
+toujours reportés. Les branches E1 récentes attendent l’autorisation de publication
+GitHub ; les validations locales ne valent ni fusion sur master ni déploiement.

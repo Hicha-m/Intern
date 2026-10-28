@@ -75,7 +75,7 @@ test('taxonomy failure leaves search usable and the picker can retry', async ({ 
   await page.getByRole('button', { name: 'Réessayer', exact: true }).click()
   await expect(page.getByRole('alert')).toHaveCount(0)
   await page.getByRole('button', { name: 'Fermer les métiers' }).click()
-  const search = page.getByRole('searchbox', { name: 'Rechercher un stage' })
+  const search = page.getByRole('searchbox', { name: 'Rechercher un emploi' })
   await search.fill('Python')
   await search.press('Enter')
   await expect(page).toHaveURL(/q=Python/)

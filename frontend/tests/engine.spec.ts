@@ -34,7 +34,7 @@ test('Europe filters persist and secondary tools are absent', async ({ page }, i
   const catalog: URL[] = []
   await page.route('**/api/v1/offers/?*', route => { catalog.push(new URL(route.request().url())); return route.fulfill({ json: { results: [], count: 0, page: 1, page_size: 12 } }) })
   await page.goto('/stages')
-  await expect(page.getByRole('heading', { name: 'Stages en Europe' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Emplois informatiques en Europe' })).toBeVisible()
   await expect.poll(() => catalog.length).toBeGreaterThan(0)
   expect(catalog.at(-1)?.searchParams.has('classification')).toBe(false)
   expect(catalog.at(-1)?.searchParams.get('europe_scope')).toBe('in_scope')
@@ -64,8 +64,9 @@ test('Europe filters persist and secondary tools are absent', async ({ page }, i
 test('details show field evidence and fresh check, report and private feedback do not submit', async ({ page }) => {
   await prepareEngine(page)
   const actions: string[] = []
+  const reports: unknown[] = []
   await page.route('**/api/v1/offers/2/**', route => {
-    if (route.request().method() !== 'GET') { actions.push(route.request().url()); return route.fulfill({ json: { id: 1 } }) }
+    if (route.request().method() !== 'GET') { if (route.request().url().endsWith('/reports/')) reports.push(route.request().postDataJSON()); actions.push(route.request().url()); return route.fulfill({ json: { id: 1 } }) }
     return route.fulfill({ json: { id: 2, title: 'Stage finance', company: { id: 1, name: 'Exemple' }, last_verified_at: '2026-09-30T18:00:00Z', quality: { classification: 'confirmed', domain: 'finance-accounting' }, facts: { duration: { value: 6, evidence_text: 'Stage de six mois', source_revision_id: 9 } }, sources: [{ id: 1, provider: 'Employeur', apply_url: 'https://example.test/apply', capabilities: { collect: true, submit: false, manual_external: true } }] } })
   })
   await page.goto('/offers/2')
@@ -74,10 +75,11 @@ test('details show field evidence and fresh check, report and private feedback d
   await expect(page.locator('.engine-evidence').getByText('Stage de six mois', { exact: true })).toBeVisible()
   await page.getByRole('button', { name: 'Masquer des recommandations' }).click()
   await expect(page.locator('[data-sonner-toast]').filter({ hasText: 'Offre masquée' })).toBeVisible()
-  await page.getByRole('button', { name: 'Signaler : ce n’est pas un stage' }).click()
+  await page.getByRole('button', { name: 'Signaler un contrat incorrect' }).click()
   await expect(page.locator('[data-sonner-toast]').filter({ hasText: 'Signalement enregistré' })).toBeVisible()
   await expect(page.getByRole('link', { name: 'Postuler sur Employeur' })).toHaveAttribute('href', 'https://example.test/apply')
   expect(actions.every(url => /feedback|reports/.test(url))).toBe(true)
+  expect(reports).toEqual([{ reason: 'wrong_contract' }])
 })
 
 test('catalogue keeps offers visible, resets advanced filters and stacks cards on mobile', async ({ page }, info) => {
@@ -108,10 +110,10 @@ test('catalogue keeps offers visible, resets advanced filters and stacks cards o
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
     await expect(page.getByRole('button', { name: 'Rechercher', exact: true })).toBeVisible()
   }
-  await page.getByLabel('Rechercher un stage').focus()
-  await expect(page.getByLabel('Rechercher un stage')).toHaveCSS('outline-style', 'none')
+  await page.getByLabel('Rechercher un emploi').focus()
+  await expect(page.getByLabel('Rechercher un emploi')).toHaveCSS('outline-style', 'none')
   await expect(page.locator('.offers-search-bar')).toHaveCSS('outline-style', 'solid')
-  await page.getByLabel('Rechercher un stage').fill('Software')
+  await page.getByLabel('Rechercher un emploi').fill('Software')
   await page.keyboard.press('Enter')
   await expect(page).toHaveURL(/q=Software/)
   await page.emulateMedia({ reducedMotion: 'reduce' })
@@ -160,7 +162,7 @@ test('custom filters support keyboard, cancellation, empty search and removing a
   await page.getByRole('option', { name: 'Allemagne', exact: true }).click()
   await expect(country).toHaveValue('Allemagne')
   await country.click()
-  await page.getByRole('heading', { name: 'Stages en Europe' }).click()
+  await page.getByRole('heading', { name: 'Emplois informatiques en Europe' }).click()
   await expect(country).toHaveAttribute('aria-expanded', 'false')
 })
 
@@ -202,7 +204,7 @@ test('invalid dates reopen advanced filters and preserve draft selections', asyn
 test('search has a single focus ring and clears without losing filters or submitting', async ({ page }, info) => {
   await prepareEngine(page)
   await page.goto('/stages?q=postgresql&country_codes=FR')
-  const input = page.getByRole('searchbox', { name: 'Rechercher un stage' })
+  const input = page.getByRole('searchbox', { name: 'Rechercher un emploi' })
   await input.focus()
   await expect(input).toHaveCSS('outline-style', 'none')
   await expect(page.locator('.offers-search-bar')).toHaveCSS('outline-style', 'solid')

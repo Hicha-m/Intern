@@ -91,8 +91,8 @@ npm --prefix frontend run test:e2e
 
 Les tests Django couvrent les cas métier et l'administration sur une base de
 test créée puis détruite automatiquement. Les tests Playwright du frontend
-utilisent des réponses API contrôlées ; seul `recette_navigateur.mjs` vérifie
-ici les trois couches ensemble. Les détails observés et les limites figurent
+utilisent des réponses API contrôlées ; les scripts `recette_*.mjs` décrits ici
+vérifient les trois couches ensemble. Les détails observés et les limites figurent
 dans le cahier.
 
 Après la recette, arrêter seulement le conteneur créé pour elle :
@@ -131,3 +131,22 @@ indépendante, les badges et les droits entre comptes. Son script
 [recette_parcours_emploi.mjs](recette_parcours_emploi.mjs) crée des offres fictives
 supplémentaires. Exécuter la recette historique stricte sur une autre base neuve
 pour conserver son jeu initial d’une offre par recruteur.
+
+
+La [recette E1.4](../docs/research/2026-10-28-e1-catalogue-transition.md)
+prépare neuf annonces historiques fictives avec la
+[fixture de transition](fixtures/catalogue_transition.py), puis vérifie
+reprise par lots, valeurs conservées et rejeu idempotent avant le navigateur.
+Depuis la racine, avec les variables PostgreSQL et les comptes fictifs de
+`intern_market_test` déjà préparés :
+
+```sh
+export RECETTE_TRANSITION_MANIFEST=/tmp/intern-e14-manifest.json
+uv run --project metier metier/app/manage.py shell < tests/fixtures/catalogue_transition.py
+RECETTE_PASSWORD='Intern-Demo-2026!' node tests/recette_transition_emploi.mjs
+```
+
+Le [script navigateur](recette_transition_emploi.mjs) vérifie les huit contrats,
+les preuves, les anciennes URL, le filtre stage et le dossier candidat existant.
+Chaque préparation ajoute un lot fictif distinct, sans modifier les offres
+précédentes. La fixture refuse toute base autre que `intern_market_test`.

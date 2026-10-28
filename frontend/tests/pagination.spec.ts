@@ -59,7 +59,7 @@ for (const count of [0, 8]) {
   test(`pagination is absent with ${count} offers`, async ({ page }) => {
     await catalogue(page, count)
     await page.goto('/stages')
-    await expect(page.getByRole('heading', { name: 'Stages en Europe' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Emplois informatiques en Europe' })).toBeVisible()
     await expect(page.getByRole('status', { name: 'Chargement des offres…' })).toHaveCount(0)
     await expect(page.locator('.offers-count').last()).toHaveText(String(count))
     await expect(page.getByRole('navigation', { name: 'Pages des offres' })).toHaveCount(0)

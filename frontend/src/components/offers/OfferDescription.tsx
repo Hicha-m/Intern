@@ -1,7 +1,7 @@
 import { useState, type KeyboardEvent } from 'react'
 import type { ContentBlock, OfferContent } from '../../lib/offerContent'
 
-const labels: Record<string, string> = { about_role: 'À propos du poste', responsibilities: 'Ce que tu feras', requirements: 'Profil demandé', preferred: 'Un plus', conditions: 'Conditions du stage', about_company: 'À propos de l’entreprise', benefits: 'Avantages', recruitment: 'Recrutement', other: 'Informations complémentaires' }
+const labels: Record<string, string> = { about_role: 'À propos du poste', responsibilities: 'Ce que tu feras', requirements: 'Profil demandé', preferred: 'Un plus', conditions: 'Conditions du poste', about_company: 'À propos de l’entreprise', benefits: 'Avantages', recruitment: 'Recrutement', other: 'Informations complémentaires' }
 const order = Object.keys(labels)
 
 function Block({ block }: { block: ContentBlock }) {

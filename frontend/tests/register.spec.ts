@@ -6,6 +6,7 @@ async function prepare(page: Page) {
   await page.route('**/api/v1/auth/email-availability/', route => route.fulfill({ json: { available: true } }))
   await page.goto('/register')
   await expect(page.getByRole('button', { name: 'Continuer' })).toBeEnabled()
+  await expect(page.getByText('Trouver un emploi informatique et préparer la suite.')).toBeVisible()
   await page.getByRole('radio', { name: /Je suis candidat/ }).check()
   await page.getByRole('button', { name: 'Continuer' }).click()
 }
