@@ -132,3 +132,7 @@ from .recruiters import (  # noqa: E402
 )
 
 __all__ += ["RecruiterApplicant", "RecruiterIntegration", "RecruiterJob", "RecruiterProfile"]
+
+from .requirements import SkillEvidence, SkillExtraction  # noqa: E402
+
+__all__ += ["SkillEvidence", "SkillExtraction"]
