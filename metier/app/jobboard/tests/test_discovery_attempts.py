@@ -107,6 +107,112 @@ class DiscoveryAttemptTests(TestCase):
         self.assertNotIn("private", query.attempts.get().error_code)
         self.assertEqual(DiscoveryAttempt.objects.count(), 1)
 
+    def test_replacement_claim_closes_abandoned_attempt_and_retries_same_cursor(self):
+        import uuid
+        from datetime import timedelta
+
+        from jobboard.services.discovery_attempts import begin_attempt, finish_attempt
+
+        for name in self.providers:
+            with self.subTest(provider=name):
+                module = import_module(f"jobboard.services.{name}_collection")
+                query = self.query(name)
+                old_token = uuid.uuid4()
+                query.lease_token = old_token
+                query.lease_expires_at = timezone.now() - timedelta(seconds=1)
+                query.save()
+                abandoned = begin_attempt(query, old_token)
+                response = [{}] if name == "jobspy" else self.page([{}], True)
+                with (
+                    patch.object(module, "collect", return_value=response) as collect,
+                    patch.object(module, "ingest", return_value=0),
+                ):
+                    module.run_queries(query_id=query.pk)
+                abandoned.refresh_from_db()
+                self.assertEqual(abandoned.outcome, "failed")
+                self.assertEqual(abandoned.error_code, "lease_expired")
+                self.assertEqual(abandoned.cursor_after, "5")
+                self.assertIsNone(abandoned.received_count)
+                new = query.attempts.latest("pk")
+                self.assertEqual(new.cursor_before, "5")
+                self.assertEqual(new.cursor_after, "6")
+                self.assertEqual(collect.call_count, 1)
+                # A late completion from the abandoned worker cannot rewrite history.
+                finish_attempt(query, old_token, received=99, imported=99)
+                abandoned.refresh_from_db()
+                self.assertEqual(abandoned.error_code, "lease_expired")
+                self.assertIsNone(abandoned.imported_count)
+
+    def test_expiry_during_ingest_rolls_back_rows_and_cursor(self):
+        from datetime import timedelta
+
+        for name in self.providers:
+            with self.subTest(provider=name):
+                module = import_module(f"jobboard.services.{name}_collection")
+                query = self.query(name)
+
+                def expire(locked, records):
+                    locked.lease_expires_at = timezone.now() - timedelta(seconds=1)
+                    locked.results.create(
+                        external_id="temporary", attribution="https://example.test"
+                    )
+                    return 1
+
+                response = [{}] if name == "jobspy" else self.page([{}], True)
+                with (
+                    patch.object(module, "collect", return_value=response),
+                    patch.object(module, "ingest", side_effect=expire),
+                ):
+                    module.run_queries(query_id=query.pk)
+                query.refresh_from_db()
+                self.assertEqual(query.cursor, "5")
+                self.assertFalse(query.results.exists())
+                self.assertEqual(query.attempts.get().error_code, "lease_lost")
+
+    def test_live_claim_is_not_replaced(self):
+        import uuid
+        from datetime import timedelta
+
+        for name in self.providers:
+            with self.subTest(provider=name):
+                module = import_module(f"jobboard.services.{name}_collection")
+                query = self.query(name)
+                query.lease_token = uuid.uuid4()
+                query.lease_expires_at = timezone.now() + timedelta(minutes=5)
+                query.save()
+                with patch.object(module, "collect") as collect:
+                    self.assertEqual(module.run_queries(query_id=query.pk), [])
+                    collect.assert_not_called()
+                self.assertEqual(query.attempts.count(), 0)
+
+    def test_uncaught_process_interruption_is_recovered_on_next_claim(self):
+        from datetime import timedelta
+
+        for name in self.providers:
+            with self.subTest(provider=name):
+                module = import_module(f"jobboard.services.{name}_collection")
+                query = self.query(name)
+                with patch.object(module, "collect", side_effect=KeyboardInterrupt):
+                    with self.assertRaises(KeyboardInterrupt):
+                        module.run_queries(query_id=query.pk)
+                abandoned = query.attempts.get()
+                self.assertEqual(abandoned.outcome, "running")
+                self.assertIsNone(abandoned.finished_at)
+                DiscoveryQuery.objects.filter(pk=query.pk).update(
+                    lease_expires_at=timezone.now() - timedelta(seconds=1)
+                )
+                response = [{}] if name == "jobspy" else self.page([{}], True)
+                with (
+                    patch.object(module, "collect", return_value=response),
+                    patch.object(module, "ingest", return_value=0),
+                ):
+                    module.run_queries(query_id=query.pk)
+                abandoned.refresh_from_db()
+                self.assertEqual(abandoned.outcome, "failed")
+                self.assertEqual(abandoned.error_code, "lease_expired")
+                self.assertEqual(query.attempts.latest("pk").cursor_before, "5")
+                self.assertEqual(query.attempts.count(), 2)
+
 
 class AttemptMigrationTests(TransactionTestCase):
     def migrate(self, name):
