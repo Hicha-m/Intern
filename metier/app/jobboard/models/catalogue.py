@@ -378,6 +378,7 @@ class OfferSource(models.Model):
     content_hash = models.CharField(max_length=64)
     raw_payload = models.JSONField(default=dict, blank=True)
     raw_expires_at = models.DateTimeField(null=True, blank=True)
+    salary_projection = models.JSONField(default=dict, db_default={})
 
     class Meta:
         constraints = [
@@ -411,6 +412,10 @@ class CompensationBand(models.Model):
     source = models.ForeignKey(
         OfferSource, on_delete=models.PROTECT, related_name="compensation_bands"
     )
+    source_revision = models.ForeignKey(
+        "SourceRevision", on_delete=models.PROTECT, null=True, blank=True,
+    )
+    extraction_version = models.CharField(max_length=40, default="", db_default="", blank=True)
     location = models.ForeignKey(
         Location, on_delete=models.PROTECT, null=True, blank=True
     )
@@ -431,6 +436,7 @@ class CompensationBand(models.Model):
 
     class Meta:
         constraints = [
+            models.UniqueConstraint(fields=["source", "extraction_version"], condition=~Q(extraction_version=""), name="salary_extractor_source_unique"),
             models.CheckConstraint(
                 condition=Q(minimum__isnull=False) | Q(maximum__isnull=False),
                 name="salary_has_bound",
