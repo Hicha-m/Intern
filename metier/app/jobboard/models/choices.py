@@ -4,6 +4,9 @@ from django.db import models
 class ContractType(models.TextChoices):
     INTERNSHIP = "internship", "Internship"
     APPRENTICESHIP = "apprenticeship", "Apprenticeship"
+    PERMANENT = "permanent", "Permanent"
+    FIXED_TERM = "fixed_term", "Fixed term"
+    # Source metadata may establish employment without establishing its duration.
     EMPLOYMENT = "employment", "Employment"
     CONTRACTOR = "contractor", "Contractor"
     TEMPORARY = "temporary", "Temporary"
