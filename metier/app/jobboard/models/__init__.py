@@ -140,3 +140,7 @@ __all__ += ["SkillEvidence", "SkillExtraction"]
 from .requirements import ExperienceEvidence, ExperienceExtraction  # noqa: E402
 
 __all__ += ["ExperienceExtraction", "ExperienceEvidence"]
+
+from .requirements import QualificationEvidence, QualificationExtraction  # noqa: E402
+
+__all__ += ["QualificationExtraction", "QualificationEvidence"]

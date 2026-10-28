@@ -144,3 +144,67 @@ class ExperienceEvidence(models.Model):
                 name="experience_bounds_ordered",
             ),
         ]
+
+
+class QualificationExtraction(models.Model):
+    revision = models.ForeignKey(
+        "SourceRevision",
+        on_delete=models.PROTECT,
+        related_name="qualification_extractions",
+    )
+    version = models.CharField(max_length=40)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    status = models.CharField(max_length=24)
+    processed_fields = models.JSONField(default=list)
+    language_summary = models.JSONField(default=dict)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["revision", "version"], name="qualification_extraction_unique"
+            ),
+            allowed(
+                "status",
+                ("processed", "no_description", "too_large"),
+                "qualification_extract_status",
+            ),
+        ]
+
+
+class QualificationEvidence(models.Model):
+    extraction = models.ForeignKey(
+        QualificationExtraction, on_delete=models.CASCADE, related_name="evidence"
+    )
+    kind = models.CharField(max_length=16)
+    code = models.CharField(max_length=160)
+    qualification = models.CharField(max_length=16)
+    value = models.JSONField(default=dict)
+    alternative = models.BooleanField(default=False)
+    json_path = models.CharField(max_length=160)
+    start = models.PositiveIntegerField()
+    end = models.PositiveIntegerField()
+    ordinal = models.PositiveIntegerField()
+    excerpt = models.TextField()
+    confidence = models.FloatField(null=True, blank=True)
+
+    class Meta:
+        constraints = [
+            allowed(
+                "kind",
+                ("education", "certification", "language"),
+                "qualification_kind_valid",
+            ),
+            allowed(
+                "qualification",
+                ("required", "preferred", "unspecified", "negated", "not_required"),
+                "qualification_modality_valid",
+            ),
+            models.UniqueConstraint(
+                fields=["extraction", "json_path", "start", "ordinal"],
+                name="qualification_evidence_unique",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(end__gt=models.F("start")),
+                name="qualification_offsets_valid",
+            ),
+        ]

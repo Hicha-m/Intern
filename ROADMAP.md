@@ -98,7 +98,7 @@ concurrence et crash contrôlés ; essai live limité avec rapport distinct.
 Résultat : corpus dédupliqué, enrichi et auditable pour les statistiques.
 
 - [ ] E4.1 — Normaliser métiers, spécialisations, synonymes de compétences, contrats, langues, télétravail et zones géographiques ; versionner la taxonomie.
-- [ ] E4.2 — Extraire compétences obligatoires/souhaitées, diplôme, certifications, années d’expérience et séniorité avec extraits justificatifs. [E4.2a : baseline des preuves de compétences vérifiée](docs/research/2026-10-28-e4-skill-evidence.md), 646 tests PostgreSQL ; [E4.2b : preuves d’expérience vérifiées](docs/research/2026-10-28-e4-experience-evidence.md), 78 tests ciblés PostgreSQL. Corpus indépendant et cibles de qualité encore ouverts.
+- [ ] E4.2 — Extraire compétences obligatoires/souhaitées, diplôme, certifications, années d’expérience et séniorité avec extraits justificatifs. [E4.2a : baseline des preuves de compétences vérifiée](docs/research/2026-10-28-e4-skill-evidence.md), 646 tests PostgreSQL ; [E4.2b : preuves d’expérience vérifiées](docs/research/2026-10-28-e4-experience-evidence.md), 78 tests ciblés PostgreSQL. [E4.2c : diplômes/certifications/langues sourcés](docs/research/2026-10-28-e4-qualification-evidence.md), 664 tests Django réussis. Corpus indépendant et cibles de qualité encore ouverts.
 - [ ] E4.3 — Normaliser les rémunérations sans mélanger devises, périodes, brut/net et fixe/variable ; garder les informations inconnues.
 - [ ] E4.4 — Améliorer le rapprochement d’annonces multi-sources, l’historique, les republications et le cycle actif/expiré ; conserver les fusions explicables.
 - [ ] E4.5 — Rejouer l’enrichissement de façon idempotente, appliquer la rétention et publier les métriques de qualité et de couverture par source.
@@ -198,12 +198,13 @@ quarantaine, épuisement du pool et transmission effective à JobSpy ; tests liv
 
 ## Prochaine story
 
-**E4.2c : extraire les diplômes et certifications avec preuves.**
-Conserver qualification obligatoire/souhaitée, révision et extrait ; différencier
-certification nommée, technologie et niveau de diplôme. Préserver négations,
-alternatives et informations absentes. Réutiliser l’extraction des langues déjà
-présente avant de créer une représentation parallèle. Préparer ensuite les API
-SQL de synthèse E5 et la consultation des preuves, avec couverture et inconnus
-visibles. E4.1/E0.4 restent nécessaires pour le corpus et les cibles du PRD ; les
-proxys sont toujours reportés. Travail récent local : publication GitHub, fusion
-sur master et déploiement en attente.
+**E5.1a : API SQL de synthèse du corpus et consultation des preuves.**
+Réutiliser le périmètre public et les filtres catalogue pour les volumes uniques,
+compétences et conditions d’entrée. Présenter dates, effectifs, dénominateurs,
+absence d’information et couverture des extractions ; conserver alternatives et
+contradictions. Les preuves doivent renvoyer à leur annonce et révision, sans
+exposer les données privées du candidat. Les seuils salariaux du PRD s’appliquent
+aux seules populations comparables, jamais aux estimations ou valeurs manquantes.
+Les jeux annotés et cibles de qualité E0.4/E4 restent ouverts ; le panel devra
+signaler cette limite. Les reprises historiques E4.5 restent à préparer avant
+une recette sur corpus réel. Les proxys restent reportés.
