@@ -10,7 +10,11 @@ from django.utils import timezone
 from jobboard.integrations.greenhouse_catalogue import CatalogueImportError
 from jobboard.integrations.nav_catalogue import collect
 from jobboard.models import DiscoveryQuery, OfferSource
-from jobboard.services.discovery_attempts import begin_attempt, finish_attempt
+from jobboard.services.discovery_attempts import (
+    begin_attempt,
+    finish_attempt,
+    validate_lease,
+)
 from jobboard.services.jobspy_collection import ingest
 
 
@@ -72,6 +76,7 @@ def run_queries(limit=1, query_id=None):
                 ):
                     raise CatalogueImportError("lease_lost")
                 imported = ingest(locked, page.records)
+                validate_lease(locked, token)
                 if page.at_tail:
                     # A fully consumed change feed also confirms unchanged active ads.
                     OfferSource.objects.filter(

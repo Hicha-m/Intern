@@ -27,7 +27,11 @@ from jobboard.models import (
     SourceBoard,
 )
 from jobboard.services.catalogue import import_board
-from jobboard.services.discovery_attempts import begin_attempt, finish_attempt
+from jobboard.services.discovery_attempts import (
+    begin_attempt,
+    finish_attempt,
+    validate_lease,
+)
 
 
 def seed_queries(countries, sites):
@@ -252,6 +256,7 @@ def run_queries(limit=1, query_id=None):
                 ):
                     raise CatalogueImportError("lease_lost")
                 imported = ingest(locked, records)
+                validate_lease(locked, token)
                 next_offset = offset + len(records)
                 locked.cursor = (
                     str(next_offset) if records and next_offset < MAX_OFFSET else ""

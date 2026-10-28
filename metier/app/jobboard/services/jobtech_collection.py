@@ -10,7 +10,11 @@ from django.utils import timezone
 from jobboard.integrations.greenhouse_catalogue import CatalogueImportError
 from jobboard.integrations.jobtech_catalogue import TERMS, collect
 from jobboard.models import DiscoveryQuery
-from jobboard.services.discovery_attempts import begin_attempt, finish_attempt
+from jobboard.services.discovery_attempts import (
+    begin_attempt,
+    finish_attempt,
+    validate_lease,
+)
 from jobboard.services.jobspy_collection import ingest
 
 
@@ -64,6 +68,7 @@ def run_queries(limit=1, query_id=None):
                 ):
                     raise CatalogueImportError("lease_lost")
                 imported = ingest(locked, page.records)
+                validate_lease(locked, token)
                 locked.cursor = page.next_cursor
                 locked.truncated = page.truncated
                 locked.total_available = page.total

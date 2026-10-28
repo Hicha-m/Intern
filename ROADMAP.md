@@ -84,7 +84,7 @@ Résultat : collecte reproductible et diagnostic précis des incidents.
 - [ ] E2.1 — Comparer JobSpy amont, sa version épinglée, ses issues/forks et les dépôts candidats : licence, maintenance, fonctionnalités, qualité, contraintes et coût.
 - [ ] E2.2 — Benchmarker les candidats sur des requêtes identiques ; retenir les composants utiles dans un ADR, épingler leurs versions et documenter les éventuels patchs.
 - [ ] E2.3 — Uniformiser les états succès, vide confirmé, partiel et échec ; conserver curseur, provenance et diagnostics expurgés. [E2.3a vérifiée : imports et réconciliation](docs/research/2026-10-28-e2-collection-outcomes.md) : 611 tests Django réussis, migration protégée ; [E2.3b vérifiée sur six runners](docs/research/2026-10-28-e2-discovery-attempts.md) : 77 tests PostgreSQL, tentatives vides/échouées et migration ; audit des autres runners ATS encore ouvert.
-- [ ] E2.4 — Vérifier/compléter idempotence, réservation de tâches, reprise après crash, budgets de requêtes et temporisation par source.
+- [ ] E2.4 — Vérifier/compléter idempotence, réservation de tâches, reprise après crash, budgets de requêtes et temporisation par source. [E2.4a vérifiée sur les six collecteurs](docs/research/2026-10-28-e2-discovery-recovery.md) : 98 tests PostgreSQL, reprise des tentatives abandonnées et contrôle du bail après ingestion ; audit exhaustif des autres workers encore ouvert.
 - [ ] E2.5 — Remonter les rémunérations et champs disponibles de JobSpy jusqu’au modèle ; exposer le tableau de santé des sources à l’administrateur.
 
 Acceptation : deux exécutions identiques ne créent pas de doublons ; reprise depuis
@@ -198,10 +198,11 @@ quarantaine, épuisement du pool et transmission effective à JobSpy ; tests liv
 
 ## Prochaine story
 
-**E2.4 : récupérer les tentatives interrompues et vérifier les baux.**
-Les imports et les tentatives des six collecteurs sont tracés et testés. Vérifier
-la récupération après arrêt brutal, l’absence de double progression et les
-budgets de reprise, puis passer au transport des rémunérations E2.5 pour préparer
-les exigences sourcées E4 et le panel E5. L’audit F02 des runners ATS hors de ces
-six collecteurs reste ouvert. Les proxys restent reportés ; aucune validation
-locale ne vaut publication GitHub, fusion sur master ou déploiement.
+**E2.5a : transporter les rémunérations publiées jusqu’aux sources normalisées.**
+Examiner les champs disponibles dans le runner JobSpy épinglé et le modèle
+existant, puis transmettre montants, devise, période et texte source sans
+annualisation implicite ni zéro pour une valeur absente. Conserver provenance et
+inconnus ; vérifier sur fixtures et PostgreSQL avant les agrégats E4/E5. Les
+contrôles E2.3/E2.4 des autres workers restent ouverts sans bloquer ce transport.
+Les proxys restent reportés. Les validations locales ne valent ni publication
+GitHub, ni fusion sur master, ni déploiement.
