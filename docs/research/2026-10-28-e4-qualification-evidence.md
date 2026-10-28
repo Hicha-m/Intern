@@ -71,7 +71,7 @@ annonces, dont la constitution et l’évaluation restent ouvertes.
 Aucun nouveau parcours UI ou endpoint public : build frontend, Playwright et
 recette navigateur non relancés pour cette extraction interne. Sources réseau
 contrôlées, PostgreSQL réel. Aucun déploiement, migration de production, collecte
-externe, CI distante ou publication GitHub exécuté.
+externe ou CI distante exécutée.
 
 ## Suite
 
@@ -85,3 +85,11 @@ offres uniques, jamais les répétitions d’une même mention.
 Prochaine livraison : API SQL de synthèse du corpus et accès aux preuves,
 avec filtres communs, dates, effectifs, dénominateurs et inconnus visibles. Les
 reprises historiques E4.5 et l’évaluation de qualité E0.4 restent nécessaires.
+
+
+## Publication pour revue
+
+Branche publiée et [PR brouillon #13](https://github.com/Hicha-m/Intern/pull/13)
+ouverte vers la story précédente (#12). Les autres stories sont liées dans la
+[roadmap](../../ROADMAP.md#revue-des-stories-publiées). Aucun changement fusionné
+sur master ni déploiement effectué ; les résultats ci-dessus sont locaux.
