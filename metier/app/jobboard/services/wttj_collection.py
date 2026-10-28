@@ -23,7 +23,7 @@ def seed_queries(countries):
             country=country,
             language="fr",
             domain="all",
-            term="internship",
+            term="all-it",
             defaults={"auto_activate": True},
         )
 

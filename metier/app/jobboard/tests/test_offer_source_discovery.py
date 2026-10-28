@@ -60,7 +60,7 @@ class DiscoveryTests(TestCase):
         )
         self.offer = Offer.objects.create(
             company=company,
-            title="Marketing Internship",
+            title="Backend Internship",
             description="Internship in marketing",
             status="open",
         )
@@ -127,7 +127,7 @@ class DiscoveryTests(TestCase):
         rare = publishable(
             Offer.objects.create(
                 company=Company.objects.create(name="Rare Employer"),
-                title="Marketing Internship",
+                title="Backend Internship",
                 description="Internship in Sofia, Bulgaria",
             )
         )

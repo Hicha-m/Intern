@@ -17,7 +17,7 @@ URL = "https://careers.sap.com/job/Paris-Intern/123/"
 
 
 def detail(
-    title="Marketing Intern",
+    title="Backend Intern",
     address='<meta itemprop="addressCountry" content="FR"><meta itemprop="addressLocality" content="Paris">',
 ):
     return f"""<div itemscope itemtype="http://schema.org/JobPosting"><span itemprop="address">{address}</span><h1><span itemprop="title">{title}</span></h1><span itemprop="description"><p>Internship in <strong>marketing</strong>.</p><p>Six months.</p><script>ignore me</script></span></div>"""
@@ -126,20 +126,21 @@ class SuccessFactorsParserTests(SimpleTestCase):
     @patch("jobboard.integrations.successfactors_catalogue.TERMS", ("internship",))
     @patch("jobboard.integrations.successfactors_catalogue.MAX_PAGES_PER_TERM", 1)
     @patch("jobboard.integrations.successfactors_catalogue.fetch_html")
-    def test_page_cap_and_non_intern_title_do_not_issue_extra_requests(self, fetch):
+    def test_page_cap_keeps_non_intern_it_details_bounded(self, fetch):
         fetch.return_value = (
             "https://careers.sap.com/search/?q=internship",
-            '<a href="/job/Manager/1/">Production Stage Manager</a><a href="/job/Engineer/2/">Senior Engineer</a><a href="?q=internship&startrow=25">Next</a>',
+            '<a href="/job/Manager/1/">Production Stage Manager</a><a href="/job/Engineer/2/">Senior Backend Engineer</a><a href="?q=internship&startrow=25">Next</a>',
         )
         # Stage Manager is inspected then rejected by the common classifier;
-        # Senior Engineer never consumes a detail request.
+        # Senior IT roles consume the same bounded detail budget.
         fetch.side_effect = [
             fetch.return_value,
             ("https://careers.sap.com/job/Manager/1/", detail(title="Stage Manager")),
+            ("https://careers.sap.com/job/Engineer/2/", detail(title="Senior Backend Engineer")),
         ]
         rows = fetch_successfactors("sap")
-        self.assertEqual(len(rows), 0)
-        self.assertEqual(fetch.call_count, 2)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(fetch.call_count, 3)
         self.assertIn(
             {"query": "internship", "code": "page_budget_exceeded"}, rows.errors
         )

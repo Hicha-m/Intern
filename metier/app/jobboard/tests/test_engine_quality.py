@@ -378,7 +378,7 @@ class PersistedQualityTests(TestCase):
 
 
 class PublicationPolicyTests(TestCase):
-    def test_reenrichment_publishes_only_confirmed_european_internships(self):
+    def test_reenrichment_publishes_it_jobs_independently_of_internship(self):
         from io import StringIO
 
         from django.core.management import call_command
@@ -393,11 +393,11 @@ class PublicationPolicyTests(TestCase):
             name="New York, USA", country_code="US", canonical_key="policy-us"
         )
         cases = [
+            ("Backend internship", france),
+            ("Senior Backend engineer", france),
+            ("Backend internship", usa),
+            ("Backend internship", None),
             ("Marketing internship", france),
-            ("Director of marketing", france),
-            ("Marketing internship", usa),
-            ("Marketing internship", None),
-            ("Graduate trainee", france),
         ]
         offers = []
         for title, location in cases:
@@ -415,7 +415,7 @@ class PublicationPolicyTests(TestCase):
         call_command("re_enrich_catalogue", all=True, limit=2, stdout=StringIO())
         self.assertEqual(
             list(published_offers(Offer.objects.all()).values_list("pk", flat=True)),
-            [offers[0].pk],
+            [offers[0].pk, offers[1].pk],
         )
         self.assertEqual(Offer.objects.filter(status="open").count(), 5)
         self.assertEqual(Offer.objects.count(), 5)

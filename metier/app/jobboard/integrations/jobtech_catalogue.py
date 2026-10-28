@@ -9,11 +9,14 @@ from zoneinfo import ZoneInfo
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 
+from jobboard.services.employment_scope import ROLE_QUERIES, eligible_facts
+
 from .greenhouse_catalogue import CatalogueImportError
 from .public_catalogue import _posting, read_json
 
 BASE = "https://jobsearch.api.jobtechdev.se"
-TERMS = ("internship", "praktik", "praktikant", "LIA")
+
+TERMS = ROLE_QUERIES + ("internship", "praktik", "praktikant", "LIA")
 PAGE_SIZE = 20
 MAX_OFFSET = 2000
 
@@ -173,13 +176,13 @@ def normalize_record(raw, _site=None):
         else "unknown"
     )
     facts = extract_facts(title, description, locations=locations, work_mode=mode)
-    if facts["classification"] != "confirmed" or facts["europe_status"] != "in_scope":
+    if not eligible_facts(facts):
         return None, facts
     row = _posting(
         raw, raw["id"], title, description, url, url, [x["name"] for x in locations]
     )
     row.update(
-        contract_type="unknown",
+        contract_type=row["contract_type"],
         work_mode=mode,
         expires_at=expires,
         location_details=[

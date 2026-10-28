@@ -16,7 +16,7 @@ URL = "https://careers-hines.icims.com/jobs/123/analyst/job"
 
 def detail(
     country="FR",
-    title="Business Analyst Intern",
+    title="Backend Developer Intern",
     expiry="2099-01-01T00:00:00Z",
     url=URL,
 ):
@@ -39,7 +39,7 @@ def detail(
     )
 
 
-def taleo_detail(contest="INT-123", title="Internship - Analysis"):
+def taleo_detail(contest="INT-123", title="Internship - Data Engineering"):
     return f"""<div id="requisitionDescriptionInterface.descRequisitionContainer">
     <span id="requisitionDescriptionInterface.reqTitleLinkAction">{title}</span>
     <span id="requisitionDescriptionInterface.reqContestNumberValue">{contest}</span>
@@ -51,7 +51,7 @@ def taleo_row(location="Austria-Vienna-Vienna-IAEA Headquarters"):
         "jobId": "123",
         "contestNo": "INT-123",
         "column": [
-            "Internship - Analysis",
+            "Internship - Data Engineering",
             json.dumps([location]),
             "2099-10-01, 9:59:00 PM",
         ],
@@ -116,7 +116,7 @@ class PublicPortalTests(SimpleTestCase):
         fetch.side_effect = [
             (
                 "https://careers-hines.icims.com/jobs/search",
-                f'<a href="{URL}">Intern</a><a href="?pr=1&searchKeyword=intern">Next</a><a href="https://evil.test/jobs/999/test/job">Bad</a>',
+                f'<a href="{URL}">Intern</a><a href="?pr=1&searchKeyword=">Next</a><a href="https://evil.test/jobs/999/test/job">Bad</a>',
             ),
             (URL + "?in_iframe=1", detail()),
             (
@@ -167,7 +167,7 @@ class PublicPortalTests(SimpleTestCase):
         ]
         values = [
             "123",
-            "Internship - Analysis",
+            "Internship - Data Engineering",
             "INT-123",
             "!* !<p>Internship duties.</p>".replace("!* !", "!*!"),
         ]

@@ -10,7 +10,7 @@ def offer_with(**facts):
     return SimpleNamespace(
         status="open",
         enrichment=SimpleNamespace(
-            facts=facts,
+            facts={"job_scope": {"value": "in_scope"}, **facts},
             classification="confirmed",
             europe_status="in_scope",
             country_codes=["FR"],

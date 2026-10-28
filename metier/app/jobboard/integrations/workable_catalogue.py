@@ -62,7 +62,6 @@ def normalize_workable(payload, key, detail_reader):
             raise CatalogueImportError("invalid_job_identity")
         grouped.setdefault(identity, []).append(job)
     rows, errors = [], []
-    from jobboard.services.engine_quality import INTERN
 
     for identity, jobs in grouped.items():
         job = jobs[0]
@@ -71,11 +70,6 @@ def normalize_workable(payload, key, detail_reader):
             errors.append({"external_id": identity, "code": "invalid_job"})
             continue
         contract = str(job.get("type") or job.get("employment_type") or "").lower()
-        # Trainee, graduate and working student do not imply internship.
-        if contract not in ("internship", "intern") and not re.search(
-            INTERN, title, re.IGNORECASE
-        ):
-            continue
         if len(rows) + len(errors) >= MAX_DETAILS:
             errors.append({"external_id": identity, "code": "detail_budget_exceeded"})
             break

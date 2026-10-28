@@ -17,7 +17,7 @@ KEY = HOST + "/ag/Airbus"
 PATH = "/job/Paris/Stage_JR1"
 
 
-def detail(title="Stage en finance", country="FR", **extra):
+def detail(title="Stage Backend", country="FR", **extra):
     return {
         "jobPostingInfo": {
             "id": "abc",
@@ -79,7 +79,7 @@ class WorkdayTests(SimpleTestCase):
     def test_stage_europe_hours_not_contract(self):
         row = normalized(detail())
         self.assertEqual(row["location_details"][0]["country"], "FR")
-        self.assertEqual(row["contract_type"], "unknown")
+        self.assertEqual(row["contract_type"], "internship")
         self.assertEqual(row["description"], "Le stagiaire participe pendant 6 mois.")
         self.assertEqual(row["published_at"], "2026-09-30")
         self.assertNotIn("questionnaireId", row["raw"]["jobPostingInfo"])
@@ -127,7 +127,7 @@ class WorkdayTests(SimpleTestCase):
                 posts = [
                     {
                         "externalPath": f"/job/Paris/Stage_JR{i}",
-                        "title": "Stage finance",
+                        "title": "Stage Backend",
                     }
                     for i in range(body["offset"], min(body["offset"] + 20, 21))
                 ]
@@ -183,7 +183,7 @@ class WorkdayTests(SimpleTestCase):
                 posts = [
                     {
                         "externalPath": f"/job/Paris/Stage_JR{i}",
-                        "title": "Stage finance",
+                        "title": "Stage Backend",
                     }
                     for i in range(body["offset"], min(body["offset"] + 20, 21))
                 ]

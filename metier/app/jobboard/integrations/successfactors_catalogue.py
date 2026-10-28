@@ -5,6 +5,8 @@ import time
 from html.parser import HTMLParser
 from urllib.parse import parse_qs, urlencode, urljoin, urlsplit
 
+from jobboard.services.employment_scope import ROLE_QUERIES
+
 from .greenhouse_catalogue import CatalogueImportError
 from .public_catalogue import CatalogueSnapshot, _posting
 from .public_html import PublicHTMLParser, fetch_html, validate_url
@@ -14,7 +16,8 @@ BOARDS = {
     "schaeffler": ("jobs.schaeffler.com", "Schaeffler"),
     "zf": ("jobs.zf.com", "ZF Group"),
 }
-TERMS = ("internship", "Praktikum", "stage", "tirocinio")
+
+TERMS = ROLE_QUERIES + ("internship", "Praktikum", "stage", "tirocinio")
 MAX_PAGES_PER_TERM = 4
 MAX_DETAILS = 240
 MAX_BYTES = 80 * 1024 * 1024
@@ -132,13 +135,10 @@ class SearchPage(PublicHTMLParser):
             self.labels[self.anchor] = self.labels.get(self.anchor, "") + data
 
 
-INTERNSHIP_TITLE = re.compile(
-    r"\b(?:intern(?:ship)?s?|stage|stagiaire|praktik(?:um|ant|antin)|pflichtpraktikum|freiwilligespraktikum|tirocinio|tirocinante|stagista)\b",
-    re.IGNORECASE,
-)
 
 
 def normalize_job(html, url, key):
+    from jobboard.services.employment_scope import eligible_facts
     from jobboard.services.engine_quality import extract_facts, structured_country_code
 
     host = BOARDS[key][0]
@@ -209,10 +209,7 @@ def normalize_job(html, url, key):
     )
     # Keep publication gating common to all sources; this prefilter avoids
     # importing unrelated jobs matched by 'stage' in their description.
-    if (
-        quality["classification"] != "confirmed"
-        or quality["europe_status"] != "in_scope"
-    ):
+    if not eligible_facts(quality):
         return None
     return row
 
@@ -253,9 +250,6 @@ def fetch_successfactors(key):
                     if parts.scheme != "https" or parts.hostname != host:
                         continue
                     match = re.fullmatch(r"/job/[^/]+/([0-9]+)/?", parts.path)
-                    label = parser.labels.get(link, "").strip()
-                    if match and label and not INTERNSHIP_TITLE.search(label):
-                        continue
                     if match and match[1] not in seen:
                         validate_url(absolute, {host})
                         seen.add(match[1])

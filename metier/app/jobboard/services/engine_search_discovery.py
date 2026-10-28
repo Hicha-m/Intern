@@ -143,7 +143,10 @@ def resolve_result(result, deadline):
 
 
 def seed_queries(auto_activate=False, linkedin=False):
+    from .employment_scope import ROLE_QUERIES
+
     definitions = [("arbeitnow", "", "de", "all", "")]
+    definitions.extend(("jobsearch_se", "SE", "en", "all", term) for term in ROLE_QUERIES)
     for language, term in [("sv", "praktik"), ("en", "internship"), ("en", "intern")]:
         for domain, word in [
             ("all", ""),
@@ -160,7 +163,8 @@ def seed_queries(auto_activate=False, linkedin=False):
 
         definitions.extend(
             ("linkedin_public", country, language, "all", term)
-            for country, (_, language, term) in COUNTRIES.items()
+            for country, (_, language, legacy_term) in COUNTRIES.items()
+            for term in (legacy_term, *ROLE_QUERIES)
         )
     for provider, country, language, domain, term in definitions:
         query, _ = DiscoveryQuery.objects.get_or_create(
@@ -189,7 +193,6 @@ def partition_capped_linkedin_query(query, cursor):
 
     language = query.language if query.language in {"fr", "de"} else "en"
     term_index = {"fr": 0, "de": 1, "en": 2}[language]
-    internship_term = {"fr": "stage", "de": "Praktikum", "en": "internship"}[language]
     created_count = 0
     for domain, terms in DOMAIN_SEARCH_TERMS.items():
         _, created = DiscoveryQuery.objects.get_or_create(
@@ -197,7 +200,7 @@ def partition_capped_linkedin_query(query, cursor):
             country=query.country,
             language=language,
             domain=domain,
-            term=f"{internship_term} {terms[term_index]}",
+            term=f"{query.term} {terms[term_index]}",
             defaults={
                 "auto_activate": query.auto_activate,
                 "next_run_at": timezone.now() + timedelta(minutes=5),

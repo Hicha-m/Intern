@@ -7,6 +7,8 @@ from dataclasses import dataclass
 
 import httpx
 
+from jobboard.services.employment_scope import eligible_facts
+
 from .greenhouse_catalogue import CatalogueImportError
 from .personio_catalogue import html_text
 from .public_catalogue import _posting
@@ -69,7 +71,7 @@ def query_index(country, low, high, page, *, company_slug=None, deadline=None):
                 json={
                     "filters": f'organization.slug:"{company_slug}"'
                     if company_slug
-                    else f"contract_type:internship AND offices.country_code:{country}",
+                    else f"offices.country_code:{country}",
                     "numericFilters": []
                     if company_slug
                     else [
@@ -256,9 +258,7 @@ def normalize_record(raw, _site=None):
     facts = extract_facts(
         raw.get("name") or "", description, locations=places, work_mode=mode
     )
-    if raw.get("contract_type") != "internship":
-        facts["classification"] = "not_internship"
-    if facts["classification"] != "confirmed" or facts["europe_status"] != "in_scope":
+    if not eligible_facts(facts):
         return None, facts
     row = _posting(
         raw,
@@ -271,7 +271,7 @@ def normalize_record(raw, _site=None):
     )
     row.update(
         work_mode=mode,
-        contract_type="unknown",
+        contract_type=row["contract_type"],
         location_details=[
             {"name": x["name"], "country": x["country_code"]} for x in places
         ],

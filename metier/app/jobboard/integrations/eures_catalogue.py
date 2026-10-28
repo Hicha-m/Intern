@@ -8,6 +8,8 @@ from urllib.parse import quote
 
 import httpx
 
+from jobboard.services.employment_scope import eligible_facts
+
 from .greenhouse_catalogue import CatalogueImportError
 from .personio_catalogue import html_text
 from .public_catalogue import _posting
@@ -125,7 +127,7 @@ def collect(country, page=1):
             "page": page,
             "sortSearch": "MOST_RECENT",
             "keywords": [],
-            "positionOfferingCodes": ["internship"],
+            "positionOfferingCodes": [],
             "locationCodes": ["el" if country == "GR" else country.lower()],
             "requestLanguage": "en",
         },
@@ -217,24 +219,17 @@ def normalize_record(raw, _site=None):
         )
         label = ", ".join(x for x in (city, code) if x)
         locations.append({"name": label, "country_code": code})
-    offering = raw.get("positionOfferingCode")
     # Explicit non-stage contracts cannot be rescued by a misleading title.
     facts = extract_facts(
         title, description, contract_type="unknown", locations=locations
     )
-    if offering != "internship":
-        facts["classification"] = (
-            "not_internship"
-            if offering in ("apprenticeship", "trainee", "traineeship", "directhire")
-            else "uncertain"
-        )
-    if facts["classification"] != "confirmed" or facts["europe_status"] != "in_scope":
+    if not eligible_facts(facts):
         return None, facts
     row = _posting(
         raw, identity, title, description, url, url, [x["name"] for x in locations]
     )
     row.update(
-        contract_type="unknown",
+        contract_type=row["contract_type"],
         location_details=[
             {"name": x["name"], "country": x["country_code"]} for x in locations
         ],

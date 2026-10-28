@@ -180,7 +180,7 @@ class DiscoveryTests(TestCase):
     def test_matrix_is_idempotent_and_sweden_scope_explicit(self):
         seed_queries()
         seed_queries()
-        self.assertEqual(DiscoveryQuery.objects.count(), 16)
+        self.assertEqual(DiscoveryQuery.objects.count(), 19)
         self.assertEqual(
             set(
                 DiscoveryQuery.objects.filter(provider="jobsearch_se").values_list(
@@ -386,7 +386,7 @@ class LinkedInDiscoveryTests(SimpleTestCase):
         self.assertEqual(
             result.records[0]["url"], "https://fr.linkedin.com/jobs/view/intern-123"
         )
-        self.assertIn("f_JT=I", fetch.call_args.args[0])
+        self.assertNotIn("f_JT=", fetch.call_args.args[0])
         self.assertIn("location=France", fetch.call_args.args[0])
 
     def test_login_gate_stops_and_hidden_apply_is_ignored(self):
@@ -440,7 +440,7 @@ class LinkedInGridTests(TestCase):
             EUROPE_COUNTRIES,
         )
         self.assertEqual(
-            DiscoveryQuery.objects.exclude(provider="linkedin_public").count(), 16
+            DiscoveryQuery.objects.exclude(provider="linkedin_public").count(), 19
         )
 
     def test_configure_command_passes_linkedin_flag(self):
@@ -456,9 +456,9 @@ class LinkedInGridTests(TestCase):
             DiscoveryQuery.objects.filter(
                 provider="linkedin_public", auto_activate=True
             ).count(),
-            47,
+            188,
         )
-        self.assertIn("Configured 63 queries", output.getvalue())
+        self.assertIn("Configured 207 queries", output.getvalue())
 
 
 class LinkedInPartitionTests(TestCase):
@@ -511,10 +511,11 @@ class LinkedInPartitionTests(TestCase):
 
         self.query.language = "es"
         self.query.country = "ES"
+        self.query.term = "software engineer"
         self.query.save()
         partition_capped_linkedin_query(self.query, "150")
         child = DiscoveryQuery.objects.exclude(pk=self.query.pk).first()
         self.assertEqual(child.language, "en")
-        self.assertTrue(child.term.startswith("internship "))
+        self.assertTrue(child.term.startswith("software engineer "))
         self.assertEqual(partition_capped_linkedin_query(child, "150"), 0)
         self.assertEqual(DiscoveryQuery.objects.count(), 14)

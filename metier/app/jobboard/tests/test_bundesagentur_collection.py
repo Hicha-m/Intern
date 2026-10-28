@@ -22,7 +22,7 @@ def record(**changes):
             "id": "10001-123-S",
             "url": "https://www.arbeitsagentur.de/jobsuche/jobdetail/10001-123-S",
             "company": "Example BA",
-            "title": "Praktikum Marketing",
+            "title": "Praktikum Backend",
             "description": "During this internship you will work on marketing and research with our team.",
             "category": "PRAKTIKUM_TRAINEE",
             "locations": [{"city": "Berlin", "country": "DEUTSCHLAND"}],
@@ -54,7 +54,7 @@ class BundesagenturNormalizationTests(SimpleTestCase):
             "Senior Developer",
         ]:
             self.assertIsNone(normalize_record(record(title=title))[0])
-        self.assertIsNone(normalize_record(record(category="ARBEIT"))[0])
+        self.assertIsNotNone(normalize_record(record(category="ARBEIT"))[0])
         self.assertIsNone(normalize_record(record(title="Remote Internship"))[0])
 
     def test_expired_future_and_malformed_dates(self):
@@ -110,7 +110,7 @@ class BundesagenturNormalizationTests(SimpleTestCase):
             return_value={"maxErgebnisse": 0, "ergebnisliste": []},
         ) as read:
             self.assertEqual(collect("Praktikum").records, [])
-        self.assertIn("angebotsart=34", read.call_args.args[0])
+        self.assertNotIn("angebotsart=", read.call_args.args[0])
         with patch(
             "jobboard.integrations.bundesagentur_catalogue.request_json",
             side_effect=[

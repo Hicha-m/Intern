@@ -157,7 +157,6 @@ def fetch_linkedin(query, deadline):
     params = {
         "keywords": query.term,
         "location": COUNTRIES[query.country][0],
-        "f_JT": "I",
         "f_TPR": "r604800",
         "start": start,
     }

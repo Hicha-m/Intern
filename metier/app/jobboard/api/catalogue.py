@@ -268,6 +268,7 @@ def offer_suggestions(request):
 @permission_classes([AllowAny])
 def offer_detail(request, pk):
     from jobboard.models import OfferMergeDecision
+    from jobboard.services.employment_scope import catalogue_scope
     from jobboard.services.engine_quality import recruiter_offers_visible
 
     alias = (
@@ -278,12 +279,8 @@ def offer_detail(request, pk):
     target = alias.canonical_offer_id if alias else pk
     data = serialize_offer(
         get_object_or_404(
-            recruiter_offers_visible(offer_queryset())
-            .exclude(status="hidden")
-            .filter(
-                enrichment__classification="confirmed",
-                enrichment__europe_status="in_scope",
-            ),
+            catalogue_scope(recruiter_offers_visible(offer_queryset()))
+            .exclude(status="hidden"),
             pk=target,
         ),
         detail=True,
@@ -453,8 +450,8 @@ def recommendations(request):
         reasons = []
         if offer.taxonomy_status in {"classified", "broad"}:
             selected = [offer.job_subdomain] if offer.job_subdomain else []
-            exact = sorted(({s.slug for s in selected} & subdomains) | set(offer.matched_subdomains))
-            family = sorted(({s.domain.slug for s in selected} & domains) | set(offer.matched_domains))
+            exact = sorted(({s.slug for s in selected} & subdomains) | set(offer.matched_subdomains or []))
+            family = sorted(({s.domain.slug for s in selected} & domains) | set(offer.matched_domains or []))
             if exact:
                 reasons.append({"code": "preferred_subdomain", "subdomains": exact})
             elif family:

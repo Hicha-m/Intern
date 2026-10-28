@@ -14,11 +14,14 @@ import httpx
 from django.utils import timezone
 from django.utils.dateparse import parse_date
 
+from jobboard.services.employment_scope import ROLE_QUERIES, eligible_facts
+
 from .greenhouse_catalogue import CatalogueImportError
 from .public_catalogue import _posting
 
 BASE = "https://rest.arbeitsagentur.de/jobboerse/jobsuche-service"
-TERMS = ("Praktikum", "Praktikant", "Internship")
+
+TERMS = ROLE_QUERIES + ("Praktikum", "Praktikant", "Internship")
 PAGE_SIZE = 20
 MAX_PAGE = 500
 
@@ -120,7 +123,6 @@ def collect(term, page=1):
         "/pc/v6/jobs?"
         + urlencode(
             {
-                "angebotsart": 34,
                 "was": term,
                 "page": page,
                 "size": PAGE_SIZE,
@@ -238,15 +240,13 @@ def normalize_record(raw, _site=None):
         else "unknown"
     )
     facts = extract_facts(title, description, locations=locations, work_mode=mode)
-    if raw.get("category") != "PRAKTIKUM_TRAINEE":
-        facts["classification"] = "uncertain"
-    if facts["classification"] != "confirmed" or facts["europe_status"] != "in_scope":
+    if not eligible_facts(facts):
         return None, facts
     row = _posting(
         raw, raw["id"], title, description, url, url, [x["name"] for x in locations]
     )
     row.update(
-        contract_type="unknown",
+        contract_type=row["contract_type"],
         work_mode=mode,
         expires_at=expires,
         location_details=[

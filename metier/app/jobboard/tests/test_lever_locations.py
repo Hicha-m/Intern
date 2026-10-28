@@ -1,7 +1,7 @@
 import copy
 import json
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from django.test import SimpleTestCase, TestCase
 
@@ -9,7 +9,7 @@ from jobboard.api.catalogue import open_offers
 from jobboard.integrations.lever_locations import explicit_role_locations
 from jobboard.integrations.public_catalogue import normalize_ashby, normalize_lever
 from jobboard.integrations.workable_catalogue import normalize_workable
-from jobboard.models import Company, OfferSource, SourceBoard
+from jobboard.models import Company, Offer, OfferSource, SourceBoard
 from jobboard.services.ats_probing import qualifies
 from jobboard.services.catalogue import import_board
 
@@ -25,7 +25,7 @@ class LeverLocationTests(SimpleTestCase):
         countries = {p["country"] for p in rows[0]["location_details"]}
         self.assertTrue({"FI", "BG", "CZ", "US", "UZ", "AM"} <= countries)
         self.assertEqual(len(countries), 23)
-        self.assertTrue(qualifies(rows[0]))
+        self.assertFalse(qualifies(rows[0]))
         self.assertIn(
             "This position is open across",
             rows[0]["raw"]["location_resolution"]["evidence"],
@@ -90,16 +90,15 @@ class LeverLocationTests(SimpleTestCase):
         )[0]
         self.assertFalse(qualifies(row))
 
-    def test_plum_non_intern_listing_does_not_request_details(self):
-        def unexpected(_):
-            self.fail("Should not fetch non-intern detail")
-
+    def test_plum_non_intern_it_listing_requests_details(self):
+        read = Mock(return_value="Develop backend services and maintain APIs with our team.")
         rows = normalize_workable(
             {"jobs": [{"title": "Backend Engineer", "shortcode": "6671EA9508"}]},
-            "withplum",
-            unexpected,
+            "withplum", read,
         )
-        self.assertFalse(rows)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["contract_type"], "unknown")
+        self.assertEqual(read.call_count, 1)
 
 
 class LeverLocationImportTests(TestCase):
@@ -116,7 +115,8 @@ class LeverLocationImportTests(TestCase):
             import_board(board.pk)
             import_board(board.pk)
         self.assertEqual(OfferSource.objects.filter(board=board).count(), 1)
-        offer = open_offers().get(company=board.company)
+        offer = Offer.objects.get(company=board.company)
+        self.assertFalse(open_offers().filter(pk=offer.pk).exists())
         self.assertIn("FI", offer.enrichment.country_codes)
         self.assertIn("US", offer.enrichment.country_codes)
         self.assertIn("location_resolution", offer.sources.get().raw_payload)

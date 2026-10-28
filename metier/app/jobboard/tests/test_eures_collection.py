@@ -22,7 +22,7 @@ def record(**changes):
             "id": "ABC123",
             "url": "https://europa.eu/eures/portal/jv-se/jv-details/ABC123?lang=en",
             "company": "Example EURES",
-            "title": "Marketing internship",
+            "title": "Backend Developer internship",
             "description": "A six month internship supporting research and marketing campaigns.",
             "positionOfferingCode": "internship",
             "locations": [{"cityName": "Berlin", "countryCode": "de"}],
@@ -43,7 +43,7 @@ class EuresNormalizationTests(SimpleTestCase):
             "directhire",
             None,
         ]:
-            self.assertIsNone(
+            self.assertIsNotNone(
                 normalize_record(record(positionOfferingCode=offering))[0]
             )
         self.assertIsNone(
@@ -104,7 +104,7 @@ class EuresNormalizationTests(SimpleTestCase):
         self.assertEqual(page.records, [])
         self.assertEqual(read.call_args.kwargs["body"]["locationCodes"], ["el"])
         self.assertEqual(
-            read.call_args.kwargs["body"]["positionOfferingCodes"], ["internship"]
+            read.call_args.kwargs["body"]["positionOfferingCodes"], []
         )
         self.assertEqual(page.next_cursor, "")
 
@@ -171,7 +171,7 @@ class EuresCollectionTests(TestCase):
 
     def test_unqualified_update_hides_previous_copy(self):
         ingest(self.query, [record()])
-        ingest(self.query, [record(positionOfferingCode="apprenticeship")])
+        ingest(self.query, [record(title="Marketing internship")])
         self.assertEqual(
             OfferSource.objects.get(board__provider="eures").source_status, "unknown"
         )

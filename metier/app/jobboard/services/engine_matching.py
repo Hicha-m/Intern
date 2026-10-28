@@ -8,7 +8,7 @@ from django.db.models import Q
 
 from .engine_quality import EUROPE_SCOPE_VERSION, EXTRACTOR_VERSION
 
-MATCHER_VERSION = "rules-2"
+MATCHER_VERSION = "rules-3-it-scope"
 
 
 def _get(profile, key, default=None):
@@ -91,15 +91,11 @@ def evaluate_match(offer, profile, criteria=None):
     if not enrichment:
         unknown("enrichment", "Offre en attente de classification et d’extraction.")
     else:
-        if enrichment.classification == "not_internship":
-            reason(
-                "classification",
-                "incompatible",
-                "Le poste n’est pas classé comme stage.",
-                facts.get("classification"),
-            )
-        elif enrichment.classification != "confirmed":
-            unknown("classification", "Le type de contrat reste à vérifier.")
+        scope = facts.get("job_scope", {}).get("value")
+        if scope == "out_of_scope":
+            reason("job_scope", "incompatible", "Le métier est hors du périmètre informatique.", facts["job_scope"])
+        elif scope != "in_scope":
+            unknown("job_scope", "Le métier informatique reste à vérifier.")
         if enrichment.europe_status == "unknown":
             unknown(
                 "europe_scope",
@@ -323,7 +319,7 @@ def preselect_offers(queryset, criteria=None):
     if criteria.get("classification"):
         classification = Q(enrichment__classification=criteria["classification"])
         # Classification selects an explicit review bucket. Missing eligibility
-        # facts may be included, but never widen confirmed internships to all jobs.
+        # facts may be included, while occupation admission remains independent.
         queryset = queryset.filter(classification)
     if criteria.get("europe_scope"):
         scope = Q(enrichment__europe_status=criteria["europe_scope"])

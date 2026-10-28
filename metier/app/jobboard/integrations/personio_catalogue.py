@@ -110,14 +110,8 @@ def fetch_personio(key, instance):
     rows, errors = [], list(snapshot.errors)
     deadline = time.monotonic() + 300
     detail_count = 0
-    from jobboard.services.engine_quality import INTERN
 
     for row in snapshot:
-        if row.get("contract_type") != "internship" and not re.search(
-            INTERN, row["title"], re.I
-        ):
-            rows.append(row)
-            continue
         try:
             detail_count += 1
             if detail_count > 120 or time.monotonic() >= deadline:

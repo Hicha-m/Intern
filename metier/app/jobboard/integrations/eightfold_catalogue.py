@@ -4,6 +4,12 @@ import re
 import time
 from urllib.parse import urlencode, urlsplit
 
+from jobboard.services.employment_scope import (
+    ROLE_QUERIES,
+    eligible_facts,
+    occupation_scope,
+)
+
 from .greenhouse_catalogue import CatalogueImportError
 from .personio_catalogue import html_text
 from .public_catalogue import CatalogueSnapshot, _posting, read_json
@@ -21,7 +27,8 @@ BOARDS = {
         "Microsoft",
     ),
 }
-TERMS = ("intern", "Praktikum", "stage", "tirocinio")
+
+TERMS = ROLE_QUERIES + ("intern", "Praktikum", "stage", "tirocinio")
 MAX_PAGES = 20
 MAX_DETAILS = 120
 REQUEST_INTERVAL = 2.0
@@ -95,7 +102,7 @@ def normalize_eightfold(job, key, expected_id):
         ],
         work_mode=mode,
     )
-    if facts["classification"] != "confirmed" or facts["europe_status"] != "in_scope":
+    if not eligible_facts(facts):
         return None
     # Numeric Eightfold id is stable; upstream displayJobId retained as evidence only.
     url = f"https://{BOARDS[key][2]}/careers/job/{expected_id}"
@@ -126,7 +133,7 @@ def normalize_eightfold(job, key, expected_id):
 
 
 def fetch_eightfold(key, *, checkpoint=None):
-    from jobboard.services.engine_quality import EUROPE_COUNTRIES, INTERN
+    from jobboard.services.engine_quality import EUROPE_COUNTRIES
 
     if key not in BOARDS:
         raise CatalogueImportError("unknown_eightfold_board")
@@ -233,9 +240,7 @@ def fetch_eightfold(key, *, checkpoint=None):
             if identity in seen:
                 continue
             seen.add(identity)
-            if not isinstance(job.get("name"), str) or not re.search(
-                INTERN, job["name"], re.IGNORECASE
-            ):
+            if not isinstance(job.get("name"), str) or occupation_scope(job["name"])["scope"] == "out_of_scope":
                 continue
             try:
                 places = locations(job)
@@ -264,7 +269,7 @@ def _checkpoint(key, checkpoint):
     now = time.time()
     valid = (
         isinstance(checkpoint, dict)
-        and checkpoint.get("version") == 1
+        and checkpoint.get("version") == 2
         and checkpoint.get("key") == key
         and isinstance(checkpoint.get("started_at"), (int, float))
         and 0 <= now - checkpoint["started_at"] <= 86400
@@ -286,7 +291,7 @@ def _checkpoint(key, checkpoint):
     if valid:
         return deepcopy(checkpoint)
     return {
-        "version": 1,
+        "version": 2,
         "key": key,
         "started_at": now,
         "term": 0,

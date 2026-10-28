@@ -16,10 +16,10 @@ class SourceFunnelTests(TestCase):
             company=Company.objects.create(name="Audit"),
         )
         for i, title, status, age in [
-            (1, "Marketing Internship", "open", 0),
-            (2, "Marketing Internship", "hidden", 0),
-            (3, "Senior Engineer", "open", 0),
-            (4, "Marketing Internship", "open", 90),
+            (1, "Backend Internship", "open", 0),
+            (2, "Backend Internship", "hidden", 0),
+            (3, "Marketing Internship", "open", 0),
+            (4, "Backend Internship", "open", 90),
         ]:
             offer = Offer.objects.create(
                 company=board.company,
@@ -48,7 +48,7 @@ class SourceFunnelTests(TestCase):
             {
                 "published": 1,
                 "offer_not_open": 1,
-                "not_internship": 1,
+                "outside_it": 1,
                 "source_not_fresh": 1,
             },
         )

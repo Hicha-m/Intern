@@ -42,6 +42,7 @@ def parse_icims_url(url):
 
 
 def eligible_row(raw, identity, title, description, url, locations, contract="unknown"):
+    from jobboard.services.employment_scope import eligible_facts
     from jobboard.services.engine_quality import extract_facts, structured_country_code
 
     row = _posting(
@@ -60,8 +61,7 @@ def eligible_row(raw, identity, title, description, url, locations, contract="un
     )
     return (
         row
-        if facts["classification"] == "confirmed"
-        and facts["europe_status"] == "in_scope"
+        if eligible_facts(facts)
         else None
     )
 
@@ -158,7 +158,7 @@ def fetch_icims(key):
     try:
         for page in range(MAX_PAGES):
             url = f"https://{host}/jobs/search?" + urlencode(
-                {"ss": 1, "searchKeyword": "intern", "in_iframe": 1, "pr": page}
+                {"ss": 1, "searchKeyword": "", "in_iframe": 1, "pr": page}
             )
             final, html = read(url)
             parser = PublicHTMLParser()
@@ -173,7 +173,7 @@ def fetch_icims(key):
                 if (
                     parts.path.rstrip("/") == "/jobs/search"
                     and params.get("pr") == [str(page + 1)]
-                    and params.get("searchKeyword") == ["intern"]
+                    and params.get("searchKeyword", [""]) == [""]
                 ):
                     next_page = True
                 match = JOB_PATH.fullmatch(parts.path)
