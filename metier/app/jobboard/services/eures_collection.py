@@ -10,6 +10,7 @@ from django.utils import timezone
 from jobboard.integrations.eures_catalogue import COUNTRIES, collect
 from jobboard.integrations.greenhouse_catalogue import CatalogueImportError
 from jobboard.models import DiscoveryQuery
+from jobboard.services.discovery_attempts import begin_attempt, finish_attempt
 from jobboard.services.jobspy_collection import ingest
 
 
@@ -51,6 +52,7 @@ def run_queries(limit=1, query_id=None):
                 now + timedelta(minutes=10),
             )
             query.save(update_fields=["lease_token", "lease_expires_at"])
+            begin_attempt(query, token)
         try:
             page = collect(query.country, int(query.cursor or 1))
             with transaction.atomic():
@@ -73,6 +75,7 @@ def run_queries(limit=1, query_id=None):
                 )
                 locked.lease_token = locked.lease_expires_at = None
                 locked.save()
+                finish_attempt(locked, token, received=len(page.records), imported=imported, more=bool(locked.cursor) or locked.truncated)
             summaries.append(
                 {
                     "query_id": query.pk,
@@ -97,6 +100,7 @@ def run_queries(limit=1, query_id=None):
                 lease_token=None,
                 lease_expires_at=None,
             )
+            finish_attempt(query, token, error=code)
             summaries.append(
                 {"query_id": query.pk, "country": query.country, "error": code}
             )

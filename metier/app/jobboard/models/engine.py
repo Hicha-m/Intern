@@ -267,6 +267,26 @@ class DiscoveryQuery(models.Model):
         ]
 
 
+class DiscoveryAttempt(models.Model):
+    query = models.ForeignKey(DiscoveryQuery, on_delete=models.PROTECT, related_name="attempts")
+    lease_token = models.UUIDField(unique=True)
+    request = models.JSONField(default=dict)
+    started_at = models.DateTimeField(default=timezone.now)
+    finished_at = models.DateTimeField(null=True)
+    outcome = models.CharField(max_length=20, default="running")
+    cursor_before = models.CharField(max_length=80, blank=True)
+    cursor_after = models.CharField(max_length=80, blank=True)
+    received_count = models.PositiveIntegerField(null=True)
+    imported_count = models.PositiveIntegerField(null=True)
+    error_code = models.CharField(max_length=80, blank=True)
+
+    class Meta:
+        constraints = [
+            allowed("outcome", ("running", "success", "empty_confirmed", "empty_uncertain", "partial", "failed"), "discovery_attempt_outcome_valid"),
+            models.CheckConstraint(condition=models.Q(finished_at__isnull=True) | models.Q(finished_at__gte=models.F("started_at")), name="discovery_attempt_dates_valid"),
+        ]
+
+
 class DiscoveryResult(models.Model):
     query = models.ForeignKey(
         DiscoveryQuery, on_delete=models.CASCADE, related_name="results"

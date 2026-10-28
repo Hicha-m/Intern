@@ -27,6 +27,7 @@ from jobboard.models import (
     SourceBoard,
 )
 from jobboard.services.catalogue import import_board
+from jobboard.services.discovery_attempts import begin_attempt, finish_attempt
 
 
 def seed_queries(countries, sites):
@@ -233,6 +234,7 @@ def run_queries(limit=1, query_id=None):
                 now + timedelta(minutes=10),
             )
             query.save(update_fields=["lease_token", "lease_expires_at"])
+            begin_attempt(query, token)
         try:
             offset = int(query.cursor or 0)
             records = collect(
@@ -264,6 +266,7 @@ def run_queries(limit=1, query_id=None):
                 )
                 locked.lease_token = locked.lease_expires_at = None
                 locked.save()
+                finish_attempt(locked, token, received=len(records), imported=imported, more=bool(locked.cursor) or locked.truncated)
             summaries.append(
                 {
                     "query_id": query.pk,
@@ -293,6 +296,7 @@ def run_queries(limit=1, query_id=None):
             DiscoveryQuery.objects.filter(pk=query.pk, lease_token=token).update(
                 **updates
             )
+            finish_attempt(query, token, error=code)
             summaries.append(
                 {
                     "query_id": query.pk,
