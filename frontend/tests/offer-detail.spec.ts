@@ -169,3 +169,15 @@ test('contract evidence explains why an atypical title is confirmed', async ({ p
   await expect(page.getByText('Le stage est précisé dans la description.', { exact: true })).toBeVisible()
   await expect(page.getByText('Objectif du stage', { exact: true })).toBeVisible()
 })
+
+test('known contract and seniority appear without calling generic employment a permanent job', async ({ page }) => {
+  await prepareDashboard(page)
+  for (const [contract, label] of [['permanent', 'CDI'], ['fixed_term', 'CDD'], ['employment', 'Emploi salarié (durée non précisée)'], ['unknown', 'Contrat non précisé']]) {
+    await page.route('**/api/v1/offers/2/', route => route.fulfill({ json: { ...offer, title: 'Backend Engineer', contract_type: contract, seniority: 'senior' } }))
+    await page.goto('/offers/2/')
+    await expect(page.locator('.offer-detail-tags')).toContainText(label)
+    await expect(page.locator('.offer-detail-tags')).toContainText('Senior')
+    if (contract !== 'permanent') await expect(page.locator('.offer-detail-tags')).not.toContainText('CDI')
+    await page.unroute('**/api/v1/offers/2/')
+  }
+})

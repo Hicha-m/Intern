@@ -176,6 +176,9 @@ def semantic_hash(offer):
             for loc in offer.locations.all()
         ),
     }
+    # Adding an unknown dimension must not manufacture updates for legacy offers.
+    if offer.seniority != "unknown":
+        content["seniority"] = offer.seniority
     return hashlib.sha256(
         json.dumps(content, sort_keys=True, ensure_ascii=False).encode()
     ).hexdigest()

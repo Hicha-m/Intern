@@ -1,6 +1,7 @@
 """Recruiter writes share the session API's user-first transaction discipline."""
 
 import hashlib
+import json
 from urllib.parse import urlsplit
 
 from django.conf import settings
@@ -97,6 +98,7 @@ def publish(job):
         description=description,
         company=company,
         contract_type=job.contract_type,
+        seniority=job.seniority,
         work_mode=job.work_mode,
         status="open",
         published_at=job.published_at or now,
@@ -129,7 +131,14 @@ def publish(job):
         },
     )
     url = f"{settings.PUBLIC_BASE_URL.rstrip('/')}/offers/{offer.pk}"
-    m.OfferSource.objects.update_or_create(
+    payload = {
+        "title": job.title, "description": description,
+        "contract_type": job.contract_type, "seniority": job.seniority,
+    }
+    content_hash = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, ensure_ascii=False).encode()
+    ).hexdigest()
+    source, _ = m.OfferSource.objects.update_or_create(
         board=board,
         external_id=str(job.pk),
         defaults={
@@ -140,9 +149,13 @@ def publish(job):
             "first_seen_at": job.published_at or now,
             "last_seen_at": now,
             "last_checked_at": now,
-            "content_hash": hashlib.sha256(description.encode()).hexdigest(),
-            "raw_payload": {"title": job.title, "description": description},
+            "content_hash": content_hash,
+            "raw_payload": payload,
         },
+    )
+    m.SourceRevision.objects.get_or_create(
+        source=source, raw_hash=content_hash,
+        defaults={"semantic_hash": content_hash, "payload": payload},
     )
     from jobboard.services.engine_quality import enrich_offer
 

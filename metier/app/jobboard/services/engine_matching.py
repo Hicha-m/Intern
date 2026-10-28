@@ -329,10 +329,10 @@ def preselect_offers(queryset, criteria=None):
         from .catalogue_search import search_offers
 
         queryset = search_offers(queryset, criteria["q"])
-    for field in ("contract_type", "work_mode"):
+    for field in ("contract_type", "seniority", "work_mode"):
         if criteria.get(field):
             condition = Q(**{field: criteria[field]})
-            if include_unknown:
+            if include_unknown and field == "work_mode":
                 condition |= Q(**{field: "unknown"})
             queryset = queryset.filter(condition)
     return queryset

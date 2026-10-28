@@ -40,6 +40,7 @@ JOB_FIELDS = (
     "title",
     "department",
     "contract_type",
+    "seniority",
     "location",
     "country_code",
     "work_mode",
@@ -87,8 +88,9 @@ class JobInput(StrictSerializer):
     title = serializers.CharField(max_length=300)
     department = serializers.CharField(max_length=160, allow_blank=True, required=False)
     contract_type = serializers.ChoiceField(
-        choices=["internship", "apprenticeship", "employment"], required=False
+        choices=m.Offer.ContractType.values, required=False
     )
+    seniority = serializers.ChoiceField(choices=m.Offer.Seniority.values, required=False)
     location = serializers.CharField(max_length=240, allow_blank=True, required=False)
     country_code = serializers.RegexField(r"^[A-Z]{2}$", required=False)
     work_mode = serializers.ChoiceField(
@@ -278,7 +280,7 @@ def jobs(request):
     query = owner.jobs.order_by("-updated_at", "-id")
     if request.query_params.get("q"):
         query = query.filter(title__icontains=request.query_params["q"][:300])
-    for name in ("status", "contract_type", "origin"):
+    for name in ("status", "contract_type", "seniority", "origin"):
         if request.query_params.get(name):
             query = query.filter(**{name: request.query_params[name]})
     if request.query_params.get("location"):

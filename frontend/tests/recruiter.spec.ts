@@ -155,3 +155,38 @@ test('candidate cannot enter recruiter pages', async ({ page }) => {
   await page.goto('/recruiter/jobs')
   await expect(page).toHaveURL(/\/dashboard$/)
 })
+
+test('wizard publishes a fixed-term junior role without assigning a contract by default', async ({ page }) => {
+  await session(page)
+  let submitted: Record<string, unknown> | undefined
+  await page.route('**/api/v1/recruiter/jobs/', async route => {
+    submitted = route.request().postDataJSON()
+    return route.fulfill({ status: 201, json: { ...job, ...submitted } })
+  })
+  await page.goto('/recruiter/jobs/new')
+  await expect(page.getByLabel('Type de contrat', { exact: true })).toHaveValue('unknown')
+  await expect(page.getByLabel('Séniorité', { exact: true })).toHaveValue('unknown')
+  await page.getByLabel('Intitulé du poste').fill('Backend Engineer CDD')
+  await page.getByLabel('Ville / localisation').fill('Marseille')
+  await page.getByLabel('Type de contrat', { exact: true }).selectOption('fixed_term')
+  await page.getByLabel('Séniorité', { exact: true }).selectOption('entry')
+  await page.getByRole('button', { name: 'Continuer' }).click()
+  await page.getByLabel('Missions et description').fill('Construire des services backend avec notre équipe.')
+  await page.getByRole('button', { name: 'Continuer' }).click()
+  await page.getByRole('button', { name: 'Continuer' }).click()
+  await expect(page.locator('.recruiter-preview')).toContainText('CDD')
+  await expect(page.locator('.recruiter-preview')).toContainText('Junior')
+  await page.getByRole('button', { name: 'Publier l’offre' }).click()
+  await expect(page).toHaveURL(/\/recruiter\/jobs$/)
+  expect(submitted?.contract_type).toBe('fixed_term')
+  expect(submitted?.seniority).toBe('entry')
+})
+
+test('legacy employment keeps its unspecified duration when editing an offer', async ({ page }) => {
+  await session(page)
+  await page.route('**/api/v1/recruiter/jobs/1/', route => route.fulfill({ json: { ...job, contract_type: 'employment' } }))
+  await page.goto('/recruiter/jobs/1/edit')
+  await expect(page.getByLabel('Type de contrat', { exact: true })).toHaveValue('employment')
+  await expect(page.getByLabel('Type de contrat', { exact: true }).locator('option:checked')).toHaveText('Emploi salarié (durée non précisée)')
+  await expect(page.getByLabel('Séniorité', { exact: true })).toHaveValue('unknown')
+})

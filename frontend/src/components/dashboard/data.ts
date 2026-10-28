@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router'
 export type Offer = {
   taxonomy?: { status: string; version: string; subdomain: { slug: string; name: string; domain: { slug: string; name: string } } | null }
   id: number; title: string; company: { id: number; name: string; logo_url?: string | null; domain?: string | null }; description?: string
-  locations?: { name: string; country_code?: string | null; city?: string | null }[]; contract_type?: string; work_mode?: string
+  locations?: { name: string; country_code?: string | null; city?: string | null }[]; contract_type?: string; seniority?: string; work_mode?: string
   sources?: { id: number; apply_url: string; provider: string }[]
 }
 export type ApplicationRow = {

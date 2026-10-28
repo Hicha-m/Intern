@@ -13,6 +13,15 @@ class ContractType(models.TextChoices):
     UNKNOWN = "unknown", "Unknown"
 
 
+class Seniority(models.TextChoices):
+    ENTRY = "entry", "Entry"
+    MID = "mid", "Mid"
+    SENIOR = "senior", "Senior"
+    LEAD = "lead", "Lead"
+    EXECUTIVE = "executive", "Executive"
+    UNKNOWN = "unknown", "Unknown"
+
+
 class WorkMode(models.TextChoices):
     REMOTE = "remote", "Remote"
     HYBRID = "hybrid", "Hybrid"

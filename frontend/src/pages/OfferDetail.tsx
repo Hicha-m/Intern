@@ -1,3 +1,4 @@
+import { contractLabel, seniorityLabel } from '../lib/employment'
 import { useState } from 'react'
 import { apiRequest } from '../lib/api'
 import { authError } from '../auth/errors'
@@ -36,7 +37,7 @@ export function OfferDetail() {
         <Link className="offer-detail-company" to={`/companies/${offer.company.id}`} aria-label={`Découvrir ${offer.company.name}`}><CompanyMark name={offer.company.name} id={offer.company.id} logoUrl={offer.company.logo_url} domain={offer.company.domain} /><span>{offer.company.name}</span><HugeiconsIcon icon={ArrowUpRight01Icon} size={16} aria-hidden="true" /></Link>
         <h1>{offer.title}</h1>
         <p className="offer-detail-location"><HugeiconsIcon icon={Location01Icon} size={18} aria-hidden="true" />{offerLocationLabel(offer.locations)}</p>
-        <div className="offer-detail-tags">{offer.quality?.classification === 'confirmed' && <span>Stage</span>}{offer.quality?.domain && domains[offer.quality.domain] && <span>{domains[offer.quality.domain]}</span>}{mode && <span>{mode}</span>}</div>
+        <div className="offer-detail-tags"><span>{contractLabel(offer.contract_type)}</span><span>{seniorityLabel(offer.seniority)}</span>{offer.quality?.domain && domains[offer.quality.domain] && <span>{domains[offer.quality.domain]}</span>}{mode && <span>{mode}</span>}</div>
         {offer.last_verified_at && <p className="offer-verified">{offer.stale ? 'Dernière vérification' : 'Offre vérifiée'} {relativeDate(offer.last_verified_at)}</p>}
         <OfferFacts offer={offer} />
       </header>

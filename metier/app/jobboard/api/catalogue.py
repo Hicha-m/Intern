@@ -40,7 +40,7 @@ from jobboard.models import (
     SearchPreference,
     Skill,
 )
-from jobboard.models.choices import ContractType, WorkMode
+from jobboard.models.choices import ContractType, Seniority, WorkMode
 
 
 def offer_queryset():
@@ -160,13 +160,14 @@ def filtered_offers(request, *, apply_search=True, params=None):
     queryset = open_offers()
     for field, choices in [
         ("contract_type", ContractType.values),
+        ("seniority", Seniority.values),
         ("work_mode", WorkMode.values),
     ]:
         value = params.get(field)
         if value:
             if value not in choices:
                 raise APIError("invalid_filter", f"Invalid {field}.")
-            if field == "contract_type":
+            if field in ("contract_type", "seniority"):
                 queryset = queryset.filter(**{field: value})
     for param, field in [("role", "role_id"), ("location", "locations__id"), ("company", "company_id")]:
         value = params.get(param)
@@ -188,6 +189,7 @@ def filtered_offers(request, *, apply_search=True, params=None):
         "europe_scope",
         "unknown_policy",
         "work_mode",
+        "seniority",
     ):
         if key in params:
             criteria[key] = params[key]

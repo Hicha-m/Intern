@@ -1,3 +1,4 @@
+import { contractLabel, seniorityLabel } from '../lib/employment'
 import './Offers.css'
 import { useEffect, useRef } from 'react'
 import { Pagination } from '../components/ui/Pagination'
@@ -19,7 +20,7 @@ export function CatalogueCard({ offer }: { offer: Offer }) {
       <span className="offer-card-company"><CompanyMark name={offer.company.name} id={offer.company.id} logoUrl={offer.company.logo_url} domain={offer.company.domain} /><span>{offer.company.name}</span></span>
       <h3>{offer.title}</h3>
       {offer.taxonomy?.subdomain && ['classified', 'broad'].includes(offer.taxonomy.status) && <span className="catalogue-job-family">{offer.taxonomy.subdomain.name}</span>}
-      <span className="catalogue-card-meta">Stage{mode && ` · ${mode}`}</span>
+      <span className="catalogue-card-meta">{contractLabel(offer.contract_type)}{offer.seniority && offer.seniority !== 'unknown' && ` · ${seniorityLabel(offer.seniority)}`}{mode && ` · ${mode}`}</span>
       <span className="catalogue-card-bottom"><span className="catalogue-location">{location}</span><span className="catalogue-card-action">Voir l’offre <HugeiconsIcon icon={ArrowRight01Icon} size={16} strokeWidth={1.5} aria-hidden="true" /></span></span>
     </Link>
   </article>

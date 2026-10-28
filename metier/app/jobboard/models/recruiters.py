@@ -3,6 +3,9 @@
 from django.conf import settings
 from django.db import models
 
+from .choices import ContractType, Seniority
+from .constraints import allowed
+
 
 class RecruiterProfile(models.Model):
     user = models.OneToOneField(
@@ -48,8 +51,12 @@ class RecruiterJob(models.Model):
     department = models.CharField(max_length=160, blank=True)
     contract_type = models.CharField(
         max_length=24,
-        default="internship",
-        choices=[(x, x) for x in ("internship", "apprenticeship", "employment")],
+        default=ContractType.UNKNOWN,
+        choices=ContractType,
+    )
+    seniority = models.CharField(
+        max_length=16, choices=Seniority, default=Seniority.UNKNOWN,
+        db_default=Seniority.UNKNOWN,
     )
     location = models.CharField(max_length=240, blank=True)
     country_code = models.CharField(max_length=2, default="FR")
@@ -76,6 +83,8 @@ class RecruiterJob(models.Model):
 
     class Meta:
         constraints = [
+            allowed("contract_type", ContractType.values, "recruiter_job_contract_valid"),
+            allowed("seniority", Seniority.values, "recruiter_job_seniority_valid"),
             models.UniqueConstraint(
                 fields=["id", "offer"], name="recruiter_job_offer_identity"
             ),

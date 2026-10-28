@@ -18,9 +18,11 @@ from rest_framework import serializers
 
 from jobboard.api.serializers import StrictSerializer
 from jobboard.models import OfferSource
+from jobboard.models.choices import Seniority
 
 
 class CatalogueFilters(StrictSerializer):
+    seniority = serializers.ChoiceField(choices=Seniority.values, required=False)
     sort = serializers.ChoiceField(choices=["relevance", "newest"], required=False)
     published_within = serializers.ChoiceField(choices=["1", "7", "30"], required=False)
     country = serializers.RegexField(r"^[A-Z]{2}$", required=False)
