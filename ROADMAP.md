@@ -53,7 +53,7 @@ Résultat : une base de décision mesurée pour les prochaines itérations.
 
 - [x] E0.1 — Rédiger les instructions essentielles, le PRD et l’architecture à partir du dépôt.
 - [x] E0.2 — Décomposer le travail en epics et stories avec critères de fin.
-- [ ] E0.3 — Inventorier sources actives, règles stage, tâches, schéma, données et tests ; mesurer les erreurs et volumes actuels sans relancer toute la collecte. [Audit ciblé E1](docs/research/2026-10-28-catalogue-audit.md) : schéma et restrictions recensés ; bilan de tests en cours, volumes et erreurs de production non mesurés.
+- [ ] E0.3 — Inventorier sources actives, règles stage, tâches, schéma, données et tests ; mesurer les erreurs et volumes actuels sans relancer toute la collecte. [Audit ciblé E1](docs/research/2026-10-28-catalogue-audit.md) : schéma et restrictions recensés ; 577 tests Django réussis sur PostgreSQL isolé ; volumes et erreurs de production non mesurés.
 - [ ] E0.4 — Constituer progressivement, avant la recette de chaque fonctionnalité concernée, les jeux annotés extraction, doublons et questions RAG du PRD ; conserver provenance, date et séparation calibration/évaluation.
 - [ ] E0.5 — Confirmer pays/langues du pilote, sources, rétentions et plafonds de coût des fonctions à activer ; traduire les points ouverts en décisions documentées.
 

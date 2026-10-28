@@ -64,8 +64,9 @@ travail sur les proxys n’est nécessaire pour commencer E1.
 - Dépendances Python installées depuis le lockfile ; aucune nouvelle dépendance.
 - Base de recette dédiée : PostgreSQL 16, conteneur éphémère
   `intern-market-recette-postgres`, port `127.0.0.1:55432`, sans volume existant.
-- Suite Django complète : en cours au moment de l’audit ; résultat à consigner
-  avant clôture de l’audit ciblé.
+- Suite Django complète avant modification fonctionnelle : **577 tests réussis
+  en 186,667 s**, sur `test_intern_market_baseline`, créée puis détruite.
+  Les accès externes simulés dans les tests ne valent pas collecte live.
 - Ruff (E4/E7/E9/F/I), contrôle Django, lint frontend et build : réussis.
   Avertissements préexistants : trois exports React Fast Refresh dans
   EngineControls.tsx et bundle JS supérieur à 500 kB.
